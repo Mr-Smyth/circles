@@ -1,39 +1,20 @@
-<img src="https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png" style="margin: 0;">
+# Circles
 
-Welcome USER_NAME,
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project.
+Circles is a Data Centric, user friendly full stack website. 
 
-## Gitpod Reminders
+Circles enables users to easily create a simple database of their family circles. It will be focused on building 
+a family circle around a chosen person, from parents and siblings to spouse and children. While automatically maintaining
+the correct relationships involved. This process can then be repeated as often as required for different people.
+This will result in a comprehensive data structure of overlapping circles, representing the users family history 
+and relationships. Key to this will be that the user will feel that they have had to put no thought into the structure
+and layout.  
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+Users will be able to perform CRUD on the database, via a simple, intuitive front end web page.
 
-`python3 -m http.server`
+This project will be submitted for my Python and Data Centric Development, and third milestone project, in my Full Stack Software Development Diploma. 
+The project is a working full-stack site that allows users to manage a
+common dataset. It will also demonstrate the technologies I have learned so far.
+</div>
 
-A blue button should appear to click: *Make Public*,
-
-Another blue button should appear to click: *Open Browser*.
-
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
-
-A blue button should appear to click: *Make Public*,
-
-Another blue button should appear to click: *Open Browser*.
-
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the backend lessons.
-
-## Updates Since The Instructional Video
-
-We continually tweak and adjust this template to help give you the best experience. Here are the updates since the original video was made:
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
---------
-
-Happy coding!
+---
