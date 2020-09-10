@@ -1,7 +1,12 @@
+<div align="center">
+
 # Circles
 
 
+
 Circles is a Data Centric, user friendly full stack website. 
+
+</div>
 
 Circles enables users to easily create a simple database of their family circles. It will be focused on building 
 a family circle around a chosen person, from parents and siblings to spouse and children. While automatically maintaining
@@ -15,6 +20,11 @@ Users will be able to perform CRUD on the database, via a simple, intuitive fron
 This project will be submitted for my Python and Data Centric Development, and third milestone project, in my Full Stack Software Development Diploma. 
 The project is a working full-stack site that allows users to manage a
 common dataset. It will also demonstrate the technologies I have learned so far.
-</div>
 
+
+
+
+* [Logical Walkthrough](https://github.com/Mr-Smyth/circles/blob/master/LogicWalkthrough.md)
+
+</div>
 ---
