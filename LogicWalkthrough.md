@@ -21,6 +21,13 @@ Please be aware the code blocks are purely to describe my logic process, and aid
 ---
 <br>
 
+## Possible Data Structure:
+
+Using Mongo DB, the following structure i feel is the best for ease of updtae and scaling and speed of query.
+
+* [Data Structure](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/database-structure.pdf
+)
+
 ## Step 1: Register / Login
 
 *   Register to create an account.
