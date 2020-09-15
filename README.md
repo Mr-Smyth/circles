@@ -21,6 +21,15 @@ This project will be submitted for my Python and Data Centric Development, and t
 The project is a working full-stack site that allows users to manage a
 common dataset. It will also demonstrate the technologies I have learned so far.
 
+---
+# Index
+* [UX](#ux)
+    * [Purpose and Goals](#purpose-and-goals)
+    * [User Stories](#user-stories)
+    * [Opportunities arising from user stories](#opportunities-arising-from-user-stories)
+
+* [UI](#ui)   
+    * [Wireframes](#wireframes)   
 
 
 
@@ -30,6 +39,8 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 ---
 
 # UX
+
+## Purpose and Goals
 
 Circles is a web based application, designed to help the user build a family tree - or Circle!  
 
@@ -50,6 +61,8 @@ and in this way, will replace all the awkward confusing entries requested by mor
 This is also complemented by a search feature on the home page allowing you to jump to any person you have created within the database. 
 I have chosen this design, as i feel that this is what common people like me want from a genealogy building tool, to keep a track of family connections and information.
 
+[Back to Index](#index)
+
 ## User Stories
 The Application is intended for users of any age who are deciding on a location for their mini-break, or even just a day out.
 
@@ -63,10 +76,29 @@ The following user stories have been identified:
 5.  As a user, I want to be able to search my family for a specific person
 6.  As a user, I want to be able to see my parental lineage within the database.
 
+[Back to Index](#index)
 
+## Opportunities arising from user stories
+
+<div align="center">
+ 
+|Opportunities | Importance | Viability / Feasibility
+|-----|:------:|:-----:|
+|**Simple Clean Interface** | 5 | 5 |
+|**Clearly indicate purpose** | 5 | 5 |
+|**Clear Simple Instructions** | 5 | 5 |
+|**Simple creation of a new person** | 5 | 5 |
+|**Enter Own Family Circle Data** | 5 | 5 |
+|**Remove need for user planning of structure**| 5 | 5 |
+|**Search Feature** | 5 | 5 |
+|**See Parental/Maternal Lineage** | 3 | 4 |
+
+
+</div>
+
+[Back to Index](#index)
 
 <br>
-
 
 # UI 
 
@@ -93,5 +125,5 @@ The following user stories have been identified:
   * [Edit/Add Children Page](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/edit-children-page-wireframe.pdf)   
 
 
-  
+  [Back to Index](#index)
    
