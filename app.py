@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_pymongo import PyMongo
 
 # Import env.py if it exists
 if os.path.exists("env.py"):
@@ -7,11 +8,22 @@ if os.path.exists("env.py"):
 
 app = Flask(__name__)
 
+# SETUP OUR env VARIABLES
+# MONGO DBNAME
+app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
+# GET THE MONGO URI OR CONNECTION STRING
+app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+# GET THE SECRET KEY WHICH IS REQUIRED FOR PARTS OF FLASK, LIKE FLASH
+app.secret_key = os.environ.get("MONGO_DBNAME")
+
+# SETUP INSTANCE OF PyMongo AND ADD IN app.py
+mongo = PyMongo(app)
+
 
 # Test function to check our setup
 @app.route("/")
 def circles():
-    return "This is Circles"
+    return "This is Circles - and life keeps on running in cycles"
 
 
 # TELL OUR APP, HOW AND WHERE TO RUN OUR APPLICATION
