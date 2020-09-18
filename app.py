@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, flash, render_template
 from flask_pymongo import PyMongo
 
 # Import env.py if it exists
@@ -22,8 +22,9 @@ mongo = PyMongo(app)
 
 # Test function to check our setup
 @app.route("/")
-def circles():
-    return "This is Circles - and life keeps on running in cycles"
+@app.route("/home")
+def home():
+    return render_template("home.html")
 
 
 # TELL OUR APP, HOW AND WHERE TO RUN OUR APPLICATION

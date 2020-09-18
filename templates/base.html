@@ -10,11 +10,39 @@
     <title>Circles</title>
 </head>
 <body>
+    
+<head>
+	<nav class="nav-extended text-shadow site-background">
+		<div class="nav-wrapper">
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="#">link 1</a></li>
+				<li><a href="#">link 2</a></li>
+				<li><a href="#">link 3</a></li>
+				<li><a href="#">link 4</a></li>
+			</ul>
+		</div>
+	</nav>
+	<!-- SIDE NAV BAR -->
+	<ul class="sidenav" id="mobile-demo">
+		<li><a href="#">link 1</a></li>
+		<li><a href="#">link 2</a></li>
+		<li><a href="#">link 3</a></li>
+		<li><a href="#">link 4</a></li>
+	</ul>
+		<div class="logo-container">
+			<a class="center-align" href="{{ url_for('home') }}">
+				<img class="logo-image" src="{{ url_for('static', filename='images/circles-logo-1024x.png') }}" alt="Logo" title="Circles Logo" />
+			</a>
+		</div>
+
+</head>
+
     {% block content %}
     {% endblock %}
     <!-- Materialize JS script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Static JS -->
-    <script src="{{ url_for('static', filename==js/utility.js)}}"></script>
+    <script src="{{ url_for('static', filename='js/utility.js') }}"></script>
 </body>
 </html>

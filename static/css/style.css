@@ -1,0 +1,29 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.text-shadow {
+    text-shadow: 2px 1.5px 1.5px rgba(0, 0, 0, 0.5)
+}
+
+.logo-container {
+    display: flex;
+    margin-top: 20px;
+    height: 300px;
+    justify-content: center;
+}
+
+.logo-image {
+    height: 100%;
+}
+
+nav ul a {
+    color: #341948;
+    font-weight: bold
+}
+
+.site-background {
+    background-color: rgb(114, 114, 182);
+}
