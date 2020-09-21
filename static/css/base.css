@@ -1,0 +1,82 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+
+body {
+    height: 200vh;
+    background: rgb(34,65,167);
+    background: radial-gradient(circle, rgba(34,65,167,1) 0%, rgba(48,96,193,1) 15%, rgba(60,121,205,1) 31%, rgba(45,123,193,1) 52%, rgba(52,150,214,1) 68%, rgba(27,130,198,1) 80%);
+}
+
+.clear {
+    background-color: transparent;
+}
+
+.text-shadow {
+    text-shadow: 2px 1.5px 1.5px rgba(0, 0, 0, 0.5)
+}
+
+
+/* ALTER STYLING OF MATERIALIZE NAV AND SIDE BAR */
+.sidenav {
+    background: rgb(60,81,152);
+    background: radial-gradient(circle, rgba(60,81,152,1) 2%, rgba(17,42,124,1) 72%);
+    padding-top: 20px;
+}
+
+.sidenav li>a {
+    color: rgb(159, 197, 248);
+    font-size: 1.2rem;
+    transition: 1.2s;
+}
+
+.sidenav li>a:hover {
+    background-color: transparent;
+    color:  rgb(116, 105, 192);
+}
+
+nav ul a {
+    color: rgb(159, 197, 248);
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: 1.2s;
+}
+
+nav ul a:hover {
+    background-color: transparent;
+    color:  rgb(153, 138, 240);
+}
+
+/* REMOVE BOX SHADOW FROM MATERIALIZE NAVBAR  */
+nav {
+    box-shadow: none;
+}
+
+/* ALTER STYLE OF HAMBURGER */
+.fa-bars:before {
+    color: rgb(159, 197, 248);
+}
+
+/* TOP LOGO RELATED STYLING */
+ #top-logo-container {
+     position: absolute;
+     margin-top: -50px;
+     margin-left: 20px;
+     height: 100px;
+     width: 100px;
+     background-color: transparent;
+     display: flex;
+     justify-content: left;
+}
+ #top-logo-image{
+     background-image: url("../images/circles-logo-1024x.png");
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: contain;
+     width: 300px;
+     height: 100%;
+}

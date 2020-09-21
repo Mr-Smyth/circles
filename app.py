@@ -20,11 +20,18 @@ app.secret_key = os.environ.get("MONGO_DBNAME")
 mongo = PyMongo(app)
 
 
-# Test function to check our setup
+# BASE ROUTE
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template("home.html")
+
+
+# ADD PERSON ROUTE
+@app.route("/add_person")
+def add_person():
+    return render_template("add_person.html")
+
 
 
 # TELL OUR APP, HOW AND WHERE TO RUN OUR APPLICATION

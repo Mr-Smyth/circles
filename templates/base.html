@@ -19,12 +19,13 @@
     <!-- Static CSS -->
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css')}}"
+      href="{{ url_for('static', filename='css/base.css')}}"
       type="text/css"
     />
+    {% block head %}			
+	{% endblock %}
     <title>Circles</title>
   </head>
-
 
   <body>
     <header>
@@ -32,8 +33,8 @@
             <div class="nav-wrapper">
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right clear"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="#">link 1</a></li>
-                    <li><a href="#">link 2</a></li>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('add_person') }}">Add Person</a></li>
                     <li><a href="#">link 3</a></li>
                     <li><a href="#">link 4</a></li>
                 </ul>
@@ -50,20 +51,7 @@
 	</header>
 	
 	
-	<!-- LOGO CONTAINER -->
-    <div id="logo-container">
-      <a  id="logo-image" href="index.html"></a>
-    </div>
 
-	<!-- SEARCH WINDOW -->
-	<div class="search-container">
-		<form id="person-search">
-            <input id="search-input" name="search-input" type="text" placeholder="Search Circles">
-            <button type="submit" class="clear search-btn">
-                <i class="fas fa-search right"></i>
-            </button>
-		</form>
-	</div>
 
     {% block content %} {% endblock %}
     <!-- Materialize JS script -->

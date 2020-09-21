@@ -1,5 +1,25 @@
 {% extends "base.html" %}
 
+{% block head %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}" type="text/css"/>
+{% endblock %}
+
 {% block content %}
 
+    <h1> This is the home page</h1>
+
+	<!-- LOGO CONTAINER -->
+    <div id="logo-container">
+      <a  id="logo-image" href="{{ url_for('home') }}"></a>
+    </div>
+
+	<!-- SEARCH WINDOW -->
+	<div class="search-container">
+		<form id="person-search">
+            <input id="search-input" name="search-input" type="text" placeholder="Search Circles">
+            <button type="submit" class="clear search-btn">
+                <i class="fas fa-search right"></i>
+            </button>
+		</form>
+	</div>
 {% endblock %}
