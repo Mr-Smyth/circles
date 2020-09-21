@@ -28,8 +28,8 @@
 
   <body>
     <header>
-        <nav class="text-shadow clear">
-            <div class="">
+        <nav class="nav-extended text-shadow clear">
+            <div class="nav-wrapper">
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right clear"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="#">link 1</a></li>
@@ -47,20 +47,16 @@
                 <li><a href="#">link 4</a></li>
             </ul>
         </nav>
-    </header>
+	</header>
+	
+	
+	<!-- LOGO CONTAINER -->
+    <div id="logo-container">
+      <a  id="logo-image" href="index.html"></a>
+    </div>
 
-	<div id="logo-image">
-		<a class="logo-container center-align" href="{{ url_for('home') }}">
-			<img
-	            class="logo-image"
-	            src="{{ url_for('static', filename='images/circles-logo-1024x.png') }}"
-	            alt="Logo"
-	            title="Circles Logo"
-	          />
-	    </a>
-	</div>
-    <!-- SEARCH WINDOW -->
-    
+	<!-- SEARCH WINDOW -->
+
 
     {% block content %} {% endblock %}
     <!-- Materialize JS script -->
