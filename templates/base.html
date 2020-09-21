@@ -56,7 +56,14 @@
     </div>
 
 	<!-- SEARCH WINDOW -->
-
+	<div class="search-container">
+		<form id="person-search">
+            <input id="search-input" name="search-input" type="text" placeholder="Search Circles">
+            <button type="submit" class="clear search-btn">
+                <i class="fas fa-search right"></i>
+            </button>
+		</form>
+	</div>
 
     {% block content %} {% endblock %}
     <!-- Materialize JS script -->

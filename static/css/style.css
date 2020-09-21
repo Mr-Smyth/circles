@@ -4,6 +4,8 @@
     box-sizing: border-box;
 }
 
+
+
 body {
     height: 200vh;
     background: rgb(34,65,167);
@@ -76,4 +78,92 @@ nav {
 /* ALTER STYLE OF HAMBURGER */
 .fa-bars:before {
     color: rgb(159, 197, 248);
+}
+
+/* SEARCH */
+.search-container {
+    height: 150px;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#person-search {
+    border: 1px solid transparent;
+    border-radius: 20px;
+    max-width: 80%;
+    min-width: 300px;
+    border: 0.5px solid rgb(115, 159, 218);
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#person-search:hover,
+#person-search:focus-within {
+    box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
+        
+}
+
+#search-input {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    font-size: 1.9rem;
+    color: #eeeeee;
+}
+
+#search-input::-webkit-input-placeholder {
+    color:rgb(115, 159, 218);
+    font-size: 1.5rem;
+
+}
+#search-input:focus::-webkit-input-placeholder {
+    color: #eeeeee;
+}
+
+.search-btn {
+    background-color: transparent;
+    border: none;
+    color:#4110b3;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Change the autofil white to transparent 
+Credit Stack overflow user Nathan-White(4395746) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+
+
+
+
+
+
+/* MEDIA QUERIES */
+/* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+@media (min-width:600px){
+    #person-search {
+        max-width: 80%;
+    }
+
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+@media (min-width:801px) {
+    #person-search {
+        max-width: 40%;
+    }
+
+
+/* big landscape tablets, laptops, and desktops */
+@media (min-width:1025px) {
+
+
 }
