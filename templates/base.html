@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+      integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+      crossorigin="anonymous"
+    />
     <!-- Materialize CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Static CSS -->
@@ -12,9 +19,10 @@
 <body>
     
 <head>
-	<nav class="nav-extended text-shadow site-background">
+	<nav class="nav-extended text-shadow clear">
 		<div class="nav-wrapper">
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger right clear"><i class="fas fa-bars"></i
+          ></a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="#">link 1</a></li>
 				<li><a href="#">link 2</a></li>
@@ -33,9 +41,8 @@
 		<div class="logo-container">
 			<a class="center-align" href="{{ url_for('home') }}">
 				<img class="logo-image" src="{{ url_for('static', filename='images/circles-logo-1024x.png') }}" alt="Logo" title="Circles Logo" />
-			</a>
+					</a>
 		</div>
-
 </head>
 
     {% block content %}
