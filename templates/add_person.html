@@ -19,10 +19,11 @@
 				<div class="row">					
 					<div class="input-field col s6 offset-s3">
                         <i class="fas fa-users prefix blue-text text-darken-5"></i>
-						<select id="family_name" name="family_name" class="validate">
+						<select id="family_name" name="family_name" class="validate" required>
 				            <option value="" disabled selected>Select family</option>
-				            <option value="family1" class="validate">Family2</option>
-				            <option value="family2" class="validate">family 1</option>
+				            {% for family in families %}
+				                <option value="{{ family.family_name }}">{{ family.family_name }}</option>
+				            {% endfor %}
 				        </select>
                         <label>Select The Persons Family to Begin</label>
 					</div>

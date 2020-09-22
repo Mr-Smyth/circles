@@ -40,7 +40,7 @@ def add_person():
     if request.method == "POST":
         # SETUP DICTIONARY FOR IMPORTING PERSON TO MONGO DB
         person = {
-            #"family_name": request.form.get("family_name"),#
+            "family_name": request.form.get("family_name"),
             "first_name": request.form.get("first_name"),
             "last_name": request.form.get("last_name"),
             "birth_surname": request.form.get("birth_surname"),
@@ -55,8 +55,12 @@ def add_person():
         mongo.db.people.insert_one(person)
         flash("This Person has bees successfully added to Circles")
         return redirect(url_for("home"))
-
-    return render_template("add_person.html")
+    
+    # GET THE FAMILY COLLECTION NAMES, FOR THE FAMILY
+    # SELECTION DROP DOWN
+    families = mongo.db.family.find().sort("family_name",1)
+    # RETURN THE FAMILIES TO THE ADD_PERSON PAGE FOR JINGA
+    return render_template("add_person.html", families=families)
 
 
 # TELL OUR APP, HOW AND WHERE TO RUN OUR APPLICATION
