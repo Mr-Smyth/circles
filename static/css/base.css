@@ -20,6 +20,10 @@ body {
     text-shadow: 2px 1.5px 1.5px rgba(0, 0, 0, 0.5)
 }
 
+.box-shade {
+    box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
+}
+
 
 /* ALTER STYLING OF MATERIALIZE NAV AND SIDE BAR */
 .sidenav {
@@ -80,3 +84,14 @@ nav {
      width: 300px;
      height: 100%;
 }
+
+/* OVERRIDE MATERIALIZE GREEN ON INPUTS */
+input:focus {
+  border-bottom: 1px solid royalblue !important;
+  box-shadow: 0 1px 0 0 royalblue !important;
+}
+
+label.active {
+  color: royalblue !important;
+}
+

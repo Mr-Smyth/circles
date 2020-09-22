@@ -28,8 +28,9 @@ def home():
 
 
 # ADD PERSON ROUTE
-@app.route("/add_person")
+@app.route("/add_person", methods=["GET", "POST"])
 def add_person():
+
     return render_template("add_person.html")
 
 

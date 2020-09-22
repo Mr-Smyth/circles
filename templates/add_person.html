@@ -11,46 +11,93 @@
     </div>
 
     <h2>Setup a new person</h2>
-
-	<div class="container white">
+    <!-- MATERIALIZE CONTAINER WITH FORM TEXT INPUT -->
+	<div class="container white box-shade">
 		<div class="row">
-			<form class="col s12">
+			<form class="col s12" method="POST" action="{{ url_for('add_person') }}">
+                <!-- FIRST NAME -->
 				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="Placeholder" id="first_name" type="text" class="validate">
+					<div class="input-field col s10 offset-s1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<input id="first_name" name="first_name" type="text" class="validate" required>
 						<label for="first_name">First Name</label>
 					</div>
-					<div class="input-field col s6">
-						<input id="last_name" type="text" class="validate">
+				</div>
+                <!-- LAST NAME -->
+				<div class="row">
+					<div class="input-field col s10 offset-s1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<input id="last_name" name="last_name" type="text" class="validate" required>
 						<label for="last_name">Last Name</label>
 					</div>
 				</div>
+                <!-- BIRTH SURNAME -->
 				<div class="row">
-					<div class="input-field col s12">
-						<input id="disabled" type="text" class="validate">
-						<label for="disabled">Disabled</label>
+					<div class="input-field col s10 offset-s1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<input id="birth_surname" name="birth_surname" type="text" class="validate">
+						<label for="birth_surname">Birth Surname (If Different)</label>
 					</div>
 				</div>
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="password" type="password" class="validate">
-						<label for="password">Password</label>
+                <!-- SELECT GENDER -->
+				<div class="row">					
+					<div class="input-field col s10 offset-s1">
+                        <i class="fas fa-venus-mars prefix blue-text text-darken-5"></i>
+						<select class="validate">
+				            <option value="" disabled selected>Select Gender</option>
+				            <option value="female" class="validate">Female</option>
+				            <option value="male" class="validate">Male</option>
+				        </select>
+                        <label>Select Persons Gender</label>
 					</div>
 				</div>
+                <!-- DOB -->
+                <div class="row">
+                    <div class="input-field col s10 offset-s1">
+                        <i class="fas fa-calendar-alt prefix blue-text text-darken-5"></i>
+                        <input id="dob" name="dob" type="text" class="validate datepicker" required>
+                        <label for="dob">Date of Birth</label>
+                    </div>
+                </div>
+                <!-- DATE OF DEATH -->
+                <div class="row">
+                    <div class="input-field col s10 offset-s1">
+                        <i class="fas fa-calendar-times prefix blue-text text-darken-5"></i>
+                        <input id="dod" name="dod" type="text" class="validate datepicker">
+                        <label for="dod">Date of Death</label>
+                    </div>
+                </div>
+                <!-- BIRTH ADDRESS -->
 				<div class="row">
-					<div class="input-field col s12">
-						<input id="email" type="email" class="validate">
-						<label for="email">Email</label>
+					<div class="input-field col s10 offset-s1">
+						<i class="fas fa-address-card prefix blue-text text-darken-5"></i>
+						<input id="birth_address" name="birth_address" type="text" class="validate">
+						<label for="birth_address">Birth Address (Town/Country)</label>
 					</div>
 				</div>
+                <!-- OTHER ADDRESS -->
 				<div class="row">
-					<div class="col s12">
-						This is an inline input field:
-						<div class="input-field inline">
-							<input id="email_inline" type="email" class="validate">
-							<label for="email_inline">Email</label>
-							<span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
-						</div>
+					<div class="input-field col s10 offset-s1">
+						<i class="fas fa-address-card prefix blue-text text-darken-5"></i>
+						<input id="rel_address" name="rel_address" type="text" class="validate">
+						<label for="rel_address">Relevant Address (Town/Country)</label>
+					</div>
+				</div>
+                <!-- RELEVANT INFORMATION -->
+                <div class="row">
+					<div class="input-field col s10 offset-s1">
+						<i class="fas fa-info-circle prefix blue-text text-darken-5"></i>
+					    <textarea id="person_info" name="person_info" minlength="0"
+				                    maxlength="1000" class="materialize-textarea validate"></textarea>
+					    <label for="person_info">Relevant Information</label>
+					</div>
+				</div>
+				<!-- SUBMIT BUTTON -->
+				<div class="row">
+					<div class="col s12 center-align">
+						<button type="submit" class="btn-large blue darken-5 text-shadow">
+				            Add Person <i class="fas fa-user-plus left"></i>                     
+				        </button>
 					</div>
 				</div>
 			</form>
