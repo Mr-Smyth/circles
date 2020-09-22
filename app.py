@@ -1,6 +1,11 @@
 import os
-from flask import Flask, flash, render_template
+from flask import (
+    Flask, flash, render_template,
+    redirect, request, session, url_for)
 from flask_pymongo import PyMongo
+
+from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Import env.py if it exists
 if os.path.exists("env.py"):
@@ -24,6 +29,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/home")
 def home():
+
     return render_template("home.html")
 
 
@@ -31,8 +37,26 @@ def home():
 @app.route("/add_person", methods=["GET", "POST"])
 def add_person():
 
-    return render_template("add_person.html")
+    if request.method == "POST":
+        # SETUP DICTIONARY FOR IMPORTING PERSON TO MONGO DB
+        person = {
+            #"family_name": request.form.get("family_name"),#
+            "first_name": request.form.get("first_name"),
+            "last_name": request.form.get("last_name"),
+            "birth_surname": request.form.get("birth_surname"),
+            "gender": request.form.get("gender"),
+            "dob": request.form.get("dob"),
+            "dod": request.form.get("dod"),
+            "birth_address": request.form.get("birth_address"),
+            "rel_address": request.form.get("rel_address"),
+            "info": request.form.get("info")
+        }
+        # ADD THE PERSON DICTIONARY TO MONGO
+        mongo.db.people.insert_one(person)
+        flash("This Person has bees successfully added to Circles")
+        return redirect(url_for("home"))
 
+    return render_template("add_person.html")
 
 
 # TELL OUR APP, HOW AND WHERE TO RUN OUR APPLICATION
