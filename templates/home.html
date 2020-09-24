@@ -11,26 +11,27 @@
       <a  id="logo-image" href="{{ url_for('home') }}"></a>
     </div>
 
-	<!-- SEARCH WINDOW -->
+	<!-- SEARCH BUTTON THAT REVEALS FORM WHEN CLICKED -->
     <div class="row">
-        <button class="col s10 m6 offset-s1 offset-m3 transparent search-button">
+        <button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
 	        Search Circles
 	    </button>
     </div>
+    <!-- SEARCH FORM  -->
 	<div class="row container">
 		<form id="person-search" action="{{ url_for('search') }}" method="POST" autocomplete="off">
         <div class="row center-align">
-			<div class="col s10 m4 offset-s0 offset-m4">
+			<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
 				<input id="searchFirstName" name="searchFirstName" type="text" placeholder="Enter a First Name" class="validate">
 		    </div>
         </div>
         <div class="row">
-            <div class="col s10 m4 offset-s0 offset-m4">
+            <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
 				<input id="searchLastName" name="searchLastName" type="text" placeholder="Enter a Surname" class="validate">
             </div>
         </div>
         <div class="row">
-			<div class="col s10 m4 offset-s0 offset-m4">
+			<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
 				<input id="searchDob" name="searchDob" type="text" placeholder="Search by Date of Birth" class="validate datepicker">
 		    </div>
         </div>
@@ -41,9 +42,12 @@
         </div>
 		</form>
 	</div>
+    <!-- RESULTS PANEL -->
+
+
 {% for result in results %}
 
-    {{ result.first_name }}<br>
+    {{ result.first_name.capitalize() }}<br>
     {{ result.last_name }}<br>
     
 

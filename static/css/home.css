@@ -59,11 +59,7 @@ input[type=text]:not(.browser-default) {
     height: 20px;
 }
 
-/* Change the autofil white to transparent 
-Credit Stack overflow user Nathan-White(4395746) */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    transition: background-color 5000s ease-in-out 0s;
+/* To Eliminate small green Materialize box over search button */
+button:focus {
+    background-color: transparent;
 }
