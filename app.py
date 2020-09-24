@@ -28,14 +28,25 @@ mongo = PyMongo(app)
 # BASE ROUTE
 @app.route("/")
 @app.route("/home")
-def home():
 
+def home():
     return render_template("home.html")
+
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    results = mongo.db.people.find()
+    return render_template("home.html", results=results)
+
+
 
 
 # ADD PERSON ROUTE
 @app.route("/add_person", methods=["GET", "POST"])
 def add_person():
+
+
+
 
     if request.method == "POST":
         # SETUP DICTIONARY FOR IMPORTING PERSON TO MONGO DB

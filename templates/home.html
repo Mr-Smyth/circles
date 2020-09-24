@@ -13,11 +13,20 @@
 
 	<!-- SEARCH WINDOW -->
 	<div class="search-container">
-		<form id="person-search">
+		<form id="person-search" action="{{ url_for('search') }}" method="POST" >
             <input id="search-input" name="search-input" type="text" placeholder="Search Circles">
             <button type="submit" class="clear search-btn">
                 <i class="fas fa-search right"></i>
             </button>
 		</form>
 	</div>
+{% for result in results %}
+
+    {{ result.first_name }}<br>
+    {{ result.last_name }}<br>
+    
+
+{% endfor %}
+
+
 {% endblock %}
