@@ -63,3 +63,11 @@ input[type=text]:not(.browser-default) {
 button:focus {
     background-color: transparent;
 }
+
+/* TO REMOVE DEFAULT STYLING FROM THE COLLAPSIBLE CLASS */
+.collapsible {
+    border: none;
+    box-shadow: none;
+    color: #eeeeee;
+    font-size: 1.4rem;
+}

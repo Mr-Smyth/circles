@@ -43,15 +43,32 @@
 		</form>
 	</div>
     <!-- RESULTS PANEL -->
+    <div class="row">
+    {% if results|length > 0 %}
+        <ul class="col s10 offset-s1 collapsible">
+            {% for result in results %}
+			<li>
+				<div class="collapsible-header white-text indigo darken-8 text-shadow">
+					<div class="col s12 ">
+						<strong>{{ result.first_name.capitalize() }} {{ result.last_name.capitalize() }}:<br> </strong>{{ result.dob }}
+					</div>
+				</div>
+				<div class="collapsible-body">
+					<p>Maiden Name (if applicable)      :<br> <strong> {{ result.birth_surname }}</strong></p>
+					<p>Date of Birth                    :<strong>{{ result.dob }}</strong></p>
+					<p>Born in                          :<strong> {{ result.birth_address }}</strong></p>
+                    <br><br>
+					<p>Information                          :<strong> {{ result.info }}</strong></p>
+				</div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <h3 class="red-text text-darken-4 center-align">{{ error }}</h3>
+    </div>
+    {% endif %}
 
 
-{% for result in results %}
-
-    {{ result.first_name.capitalize() }}<br>
-    {{ result.last_name }}<br>
-    
-
-{% endfor %}
 
 
 {% endblock %}

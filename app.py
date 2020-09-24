@@ -35,30 +35,34 @@ def home():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
-    # SETUP A DICTIONARY THAT HOLDS THE INFOR WE CAN QUERY
-    # IT WILL POPULATE FROM THE FORM.
-    searchInput = {
-    "first_name": request.form.get("searchFirstName").lower(),
-    "last_name": request.form.get("searchLastName").lower(),
-    "dob": request.form.get("searchDob"),
-    }
-    # SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
-    # searchInput ABOVE TO BUILD A QUERY FROM ONLY POPULATED
-    # VALUES
-    query = {}
-    for k,v in searchInput.items():
-        if len(v) > 0:    
-            query[k] = v
-    
-    # CHECK IF THE QUERY IS NOT  BLANK - SOMEONE JUST CLICKED 
-    # SEARCH WITHOUT ANY ENTRIES
-    if len(query) != 0:
-        results = list(mongo.db.people.find(query))
-    else:
-        return redirect(url_for("home"))
-    
-    # RETURN TO HOME, THE RESULTS CURSOR
-    return render_template("home.html", results=results)
+    if request.method == "POST":
+        # SETUP A DICTIONARY THAT HOLDS THE INFOR WE CAN QUERY
+        # IT WILL POPULATE FROM THE FORM.
+        searchInput = {
+        "first_name": request.form.get("searchFirstName").lower(),
+        "last_name": request.form.get("searchLastName").lower(),
+        "dob": request.form.get("searchDob"),
+        }
+        # SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
+        # searchInput ABOVE TO BUILD A QUERY FROM ONLY POPULATED
+        # VALUES
+        query = {}
+        for k,v in searchInput.items():
+            if len(v) > 0:    
+                query[k] = v
+        
+        # CHECK IF THE QUERY IS NOT  BLANK - SOMEONE JUST CLICKED 
+        # SEARCH WITHOUT ANY ENTRIES
+        if len(query) > 0:
+            results = list(mongo.db.people.find(query))
+            error = "Sorry we have no records matching your query."
+
+            
+        else:
+            return redirect(url_for("home"))
+        
+        # RETURN TO HOME, THE RESULTS CURSOR
+    return render_template("home.html", results=results, error=error)
 
 
 
@@ -66,9 +70,6 @@ def search():
 # ADD PERSON ROUTE
 @app.route("/add_person", methods=["GET", "POST"])
 def add_person():
-
-
-
 
     if request.method == "POST":
         # SETUP DICTIONARY FOR IMPORTING PERSON TO MONGO DB
