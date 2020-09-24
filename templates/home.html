@@ -12,12 +12,33 @@
     </div>
 
 	<!-- SEARCH WINDOW -->
-	<div class="search-container">
-		<form id="person-search" action="{{ url_for('search') }}" method="POST" >
-            <input id="search-input" name="search-input" type="text" placeholder="Search Circles">
-            <button type="submit" class="clear search-btn">
-                <i class="fas fa-search right"></i>
-            </button>
+    <div class="row">
+        <button class="col s10 m6 offset-s1 offset-m3 transparent search-button">
+	        Search Circles
+	    </button>
+    </div>
+	<div class="row container">
+		<form id="person-search" action="{{ url_for('search') }}" method="POST" autocomplete="off">
+        <div class="row center-align">
+			<div class="col s10 m4 offset-s0 offset-m4">
+				<input id="searchFirstName" name="searchFirstName" type="text" placeholder="Enter a First Name" class="validate">
+		    </div>
+        </div>
+        <div class="row">
+            <div class="col s10 m4 offset-s0 offset-m4">
+				<input id="searchLastName" name="searchLastName" type="text" placeholder="Enter a Surname" class="validate">
+            </div>
+        </div>
+        <div class="row">
+			<div class="col s10 m4 offset-s0 offset-m4">
+				<input id="searchDob" name="searchDob" type="text" placeholder="Search by Date of Birth" class="validate datepicker">
+		    </div>
+        </div>
+        <div class="row">
+			<button type="submit" class="col s10 m4 offset-s0 offset-m4 search-btn">
+		        <i class="fas fa-search icon-4x"></i>
+		    </button>
+        </div>
 		</form>
 	</div>
 {% for result in results %}
@@ -30,3 +51,6 @@
 
 
 {% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock scripts %}

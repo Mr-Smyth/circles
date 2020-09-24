@@ -35,7 +35,20 @@ def home():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
-    results = mongo.db.people.find()
+
+    searchInput = {
+    "first_name": request.form.get("searchFirstName"),
+    "last_name": request.form.get("searchLastName"),
+    "dob": request.form.get("searchDob"),
+    }
+    query = {}
+    for k,v in searchInput.items():
+        if len(v) > 0:    
+            query[k] = v
+  
+
+    results = mongo.db.people.find(query)
+
     return render_template("home.html", results=results)
 
 
