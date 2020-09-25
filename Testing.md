@@ -14,9 +14,9 @@
 
 #### After the initial setup of the flask app, and adding the relevent enviroment variables, and deployment to Heroku i performed the following tests.
 
-* TEST:	
+* :hammer: TEST:	
     * Setup a base route and function and entered a simple return text "This is Circles".
-* RESULT: 
+* :equal: RESULT: 
     * The result displayed as expected on the local development server.
 	* The result displayed as expected on the deployed site via Heroku.
 
