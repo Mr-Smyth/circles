@@ -38,6 +38,7 @@
     border-radius: 10px;
     background-color: transparent;
     padding: 20px;
+    
 }
 
 input:focus::placeholder {
