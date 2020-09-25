@@ -35,6 +35,8 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 
 * [Logical Walkthrough](https://github.com/Mr-Smyth/circles/blob/master/LogicWalkthrough.md)
 
+* [Testing](https://github.com/Mr-Smyth/circles/blob/master/Testing.md)
+
 </div>
 ---
 

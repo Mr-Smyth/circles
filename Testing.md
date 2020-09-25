@@ -11,13 +11,15 @@
 
 ---
 
-## Test connection to Heroku.
+## :hammer:Test connection to Heroku.
 
 #### After the initial setup of the flask app, and adding the relevent enviroment variables, and deployment to Heroku i performed the following tests.
 
-* TEST:	 Setup a base route and function and entered a simple return text "This is Circles".
-* RESULT: * The result displayed as expected on the local development server.
-	 * The result displayed as expected on the deployed site via Heroku.
+* TEST:	
+    * Setup a base route and function and entered a simple return text "This is Circles".
+* RESULT: 
+    * The result displayed as expected on the local development server.
+	* The result displayed as expected on the deployed site via Heroku.
 
 [Back to Index](#index)
 
