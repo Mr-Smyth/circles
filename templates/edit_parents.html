@@ -5,11 +5,89 @@
 {% endblock %}
 
 {% block content %}
+
 	<!-- LOGO CONTAINER -->
     <div id="top-logo-container">
       <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
     </div>
 
-    <h2 class="page-heading text-shadow">Edit {{ person.first_name.capitalize() }}'s Parents</h2>
+    
+    
+    <h2 class="page-heading text-shadow">Edit {{ person.first_name.capitalize() }}'s Parents
+    <br><strong class="text-shadow"><h4>Step 1 of ....</h4></strong>
+    </h2>
+    
+    <div class="container white box-shade">
+		<div class="row">
+			<form class="col s12" method="POST" action="{{ url_for('add_parents', person_id=person._id) }}" autocomplete="off">
+				<!-- ENTER MOTHERS INFORMATION -->
+                <!-- FIRST NAME -->
+				<div class="row"> 
+                    <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s Mother</h5>
+					<div class="input-field col s12 m10 offset-s0 offset-m1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<input id="mothers_first_name" name="mothers_first_name" type="text" class="validate" required>
+						<label for="mothers_first_name">First Name</label>
+					</div>
+				</div>
+                <!-- LAST NAME -->
+				<div class="row">
+					<div class="input-field col s12 m10 offset-s0 offset-m1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<input id="mothers_last_name" name="mothers_last_name" type="text" class="validate" required>
+						<label for="mothers_last_name">Last Name</label>
+					</div>
+				</div>
+                <!-- DOB -->
+                <div class="row">
+                    <div class="input-field col s12 m10 offset-s0 offset-m1">
+                        <i class="fas fa-calendar-alt prefix blue-text text-darken-5"></i>
+                        <input id="mothers_dob" name="mothers_dob" type="text" class="validate datepicker" required>
+                        <label for="mothers_dob">Date of Birth</label>
+                    </div>
+                </div>
+                <!-- ENTER FATHERS INFORMATION -->
+                <!-- FIRST NAME -->
+				<div class="row"> 
+                    <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s Father</h5>
+                    <h5>{{ hub_person_id }}, {{ hub_mother_id }}, {{ hub_father_id }}</h5>
+                        <h5>{{ ff }}</h5>
+                 
+					<div class="input-field col s12 m10 offset-s0 offset-m1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<input id="fathers_first_name" name="fathers_first_name" type="text" class="validate" required>
+						<label for="fathers_first_name">First Name</label>
+					</div>
+				</div>
+                <!-- LAST NAME -->
+				<div class="row">
+					<div class="input-field col s12 m10 offset-s0 offset-m1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<input id="fathers_last_name" name="fathers_last_name" type="text" class="validate" required>
+						<label for="fathers_last_name">Last Name</label>
+					</div>
+				</div>
+                <!-- DOB -->
+                <div class="row">
+                    <div class="input-field col s12 m10 offset-s0 offset-m1">
+                        <i class="fas fa-calendar-alt prefix blue-text text-darken-5"></i>
+                        <input id="fathers_dob" name="fathers_dob" type="text" class="validate datepicker" required>
+                        <label for="fathers_dob">Date of Birth</label>
+                    </div>
+                </div>
+                <!-- SUBMIT BUTTON -->
+				<div class="row">
+					<div class="col s12 center-align">
+						<button type="submit" class="btn-large blue darken-5 text-shadow">
+				            Add Parents <i class="fas fa-user-plus left"></i>                     
+				        </button>
+					</div>
+				</div>
+			</form>
+		</div>
+    </div>
+       
+
+    
     
 {% endblock %}

@@ -110,6 +110,110 @@ def edit_parents(person_id):
 
 
 
+@app.route("/add_parents/<person_id>", methods=["GET", "POST"])
+def add_parents(person_id):
+    if request.method == "POST":
+        # SETUP A DICTIONARY THAT HOLDS THE INFOR WE CAN QUERY
+        # IT WILL POPULATE FROM THE FORM.
+        mother = {
+        "first_name": request.form.get("mothers_first_name").lower(),
+        "last_name": request.form.get("mothers_last_name").lower(),
+        "dob": request.form.get("mothers_dob"),
+        }
+        father = {
+        "first_name": request.form.get("fathers_first_name").lower(),
+        "last_name": request.form.get("fathers_last_name").lower(),
+        "dob": request.form.get("fathers_dob"),
+        }
+        
+        # SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
+        # mother and father ABOVE TO BUILD A QUERY. 
+        # TO CHECK IF THEY ARE ALREADY IN MONGODB
+        query_mother = {}
+        for k,v in mother.items():
+            if len(v) > 0:    
+                query_mother[k] = v
+        
+        query_father = {}
+        for k,v in father.items():
+            if len(v) > 0:    
+                query_father[k] = v
+        
+        existing_father = list(mongo.db.people.find(query_father))
+        existing_mother = list(mongo.db.people.find(query_mother))
+
+        # GET PERSON WHO WE ARE CONNECTING PARENTS TO
+        person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+
+        hub_person_id = person_id
+        hub_mother_id = ""
+        hub_father_id = ""
+        
+        insert_father = {
+            "family_name": person["family_name"],
+            "first_name": query_father["first_name"],
+            "last_name": query_father["last_name"],
+            "birth_surname": "null",
+            "parents": "null",
+            "siblings": "null",
+            "spouse": "null",
+            "children": [hub_person_id],
+            "gender": "male",
+            "dob": query_father['dob'],
+            "dod": "null",
+            "birth_address": "null",
+            "rel_address": "null",
+            "information": "null"
+        }
+        insert_mother = {
+            "family_name": person["family_name"],
+            "first_name": query_mother["first_name"],
+            "last_name": query_mother["last_name"],
+            "birth_surname": "null",
+            "parents": "null",
+            "siblings": "null",
+            "spouse": "null",
+            "children": [hub_person_id],
+            "gender": "female",
+            "dob": query_mother["dob"],
+            "dod": "null",
+            "birth_address": "null",
+            "rel_address": "null",
+            "information": "null"
+        }
+
+        # IF HUB PERSONS MOTHER ALREADY EXISTS
+        if existing_mother:
+            # SET THE EXISTING MOTHER AS THE HUB MOTHER
+            hub_mother = existing_mother
+            # NOW WE NEED THE ID OF THAT MOTHER
+            for field in existing_mother:
+                hub_mother_id = field['_id']
+        else:
+            # ELSE WE INSERT THE ONE ENTERED BY THE USER
+            x = mongo.db.people.insert_one(insert_mother)
+            # AND GET BACK ITS NEW ID
+            hub_mother_id = x.inserted_id
+
+        # IF HUB PERSONS FATHER ALREADY EXISTS
+        if existing_father:
+            # SET THE EXISTING FATHER AS THE HUB FATHER
+            hub_father = existing_father
+            # NOW WE NEED THE ID OF THAT FATHER
+            for field in existing_father:
+                hub_father_id = field['_id']
+
+        else:
+            # ELSE WE INSERT THE ONE ENTERED BY THE USER
+            x = mongo.db.people.insert_one(insert_father)
+            # AND GET BACK THE NEW ID
+            hub_father_id = x.inserted_id
+
+
+
+
+        # RETURN TO HOME, THE RESULTS CURSOR
+    return render_template("edit_parents.html", hub_father_id=hub_father_id, hub_mother_id=hub_mother_id, hub_person_id=hub_person_id, person=person )
 
 
 # TELL OUR APP, HOW AND WHERE TO RUN OUR APPLICATION
