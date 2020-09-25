@@ -11,7 +11,7 @@
 
 ---
 
-:hammer:## Test connection to Heroku.
+:hammer: ## Test connection to Heroku.
 
 #### After the initial setup of the flask app, and adding the relevent enviroment variables, and deployment to Heroku i performed the following tests.
 
