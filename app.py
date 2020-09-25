@@ -74,16 +74,19 @@ def add_person():
     if request.method == "POST":
         # SETUP DICTIONARY FOR IMPORTING PERSON TO MONGO DB
         person = {
-            "family_name": request.form.get("family_name"),
-            "first_name": request.form.get("first_name"),
-            "last_name": request.form.get("last_name"),
+            "family_name": request.form.get("family_name").lower(),
+            "first_name": request.form.get("first_name").lower(),
+            "last_name": request.form.get("last_name").lower(),
             "birth_surname": request.form.get("birth_surname"),
+            "parents": "null",
+            "siblings": "null",
+            "spouse": "null",
             "gender": request.form.get("gender"),
             "dob": request.form.get("dob"),
             "dod": request.form.get("dod"),
             "birth_address": request.form.get("birth_address"),
             "rel_address": request.form.get("rel_address"),
-            "info": request.form.get("info")
+            "information": request.form.get("person_info")
         }
         # ADD THE PERSON DICTIONARY TO MONGO
         mongo.db.people.insert_one(person)
