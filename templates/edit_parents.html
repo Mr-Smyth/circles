@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+	<!-- LOGO CONTAINER -->
+    <div id="top-logo-container">
+      <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+    </div>
+
+    <h2 class="page-heading text-shadow">Edit {{ person.first_name.capitalize() }}'s Parents</h2>
+    
+{% endblock %}

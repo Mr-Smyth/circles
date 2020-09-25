@@ -22,7 +22,7 @@
 		<form id="person-search" action="{{ url_for('search') }}" method="POST" autocomplete="off">
         <div class="row center-align">
 			<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-				<input id="searchFirstName" name="searchFirstName" type="text" placeholder="Enter a First Name" class="validate">
+				<input id="searchFirstName" name="searchFirstName" type="text" placeholder="Enter a First Name" class="validate" onFocus="this.select()">
 		    </div>
         </div>
         <div class="row">
@@ -44,25 +44,28 @@
 	</div>
     <!-- RESULTS PANEL -->
     <div class="row">
-    {% if results|length > 0 %}
+    {% if people|length > 0 %}
         <ul class="col s10 offset-s1 collapsible">
-            {% for result in results %}
+            {% for person in people %}
 			<li>
 				<div class="collapsible-header white-text indigo darken-8 text-shadow">
 				    <div class="col s1 valign-wrapper">
                         <i class="fas fa-chevron-circle-down"></i>
                     </div>
-                    <div class="col s11 ">
-                        <strong>{{ result.first_name.capitalize() }} {{ result.last_name.capitalize() }}:<br> </strong>{{ result.dob }}
-                    </div>
+					<div class="col s8 ">
+						<strong>{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }}:<br> </strong>{{ person.dob }}
+					</div>
+					<div class="col s3 valign-wrapper">
+						<a href="{{ url_for('edit_parents', person_id=person._id) }}" class="btn-large indigo darken-4">Edit</a>
+					</div>
 				</div>
 
 				<div class="collapsible-body">
-					<p>Maiden Name (if applicable)      :<br> <strong> {{ result.birth_surname }}</strong></p>
-					<p>Date of Birth                    :<strong>{{ result.dob }}</strong></p>
-					<p>Born in                          :<strong> {{ result.birth_address }}</strong></p>
+					<p>Maiden Name (if applicable)      : <strong> {{ person.birth_surname }}</strong></p>
+					<p>Date of Birth                    : <strong>{{ person.dob }}</strong></p>
+					<p>Born in                          : <strong> {{ person.birth_address }}</strong></p>
                     <br><br>
-					<p>Information                          :<strong> {{ result.information }}</strong></p>
+					<p>Information                          :<strong> {{ person.information }}</strong></p>
 				</div>
             </li>
             {% endfor %}

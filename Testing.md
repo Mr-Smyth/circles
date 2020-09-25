@@ -103,12 +103,12 @@ This did not freeze or break the site, and allowed the user to click on the sear
 * :clipboard: RESULT:
     * A Flash message to inform the user that the person was inserted successfully was displayed.
     * The Mongo collection contained 2 problems:
-* ERRORS: 
+    * ERRORS: 
 	* Where i had not matched the import dictionary with the correct HTML input ID, the type of the document was set to null.
-* FIX: 
+    * FIX: 
 	* I matched the import field in the dictionary being imported, to the correct Id in the form.
 
-* RE-TESTED RESULT: 
+    * RE-TESTED RESULT: 
 	* All fields within each document in MongoDB were inserted correctly.
 
 <br>

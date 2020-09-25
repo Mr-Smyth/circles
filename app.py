@@ -54,7 +54,7 @@ def search():
         # CHECK IF THE QUERY IS NOT  BLANK - SOMEONE JUST CLICKED 
         # SEARCH WITHOUT ANY ENTRIES
         if len(query) > 0:
-            results = list(mongo.db.people.find(query))
+            people = list(mongo.db.people.find(query))
             error = "Sorry we have no records matching your query."
 
             
@@ -62,7 +62,7 @@ def search():
             return redirect(url_for("home"))
         
         # RETURN TO HOME, THE RESULTS CURSOR
-    return render_template("home.html", results=results, error=error)
+    return render_template("home.html", people=people, error=error)
 
 
 
@@ -98,6 +98,18 @@ def add_person():
     families = mongo.db.family.find().sort("family_name",1)
     # RETURN THE FAMILIES TO THE ADD_PERSON PAGE FOR JINGA
     return render_template("add_person.html", families=families)
+
+
+# EDIT PARENTS ROUTE AND FUNCTION
+@app.route("/edit_parents/<person_id>", methods=["GET", "POST"])
+def edit_parents(person_id):
+
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+
+    return render_template("edit_parents.html", person=person)
+
+
+
 
 
 # TELL OUR APP, HOW AND WHERE TO RUN OUR APPLICATION
