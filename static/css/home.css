@@ -38,7 +38,6 @@
     border-radius: 10px;
     background-color: transparent;
     padding: 20px;
-    transition: 1.5s;
 }
 
 input:focus::placeholder {

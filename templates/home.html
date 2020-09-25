@@ -49,10 +49,14 @@
             {% for result in results %}
 			<li>
 				<div class="collapsible-header white-text indigo darken-8 text-shadow">
-					<div class="col s12 ">
-						<strong>{{ result.first_name.capitalize() }} {{ result.last_name.capitalize() }}:<br> </strong>{{ result.dob }}
-					</div>
+				    <div class="col s1 valign-wrapper">
+                        <i class="fas fa-chevron-circle-down"></i>
+                    </div>
+                    <div class="col s11 ">
+                        <strong>{{ result.first_name.capitalize() }} {{ result.last_name.capitalize() }}:<br> </strong>{{ result.dob }}
+                    </div>
 				</div>
+
 				<div class="collapsible-body">
 					<p>Maiden Name (if applicable)      :<br> <strong> {{ result.birth_surname }}</strong></p>
 					<p>Date of Birth                    :<strong>{{ result.dob }}</strong></p>

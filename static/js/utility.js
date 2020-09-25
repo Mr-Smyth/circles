@@ -12,4 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
             done: "Select"
         }
     });
+    let collapsibles = document.querySelectorAll(".collapsible");
+    let collapsiblesInstance = M.Collapsible.init(collapsibles);
 });
