@@ -149,37 +149,39 @@ def add_parents(person_id):
         hub_mother_id = ""
         hub_father_id = ""
         
+        # PREP INSERT TEMPLATE FOR MOTHER
         insert_father = {
-            "family_name": person["family_name"],
-            "first_name": query_father["first_name"],
-            "last_name": query_father["last_name"],
-            "birth_surname": "null",
-            "parents": "null",
-            "siblings": "null",
-            "spouse": "null",
+            "family_name": person["family_name"].lower(),
+            "first_name": query_father["first_name"].lower(),
+            "last_name": query_father["last_name"].lower(),
+            "birth_surname": "not-defined",
+            "parents": "not-defined",
+            "siblings": "not-defined",
+            "spouse": "not-defined",
             "children": [hub_person_id],
             "gender": "male",
             "dob": query_father['dob'],
-            "dod": "null",
-            "birth_address": "null",
-            "rel_address": "null",
-            "information": "null"
+            "dod": "not-defined",
+            "birth_address": "not-defined",
+            "rel_address": "not-defined",
+            "information": "not-defined"
         }
+        # PREP INSERT TEMPLATE FOR A NEW FATHER
         insert_mother = {
-            "family_name": person["family_name"],
-            "first_name": query_mother["first_name"],
-            "last_name": query_mother["last_name"],
-            "birth_surname": "null",
-            "parents": "null",
-            "siblings": "null",
-            "spouse": "null",
+            "family_name": person["family_name"].lower(),
+            "first_name": query_mother["first_name"].lower(),
+            "last_name": query_mother["last_name"].lower(),
+            "birth_surname": "not-defined",
+            "parents": "not-defined",
+            "siblings": "not-defined",
+            "spouse": "not-defined",
             "children": [hub_person_id],
             "gender": "female",
             "dob": query_mother["dob"],
-            "dod": "null",
-            "birth_address": "null",
-            "rel_address": "null",
-            "information": "null"
+            "dod": "not-defined",
+            "birth_address": "not-defined",
+            "rel_address": "not-defined",
+            "information": "not-defined"
         }
 
         # IF HUB PERSONS MOTHER ALREADY EXISTS
@@ -189,11 +191,20 @@ def add_parents(person_id):
             # NOW WE NEED THE ID OF THAT MOTHER
             for field in existing_mother:
                 hub_mother_id = field['_id']
+            # NOW UPDATE THAT EXISTING MOTHER WITH THE SAME INSERT_MOTHER
+            # BUT SKIP OVER THE NOT_DEFINED VALUES
+            for k,v in insert_mother.items():
+                if v != "not_defined":
+                    insert = {}
+                    insert[k] = v 
+                    mongo.db.people.update({"_id": ObjectId(hub_mother_id)}, insert_mother)
+
+
         else:
             # ELSE WE INSERT THE ONE ENTERED BY THE USER
-            x = mongo.db.people.insert_one(insert_mother)
+            newMother= mongo.db.people.insert_one(insert_mother)
             # AND GET BACK ITS NEW ID
-            hub_mother_id = x.inserted_id
+            hub_mother_id = newMother.inserted_id
 
         # IF HUB PERSONS FATHER ALREADY EXISTS
         if existing_father:
@@ -202,15 +213,19 @@ def add_parents(person_id):
             # NOW WE NEED THE ID OF THAT FATHER
             for field in existing_father:
                 hub_father_id = field['_id']
-
+            # NOW UPDATE THAT EXISTING FATHER WITH THE SAME INSERT_FATHER
+            # BUT SKIP OVER THE NOT_DEFINED VALUES
+            for k,v in insert_father.items():
+                if v != "not_defined":
+                    insert = {}
+                    insert[k] = v 
+                    mongo.db.people.update({"_id": ObjectId(hub_father_id)}, insert_father)
+                
         else:
             # ELSE WE INSERT THE ONE ENTERED BY THE USER
-            x = mongo.db.people.insert_one(insert_father)
+            newFather = mongo.db.people.insert_one(insert_father)
             # AND GET BACK THE NEW ID
-            hub_father_id = x.inserted_id
-
-
-
+            hub_father_id = newFather.inserted_id
 
         # RETURN TO HOME, THE RESULTS CURSOR
     return render_template("edit_parents.html", hub_father_id=hub_father_id, hub_mother_id=hub_mother_id, hub_person_id=hub_person_id, person=person )
