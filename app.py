@@ -119,7 +119,8 @@ def edit_parents(person_id):
     except:
         # IN THE CASE OF AN ERROR, WE CAN PASS. 
         # BECAUSE IT WILL ONLY MEAN THAT NO PARENT HAS YET BEEN LINKED TO THIS HUB PERSON, 
-        # AND IT IS THE PURPOSE OF THIS FUNCTION TO DO SO
+        # AND IT IS THE PURPOSE OF THIS FUNCTION TO DO SO - EXCEPT A DUMMY OBJECT IS NEEDED TO SATISFY
+        # JINGA TO POPULATE THE HTML
         existing_mother = {
         "first_name": "",
         "last_name": "",
@@ -132,7 +133,8 @@ def edit_parents(person_id):
         existing_father_id = person["parents"]["father"]
         existing_father = mongo.db.people.find_one({"_id": ObjectId(existing_father_id)})
     except:
-        # AS MENTIONED ABOVE, WE CAN SAFELY PASS IT
+        # AS MENTIONED ABOVE, WE CAN SAFELY PASS IT - EXCEPT A DUMMY OBJECT IS NEEDED TO SATISFY
+        # JINGA TO POPULATE THE HTML
         existing_father = {
         "first_name": "",
         "last_name": "",
@@ -140,38 +142,46 @@ def edit_parents(person_id):
         }
         pass
 
+
+
+
     if request.method == "POST":
+        # REMOVE ANY CONNECTION OF HUB_PERSON AS A CHILD OF ANYONE
+        # HUB_PERSON WILL BE RE-ASSIGNED NEW PARENTS ON SUBMIT
+        mongo.db.people.update({}, {"$pull": {
+             "children": {"$in": [person_id]}}}, multi=True)
 
         # SETUP A DICTIONARY THAT HOLDS THE INFO WE CAN QUERY
-        # IT WILL POPULATE FROM THE FORM.
+        # THIS WILL POPULATE FROM THE FORM.
         mother = {
-        "first_name": request.form.get("mothers_first_name").lower(),
-        "last_name": request.form.get("mothers_last_name").lower(),
-        "dob": request.form.get("mothers_dob"),
-        }
+            "first_name": request.form.get("mothers_first_name").lower(),
+            "last_name": request.form.get("mothers_last_name").lower(),
+            "dob": request.form.get("mothers_dob"),
+            }
         father = {
-        "first_name": request.form.get("fathers_first_name").lower(),
-        "last_name": request.form.get("fathers_last_name").lower(),
-        "dob": request.form.get("fathers_dob"),
-        }
+            "first_name": request.form.get("fathers_first_name").lower(),
+            "last_name": request.form.get("fathers_last_name").lower(),
+            "dob": request.form.get("fathers_dob"),
+            }
 
         # SETUP REQUIRED VARAIBLES
         hub_person_id = person_id
         hub_mother_id = ""
         hub_father_id = ""
-        parents = {"parents": {"mother": "not_defined", "father": "not_defined"}}
-        
+        parents = {"parents": {
+            "mother": "not_defined", "father": "not_defined"}}
+
         # SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
         # mother and father ABOVE TO BUILD A QUERY.
         # TO CHECK IF THEY ARE ALREADY IN MONGODB
         query_mother = {}
-        for k,v in mother.items():
-            if len(v) > 0:    
+        for k, v in mother.items():
+            if len(v) > 0:
                 query_mother[k] = v
 
         query_father = {}
-        for k,v in father.items():
-            if len(v) > 0:    
+        for k, v in father.items():
+            if len(v) > 0:
                 query_father[k] = v
 
 
@@ -210,12 +220,8 @@ def edit_parents(person_id):
             "information": "not_defined"
         }
 
-
-        
         father_exists = list(mongo.db.people.find(query_father))
         mother_exists = list(mongo.db.people.find(query_mother))
-
-
 
         # IF HUB PERSONS MOTHER ALREADY EXISTS
         if mother_exists:
@@ -230,6 +236,7 @@ def edit_parents(person_id):
                 if v != "not_defined":
                     insert = {}
                     insert[k] = v
+                    # SET UP THE PARENTS OBJECT TO BE ASSIGNED TO THE HUB PERSON
                     mongo.db.people.update({"_id": ObjectId(
                         hub_mother_id)}, insert_mother)
                     parents["parents"]["mother"] = hub_mother_id
@@ -254,6 +261,7 @@ def edit_parents(person_id):
                 if v != "not_defined":
                     insert = {}
                     insert[k] = v
+                    # SET UP THE PARENTS OBJECT TO BE ASSIGNED TO THE HUB PERSON
                     mongo.db.people.update({"_id": ObjectId(
                         hub_father_id)}, insert_father)
                     parents["parents"]["father"] = hub_father_id
@@ -270,12 +278,11 @@ def edit_parents(person_id):
         flash("Eamonn has been updated")
         return redirect(url_for("edit_parents", person_id=person_id))
 
-    
-
     # RETURN TO HOME, THE RESULTS CURSOR
     return render_template("edit_parents.html", existing_mother=existing_mother, existing_father=existing_father, person=person)
 
 
+# ROUTE TO HANDLE EDITING OF THE MAIN HUB PERSON
 @app.route("/edit_hub_person/<person_id>", methods=["GET", "POST"])
 def edit_hub_person(person_id):
     # GET THE HUB_PERSON INFO
