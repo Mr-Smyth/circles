@@ -257,7 +257,7 @@ def edit_parents(person_id):
                 hub_father_id = field['_id']
             # NOW UPDATE THAT HUB FATHER WITH THE SAME INSERT_FATHER
             # BUT SKIP OVER THE NOT_DEFINED VALUES
-            for k,v in insert_father.items():
+            for k, v in insert_father.items():
                 if v != "not_defined":
                     insert = {}
                     insert[k] = v
@@ -273,7 +273,8 @@ def edit_parents(person_id):
             parents["parents"]["father"] = hub_father_id
 
         # SO NOW PARENTS ARE ASSIGNED, WE CAN UPDATE OUR HUB PERSON WITH THEIR PARENTS
-        mongo.db.people.update_one({"_id": ObjectId(hub_person_id)}, {"$set": parents})
+        mongo.db.people.update_one({"_id": ObjectId(
+            hub_person_id)}, {"$set": parents})
 
         flash("Eamonn has been updated")
         return redirect(url_for("edit_parents", person_id=person_id))
