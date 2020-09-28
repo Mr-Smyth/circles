@@ -19,14 +19,14 @@
     
     <div class="container white box-shade">
 		<div class="row">
-			<form class="col s12" method="POST" action="{{ url_for('add_parents', person_id=person._id) }}" autocomplete="off">
+			<form class="col s12" method="POST" action="{{ url_for('edit_parents', person_id=person._id) }}" autocomplete="off">
 				<!-- ENTER MOTHERS INFORMATION -->
                 <!-- FIRST NAME -->
 				<div class="row"> 
                     <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s Mother</h5>
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
-						<input id="mothers_first_name" name="mothers_first_name" type="text" class="validate" required>
+						<input id="mothers_first_name" name="mothers_first_name" value="{{ existing_mother.first_name.capitalize() }}" type="text" class="validate" required>
 						<label for="mothers_first_name">First Name</label>
 					</div>
 				</div>
@@ -34,7 +34,7 @@
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
-						<input id="mothers_last_name" name="mothers_last_name" type="text" class="validate" required>
+						<input id="mothers_last_name" name="mothers_last_name" value="{{ existing_mother.last_name.capitalize() }}" type="text" class="validate" required>
 						<label for="mothers_last_name">Last Name</label>
 					</div>
 				</div>
@@ -42,20 +42,17 @@
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
                         <i class="fas fa-calendar-alt prefix blue-text text-darken-5"></i>
-                        <input id="mothers_dob" name="mothers_dob" type="text" class="validate datepicker" required>
+                        <input id="mothers_dob" name="mothers_dob" value="{{ existing_mother.dob }}" type="text" class="validate datepicker" required>
                         <label for="mothers_dob">Date of Birth</label>
                     </div>
                 </div>
                 <!-- ENTER FATHERS INFORMATION -->
                 <!-- FIRST NAME -->
 				<div class="row"> 
-                    <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s Father</h5>
-                    <h5>{{ hub_person_id }}, {{ hub_mother_id }}, {{ hub_father_id }}</h5>
-                        <h5>{{ ff }}</h5>
-                 
+                    <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s Father</h5>               
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
-						<input id="fathers_first_name" name="fathers_first_name" type="text" class="validate" required>
+						<input id="fathers_first_name" name="fathers_first_name" value="{{ existing_father.first_name.capitalize() }}" type="text" class="validate" required>
 						<label for="fathers_first_name">First Name</label>
 					</div>
 				</div>
@@ -63,7 +60,7 @@
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
-						<input id="fathers_last_name" name="fathers_last_name" type="text" class="validate" required>
+						<input id="fathers_last_name" name="fathers_last_name" value="{{ existing_father.last_name.capitalize() }}" type="text" class="validate" required>
 						<label for="fathers_last_name">Last Name</label>
 					</div>
 				</div>
@@ -71,7 +68,7 @@
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
                         <i class="fas fa-calendar-alt prefix blue-text text-darken-5"></i>
-                        <input id="fathers_dob" name="fathers_dob" type="text" class="validate datepicker" required>
+                        <input id="fathers_dob" name="fathers_dob" type="text" value="{{ existing_father.dob }}" class="validate datepicker" required>
                         <label for="fathers_dob">Date of Birth</label>
                     </div>
                 </div>

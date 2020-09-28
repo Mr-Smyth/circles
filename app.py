@@ -48,16 +48,15 @@ def search():
         # VALUES
         query = {}
         for k,v in searchInput.items():
-            if len(v) > 0:    
+            if len(v) > 0:
                 query[k] = v
-        
+
         # CHECK IF THE QUERY IS NOT  BLANK - SOMEONE JUST CLICKED 
         # SEARCH WITHOUT ANY ENTRIES
         if len(query) > 0:
             people = list(mongo.db.people.find(query))
             error = "Sorry we have no records matching your query."
 
-            
         else:
             return redirect(url_for("home"))
         
@@ -103,21 +102,23 @@ def add_person():
 # EDIT PARENTS ROUTE AND FUNCTION
 @app.route("/edit_parents/<person_id>", methods=["GET", "POST"])
 def edit_parents(person_id):
-
-    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
-
-    return render_template("edit_parents.html", person=person)
-
-
-
-@app.route("/add_parents/<person_id>", methods=["GET", "POST"])
-def add_parents(person_id):
     # IN EDIT PERSON, WE WILL REFER TO PERSON AS THE HUB_PERSON
     # THIS FUNCTION WILL 
     # * CHECK IF ENTERED MOTHER AND FATHER ARE ALREADY IN DB
-    # * 
+    # * DISPLAY CURRENT PARENTS
+    # * CHANGE THE PARENTS IF NEW PARENTS ENTERED
+
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+    # GET FATHERS INFO
+    existing_mother_id = person["parents"]["mother"]
+    existing_mother = mongo.db.people.find_one({"_id": ObjectId(existing_mother_id)})
+
+    # GET MOTHERS INFO
+    existing_father_id = person["parents"]["father"]
+    existing_father = mongo.db.people.find_one({"_id": ObjectId(existing_father_id)})
 
     if request.method == "POST":
+
         # SETUP A DICTIONARY THAT HOLDS THE INFOR WE CAN QUERY
         # IT WILL POPULATE FROM THE FORM.
         mother = {
@@ -146,9 +147,6 @@ def add_parents(person_id):
         
         father_exists = list(mongo.db.people.find(query_father))
         mother_exists = list(mongo.db.people.find(query_mother))
-
-        # GET PERSON WHO WE ARE CONNECTING PARENTS TO
-        person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
 
         hub_person_id = person_id
         hub_mother_id = ""
@@ -240,9 +238,12 @@ def add_parents(person_id):
         # SO NOW PARENTS ARE ASSIGNED, WE CAN UPDATE OUR HUB PERSON WITH THEIR PARENTS
         mongo.db.people.update_one({"_id": ObjectId(hub_person_id)}, {"$set": parents})
 
+        flash("Eamonn has been updated")
+        return redirect(url_for("edit_parents", person_id=person_id))
+
 
         # RETURN TO HOME, THE RESULTS CURSOR
-    return render_template("edit_parents.html", hub_father_id=hub_father_id, hub_mother_id=hub_mother_id, hub_person_id=hub_person_id, person=person )
+    return render_template("edit_parents.html", existing_mother=existing_mother, existing_father=existing_father, person=person)
 
 
 
