@@ -14,7 +14,7 @@
     
     
     <h2 class="page-heading text-shadow">Edit {{ person.first_name.capitalize() }}'s Parents
-    <br><strong class="text-shadow"><h4>Step 1 of ....</h4></strong>
+    <br><strong class="text-shadow"><h4>Step 2 of 5</h4></strong>
     </h2>
     
     <div class="container white box-shade">
@@ -26,7 +26,7 @@
                     <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s Mother</h5>
                     <h5>{{ x }}</h5>
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="mothers_first_name" name="mothers_first_name" value="{{ existing_mother.first_name.capitalize() }}" type="text" class="validate" required>
 						<label for="mothers_first_name">First Name</label>
 					</div>
@@ -34,7 +34,7 @@
                 <!-- LAST NAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="mothers_last_name" name="mothers_last_name" value="{{ existing_mother.last_name.capitalize() }}" type="text" class="validate" required>
 						<label for="mothers_last_name">Last Name</label>
 					</div>
@@ -42,7 +42,7 @@
                 <!-- DOB -->
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
-                        <i class="fas fa-calendar-alt prefix blue-text text-darken-5"></i>
+                        <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
                         <input id="mothers_dob" name="mothers_dob" value="{{ existing_mother.dob }}" type="text" class="validate datepicker" required>
                         <label for="mothers_dob">Date of Birth</label>
                     </div>
@@ -52,7 +52,7 @@
 				<div class="row"> 
                     <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s Father</h5>               
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="fathers_first_name" name="fathers_first_name" value="{{ existing_father.first_name.capitalize() }}" type="text" class="validate" required>
 						<label for="fathers_first_name">First Name</label>
 					</div>
@@ -60,7 +60,7 @@
                 <!-- LAST NAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="fathers_last_name" name="fathers_last_name" value="{{ existing_father.last_name.capitalize() }}" type="text" class="validate" required>
 						<label for="fathers_last_name">Last Name</label>
 					</div>
@@ -68,7 +68,7 @@
                 <!-- DOB -->
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
-                        <i class="fas fa-calendar-alt prefix blue-text text-darken-5"></i>
+                        <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
                         <input id="fathers_dob" name="fathers_dob" type="text" value="{{ existing_father.dob }}" class="validate datepicker" required>
                         <label for="fathers_dob">Date of Birth</label>
                     </div>
@@ -76,11 +76,13 @@
                 <!-- SUBMIT BUTTON -->
 				<div class="row">
 					<div class="col s12 center-align">
-						<button type="submit" class="btn-large blue darken-5 text-shadow">
-				            Add Parents <i class="fas fa-user-plus left"></i>                     
+						<button type="submit" class="btn-large deep-purple darken-2 text-shadow">
+				            Add Parents <i class="fas fa-user-friends left"></i>                     
 				        </button>
-                        <a href="{{ url_for('edit_hub_person', person_id=person._id) }}" class="red btn text-shadow">skip</a>
-					</div>
+                    </div>
+                    <div class="col s12 center-align">
+                        <a href="{{ url_for('edit_spouse_partner', person_id=person._id) }}" class="btn-large green darken-4 text-shadow">skip</a>
+                    </div>
 				</div>
 			</form>
 		</div>

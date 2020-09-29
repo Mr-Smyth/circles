@@ -10,7 +10,9 @@
       <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
     </div>
 
-    <h2 class="page-heading text-shadow">Setup a new person</h2>
+    <h2 class="page-heading text-shadow">Setup a new Person
+    <br><strong class="text-shadow"><h4>Step 1 of 5</h4></strong>
+    </h2>
     <!-- MATERIALIZE CONTAINER WITH FORM TEXT INPUT -->
 	<div class="container white box-shade">
 		<div class="row">
@@ -18,7 +20,7 @@
                 <!-- FAMILY -->
 				<div class="row">					
 					<div class="input-field col s12 m6 offset-s0 offset-m3">
-                        <i class="fas fa-users prefix blue-text text-darken-5"></i>
+                        <i class="fas fa-users prefix blue-text text-darken-3"></i>
 						<select id="family_name" name="family_name" class="validate" required>
 				            <option value="" disabled selected>Select family</option>
 				            {% for family in families %}
@@ -31,7 +33,7 @@
                 <!-- FIRST NAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="first_name" name="first_name" type="text" class="validate" required>
 						<label for="first_name">First Name</label>
 					</div>
@@ -39,7 +41,7 @@
                 <!-- LAST NAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="last_name" name="last_name" type="text" class="validate" required>
 						<label for="last_name">Last Name</label>
 					</div>
@@ -47,7 +49,7 @@
                 <!-- BIRTH SURNAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-5"></i>
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="birth_surname" name="birth_surname" type="text" class="validate">
 						<label for="birth_surname">Birth Surname (If Different)</label>
 					</div>
@@ -55,19 +57,19 @@
                 <!-- SELECT GENDER -->
 				<div class="row">					
 					<div class="input-field col s8 m6 offset-s0 offset-m1">
-                        <i class="fas fa-venus-mars prefix blue-text text-darken-5"></i>
+                        <i class="fas fa-venus-mars prefix blue-text text-darken-4"></i>
 						<select id="gender" name="gender" class="validate">
 				            <option value="" disabled selected>Select Gender</option>
 				            <option value="female" class="validate">Female</option>
 				            <option value="male" class="validate">Male</option>
 				        </select>
-                        <label>Select Persons Gender</label>
+                        <label>Select Gender</label>
 					</div>
 				</div>
                 <!-- DOB -->
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
-                        <i class="fas fa-calendar-alt prefix blue-text text-darken-5"></i>
+                        <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
                         <input id="dob" name="dob" type="text" class="validate datepicker" required>
                         <label for="dob">Date of Birth</label>
                     </div>
@@ -75,7 +77,7 @@
                 <!-- DATE OF DEATH -->
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
-                        <i class="fas fa-calendar-times prefix blue-text text-darken-5"></i>
+                        <i class="fas fa-calendar-times prefix blue-text text-darken-4"></i>
                         <input id="dod" name="dod" type="text" class="validate datepicker">
                         <label for="dod">Date of Death</label>
                     </div>
@@ -83,23 +85,23 @@
                 <!-- BIRTH ADDRESS -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-address-card prefix blue-text text-darken-5"></i>
+						<i class="fas fa-address-card prefix blue-text text-darken-4"></i>
 						<input id="birth_address" name="birth_address" type="text" class="validate">
-						<label for="birth_address">Birth Address (Town/Country)</label>
+						<label for="birth_address">Birth Address</label>
 					</div>
 				</div>
                 <!-- OTHER ADDRESS -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-address-card prefix blue-text text-darken-5"></i>
+						<i class="fas fa-address-card prefix blue-text text-darken-4"></i>
 						<input id="rel_address" name="rel_address" type="text" class="validate">
-						<label for="rel_address">Relevant Address (Town/Country)</label>
+						<label for="rel_address">Relevant Address</label>
 					</div>
 				</div>
                 <!-- RELEVANT INFORMATION -->
                 <div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-info-circle prefix blue-text text-darken-5"></i>
+						<i class="fas fa-info-circle prefix blue-text text-darken-4"></i>
 					    <textarea id="person_info" name="person_info" minlength="0"
 				                    maxlength="1000" class="materialize-textarea validate"></textarea>
 					    <label for="person_info">Relevant Information</label>
@@ -108,7 +110,7 @@
 				<!-- SUBMIT BUTTON -->
 				<div class="row">
 					<div class="col s12 center-align">
-						<button type="submit" class="btn-large blue darken-5 text-shadow">
+						<button type="submit" class="btn-large blue darken-4 text-shadow">
 				            Add Person <i class="fas fa-user-plus left"></i>                     
 				        </button>
 					</div>

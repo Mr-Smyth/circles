@@ -12,7 +12,8 @@ body {
 
 .btn-large {
     font-size: 1.4rem;
-    border-radius: 50%
+    border-radius: 30px;
+    margin-bottom: 20px;
 }
 
 .clear {

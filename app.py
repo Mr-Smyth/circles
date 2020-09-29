@@ -118,9 +118,9 @@ def edit_parents(person_id):
         # ITS A NEW MOTHER - NO TEMPLATE YET
         # SO WE GIVE IT ONE
         existing_mother = {
-            "first_name": "",
-            "last_name": "",
-            "dob": ""
+            "first_name": "ms rosie",
+            "last_name": "Smyth",
+            "dob": "may"
         }
 
     # PERSONS FATHER - CHECK IF FATHER ALREADY LINKED
@@ -259,11 +259,35 @@ def edit_parents(person_id):
 
 
 # ROUTE TO HANDLE EDITING OF THE MAIN HUB PERSON
-@app.route("/edit_hub_person/<person_id>", methods=["GET", "POST"])
-def edit_hub_person(person_id):
-    # GET THE HUB_PERSON INFO
+@app.route("/edit_spouse_partner/<person_id>", methods=["GET", "POST"])
+def edit_spouse_partner(person_id):
+
+    # SETUP SOME REQUIRED VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
-    return render_template("edit_hub_person.html", person=person)
+    persons_id = person["_id"]
+    persons_spouse_id = person["spouse"]
+
+    print("-----  person id ------- person_spouse_id")
+    print(person_id, persons_spouse_id)
+
+    # CHECK IF ALREADY HAVE A SPOUSE
+    if persons_spouse_id != "":
+        # THEN THERE IS AN EXISTING SPOUSE - SO WE ASSIGN THE ID
+        existing_spouse = mongo.db.people.find_one({
+            "_id": ObjectId(persons_spouse_id)})
+    else:
+        # ITS A NEW PERSON, SO NEW SPOUSE - IT HAS NO
+        # TEMPLATE YET, SO WE GIVE IT ONE
+        existing_spouse = {
+                "first_name": "",
+                "last_name": "",
+                "dob": ""
+                }
+
+  
+
+            
+    return render_template("edit_spouse_partner.html", existing_spouse=existing_spouse, person=person)
 
 
 @app.errorhandler(404)

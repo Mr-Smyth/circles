@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+
+	<!-- LOGO CONTAINER -->
+    <div id="top-logo-container">
+      <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+    </div>
+
+    
+    
+    <h2 class="page-heading text-shadow">Enter/Edit {{ person.first_name.capitalize() }}'s Spouse
+    <br><strong class="text-shadow"><h4>Step 3 of 5</h4></strong>
+    </h2>
+    
+    <div class="container white box-shade">
+		<div class="row">
+			<form class="col s12" method="POST" action="{{ url_for('edit_spouse_partner', person_id=person._id) }}" autocomplete="off">
+				<!-- ENTER MOTHERS INFORMATION -->
+                <!-- FIRST NAME -->
+				<div class="row"> 
+                    <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s spouse</h5>
+                    <h5>{{ x }}</h5>
+					<div class="input-field col s12 m10 offset-s0 offset-m1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+						<input id="spouse_first_name" name="spouse_first_name" value="{{ existing_spouse.first_name }}" type="text" class="validate" required>
+						<label for="spouse_first_name">First Name</label>
+					</div>
+				</div>
+                <!-- LAST NAME -->
+				<div class="row">
+					<div class="input-field col s12 m10 offset-s0 offset-m1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+						<input id="spouse_last_name" name="spouse_last_name" value="{{ existing_spouse.last_name }}" type="text" class="validate" required>
+						<label for="spouse_last_name">Last Name</label>
+					</div>
+				</div>
+                <!-- BIRTH SURNAME -->
+				<div class="row">
+					<div class="input-field col s12 m10 offset-s0 offset-m1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+						<input id="spouse_birth_surname" name="spouse_birth_surname" value="{{ existing_spouse.birth_surname_name }}" type="text" class="validate">
+						<label for="spouse_birth_surname">Maiden (Birth) Surname</label>
+					</div>
+				</div>
+                <!-- DOB -->
+                <div class="row">
+                    <div class="input-field col s12 m10 offset-s0 offset-m1">
+                        <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
+                        <input id="spouse_dob" name="spouse_dob" value="{{ existing_spouse.dob }}" type="text" class="validate datepicker" required>
+                        <label for="spouse_dob">Date of Birth</label>
+                    </div>
+                </div>
+                <!-- SUBMIT BUTTON -->
+				<div class="row">
+					<div class="col s12 center-align">
+						<button type="submit" class="btn-large deep-purple darken-2 text-shadow">
+				            Add Spouse <i class="fas fa-user-friends left"></i>                     
+				        </button>
+                    </div>
+                    <div class="col s12 center-align">
+                        <a href="#" class="btn-large green darken-4 text-shadow">skip</a>
+                    </div>
+				</div>
+			</form>
+		</div>
+    </div>
+       
+
+    
+    
+{% endblock %}
