@@ -2,7 +2,7 @@
 
 # Circles
 
-
+![Circles logo](https://github.com/Mr-Smyth/circles/blob/master/static/images/circles-logo-1024x.png "Site logo")
 
 Circles is a Data Centric, user friendly full stack website. 
 
