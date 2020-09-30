@@ -3,6 +3,7 @@ from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
+from pymongo import ReturnDocument 
 
 from bson.objectid import ObjectId
 from werkzeug.security import (
@@ -118,9 +119,9 @@ def edit_parents(person_id):
         # ITS A NEW MOTHER - NO TEMPLATE YET
         # SO WE GIVE IT ONE
         existing_mother = {
-            "first_name": "ms rosie",
-            "last_name": "Smyth",
-            "dob": "may"
+            "first_name": "",
+            "last_name": "",
+            "dob": ""
         }
 
     # PERSONS FATHER - CHECK IF FATHER ALREADY LINKED
@@ -250,7 +251,7 @@ def edit_parents(person_id):
             {"_id": ObjectId(person_id)}, {"$set": {"parents": parents}})
 
         flash("Circle has been updated")
-        return redirect(url_for("edit_parents", person_id=person_id))
+        return redirect(url_for("edit_spouse_partner", person_id=person_id))
 
     # RETURN TO HOME, THE RESULTS CURSOR
     return render_template(
@@ -258,7 +259,7 @@ def edit_parents(person_id):
         existing_father=existing_father, person=person)
 
 
-# ROUTE TO HANDLE EDITING OF THE MAIN HUB PERSON
+# ROUTE TO HANDLE EDITING OF THE SPOUSE
 @app.route("/edit_spouse_partner/<person_id>", methods=["GET", "POST"])
 def edit_spouse_partner(person_id):
 
@@ -266,9 +267,6 @@ def edit_spouse_partner(person_id):
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
     persons_spouse_id = person["spouse"]
-
-    print("-----  person id ------- person_spouse_id")
-    print(person_id, persons_spouse_id)
 
     # CHECK IF ALREADY HAVE A SPOUSE
     if persons_spouse_id != "":
@@ -284,10 +282,93 @@ def edit_spouse_partner(person_id):
                 "dob": ""
                 }
 
-  
+    # WHEN FORM IS SUBMITTED / UPDATED
+    if request.method == "POST":
+        # GET THE TEMPLTE FROM THE FORM
+        # FOR SPOUSE UPDATES
+        spouse = {
+            "first_name": request.form.get("spouse_first_name").lower(),
+            "last_name": request.form.get("spouse_last_name").lower(),
+            "birth_surname": request.form.get("spouse_birth_surname").lower(),
+            "spouse": persons_id,
+            "dob": request.form.get("spouse_dob")
+        }
+        # SETUP A TEMPLATE FOR SEARCHING FOR SPOUSE - WE DONT WANT THE
+        # BIRTH SURNAME FOR THIS, AS IT MAY MISS TARGET SPOUSE IF NOT
+        # ALREADY ENTERED
+        spouse_search = {
+            "first_name": request.form.get("spouse_first_name").lower(),
+            "last_name": request.form.get("spouse_last_name").lower(),
+            "dob": request.form.get("spouse_dob")
+        }
 
-            
-    return render_template("edit_spouse_partner.html", existing_spouse=existing_spouse, person=person)
+        # IF PERSONS SPOUSE IS NOT BLANK - THEY EXIST AS A SPOUSE
+        if persons_spouse_id != "":
+            # UPDATE SPOUSE RECORD WITH ANY CHANGE IN THE FORM TO
+            # FIRST/LAST/MAIDEN OR DOB.
+            mongo.db.people.find_one_and_update(
+                {"_id": ObjectId(persons_spouse_id)},
+                {"$set": spouse},
+                return_document=ReturnDocument.AFTER)
+            # GRAB THE SPOUSE ID, AS WE NEED TO INSERT IT TO THE PERSON
+            spouse_id = persons_spouse_id
+            print("---------     spouse_id if spouse id is not blank (exists)")
+            print(spouse_id)
+            print("---------     persons_spouse_id - if spouse id is not blank")
+            print(persons_spouse_id)
+            print("-----------    return document - if spouse id is not blank")
+            print(ReturnDocument)
+
+        else:
+            # FIRST WE CHECK IF SPOUSE EXISTS ANYWHERE IN THE DB
+            if mongo.db.people.count_documents(spouse_search, limit=1) == 0:
+                # IF THE COUNT IS == O, THEN WE INSERT A NEW SPOUSE
+                spouse = {
+                    "family_name": person["family_name"].lower(),
+                    "first_name": request.form.get(
+                        "spouse_first_name").lower(),
+                    "last_name": request.form.get("spouse_last_name").lower(),
+                    "birth_surname": request.form.get(
+                        "spouse_last_name").lower(),
+                    "parents": {"mother": "", "father": ""},
+                    "siblings": "",
+                    "spouse": persons_id,
+                    "gender": "Female",
+                    "dob": request.form.get("spouse_dob"),
+                    "dod": "",
+                    "birth_address": "",
+                    "rel_address": "",
+                    "information": "",
+                    "children": []
+                }
+                # INSERT THE NEW SPOUSE
+                mongo.db.people.insert_one(spouse)
+
+            else:
+                # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR SPOUSE
+                # SO WE UPDATE THAT SPOUSE
+                found_spouse = mongo.db.people.find_one(spouse_search)["_id"]
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(found_spouse)},
+                    {"$set": spouse},
+                    return_document=ReturnDocument.AFTER)
+
+                spouse_id = found_spouse
+                print("---------     spouse_id if we have a match for a spouse in db")
+                print(spouse_id)
+                print("---------     found_spouse persons_spouse_id - if we have a match for a spouse in db")
+                print(persons_spouse_id)
+                print("-----------    return document - if we have a match for a spouse in db")
+                print(ReturnDocument)
+
+        flash("Circle has been updated")
+        return redirect(url_for(
+            "edit_spouse_partner", person_id=person_id))
+
+
+    return render_template(
+        "edit_spouse_partner.html", existing_spouse=existing_spouse,
+        person=person)
 
 
 @app.errorhandler(404)
