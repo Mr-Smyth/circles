@@ -108,6 +108,21 @@ The following user stories have been identified:
 <br>
 
 # UI 
+Simple clean interface is key, the heavy lifting must be done behind the scenes. So i want to keep
+the front end completll clutter free. Ideally i am aiming for the user to only need to interact with the search bar, and everything after that
+is very intuitive with the correct amount of guidance, and action buttons, with clearly understandable purposes.
+
+I designed the logo first on this application, and found that the logo sat really nicely on a blue background. So the background will be a radial gradient of several similar, subtle shades of blue.
+The other colours in use will be shades of indigo and purple for box shading.
+
+I dont want to bamboozle the user with decisions, the person creation procedure takes you through
+a defined number of steps, so the user always knows where they are in the process.
+
+After that, i want the search and view to be simple. The user will search for a person, and have the option to view or edit. A drop down container will also 
+be included in the search results, to aid in selecting the correct 'John Smith' for example.
+
+The viewing of a persons circle will be interactive and each member of the circle, upon clicking,  will lead the user down a new rabbit hole of discovery.   
+
 
 ## Wireframes
 
