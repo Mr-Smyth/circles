@@ -7,6 +7,8 @@
 * [Testing of Home page](#testing-of-home-page)
 * [Testing of Search Functionality](#testing-of-search-functionality)
 * [Testing of Add Person Functionality](#testing-of-add-person-functionality)
+* [Testing of Edit Parents Functionality](#testing-of-edit-parents-functionality)
+* [Testing of Edit Spouse Functionality](#testing-of-edit-spouse-functionality)
 
 
 ---
@@ -19,6 +21,15 @@
 * :clipboard: RESULT: 
     * The result displayed as expected on the local development server.
 	* The result displayed as expected on the deployed site via Heroku.
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * Test here..
+* :clipboard: RESULT:
+    * Results here
 
 [Back to Index](#index)
 
@@ -37,13 +48,22 @@
 	* The resposiveness was good for initial testing.
 
 
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * Test here..
+* :clipboard: RESULT:
+    * Results here
+
 [Back to Index](#index)
 
 ---
 
 ## Testing of Search Functionality:
 
-## Initial Testing:
+### Initial Testing:
 
 #### After the initial setup of the search functionality, i decided to move from a single full name search box to a more flexible Mini Form.
 I believ this gave me the experience that was more flexible and desirable, in that i could search by any of First name, last name or DOB, or all together.
@@ -86,7 +106,14 @@ Visually all results were displayed in a colapsible element, which was otherwise
 
 This did not freeze or break the site, and allowed the user to click on the search button, and attempt another search. The message reflected the error.
 
-## Final Testing:
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * Test here..
+* :clipboard: RESULT:
+    * Results here
 
 [Back to Index](#index)
 
@@ -94,7 +121,7 @@ This did not freeze or break the site, and allowed the user to click on the sear
 
 ## Testing of Add Person Functionality:
 
-## Initial Testing:
+### Initial Testing:
 
 #### After the initial setup of the Add person functionality, i performed the following tests
 
@@ -134,7 +161,112 @@ This did not freeze or break the site, and allowed the user to click on the sear
 
 
 
-## Final Testing:
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
+
+[Back to Index](#index)
+
+---
+
+## Testing of edit parents functionality:
+Edit Parents, will grab the parents, if they exist, of the person being created/edited, and display them.
+It also allows for editing/updating of the parents.
+
+### Initial Testing:
+
+#### After the initial setup of the Add person functionality, i performed the following tests
+
+* :hammer: TEST:  
+    * Case where user enters parents name that are new people.
+* :clipboard: RESULT:
+    * User was able to enter parents details into the blank input form and then click
+    **Add Parents** which then took the user to the next stage.  
+     On checking MongoDB each document showed the proper linking between the person and the parents, 
+     via a parents dictionary within the person. Each parent had a children array containing the personID, which is their child.
+* :hammer: TEST: 
+    * Case where user enters parents name that would match an existing person.
+* :clipboard: RESULT:
+    * The function successfully detected any existing documents within MongoDb that matched the user entry into 
+    the form, and so eliminates duplication. The existing documents as well as the person were updated accordingly
+* :hammer: TEST: 
+    * Case where user is editing a person that has existing parents.
+* :clipboard: RESULT:
+    * The function will currently get the existing parents names, and display their details.  
+    In the case where they are edited in any way the function will take the data from the form 
+    and use them to edit the existing parents data.  
+    ***! This is not entirely desirable in all cases***, so to allow for changing of parents to a different parent, 
+    a reset parents button would need to be developed and used, to reset any links between existing parents and the person.
+    Then return a blank for for editing.
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
+
+[Back to Index](#index)
+
+---
+
+## Testing for Edit Spouse Functionality:
+
+### Initial Testing:
+
+#### After the initial setup of the **your function here** functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
+
+[Back to Index](#index)
+
+---
+
+
+
+
+---
+---
+---
+---
+## Template:
+
+### Initial Testing:
+
+#### After the initial setup of the **your function here** functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
 
 [Back to Index](#index)
 
