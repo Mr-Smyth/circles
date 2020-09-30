@@ -31,11 +31,16 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 * [UI](#ui)   
     * [Wireframes](#wireframes)   
 
+* [Development](#development)   
+     
 
 
-* [Logical Walkthrough](https://github.com/Mr-Smyth/circles/blob/master/LogicWalkthrough.md)
+
+
 
 * [Testing](https://github.com/Mr-Smyth/circles/blob/master/Testing.md)
+
+* [Deploy to Heroku](#deploy-to-heroku)
 
 </div>
 ---
@@ -131,4 +136,106 @@ The following user stories have been identified:
 
 
   [Back to Index](#index)
-   
+
+# Development
+
+## Technologies Used:
+
+## Logic Walkthrough
+
+*   [Planning stages Logic Walkthrough](https://github.com/Mr-Smyth/circles/blob/master/LogicWalkthrough.md)
+*   [Planning stages considered Schema](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/database-structure.pdf)
+
+## Development Walkthrough
+
+
+* Setup a new Database/Collection in MongoDB called Circles.
+* Initial setup of resources, libraries, env, gitignore, requirements and folder structure in Flask.
+* Setup my Enviroment variables.
+* Initial push to Github.
+* [Deploy to Heroku](#deploy-to-heroku)
+* Setup **Base** and **Home** page templates - this will include the key search feature.
+* Setup the **add_person** page, route and function.
+* Setup the **edit_parents** page route and function.
+* Setup the **edit_spouse** page route and function.
+
+
+
+
+[Back to Index](#index)
+
+---
+
+
+# Deploy To Heroku
+
+### Setup Requirements:
+Make sure Requirements.txt is ***always*** up to date.  
+Requirements.txt tells Heroku what resources are needed to run the app.
+
+1.  Goto the Bash Terminal
+2.  Type the following: ```pip3 freeze --local > requirements.txt```
+3.  Push all changes to GitHub.
+
+### Setup Procfile:
+Heroku looks for this Procfile to find out which file runs the app and how to run it.
+
+1.  Goto the Bash Terminal.
+2.  Type the following: ```echo web: python app.py > Procfile.```
+3.  Open the Procfile, and if there is an empty line, delete it as it can cause problems with Heroku.
+4.  Push file to github.
+
+### Heroku:
+
+#### Create a new application:
+
+1.  Goto the Heroku Dashboard.
+2.  Click New.
+3.  Select create a new app.
+4.  The Heroku app name must be unique, use "–" instead of spaces, and use lower case letters.
+5.  Mr-smyth-circles is the name i picked for this application.
+6.  Select the region closest – Europe
+7.  Click create app.
+
+#### Connecting to the GitHub repository:
+There are a number of ways to connect this, or any app. You can use Heroku CLI to connect as 
+outlined on the Heroku site. However its simpler to deploy the site from Github, 
+that way you only need to push to GitHub.
+
+1.  Select Github, from the Deployment method section, on the Deploy Tab.
+2.  Make sure your github id is displayed and then enter the github repository name and click search.
+3.  Once it finds the repository, click connect to connect to the repository.
+
+#### Setup the Config Vars.
+Attempting to deploy at this stage would result in some unwanted application errors, 
+this is because we have hidden our environment variables inside the env file, 
+and this is not available to Heroku.
+
+1.  Click on settings.
+2.  Click on **Reveal Config Vars**.
+3.  This is where we tell heroku what secret variables are required. 
+Add the Key Value pairs as follows: **NO QUOTES**
+``` 
+    IP : 0.0.0.0   
+    PORT: 5000   
+    SECRET_KEY: ###########################    
+    MONGO_URI : mongodb+srv://root:<MONGO-PASSWORD-HERE>@myfirstcluster.ugdke.mongodb.net/<APP-NAME-HERE>?retryWrites=true&w=majority   
+    MONGO_DBNAME: app_name_here  
+```
+***! Note: You will get this information from the local copy of the env file***   
+
+4.  Click on **Hide Config Vars**.
+
+### Automatic Deployment:
+Once the Config Vars have been entered you are ready for Automatic Deployment.
+
+1.  Click on the Deploy Tab.
+2.  Click enable automatic deploys.
+3.  Select the master branch.
+4.  Click Deploy branch
+
+#### The Project is now deployed.
+
+[Back to Index](#index)
+
+---
