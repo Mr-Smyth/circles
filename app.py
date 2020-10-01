@@ -364,35 +364,53 @@ def edit_siblings(person_id):
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
     persons_siblings = person["siblings"]
-    siblings = {}
+    existing_siblings = {}
 
     print("----------siblings IDs----------------------------")
     print("--------------------------------------")
     print(persons_siblings)
     print(len(persons_siblings))
     print("--------------------------------------")
+
     print("--------------------------------------")
 
     # PERSONS SIBLING - CHECK IF SIBLINGS ALREADY LINKED
-    if len(persons_siblings) == "0":
-        # THEN PERSON HAS EXISTING SIBLINGS - SO GET THEM
-        for index, sibling in enumerate(persons_siblings):
-            siblings[index] = mongo.db.people.find_one({
-            "_id": ObjectId(sibling)
-            })
+    if len(persons_siblings) > 0:
+        # THEN PERSON HAS EXISTING SIBLINGS - SO GET THEM INTO
+        # A DICT, START INDEX AT ASCII 97 'a' WAS HAVING TROUBLE WITH
+        # '0' AS A KEY
+        for index, sibling in enumerate(persons_siblings, 97):
+            existing_siblings[chr(index)] = mongo.db.people.find_one({
+                "_id": ObjectId(sibling)
+                })
+        print("----------siblings IDs (383)----------------------------")
+        print("--------------------------------------")
+        print(existing_siblings)
+        print("--------------------------------------")
+        print("--------------------------------------")
+        
+    else:
+        # WE PASS AN EMPTY DICT INTO THE TEMPLATE
+        existing_siblings = {
+            "a": {
+                "first_name": "",
+                "last_name": "",
+                "dob": ""
+                }
+            }
 
 
-
-    print("----------siblings IDs----------------------------")
-    print("--------------------------------------")
-    print(siblings)
-    print("--------------------------------------")
-    print("--------------------------------------")
 
     # WHEN FORM IS SUBMITTED / UPDATED
     if request.method == "POST":
         # GET THE TEMPLTE FROM THE FORM
         # FOR SIBLING
+
+        sibling_search = {
+            "first_name": request.form.get("sibling_first_name").lower(),
+            "last_name": request.form.get("sibling_last_name").lower(),
+            "dob": request.form.get("sibling_dob")
+        }
 
         sibling = {
             "family_name": person["family_name"].lower(),
@@ -401,7 +419,7 @@ def edit_siblings(person_id):
             "last_name": request.form.get("sibling_last_name").lower(),
             "birth_surname": person["birth_surname"].lower(),
             "parents": {"mother": "", "father": ""},
-            "siblings": "",
+            "siblings": [person_id],
             "spouse": "",
             "gender": "Female",
             "dob": request.form.get("sibling_dob"),
@@ -419,7 +437,7 @@ def edit_siblings(person_id):
             "edit_siblings", person_id=person_id))
 
 
-    return render_template("edit_siblings.html", person=person)
+    return render_template("edit_siblings.html", existing_siblings=existing_siblings, person=person)
 
 
 # ROUTE TO HANDLE E404
