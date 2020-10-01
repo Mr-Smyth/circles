@@ -61,12 +61,28 @@
 				</div>
 
 				<div class="collapsible-body">
-					<p>Maiden Name (if applicable)      : <strong> {{ person.birth_surname }}</strong></p>
-					<p>Date of Birth                    : <strong>{{ person.dob }}</strong></p>
-					<p>Born in                          : <strong> {{ person.birth_address }}</strong></p>
-                    <br><br>
-					<p>Information                          :<strong> {{ person.information }}</strong></p>
-				</div>
+                    {% if (person.family_name != "") %}
+					    <p>Family Name : <strong> {{ person.family_name }}</strong></p>
+                    {% endif %}
+                    {% if (person.birth_surname != "") %}
+					    <p>Maiden Name: <strong> {{ person.birth_surname }}</strong></p>
+                    {% endif %}
+                    {% if (person.gender != "") %}
+					    <p>Gender: <strong> {{ person.gender }}</strong></p>
+                    {% endif %}
+                    {% if (person.dob != "") %}
+					    <p>Date of Birth: <strong> {{ person.dob }}</strong></p>
+                    {% endif %}
+                    {% if (person.dod != "") %}
+					    <p>Date of Death: <strong> {{ person.dod }}</strong></p>
+                    {% endif %}
+                    {% if (person.information != "") %}
+                        <p><i class="fas fa-info-circle"></i></p>
+					    <p>Information: <strong> {{ person.information }}</strong></p>
+                    {% endif %}
+
+                    
+
             </li>
             {% endfor %}
         </ul>

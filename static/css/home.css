@@ -64,10 +64,13 @@ button:focus {
     background-color: transparent;
 }
 
-/* TO REMOVE DEFAULT STYLING FROM THE COLLAPSIBLE CLASS */
-.collapsible {
+/* TO REMOVE DEFAULT STYLING FROM THE MATERIALIZE COLLAPSIBLE CLASS */
+.collapsible-header, .collapsible-body, .collapsible, ul.collapsible>li 
+{
     border: none;
     box-shadow: none;
     color: #eeeeee;
     font-size: 1.4rem;
+    border-radius: 20px;
+    margin-bottom: 5px;
 }
