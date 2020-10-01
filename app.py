@@ -312,13 +312,6 @@ def edit_spouse_partner(person_id):
                 return_document=ReturnDocument.AFTER)
             # GRAB THE SPOUSE ID, AS WE NEED TO INSERT IT TO THE PERSON
             spouse_id = persons_spouse_id
-            print("---------     spouse_id if spouse id is not blank (exists)")
-            print(spouse_id)
-            print("---------     persons_spouse_id - if spouse id is not blank")
-            print(persons_spouse_id)
-            print("-----------    return document - if spouse id is not blank")
-            print(ReturnDocument)
-
         else:
             # FIRST WE CHECK IF SPOUSE EXISTS ANYWHERE IN THE DB
             if mongo.db.people.count_documents(spouse_search, limit=1) == 0:
@@ -352,18 +345,11 @@ def edit_spouse_partner(person_id):
                     {"_id": ObjectId(found_spouse)},
                     {"$set": spouse},
                     return_document=ReturnDocument.AFTER)
-
                 spouse_id = found_spouse
-                print("---------     spouse_id if we have a match for a spouse in db")
-                print(spouse_id)
-                print("---------     found_spouse persons_spouse_id - if we have a match for a spouse in db")
-                print(persons_spouse_id)
-                print("-----------    return document - if we have a match for a spouse in db")
-                print(ReturnDocument)
 
         flash("Circle has been updated")
         return redirect(url_for(
-            "edit_spouse_partner", person_id=person_id))
+            "edit_siblings", person_id=person_id))
 
 
     return render_template(
@@ -371,6 +357,72 @@ def edit_spouse_partner(person_id):
         person=person)
 
 
+# ROUTE TO HANDLE EDITING OF THE SPOUSE
+@app.route("/edit_siblings/<person_id>", methods=["GET", "POST"])
+def edit_siblings(person_id):
+    # SETUP SOME REQUIRED VARIABLES
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+    persons_id = person["_id"]
+    persons_siblings = person["siblings"]
+    siblings = {}
+
+    print("----------siblings IDs----------------------------")
+    print("--------------------------------------")
+    print(persons_siblings)
+    print(len(persons_siblings))
+    print("--------------------------------------")
+    print("--------------------------------------")
+
+    # PERSONS SIBLING - CHECK IF SIBLINGS ALREADY LINKED
+    if len(persons_siblings) == "0":
+        # THEN PERSON HAS EXISTING SIBLINGS - SO GET THEM
+        for index, sibling in enumerate(persons_siblings):
+            siblings[index] = mongo.db.people.find_one({
+            "_id": ObjectId(sibling)
+            })
+
+
+
+    print("----------siblings IDs----------------------------")
+    print("--------------------------------------")
+    print(siblings)
+    print("--------------------------------------")
+    print("--------------------------------------")
+
+    # WHEN FORM IS SUBMITTED / UPDATED
+    if request.method == "POST":
+        # GET THE TEMPLTE FROM THE FORM
+        # FOR SIBLING
+
+        sibling = {
+            "family_name": person["family_name"].lower(),
+            "first_name": request.form.get(
+                "sibling_first_name").lower(),
+            "last_name": request.form.get("sibling_last_name").lower(),
+            "birth_surname": person["birth_surname"].lower(),
+            "parents": {"mother": "", "father": ""},
+            "siblings": "",
+            "spouse": "",
+            "gender": "Female",
+            "dob": request.form.get("sibling_dob"),
+            "dod": "",
+            "birth_address": "",
+            "rel_address": "",
+            "information": "",
+            "children": []
+        }
+        # INSERT THE NEW SPOUSE
+        mongo.db.people.insert_one(sibling)
+
+        flash("Circle has been updated")
+        return redirect(url_for(
+            "edit_siblings", person_id=person_id))
+
+
+    return render_template("edit_siblings.html", person=person)
+
+
+# ROUTE TO HANDLE E404
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html")

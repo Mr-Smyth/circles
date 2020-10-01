@@ -24,7 +24,6 @@
                 <!-- FIRST NAME -->
 				<div class="row"> 
                     <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s spouse</h5>
-                    <h5>{{ x }}</h5>
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="spouse_first_name" name="spouse_first_name" value="{{ existing_spouse.first_name }}" type="text" class="validate" required>
@@ -63,7 +62,7 @@
 				        </button>
                     </div>
                     <div class="col s12 center-align">
-                        <a href="#" class="btn-large green darken-4 text-shadow">skip</a>
+                        <a href="{{ url_for('edit_siblings', person_id=person._id) }}" class="btn-large green darken-4 text-shadow">skip</a>
                     </div>
 				</div>
 			</form>

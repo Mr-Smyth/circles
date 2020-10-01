@@ -73,6 +73,7 @@ button:focus {
     font-size: 1.4rem;
     border-radius: 20px;
     margin-bottom: 15px;
+    
 }
 .collapsible-header {
     box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);

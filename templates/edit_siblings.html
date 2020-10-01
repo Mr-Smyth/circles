@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+
+	<!-- LOGO CONTAINER -->
+    <div id="top-logo-container">
+      <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+    </div>
+
+    
+    
+    <h2 class="page-heading text-shadow">Enter/Edit {{ person.first_name.capitalize() }}'s Siblings
+    <br><strong class="text-shadow"><h4>Step 4 of 5</h4></strong>
+    </h2>
+    
+    <div class="container info-box white box-shade">
+		<div class="row">
+            <h5 class="text-shadow">{{ person.first_name.capitalize() }}'s current siblings:</h5>
+    
+            <!-- RESULTS PANEL -->
+            <div class="row">
+            {% if people|length > 0 %}
+                <ul class="col s10 offset-s1 collapsible">
+                    {% for person in people %}
+                    <li>
+                        <div class="collapsible-header white-text indigo darken-8 text-shadow">
+                            <div class="col s1 valign-wrapper">
+                                <i class="fas fa-chevron-circle-down"></i>
+                            </div>
+                            <div class="col s8 ">
+                                <strong>{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }}:<br> </strong>{{ person.dob }}
+                            </div>
+                            <div class="col s3 valign-wrapper">
+                                <a href="#" class="btn-large indigo darken-4">Edit</a>
+                            </div>
+                        </div>
+
+                        <div class="collapsible-body">
+                            {% if (person.family_name != "") %}
+                                <p>Family Name : <strong> {{ person.family_name.capitalize() }}</strong></p>
+                            {% endif %}
+                            {% if (person.birth_surname != "") %}
+                                <p>Maiden Name: <strong> {{ person.birth_surname.capitalize() }}</strong></p>
+                            {% endif %}
+                            {% if (person.gender != "") %}
+                                <p>Gender: <strong> {{ person.gender.capitalize() }}</strong></p>
+                            {% endif %}
+                            {% if (person.dob != "") %}
+                                <p>Date of Birth: <strong> {{ person.dob }}</strong></p>
+                            {% endif %}
+                            {% if (person.dod != "") %}
+                                <p>Date of Death: <strong> {{ person.dod }}</strong></p>
+                            {% endif %}
+                            {% if (person.information != "") %}
+                                <p><i class="fas fa-info-circle"></i></p>
+                                <p>Information: <strong> {{ person.information.capitalize() }}</strong></p>
+                            {% endif %}
+
+                            
+
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                    <h3 class="red-text text-darken-4 center-align">{{ error }}</h3>
+            </div>
+            {% endif %}
+		</div>
+    </div>
+
+    <div class="container white box-shade">
+		<div class="row">
+			<form class="col s12" method="POST" action="{{ url_for('edit_siblings', person_id=person._id) }}" autocomplete="off">
+				<!-- ENTER MOTHERS INFORMATION -->
+                <!-- FIRST NAME -->
+				<div class="row"> 
+                    <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s siblings</h5>
+					<div class="input-field col s12 m10 offset-s0 offset-m1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+						<input id="sibling_first_name" name="sibling_first_name" value="first name of sibling" type="text" class="validate" required>
+						<label for="sibling_first_name">First Name</label>
+					</div>
+				</div>
+                <!-- LAST NAME -->
+				<div class="row">
+					<div class="input-field col s12 m10 offset-s0 offset-m1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+						<input id="sibling_last_name" name="sibling_last_name" value="last name of sibling" type="text" class="validate" required>
+						<label for="sibling_last_name">Last Name</label>
+					</div>
+				</div>
+                <!-- BIRTH SURNAME -->
+				<div class="row">
+					<div class="input-field col s12 m10 offset-s0 offset-m1">
+						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+						<input id="sibling_birth_surname" name="sibling_birth_surname" value="{{ person.birth_surname.capitalize() }}" type="text" class="validate">
+						<label for="sibling_birth_surname">Maiden (Birth) Surname</label>
+					</div>
+				</div>
+                <!-- DOB -->
+                <div class="row">
+                    <div class="input-field col s12 m10 offset-s0 offset-m1">
+                        <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
+                        <input id="sibling_dob" name="sibling_dob" value="dob of sibling" type="text" class="validate datepicker" required>
+                        <label for="sibling_dob">Date of Birth</label>
+                    </div>
+                </div>
+                <!-- SUBMIT BUTTON -->
+				<div class="row">
+					<div class="col s12 center-align">
+						<button type="submit" class="btn-large deep-purple darken-2 text-shadow">
+				            Add Spouse <i class="fas fa-user-friends left"></i>                     
+				        </button>
+                    </div>
+                    <div class="col s12 center-align">
+                        <a href="#" class="btn-large green darken-4 text-shadow">skip</a>
+                    </div>
+				</div>
+			</form>
+		</div>
+    </div>
+       
+
+    
+    
+{% endblock %}

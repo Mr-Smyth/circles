@@ -62,13 +62,13 @@
 
 				<div class="collapsible-body">
                     {% if (person.family_name != "") %}
-					    <p>Family Name : <strong> {{ person.family_name }}</strong></p>
+					    <p>Family Name : <strong> {{ person.family_name.capitalize() }}</strong></p>
                     {% endif %}
                     {% if (person.birth_surname != "") %}
-					    <p>Maiden Name: <strong> {{ person.birth_surname }}</strong></p>
+					    <p>Maiden Name: <strong> {{ person.birth_surname.capitalize() }}</strong></p>
                     {% endif %}
                     {% if (person.gender != "") %}
-					    <p>Gender: <strong> {{ person.gender }}</strong></p>
+					    <p>Gender: <strong> {{ person.gender.capitalize() }}</strong></p>
                     {% endif %}
                     {% if (person.dob != "") %}
 					    <p>Date of Birth: <strong> {{ person.dob }}</strong></p>
@@ -78,7 +78,7 @@
                     {% endif %}
                     {% if (person.information != "") %}
                         <p><i class="fas fa-info-circle"></i></p>
-					    <p>Information: <strong> {{ person.information }}</strong></p>
+					    <p>Information: <strong> {{ person.information.capitalize() }}</strong></p>
                     {% endif %}
 
                     
