@@ -324,7 +324,7 @@ def edit_spouse_partner(person_id):
                     "birth_surname": request.form.get(
                         "spouse_last_name").lower(),
                     "parents": {"mother": "", "father": ""},
-                    "siblings": "",
+                    "siblings": [],
                     "spouse": persons_id,
                     "gender": "Female",
                     "dob": request.form.get("spouse_dob"),
@@ -401,7 +401,7 @@ def edit_siblings(person_id):
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
                 "spouse": "",
-                "gender": "Female",
+                "gender": request.form.get("gender"),
                 "dob": request.form.get("sibling_dob"),
                 "dod": "",
                 "birth_address": "",
@@ -409,29 +409,30 @@ def edit_siblings(person_id):
                 "information": "",
                 "children": []
             }
-            # INSERT THE NEW SPOUSE
-            new_sibling = mongo.db.people.insert_one(sibling)
-            new_sibling_id = new_sibling.inserted_id
+            # INSERT THE NEW SPOUSE THEN GET ID IN CORRECT FORMAT
+            mongo.db.people.insert_one(sibling)
+            new_sibling_id = mongo.db.people.find_one(sibling)["_id"]
 
             # UPDATE PERSONS SIBLING ARRAY WITH ID FROM NEW SIBLING
             mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(person_id)},
                     {"$addToSet": {"siblings": new_sibling_id}})
 
-            # UPDATE PERSONS SIBLINGS WITH THIS NEW SIBLING - 
+            # UPDATE PERSONS SIBLINGS WITH THIS NEW SIBLING -
             # PERSONS SIBLING + PERSONS_ID IS THE FULL SIBLING LIST
             combined_siblings = persons_siblings_ids.copy()
-            combined_siblings.append(person_id)
+            combined_siblings.append(persons_id)
             combined_siblings.append(new_sibling_id)
 
-            # ADD THIS LIST, TO ALL SIBLINGS, BUT REMOVE EACH SIBLING FROM OWN LIST
-            # *     SO CREATE A MY_SIBLING_LIST - THIS LIST IS FOR ADDING TO EACH
-            #       SIBLING
+            # ADD THIS LIST, TO ALL SIBLINGS, BUT REMOVE EACH SIBLING
+            # FROM OWN LIST:
+            # *     SO CREATE A MY_SIBLING_LIST - THIS LIST IS FOR ADDING
+            #        TO EACH SIBLING
             # *     THEN MAKE MY_SIBLINGS EQUAL A COPY OF COMBINED SIBLINGS
             # *     THEN REMOVE CURRENT SIBLING IN THE ITERATION FROM MY
             #       SIBLINGS
-            # *     ADD THE CURRENT MY_SIBLINGS TO THE ID OF THE CURRENT SIBLING
-            #       IN THE ITERATION
+            # *     ADD THE CURRENT MY_SIBLINGS TO THE ID OF THE CURRENT
+            #       SIBLING IN THE ITERATION
             my_siblings = []
             for sibling in combined_siblings:
                 my_siblings = combined_siblings.copy()
@@ -462,8 +463,8 @@ def edit_siblings(person_id):
 
             # 3RD STAGE: COMBINE THESE LISTS OF SIBLINGS
             person_and_sibling_list = [persons_id, found_sibling_id]
-            combined_siblings = list(set(
-                persons_siblings_ids + person_and_sibling_list + sibling_siblings_id_list))
+            combined_siblings = []
+            combined_siblings = list(set(persons_siblings_ids + person_and_sibling_list + sibling_siblings_id_list))
 
             # 4th STAGE: PUSH EACH MY_SIBLINGS LIST TO EACH SIBLING
             # *     CREATE A MY_SIBLING_LIST - THIS LIST IS FOR ADDING TO EACH
