@@ -18,8 +18,10 @@
     </h2>
 	{% if existing_siblings|length > 0 %}
 	<div class="container info-box white box-shade">
-		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s current siblings:</h5>
-        <a href="{{ url_for('edit_siblings', person_id=person._id) }}" class="btn-large indigo darken-4">{{ existing_siblings.a.first_name }} {{ existing_siblings.a.last_name }}</a>
+		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s current siblings: </h5>
+        {% for sibling, item in existing_siblings.items() %}
+            <a href="{{ url_for('edit_siblings', person_id=item._id) }}" class="btn-large indigo darken-4">{{ item.first_name }} {{ item.last_name }}</a>
+        {% endfor %}
 	</div>
     {% endif %}
 
