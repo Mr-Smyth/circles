@@ -10,6 +10,19 @@
       <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
     </div>
 
+    <!-- FLASH MESSAGES -->
+    <section>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="row flash-messages">
+                        <h4 class="transparent darken-5 center-align text-shadow">{{ message }}</h4>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </section>
+
     <h2 class="page-heading text-shadow">Setup a new Person
     <br><strong class="text-shadow"><h4>Step 1 of 5</h4></strong>
     </h2>
@@ -35,7 +48,7 @@
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="first_name" name="first_name" type="text" class="validate" required>
-						<label for="first_name">First Name</label>
+						<label for="first_name">First Name (*Req)</label>
 					</div>
 				</div>
                 <!-- LAST NAME -->
@@ -43,7 +56,7 @@
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="last_name" name="last_name" type="text" class="validate" required>
-						<label for="last_name">Last Name</label>
+						<label for="last_name">Last Name (*Req)</label>
 					</div>
 				</div>
                 <!-- BIRTH SURNAME -->
@@ -59,11 +72,11 @@
 					<div class="input-field col s8 m6 offset-s0 offset-m1">
                         <i class="fas fa-venus-mars prefix blue-text text-darken-4"></i>
 						<select id="gender" name="gender" class="validate" required>
-				            <option value="" disabled selected>Select Gender</option>
+				            <option value="" disabled selected>Select Gender (*Req)</option>
 				            <option value="female" class="validate">Female</option>
 				            <option value="male" class="validate">Male</option>
 				        </select>
-                        <label>Select Gender</label>
+                        <label>Select Gender (*Req)</label>
 					</div>
 				</div>
                 <!-- DOB -->
@@ -71,7 +84,7 @@
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
                         <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
                         <input id="dob" name="dob" type="text" class="validate datepicker" required>
-                        <label for="dob">Date of Birth</label>
+                        <label for="dob">Date of Birth (*Req)</label>
                     </div>
                 </div>
                 <!-- DATE OF DEATH -->

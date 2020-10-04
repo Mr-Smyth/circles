@@ -13,14 +13,14 @@
 
     
     
-    <h2 class="page-heading text-shadow">Enter/Edit {{ person.first_name.capitalize() }}'s Siblings
+    <h2 class="page-heading text-shadow">Add {{ person.first_name.capitalize() }}'s Siblings
     <br><strong class="text-shadow"><h4>Step 4 of 5</h4></strong>
     </h2>
 	{% if existing_siblings|length > 0 %}
 	<div class="container info-box white box-shade">
 		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s current siblings: </h5>
         {% for sibling, item in existing_siblings.items() %}
-            <a href="{{ url_for('edit_siblings', person_id=item._id) }}" class="btn-large indigo darken-4">{{ item.first_name }}<br>{{ item.last_name }}</a>
+            <a href="{{ url_for('edit_siblings', person_id=item._id) }}" class="btn-large indigo darken-4">{{ item.first_name }} {{ item.last_name }}</a>
         {% endfor %}
 	</div>
     {% endif %}
@@ -31,7 +31,7 @@
 				<!-- ENTER MOTHERS INFORMATION -->
                 <!-- FIRST NAME -->
 				<div class="row"> 
-                    <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s siblings</h5>
+                    <h5 class="text-shadow">Add {{ person.first_name.capitalize() }}'s siblings</h5>
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="sibling_first_name" name="sibling_first_name" type="text" class="validate" required>

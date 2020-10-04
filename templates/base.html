@@ -56,19 +56,6 @@
 	</header>
 	
 	
-    <section>
-        <!-- FLASH MESSAGES -->
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="row flash-messages">
-                        <h4 class="transparent darken-5 center-align text-shadow">{{ message }}</h4>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </section>
-
     {% block content %} {% endblock %}
     <!-- Materialize JS script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

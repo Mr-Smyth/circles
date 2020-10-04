@@ -308,10 +308,14 @@ def edit_spouse_partner(person_id):
             # FIRST/LAST/MAIDEN OR DOB.
             mongo.db.people.find_one_and_update(
                 {"_id": ObjectId(persons_spouse_id)},
-                {"$set": spouse},
-                return_document=ReturnDocument.AFTER)
+                {"$set": spouse})
             # GRAB THE SPOUSE ID, AS WE NEED TO INSERT IT TO THE PERSON
             spouse_id = persons_spouse_id
+
+            #UPDATE PERSON
+            mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(persons_id)},
+                    {"$set":{"spouse": spouse_id}})
         else:
             # FIRST WE CHECK IF SPOUSE EXISTS ANYWHERE IN THE DB
             if mongo.db.people.count_documents(spouse_search, limit=1) == 0:
@@ -335,7 +339,13 @@ def edit_spouse_partner(person_id):
                     "children": []
                 }
                 # INSERT THE NEW SPOUSE
-                mongo.db.people.insert_one(spouse)
+                inserted_spouse = mongo.db.people.insert_one(spouse)
+                spouse_id = inserted_spouse.inserted_id
+
+                # UPDATE PERSON
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(persons_id)},
+                    {"$set": {"spouse": spouse_id}})
 
             else:
                 # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR SPOUSE
@@ -343,9 +353,13 @@ def edit_spouse_partner(person_id):
                 found_spouse = mongo.db.people.find_one(spouse_search)["_id"]
                 mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(found_spouse)},
-                    {"$set": spouse},
-                    return_document=ReturnDocument.AFTER)
+                    {"$set": spouse})
                 spouse_id = found_spouse
+
+                # UPDATE PERSON
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(persons_id)},
+                    {"$set":{"spouse": spouse_id}})
 
         flash("Circle has been updated")
         return redirect(url_for(
@@ -472,8 +486,8 @@ def edit_siblings(person_id):
             # *     MAKE MY_SIBLINGS EQUAL A COPY OF COMBINED SIBLINGS
             # *     THEN REMOVE CURRENT SIBLING IN THE ITERATION FROM MY
             #       SIBLINGS
-            # *     ADD THE CURRENT MY_SIBLINGS TO THE ID OF THE CURRENT SIBLING
-            #       IN THE ITERATION
+            # *     ADD THE CURRENT MY_SIBLINGS TO THE ID OF THE CURRENT
+            #       SIBLING IN THE ITERATION
             my_siblings = []
             for sibling in combined_siblings:
                 my_siblings = combined_siblings.copy()

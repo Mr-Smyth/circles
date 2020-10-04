@@ -93,7 +93,6 @@ button:focus {
     {
         font-size: 1.4rem;
     }
-    
 }
 
 /* tablet, landscape iPad, lo-res laptops ands desktops */
@@ -104,10 +103,8 @@ button:focus {
     }
     .btn-small {
         font-size: 1.4rem;
+    }   
 }
-    
-}
-
 
 /* big landscape tablets, laptops, and desktops */
 @media (min-width:1025px) {

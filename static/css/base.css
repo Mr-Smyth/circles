@@ -125,3 +125,6 @@ label.active {
   color: royalblue !important;
 }
 
+.dropdown-content li>a, .dropdown-content li>span {
+    color: royalblue;
+}

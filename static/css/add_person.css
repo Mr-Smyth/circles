@@ -3,7 +3,7 @@
     procedure */
 
 .container {
-    padding: 10px;
+    padding: 40px 10px 10px 10px;
     border-radius: 10px;
 }
 
@@ -21,13 +21,14 @@
     .page-heading {
     font-size: 3rem;
     }
+    .container {
+    padding: 40px 10px 10px 40px;
+    border-radius: 10px;
+}
 }
 
 /* tablet, landscape iPad, lo-res laptops ands desktops */
 @media (min-width:801px) {
-    .container {
-        padding: 10px;
-    }
 
 }
 

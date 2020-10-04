@@ -7,97 +7,116 @@
 {% block content %}
 
 	<!-- LOGO CONTAINER -->
-    <div id="logo-container">
-      <a  id="logo-image" href="{{ url_for('home') }}"></a>
-    </div>
+    <section>
+        <div id="logo-container">
+        <a  id="logo-image" href="{{ url_for('home') }}"></a>
+        </div>
+    </section>
+
+    <!-- FLASH MESSAGES -->
+    <section>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="row flash-messages">
+                        <h4 class="transparent darken-5 center-align text-shadow">{{ message }}</h4>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </section>
 
 	<!-- SEARCH BUTTON THAT REVEALS FORM WHEN CLICKED -->
-    <div class="row">
-        <button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
-	        Search Circles
-	    </button>
-    </div>
-    <!-- SEARCH FORM  -->
-	<div class="row container">
-		<form id="person-search" action="{{ url_for('search') }}" method="POST" autocomplete="off">
-        <div class="row center-align">
-			<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-				<input id="searchFirstName" name="searchFirstName" type="text" placeholder="Enter a First Name" class="validate" onFocus="this.select()">
-		    </div>
-        </div>
-        <div class="row">
-            <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-				<input id="searchLastName" name="searchLastName" type="text" placeholder="Enter a Surname" class="validate">
-            </div>
-        </div>
-        <div class="row">
-			<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-				<input id="searchDob" name="searchDob" type="text" placeholder="Search by Date of Birth" class="validate datepicker">
-		    </div>
-        </div>
-        <div class="row">
-			<button type="submit" class="col s10 m4 offset-s0 offset-m4 search-btn">
-		        <i class="fas fa-search icon-4x"></i>
+	<section>
+		<div class="row">
+			<button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
+		        Search Circles
 		    </button>
-        </div>
-		</form>
-	</div>
-    <!-- RESULTS PANEL -->
-    <div class="row">
-    {% if people|length > 0 %}
-        <ul class="col s12 m10 offset-s0 offset-m1 collapsible">
-            {% for person in people %}
-			<li>
-				<div class="collapsible-header col s12 white-text indigo darken-8 text-shadow">
-				    <div class="col s2 valign-wrapper">
-                        <i class="fas fa-chevron-circle-down"></i>
-                    </div>
-					<div class="col s5 search-result-details">
-						<strong>{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }}:<br> </strong>{{ person.dob }}
+		</div>
+		<!-- SEARCH FORM  -->
+		<div class="row container">
+			<form id="person-search" action="{{ url_for('search') }}" method="POST" autocomplete="off">
+				<div class="row center-align">
+					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+						<input id="searchFirstName" name="searchFirstName" type="text" placeholder="Enter a First Name" class="validate" onFocus="this.select()">
+			    </div>
 					</div>
-                    <div class="row col s5 search-result-buttons">
-						<div class="col s10 m5 offset-s1 pull-m1">
-							<a href="{{ url_for('edit_parents', person_id=person._id) }}" class="center-align btn-small indigo darken-4">Edit</a>
+					<div class="row">
+						<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+							<input id="searchLastName" name="searchLastName" type="text" placeholder="Enter a Surname" class="validate">
+	            </div>
 						</div>
-						<div class="col s10 m5 offset-s1 pull-m1">
-							<a href="{{ url_for('edit_parents', person_id=person._id) }}" class="center-align btn-small indigo darken-4">View</a>
+						<div class="row">
+							<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+								<input id="searchDob" name="searchDob" type="text" placeholder="Search by Date of Birth" class="validate datepicker">
+			    </div>
+							</div>
+							<div class="row">
+								<button type="submit" class="col s10 m4 offset-s0 offset-m4 search-btn">
+			        <i class="fas fa-search icon-4x"></i>
+			    </button>
+							</div>
+			</form>
+		</div>
+	</section>
+
+    <!-- RESULTS PANEL -->
+	<section>
+		<div class="row">
+			{% if people|length > 0 %}
+			<ul class="col s12 m10 offset-s0 offset-m1 collapsible">
+				{% for person in people %}
+				<li>
+					<div class="collapsible-header col s12 white-text indigo darken-8 text-shadow">
+						<div class="col s2 valign-wrapper">
+							<i class="fas fa-chevron-circle-down"></i>
 						</div>
-                    </div>
-				</div>
-
-				<div class="collapsible-body">
-                    {% if (person.family_name != "") %}
-					    <p>Family Name : <strong> {{ person.family_name.capitalize() }}</strong></p>
-                    {% endif %}
-                    {% if (person.birth_surname != "") %}
-					    <p>Maiden Name: <strong> {{ person.birth_surname.capitalize() }}</strong></p>
-                    {% endif %}
-                    {% if (person.gender != "") %}
-					    <p>Gender: <strong> {{ person.gender.capitalize() }}</strong></p>
-                    {% endif %}
-                    {% if (person.dob != "") %}
-					    <p>Date of Birth: <strong> {{ person.dob }}</strong></p>
-                    {% endif %}
-                    {% if (person.dod != "") %}
-					    <p>Date of Death: <strong> {{ person.dod }}</strong></p>
-                    {% endif %}
-                    {% if (person.information != "") %}
-                        <p><i class="fas fa-info-circle"></i></p>
-					    <p>Information: <strong> {{ person.information.capitalize() }}</strong></p>
-                    {% endif %}
-
-                    
-
-            </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-            <h3 class="red-text text-darken-4 center-align">{{ error }}</h3>
-    </div>
-    {% endif %}
-
-
-
+						<div class="col s5 search-result-details">
+							<strong>{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }}:<br> </strong>{{ person.dob }}
+						</div>
+						<div class="row col s5 search-result-buttons">
+							<div class="col s10 m5 offset-s1 pull-m1">
+								<a href="{{ url_for('edit_parents', person_id=person._id) }}"
+									class="center-align btn-small indigo darken-4">Edit</a>
+							</div>
+							<div class="col s10 m5 offset-s1 pull-m1">
+								<a href="{{ url_for('edit_parents', person_id=person._id) }}"
+									class="center-align btn-small indigo darken-4">View</a>
+							</div>
+						</div>
+					</div>
+	
+					<div class="collapsible-body">
+						{% if (person.family_name != "") %}
+						<p>Family Name : <strong> {{ person.family_name.capitalize() }}</strong></p>
+						{% endif %}
+						{% if (person.birth_surname != "") %}
+						<p>Maiden Name: <strong> {{ person.birth_surname.capitalize() }}</strong></p>
+						{% endif %}
+						{% if (person.gender != "") %}
+						<p>Gender: <strong> {{ person.gender.capitalize() }}</strong></p>
+						{% endif %}
+						{% if (person.dob != "") %}
+						<p>Date of Birth: <strong> {{ person.dob }}</strong></p>
+						{% endif %}
+						{% if (person.dod != "") %}
+						<p>Date of Death: <strong> {{ person.dod }}</strong></p>
+						{% endif %}
+						{% if (person.information != "") %}
+						<p><i class="fas fa-info-circle"></i></p>
+						<p>Information: <strong> {{ person.information.capitalize() }}</strong></p>
+						{% endif %}
+	
+	
+	
+				</li>
+				{% endfor %}
+			</ul>
+			{% else %}
+			<h3 class="red-text text-darken-4 center-align">{{ error }}</h3>
+		</div>
+		{% endif %}
+	</section>
 
 {% endblock %}
 {% block scripts %}
