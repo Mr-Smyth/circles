@@ -5,15 +5,21 @@
 }
 
 body {
-    height: 200vh;
+    min-height: 100vh;
     background: rgb(34,65,167);
     background: radial-gradient(circle, rgba(34,65,167,1) 0%, rgba(48,96,193,1) 15%, rgba(60,121,205,1) 31%, rgba(45,123,193,1) 52%, rgba(52,150,214,1) 68%, rgba(27,130,198,1) 80%);
 }
 
 .btn-large {
-    font-size: 1.4rem;
+    font-size: 1rem;
     border-radius: 30px;
     margin-bottom: 20px;
+}
+
+.btn-small {
+    margin: 5px;
+    font-size: 1rem;
+    border-radius: 30px;
 }
 
 .clear {

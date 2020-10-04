@@ -33,12 +33,11 @@
     color: white;
 }
 
-.container {
+.container{
     display: none;
     border-radius: 10px;
     background-color: transparent;
     padding: 20px;
-    
 }
 
 input:focus::placeholder {
@@ -59,6 +58,11 @@ input[type=text]:not(.browser-default) {
     height: 20px;
 }
 
+.search-result-details,
+.search-result-buttons {
+    margin:auto;
+}
+
 /* To Eliminate small green Materialize box over search button */
 button:focus {
     background-color: transparent;
@@ -70,11 +74,42 @@ button:focus {
     border: none;
     box-shadow: none;
     color: #eeeeee;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     border-radius: 20px;
     margin-bottom: 15px;
-    
 }
 .collapsible-header {
     box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
+}
+
+.col{
+    padding-left: 40px;
+}
+
+/* MEDIA QUERIES */
+/* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+@media (min-width:600px){
+    .collapsible-header, .collapsible-body, .collapsible, ul.collapsible>li 
+    {
+        font-size: 1.4rem;
+    }
+    
+}
+
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+@media (min-width:801px) {
+    .collapsible-header, .collapsible-body, .collapsible, ul.collapsible>li 
+    {
+        font-size: 1.5rem;
+    }
+    .btn-small {
+        font-size: 1.4rem;
+}
+    
+}
+
+
+/* big landscape tablets, laptops, and desktops */
+@media (min-width:1025px) {
+
 }
