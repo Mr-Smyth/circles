@@ -31,7 +31,19 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 * [UI](#ui)   
     * [Wireframes](#wireframes)   
 
-* [Development](#development)   
+* [Features](#Features)
+    * [Home Page](#Home-Page)
+    * [Add Person](#Add-Person-Page)
+    * [Edit Parents](#Edit-Parents-Page)
+    * [Edit Spouse / Partner](#Edit-Spouse_Partner-Page)
+    * [Edit Siblings](#Edit-Siblings-Page)
+    * [Edit Children](#Edit-Children-Page)
+
+
+* [Development](#development)  
+    * [Technologies Used](#technologies-used)
+    * [Resources Used](#resources-used)
+    
      
 
 
@@ -152,9 +164,109 @@ The viewing of a persons circle will be interactive and each member of the circl
 
   [Back to Index](#index)
 
+
+# Features
+
+## Home Page
+The Home screen opens with the site logo prominant mid screen. This sits on a circular gradient sky blue background, which 
+i choose to best match mythe site logo. The search bar which sits under the logo, has a subtle hover effect, and opens into a small search form when clicked.
+The search form will search MongoDb, for any or all of the entered data, and return a list of results.
+
+These results are in the form of a collapsible list, each result shows the full name and the Date of Birth - 
+the 2 key pieces of information for finding the person you want. When the collapsible is clicked, 
+any information relating to that person will be displayed, to give greater clarification, 
+and confirm that you are selecting the correct 'John Smith'!  
+
+[Back to Index](#index)
+## Add Person Page
+### Step 1 of 5 
+This is selected either from the menu, or may become an option when a person is not found.
+The page includes common navigation, and a reduced logo pushed to the top left.
+A clear heading, shows the user what page they are on, and clear indication of the stage they are at.
+This page includes a detailed form for the user to fill in, to create a person in Circles.  
+Clicking on Add Person, will perform the above CRUD, and will automatically take the user to step 2 - Edit Parents.
+Clicking skip, will take the user to the next step - Edit Spouse.
+
+
+[Back to Index](#index)
+## Edit Parents Page
+### Step 2 of 5
+This page is reachable from either completing the setup a new person page, or by clicking edit on a search result from the
+home page. The page includes common site navigation and a reduced logo pushed to the top left. The persons
+parents (if linked in the DB) will be displayed in form, allowing you to edit them. 
+Editing a parent will first force Circles to search for a match, if a match is found then that 
+found person will become the parent. If no match is found, then the entered information will be used to 
+create a new parent.
+Clicking on Add Parents, will perform the above CRUD, and automatically take the user to step 3 - Edit Spouse.
+Clicking skip, will take the user to the next step - Edit Spouse.
+
+[Back to Index](#index)
+## Edit Spouse_Partner Page
+### Step 3 of 5
+This page is reachable only from completing the Edit Parents page. 
+The page includes common site navigation and a reduced logo pushed to the top left.
+The page will display the Spouse and or Partners of the person being edited, in a row of links, within
+a top seperated window. These links are clickable and when clicked, will change the person being edited, to 
+the person who was just clicked.  
+Below this window is a blank form, which will allow the user to add a spouse or partner for the person being edited.
+Once added, a new spouse or partner will be immediatly displayed at the top of the page.
+Clicking Add Spouse Partner will first force Circles to search for a match, if a match is found then that found person
+will become a spouse/partner of the person being edited. If no match is found, then the entered information will be used to 
+create a new person, who will be a spouse of the person being edited.  
+Circles will then return the user to the Edit Spouse Partner page, so more relevant partners may be added.
+When the user is finished with this stage, clicking Skip / Next, will take the user to step 4 - Edit Siblings. 
+
+
+[Back to Index](#index)
+## Edit Siblings Page
+### Step 4 of 5
+This page is reachable only from completing the Edit Parents page. 
+The page includes common site navigation and a reduced logo pushed to the top left.
+The page will display the Siblings of the person being edited, in a row of links, within
+a top seperated window. These links are clickable and when clicked, will change the person being edited, to 
+the person who was just clicked.  
+Below this window is a blank form, which will allow the user to add a sibling or partner for the person being edited.
+Once added, a new spouse or partner will be immediatly displayed at the top of the page.
+Clicking Add Sibling will first force Circles to search for a match, if a match is found then that found person
+will become a sibling of the person being edited. A check is also done to find any siblings of the found sibling. If any exist
+Then the person being edited is linked to them also as a sibling, and they are each linked to the person being edited. **This is important, 
+as obviously your brothers brother is also your brother right?**  
+If no match is found, then the entered information will be used to 
+create a new person, who will be a spouse of the person being edited.  
+Circles will then return the user to the edit Sibling page, so more relevant partners may be added.
+When the user is finished with this stage, clicking Skip / Next, will take the user to step 4 
+
+[Back to Index](#index)
+## Edit Children Page
+
+
+
+[Back to Index](#index)
+
+---
+
 # Development
 
 ## Technologies Used:
+
+*   HTML.
+*   CSS.
+*   Javascript.
+*   Python.
+*   Flask micro web framework.
+*   Jinga2.
+*   MongoDB.
+*   GitHub.
+*   Heroku.
+*   Paint dot net.
+*   Balsamiq Wireframes.
+
+## Resources Used:
+
+*   Font Awesome.
+*   Favicons.
+*   Google Fonts.
+
 
 ## Logic Walkthrough
 
@@ -169,10 +281,12 @@ The viewing of a persons circle will be interactive and each member of the circl
 * Setup my Enviroment variables.
 * Initial push to Github.
 * [Deploy to Heroku](#deploy-to-heroku)
-* Setup **Base** and **Home** page templates - this will include the key search feature.
+* Setup **Base** and **Home** page template.
+    *   This will include the key search feature.
 * Setup the **add_person** page, route and function.
 * Setup the **edit_parents** page route and function.
 * Setup the **edit_spouse** page route and function.
+* Setup the **edit_spouse_partner** route and function.
 
 
 
@@ -180,6 +294,10 @@ The viewing of a persons circle will be interactive and each member of the circl
 [Back to Index](#index)
 
 ---
+
+
+
+
 
 
 # Deploy To Heroku

@@ -159,6 +159,13 @@ This did not freeze or break the site, and allowed the user to click on the sear
 * :clipboard: RESULT: 
     * Using the search feature on the home page, i was able to recall and view any document i entered.
 
+<br>
+
+* :hammer: TEST: 
+    * Click submit without filling in the form.
+* :clipboard: RESULT:
+    * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
+
 
 
 ### Final Testing:
@@ -203,6 +210,10 @@ It also allows for editing/updating of the parents.
     ***! This is not entirely desirable in all cases***, so to allow for changing of parents to a different parent, 
     a reset parents button would need to be developed and used, to reset any links between existing parents and the person.
     Then return a blank for for editing.
+* :hammer: TEST: 
+    * Click submit without filling in the form.
+* :clipboard: RESULT:
+    * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
 
 ### Final Testing:
 
@@ -218,15 +229,28 @@ It also allows for editing/updating of the parents.
 ---
 
 ## Testing for Edit Spouse Functionality:
+Edit spouse / partner will grab the persons spouse / partners and display them on screen. These partners name are clickable, and for now return you to the same page where you may edit their partners. 
+The included form will allow for adding of more partners.
 
 ### Initial Testing:
 
-#### After the initial setup of the **your function here** functionality, i performed the following tests
+#### After the initial setup of the edit_spouse_partner functionality, i performed the following tests
 
 * :hammer: TEST: 
-    * test here..
+    * Added a spouse details, and clicked Add Spouse.  
 * :clipboard: RESULT:
-    * results here..
+    * Result was the person was linked to the spouse, but found that the spouse was not linked to the person. Added an update to add the spouse to the person. Re-test showed results as expected.
+* :hammer: TEST: 
+    * Click submit without filling in the form.
+* :clipboard: RESULT:
+    * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
+### After refactor to change spouse / partner to an array:
+#### After this development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * After refactoring the code to convert the spouse link, to an Array, i performed multiple tests where i created a new person and added a spouse/Partner.
+* :clipboard: RESULT:
+    * Results in Database were correct and as expected. The results on screen showed the persons spouse / partner list. This list is clickable and clicking on a name, changes the person being edited to the person clicked.
 
 ### Final Testing:
 
@@ -241,6 +265,43 @@ It also allows for editing/updating of the parents.
 
 ---
 
+## Edit Siblings:
+The edit siblings page adds someone as the persons sibling, and vice versa.
+Also siblings of siblings also become siblings of eachother. As a result, of all this 'heavy lifting', a small delay on form submit is noticable with larger sibling groups.
+I am implementing a 'working' indicator for these situations.
+
+### Initial Testing:
+
+#### After the initial setup of the edit_siblings functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * Enter a new sibling into the form and click Add Sibling.
+* :clipboard: RESULT:
+    * MongoDB showed sibling correctly added to person array, and person added to siblings sibling array.
+    The page displayed the correct siblings for the person being edited, and i was able to click on the sibling
+    to change to that person.
+* :hammer: TEST: 
+    * I linked person(A) to 2 siblings. Then linked another person(B) to 2 siblings. I then 
+    linked person(A) to person(B) as a sibling.
+* :clipboard: RESULT:
+    * All person(A)'s siblings became siblings of person(B) and vice versa. also all of their siblings became siblings of eachother.
+* :hammer: TEST: 
+    * Click submit without filling in the form.
+* :clipboard: RESULT:
+    * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
+
+[Back to Index](#index)
+
+---
 
 
 
