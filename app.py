@@ -292,7 +292,7 @@ def edit_parents(person_id):
         existing_father=existing_father, person=person)
 
 
-# ROUTE TO HANDLE EDITING OF THE SPOUSE/PARTNER
+# ROUTE TO HANDLE ADDING A SPOUSE/PARTNER
 @app.route("/edit_spouse_partner/<person_id>", methods=["GET", "POST"])
 def edit_spouse_partner(person_id):
 
@@ -302,7 +302,7 @@ def edit_spouse_partner(person_id):
     persons_spouse_partner_ids = person["spouse_partner"]
     existing_spouse_partners = {}
 
-    # PERSONS SPOUSE_PARTNER - CHECK IF SIBLINGS ALREADY LINKED
+    # PERSONS SPOUSE_PARTNER - CHECK IF SPOUSE/PARTNERS ALREADY LINKED
     if len(persons_spouse_partner_ids) > 0:
         # THEN PERSON HAS EXISTING SPOUSE_PARTNERS - SO GET THEM INTO
         # A DICT, START INDEX AT ASCII 97 'a' WAS HAVING TROUBLE WITH
@@ -387,7 +387,7 @@ def edit_spouse_partner(person_id):
         existing_spouse_partners=existing_spouse_partners, person=person)
 
 
-# ROUTE TO HANDLE EDITING OF THE SIBLING
+# ROUTE TO HANDLE ADDING OF A SIBLING
 @app.route("/edit_siblings/<person_id>", methods=["GET", "POST"])
 def edit_siblings(person_id):
     # SETUP SOME REQUIRED VARIABLES
@@ -430,7 +430,7 @@ def edit_siblings(person_id):
                 "birth_surname": person["birth_surname"].lower(),
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
-                "spouse": "",
+                "spouse_partner": [],
                 "gender": request.form.get("gender"),
                 "dob": request.form.get("sibling_dob"),
                 "dod": "",
@@ -519,6 +519,51 @@ def edit_siblings(person_id):
 
     return render_template("edit_siblings.html", existing_siblings=existing_siblings, person=person)
 
+
+# ROUTE TO HANDLE ADDING OF CHILDREN TO PERSON
+@app.route("/edit_children/<person_id>", methods=["GET", "POST"])
+def edit_children(person_id):
+    # SETUP SOME REQUIRED VARIABLES
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+    persons_id = person["_id"]
+    persons_gender = person["gender"]
+    persons_spouse_partners_list = person["spouse_partner"]
+    persons_children_ids = person["children"]
+    existing_children = {}
+    persons_spouse_partners = {}
+
+    print("----------------------------")
+    print("persons_spouse_partners_list")
+    print(persons_spouse_partners_list)
+
+
+    # PERSONS CHILDREN - CHECK IF CHILDREN ALREADY LINKED
+    if len(persons_children_ids) > 0:
+        # THEN PERSON HAS EXISTING CHILDREN - SO GET THEM INTO
+        # A DICT, START INDEX AT ASCII 97 'a' WAS HAVING TROUBLE WITH
+        # '0' AS A KEY
+        for index, child in enumerate(persons_children_ids, 97):
+            existing_children[chr(index)] = mongo.db.people.find_one({
+                "_id": ObjectId(child)
+                })
+    else:
+        # WE PASS AN EMPTY DICT INTO THE TEMPLATE
+        existing_children = {}
+
+    # PERSONS SPOUSE_PARTNER - CHECK IF SPOUSE/PARTNERS ALREADY LINKED
+    if len(persons_spouse_partners_list) > 0:
+        # THEN PERSON HAS EXISTING SPOUSE_PARTNERS - SO GET THEM INTO
+        # A DICT, START INDEX AT ASCII 97 'a' WAS HAVING TROUBLE WITH
+        # '0' AS A KEY
+        for index, spouse_partner in enumerate(persons_spouse_partners_list, 97):
+            persons_spouse_partners[chr(index)] = mongo.db.people.find_one({
+                "_id": ObjectId(spouse_partner)
+                })
+    else:
+        # PASS AN EMPTY DICT INTO THE TEMPLATE
+        persons_spouse_partners = {}
+
+    return render_template('edit_children.html', persons_spouse_partners=persons_spouse_partners, existing_children=existing_children, person=person)
 
 # ROUTE TO HANDLE E404
 @app.errorhandler(404)

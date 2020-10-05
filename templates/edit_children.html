@@ -25,13 +25,13 @@
     </section>
     
     
-    <h2 class="page-heading text-shadow">Add {{ person.first_name.capitalize() }}'s Siblings
+    <h2 class="page-heading text-shadow">Add {{ person.first_name.capitalize() }}'s Children
     <br><strong class="text-shadow"><h4>Step 4 of 5</h4></strong>
     </h2>
-	{% if existing_siblings|length > 0 %}
+	{% if existing_children|length > 0 %}
 	<div class="container info-box white box-shade">
-		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s current siblings: </h5>
-        {% for sibling, item in existing_siblings.items() %}
+		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s current children: </h5>
+        {% for child, item in existing_children.items() %}
             <a href="{{ url_for('edit_siblings', person_id=item._id) }}" class="btn-large indigo darken-4">{{ item.first_name }} {{ item.last_name }}</a>
         {% endfor %}
 	</div>
@@ -40,22 +40,36 @@
     <div class="container white box-shade">
 		<div class="row">
 			<form class="col s12" method="POST" action="{{ url_for('edit_siblings', person_id=person._id) }}" autocomplete="off">
-				<!-- ENTER SIBLINGS INFORMATION -->
+				<!-- ENTER CHILDS INFORMATION -->
                 <!-- FIRST NAME -->
 				<div class="row"> 
-                    <h5 class="text-shadow">Add {{ person.first_name.capitalize() }}'s siblings</h5>
+                    <h5 class="text-shadow">Add {{ person.first_name.capitalize() }}'s Children</h5>
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="sibling_first_name" name="sibling_first_name" type="text" class="validate" required>
-						<label for="sibling_first_name">First Name</label>
+						<input id="child_first_name" name="child_first_name" type="text" class="validate" required>
+						<label for="child_first_name">First Name</label>
 					</div>
 				</div>
+                <!-- SELECT PARENTS -->
+                {% if persons_spouse_partners|length > 0 %}
+					<div class="row">
+						<h6 class="col s12 m10 offset-s0 offset-m1">Please select the parents of this child</h6>
+						{% for key, spouse_partner in persons_spouse_partners.items() %}
+						<p class="col s12 m10 offset-s0 offset-m2">
+							<label>
+								<input class="with-gap" name="child_parents" type="radio" checked />
+								<span>{{ spouse_partner.first_name.capitalize() }} and {{ person.first_name.capitalize() }}</span>
+							</label>
+						</p>
+						{% endfor %}
+					</div>
+                {% endif %}
                 <!-- LAST NAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="sibling_last_name" name="sibling_last_name" type="text" class="validate" required>
-						<label for="sibling_last_name">Last Name</label>
+						<input id="child_last_name" name="child_last_name" type="text" class="validate" required>
+						<label for="child_last_name">Last Name</label>
 					</div>
 				</div>
                 <!-- SELECT GENDER -->
@@ -74,8 +88,8 @@
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
                         <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
-                        <input id="sibling_dob" name="sibling_dob" type="text" class="validate datepicker" required>
-                        <label for="sibling_dob">Date of Birth</label>
+                        <input id="child_dob" name="child_dob" type="text" class="validate datepicker" required>
+                        <label for="child_dob">Date of Birth</label>
                     </div>
                 </div>
                 <!-- SUBMIT BUTTON -->
