@@ -33,7 +33,7 @@ mongo = PyMongo(app)
 def home():
     return render_template("home.html")
 
-
+# SEARCH
 @app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == "POST":
@@ -100,7 +100,7 @@ def add_person():
                 "birth_surname": request.form.get("birth_surname"),
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
-                "spouse": "",
+                "spouse_partner": [],
                 "gender": request.form.get("gender"),
                 "dob": request.form.get("dob"),
                 "dod": request.form.get("dod"),
@@ -210,7 +210,7 @@ def edit_parents(person_id):
                     "birth_surname": "",
                     "parents": {"mother": "", "father": ""},
                     "siblings": [],
-                    "spouse": "",
+                    "spouse_partner": [],
                     "gender": "Female",
                     "dob": request.form.get("mothers_dob"),
                     "dod": "",
@@ -255,7 +255,7 @@ def edit_parents(person_id):
                     "birth_surname": "",
                     "parents": {"mother": "", "father": ""},
                     "siblings": [],
-                    "spouse": "",
+                    "spouse_partner": [],
                     "gender": "Male",
                     "dob": request.form.get("fathers_dob"),
                     "dod": "",
@@ -292,116 +292,99 @@ def edit_parents(person_id):
         existing_father=existing_father, person=person)
 
 
-# ROUTE TO HANDLE EDITING OF THE SPOUSE
+# ROUTE TO HANDLE EDITING OF THE SPOUSE/PARTNER
 @app.route("/edit_spouse_partner/<person_id>", methods=["GET", "POST"])
 def edit_spouse_partner(person_id):
 
     # SETUP SOME REQUIRED VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
-    persons_spouse_id = person["spouse"]
+    persons_spouse_partner_ids = person["spouse_partner"]
+    existing_spouse_partners = {}
 
-    # CHECK IF ALREADY HAVE A SPOUSE
-    if persons_spouse_id != "":
-        # THEN THERE IS AN EXISTING SPOUSE - SO WE ASSIGN THE ID
-        existing_spouse = mongo.db.people.find_one({
-            "_id": ObjectId(persons_spouse_id)})
+    # PERSONS SPOUSE_PARTNER - CHECK IF SIBLINGS ALREADY LINKED
+    if len(persons_spouse_partner_ids) > 0:
+        # THEN PERSON HAS EXISTING SPOUSE_PARTNERS - SO GET THEM INTO
+        # A DICT, START INDEX AT ASCII 97 'a' WAS HAVING TROUBLE WITH
+        # '0' AS A KEY
+        for index, spouse_partner in enumerate(persons_spouse_partner_ids, 97):
+            existing_spouse_partners[chr(index)] = mongo.db.people.find_one({
+                "_id": ObjectId(spouse_partner)
+                })
     else:
-        # ITS A NEW PERSON, SO NEW SPOUSE - IT HAS NO
-        # TEMPLATE YET, SO WE GIVE IT ONE
-        existing_spouse = {
-                "first_name": "",
-                "last_name": "",
-                "dob": ""
-                }
+        # PASS AN EMPTY DICT INTO THE TEMPLATE
+        existing_spouse_partners = {}
 
-    # WHEN FORM IS SUBMITTED / UPDATED
     if request.method == "POST":
-        # GET THE TEMPLTE FROM THE FORM
-        # FOR SPOUSE UPDATES
-        spouse = {
-            "first_name": request.form.get("spouse_first_name").lower(),
-            "last_name": request.form.get("spouse_last_name").lower(),
-            "birth_surname": request.form.get("spouse_birth_surname").lower(),
-            "spouse": persons_id,
-            "dob": request.form.get("spouse_dob")
-        }
-        # SETUP A TEMPLATE FOR SEARCHING FOR SPOUSE - WE DONT WANT THE
-        # BIRTH SURNAME FOR THIS, AS IT MAY MISS TARGET SPOUSE IF NOT
-        # ALREADY ENTERED
-        spouse_search = {
-            "first_name": request.form.get("spouse_first_name").lower(),
-            "last_name": request.form.get("spouse_last_name").lower(),
-            "dob": request.form.get("spouse_dob")
+        # GET THE TEMPLATE FROM THE FOR PARTNER/SPOUSE
+        spouse_partner_search = {
+            "first_name": request.form.get(
+                "spouse_partner_first_name").lower(),
+            "last_name": request.form.get("spouse_partner_last_name").lower(),
+            "dob": request.form.get("spouse_partner_dob")
         }
 
-        # IF PERSONS SPOUSE IS NOT BLANK - THEY EXIST AS A SPOUSE
-        if persons_spouse_id != "":
-            # UPDATE SPOUSE RECORD WITH ANY CHANGE IN THE FORM TO
-            # FIRST/LAST/MAIDEN OR DOB.
-            mongo.db.people.find_one_and_update(
-                {"_id": ObjectId(persons_spouse_id)},
-                {"$set": spouse})
-            # GRAB THE SPOUSE ID, AS WE NEED TO INSERT IT TO THE PERSON
-            spouse_id = persons_spouse_id
+        # SEE IF PERSON ENTERED ON FORM EXISTS
+        if mongo.db.people.count_documents(
+                spouse_partner_search, limit=1) == 0:
 
-            #UPDATE PERSON
+            # THIS IS THE CASE THAT THIS ENTERED SPOUSE/PARTNER DOES NOT EXIST
+            # IN THE DB. IT IS TEMPLATE WE USE TO CREATE A NEW SPOUSE/PARTNER
+            spouse_partner = {
+                "family_name": person["family_name"].lower(),
+                "first_name": request.form.get(
+                    "spouse_partner_first_name").lower(),
+                "last_name": request.form.get(
+                    "spouse_partner_last_name").lower(),
+                "birth_surname": "",
+                "parents": {"mother": "", "father": ""},
+                "siblings": [],
+                "spouse_partner": [],
+                "gender": request.form.get("gender"),
+                "dob": request.form.get("spouse_partner_dob"),
+                "dod": "",
+                "birth_address": "",
+                "rel_address": "",
+                "information": "",
+                "children": []
+            }
+            # INSERT THE NEW SPOUSE/PARTNER THEN GET ID IN CORRECT FORMAT
+            mongo.db.people.insert_one(spouse_partner)
+            new_spouse_partner_id = mongo.db.people.find_one(
+                spouse_partner)["_id"]
             mongo.db.people.find_one_and_update(
-                    {"_id": ObjectId(persons_id)},
-                    {"$set":{"spouse": spouse_id}})
+                    {"_id": ObjectId(new_spouse_partner_id)},
+                    {"$addToSet": {"spouse_partner": persons_id}})
+
+            # UPDATE PERSONS SPOUSE/PARTNER ARRAY WITH ID
+            # FROM NEW SPOUSE/PARTNER
+            mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(person_id)},
+                    {"$addToSet": {"spouse_partner": new_spouse_partner_id}})
+
         else:
-            # FIRST WE CHECK IF SPOUSE EXISTS ANYWHERE IN THE DB
-            if mongo.db.people.count_documents(spouse_search, limit=1) == 0:
-                # IF THE COUNT IS == O, THEN WE INSERT A NEW SPOUSE
-                spouse = {
-                    "family_name": person["family_name"].lower(),
-                    "first_name": request.form.get(
-                        "spouse_first_name").lower(),
-                    "last_name": request.form.get("spouse_last_name").lower(),
-                    "birth_surname": request.form.get(
-                        "spouse_last_name").lower(),
-                    "parents": {"mother": "", "father": ""},
-                    "siblings": [],
-                    "spouse": persons_id,
-                    "gender": "Female",
-                    "dob": request.form.get("spouse_dob"),
-                    "dod": "",
-                    "birth_address": "",
-                    "rel_address": "",
-                    "information": "",
-                    "children": []
-                }
-                # INSERT THE NEW SPOUSE
-                inserted_spouse = mongo.db.people.insert_one(spouse)
-                spouse_id = inserted_spouse.inserted_id
+            # ELSE THE SPOUSE/PARTNER DOES EXIST IN DB, SO WE UPDATE THEM
+            found_spouse_partner = mongo.db.people.find_one(
+                spouse_partner_search)
+            found_spouse_partner_id = found_spouse_partner["_id"]
 
-                # UPDATE PERSON
-                mongo.db.people.find_one_and_update(
+            # ADD PERSON ID TO FOUND SPOUSE_PARTNER
+            mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(found_spouse_partner_id)},
+                    {"$addToSet": {"spouse_partner": persons_id}})
+
+            # ADD FOUND SPOUSE / PARTNER TO PERSON
+            mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(persons_id)},
-                    {"$set": {"spouse": spouse_id}})
-
-            else:
-                # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR SPOUSE
-                # SO WE UPDATE THAT SPOUSE
-                found_spouse = mongo.db.people.find_one(spouse_search)["_id"]
-                mongo.db.people.find_one_and_update(
-                    {"_id": ObjectId(found_spouse)},
-                    {"$set": spouse})
-                spouse_id = found_spouse
-
-                # UPDATE PERSON
-                mongo.db.people.find_one_and_update(
-                    {"_id": ObjectId(persons_id)},
-                    {"$set":{"spouse": spouse_id}})
+                    {"$addToSet": {"spouse_partner": found_spouse_partner_id}})
 
         flash("Circle has been updated")
         return redirect(url_for(
-            "edit_siblings", person_id=person_id))
-
+            "edit_spouse_partner", person_id=person_id))
 
     return render_template(
-        "edit_spouse_partner.html", existing_spouse=existing_spouse,
-        person=person)
+        "edit_spouse_partner.html",
+        existing_spouse_partners=existing_spouse_partners, person=person)
 
 
 # ROUTE TO HANDLE EDITING OF THE SIBLING

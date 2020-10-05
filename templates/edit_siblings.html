@@ -11,6 +11,18 @@
       <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
     </div>
 
+    <!-- FLASH MESSAGES -->
+    <section>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="row flash-messages">
+                        <h4 class="transparent darken-5 center-align text-shadow">{{ message }}</h4>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </section>
     
     
     <h2 class="page-heading text-shadow">Add {{ person.first_name.capitalize() }}'s Siblings
