@@ -67,7 +67,7 @@
 			<ul class="col s12 m10 offset-s0 offset-m1 collapsible">
 				{% for person in people %}
 				<li>
-					<div class="collapsible-header col s12 white-text indigo darken-8 text-shadow">
+					<div class="collapsible-header col s12 white-text dark purple darken-3 text-shadow">
 						<div class="col s2 valign-wrapper">
 							<i class="fas fa-chevron-circle-down"></i>
 						</div>
@@ -106,14 +106,14 @@
 						<p><i class="fas fa-info-circle"></i></p>
 						<p>Information: <strong> {{ person.information.capitalize() }}</strong></p>
 						{% endif %}
-	
-	
-	
+					</div>
 				</li>
 				{% endfor %}
 			</ul>
 			{% else %}
-			<h3 class="red-text text-darken-4 center-align">{{ error }}</h3>
+            <div class="row">
+			    <h4 class="center-align red-text text-darken-4">{{ error }}</h4>
+            </div>
 		</div>
 		{% endif %}
 	</section>

@@ -37,7 +37,7 @@ body {
 .page-heading {
     font-size: 2rem;
     margin-left: 20px;
-    margin-top: 100px;
+    margin-top: 60px;
     margin-bottom: 40px;
     color: rgb(24, 7, 65);
 }
@@ -52,6 +52,12 @@ body {
 
 .flash-messages {
     color: rgb(24, 7, 65);
+    font-size: 2rem;
+    margin-top: 60px;
+    box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
+    padding: 10px;
+    color: #9fc5f8;
+
 }
 
 

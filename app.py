@@ -65,38 +65,71 @@ def search():
 
 
 # ADD PERSON ROUTE
-@app.route("/add_person", methods=["GET", "POST"])
+@app.route("/add_person/", methods=["GET", "POST"])
 def add_person():
 
     if request.method == "POST":
-        # SETUP DICTIONARY FOR IMPORTING PERSON TO MONGO DB
-        person = {
+        # USED TO SEARCH FOR EXISTING PERSON
+        person_search = {
+            "first_name": request.form.get("first_name").lower(),
+            "last_name": request.form.get("last_name").lower(),
+            "gender": request.form.get("gender"),
+            "dob": request.form.get("dob"),
+        }
+        # USED TO UPDATE AN EXISTING PERSON
+        person_update = {
             "family_name": request.form.get("family_name").lower(),
             "first_name": request.form.get("first_name").lower(),
             "last_name": request.form.get("last_name").lower(),
             "birth_surname": request.form.get("birth_surname"),
-            "parents": {"mother": "", "father": ""},
-            "siblings": [],
-            "spouse": "",
             "gender": request.form.get("gender"),
             "dob": request.form.get("dob"),
             "dod": request.form.get("dod"),
             "birth_address": request.form.get("birth_address"),
             "rel_address": request.form.get("rel_address"),
             "information": request.form.get("person_info"),
-            "children": []
         }
-        # ADD THE PERSON DICTIONARY TO MONGO
-        new_person = mongo.db.people.insert_one(person)
+
+        # CHECK TO SEE IF PERSON ALREADY EXISTS
+        if mongo.db.people.count_documents(person_search, limit=1) == 0:
+            # SETUP DICTIONARY FOR IMPORTING PERSON TO MONGO DB
+            person = {
+                "family_name": request.form.get("family_name").lower(),
+                "first_name": request.form.get("first_name").lower(),
+                "last_name": request.form.get("last_name").lower(),
+                "birth_surname": request.form.get("birth_surname"),
+                "parents": {"mother": "", "father": ""},
+                "siblings": [],
+                "spouse": "",
+                "gender": request.form.get("gender"),
+                "dob": request.form.get("dob"),
+                "dod": request.form.get("dod"),
+                "birth_address": request.form.get("birth_address"),
+                "rel_address": request.form.get("rel_address"),
+                "information": request.form.get("person_info"),
+                "children": []
+            }
+            # ADD THE PERSON DICTIONARY TO MONGO
+            person_inserted = mongo.db.people.insert_one(person)
+            person_id = person_inserted.inserted_id
+        else:
+            # THEN PERSON ALREADY EXISTS, WE CAN UPDATE THEM
+            person_id = mongo.db.people.find_one(
+                person_search)["_id"]
+            mongo.db.people.find_one_and_update(
+                {"_id": ObjectId(person_id)},
+                {"$set": person_update})
+
         flash("This Person has bees successfully added to Circles")
         return redirect(url_for(
-            "edit_parents", person_id=new_person.inserted_id))
+            "edit_parents", person_id=person_id))
 
     # GET THE FAMILY COLLECTION NAMES, FOR THE FAMILY
     # SELECTION DROP DOWN
     families = mongo.db.family.find().sort("family_name", 1)
     # RETURN THE FAMILIES TO THE ADD_PERSON PAGE FOR JINGA
-    return render_template("add_person.html", families=families)
+    return render_template(
+        "add_person.html", families=families)
 
 
 # EDIT PARENTS ROUTE AND FUNCTION
