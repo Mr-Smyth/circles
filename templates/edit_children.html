@@ -39,31 +39,31 @@
 
     <div class="container white box-shade">
 		<div class="row">
-			<form class="col s12" method="POST" action="{{ url_for('edit_siblings', person_id=person._id) }}" autocomplete="off">
+			<form class="col s12" method="POST" action="{{ url_for('edit_children', person_id=person._id) }}" autocomplete="off">
 				<!-- ENTER CHILDS INFORMATION -->
+                <!-- SELECT THE CHILDS PARENTS -->
+                {% if persons_spouse_partners|length > 0 %}
+				<div class="row">
+                <h5 class="text-shadow">Add {{ person.first_name.capitalize() }}'s Children</h5>
+					<h6 class="text-shadow col s12 m10 offset-s0 offset-m1"><strong>Firtly, lets select this childs parents:</strong></h6>
+					{% for key, spouse_partner in persons_spouse_partners.items() %}
+					<p class="col s12 m10 offset-s0 offset-m1">
+						<label>
+							<input class="with-gap" id="child_parents" name="child_parents" type="radio" value="{{ spouse_partner._id }}" required/>
+							<span class="blue-text text-darken-4""><strong>{{ spouse_partner.first_name.capitalize() }} and {{ person.first_name.capitalize() }}</strong></span>
+						</label>
+					</p>
+					{% endfor %}
+				</div>
+                {% endif %}
                 <!-- FIRST NAME -->
 				<div class="row"> 
-                    <h5 class="text-shadow">Add {{ person.first_name.capitalize() }}'s Children</h5>
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
 						<input id="child_first_name" name="child_first_name" type="text" class="validate" required>
 						<label for="child_first_name">First Name</label>
 					</div>
 				</div>
-                <!-- SELECT PARENTS -->
-                {% if persons_spouse_partners|length > 0 %}
-					<div class="row">
-						<h6 class="col s12 m10 offset-s0 offset-m1">Please select the parents of this child</h6>
-						{% for key, spouse_partner in persons_spouse_partners.items() %}
-						<p class="col s12 m10 offset-s0 offset-m2">
-							<label>
-								<input class="with-gap" name="child_parents" type="radio" checked />
-								<span>{{ spouse_partner.first_name.capitalize() }} and {{ person.first_name.capitalize() }}</span>
-							</label>
-						</p>
-						{% endfor %}
-					</div>
-                {% endif %}
                 <!-- LAST NAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
