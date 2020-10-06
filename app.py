@@ -570,10 +570,12 @@ def edit_children(person_id):
         }
 
         # GET THE SELECTED OTHER PARENT
-        selected_parents_in_form = request.form.get("child_parents")
-        selected_parent = mongo.db.people.find_one(
-            {"_id": ObjectId(selected_parents_in_form)})
-        selected_parent_id = selected_parent["_id"]
+        selected_parent_id = False
+        if len(persons_spouse_partners) != 0:
+            selected_parents_in_form = request.form.get("child_parents")
+            selected_parent = mongo.db.people.find_one(
+                {"_id": ObjectId(selected_parents_in_form)})
+            selected_parent_id = selected_parent["_id"]
 
         # SEE IF THE CHILD ENTERED ON FORM EXISTS
         if mongo.db.people.count_documents(child_search, limit=1) == 0:
@@ -607,16 +609,21 @@ def edit_children(person_id):
             child_id = found_child["_id"]
 
         # LINK CHILD WITH THEIR PARENTS
-        child_parents = {
-                "mother": "", "father": ""}
+        child_parents = {}
         # CHECK IF PERSON IS THE MOTHER
         if persons_gender == "female":
-            child_parents = {
-                "mother": persons_id, "father": selected_parent_id}
+            child_parents['mother'] = persons_id
+            child_parents['father'] = ""
+            if selected_parent_id:
+                child_parents['father'] = selected_parent_id
         # ELSE PERSON IS THE FATHER
+        elif persons_gender == "male":
+            child_parents['father'] = persons_id
+            child_parents['mother'] = ""
+            if selected_parent_id:
+                child_parents['mother'] = selected_parent_id
         else:
-            child_parents = {
-                "mother": selected_parent_id, "father": persons_id}
+            child_parents = {"mother": "", "father": ""}
 
         mongo.db.people.find_one_and_update(
             {"_id": ObjectId(child_id)}, {"$set": {"parents": child_parents}})

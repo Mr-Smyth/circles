@@ -45,7 +45,7 @@
                 {% if persons_spouse_partners|length > 0 %}
 				<div class="row">
                 <h5 class="text-shadow">Add {{ person.first_name.capitalize() }}'s Children</h5>
-					<h6 class="text-shadow col s12 m10 offset-s0 offset-m1"><strong>Firtly, lets select this childs parents:</strong></h6>
+					<h6 class="col s12 m10 offset-s0 offset-m1"><strong>Firtly, lets select this childs parents:</strong></h6>
 					{% for key, spouse_partner in persons_spouse_partners.items() %}
 					<p class="col s12 m10 offset-s0 offset-m1">
 						<label>
@@ -96,7 +96,7 @@
 				<div class="row">
 					<div class="col s12 center-align">
 						<button type="submit" class="btn-large deep-purple darken-2 text-shadow">
-				            Add this Sibling <i class="fas fa-user-friends left"></i>                     
+				            Add this Child <i class="fas fa-user-friends left"></i>                     
 				        </button>
                     </div>
                     <div class="col s12 center-align">
