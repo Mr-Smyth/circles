@@ -23,9 +23,7 @@
             {% endif %}
         {% endwith %}
     </section>
-
-    
-    
+  
     <h2 class="page-heading text-shadow">Enter/Edit {{ person.first_name.capitalize() }}'s Spouse
     <br><strong class="text-shadow"><h4>Step 3 of 5</h4></strong>
     </h2>
@@ -33,9 +31,9 @@
 	{% if existing_spouse_partners|length > 0 %}
 	<div class="container info-box white box-shade">
 		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s Spouse / Relevant Partners: </h5>
-		{% for spouse_partner, item in existing_spouse_partners.items() %}
-		<a href="{{ url_for('edit_spouse_partner', person_id=item._id) }}" class="btn-large indigo darken-4">{{ item.first_name }}
-			{{ item.last_name }}</a>
+		{% for index, spouse_partner in existing_spouse_partners.items() %}
+		<a href="{{ url_for('unlink_spouse_partner', partner_id=spouse_partner._id, person_id=person._id) }}" class="btn-large indigo darken-4">{{ spouse_partner.first_name }}
+			{{ spouse_partner.last_name }}</a>
 		{% endfor %}
 	</div>
 	{% endif %}

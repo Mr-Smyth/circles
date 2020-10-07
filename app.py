@@ -282,7 +282,6 @@ def edit_parents(person_id):
         flash("Circle has been updated")
         return redirect(url_for("edit_spouse_partner", person_id=person_id))
 
-    # RETURN TO HOME, THE RESULTS CURSOR
     return render_template(
         "edit_parents.html", existing_mother=existing_mother,
         existing_father=existing_father, person=person)
@@ -680,6 +679,20 @@ def edit_children(person_id):
     return render_template(
         'edit_children.html', persons_spouse_partners=persons_spouse_partners,
         existing_children=existing_children, person=person)
+
+
+# ROUTE TO HANDLE REMOVING A SPOUSE OR PARTNER AS A SPOUSE OR PARTNER
+@app.route("/unlink_spouse_partner/<partner_id>/<person_id>", methods=["GET", "POST"])
+def unlink_spouse_partner(partner_id, person_id):
+    partner = mongo.db.people.find_one({"_id": ObjectId(partner_id)})
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+
+    # NEED TO HANDLE A CHECK TO SEE IF THEY STILL HAVE COMMON CHILDREN
+    # IF THEY DO, WE CANNOT REMOVE THEM
+
+    # SETUP FUNCTIONALITY TO REMOVE THEM AS PARTNERS
+    return render_template("unlink_spouse_partner.html", partner=partner, person=person)
+
 
 # ROUTE TO HANDLE E404
 @app.errorhandler(404)
