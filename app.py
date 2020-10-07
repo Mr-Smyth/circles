@@ -174,6 +174,13 @@ def edit_parents(person_id):
 
     # WHEN FORM IS SUBMITTED / UPDATED
     if request.method == "POST":
+
+        # IMPORTANT - WE REMOVE THE PERSONS ID FROM ANY CHILDREN
+        # ARRAY - THIS IS BECAUSE WE ARE POSTING NEW PARENTS. 
+        # FOR EXAMPLE: WE DONT WANT PERSON HAVING 2 BIRTH MOTHERS.
+        mongo.db.people.update({}, {"$pull": {
+             "children": {"$in": [persons_id]}}}, multi=True)
+
         # GET THE TEMPLTE FROM THE FORM
         # FOR MOTHER
         mother = {
