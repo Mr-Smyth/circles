@@ -568,6 +568,15 @@ def edit_children(person_id):
             "dob": request.form.get("child_dob")
         }
 
+        # COMBINED SIBLINGS WILL BE USED TO CREATE THE SIBLING LINK
+        # BETWEEN THIS CHILD AND ALL OTHER POSSIBLE SIBLINGS
+        combined_childs_siblings = []
+        persons_children = person['children']
+        for item in persons_children:
+                if item not in combined_childs_siblings:
+                    combined_childs_siblings.append(item)
+        
+
         # SEE IF THE CHILD ENTERED ON FORM EXISTS
         if mongo.db.people.count_documents(child_search, limit=1) == 0:
             # THIS IS THE CASE THAT THIS ENTERED CHILD DOES NOT EXIST
@@ -592,12 +601,23 @@ def edit_children(person_id):
             # INSERT THE NEW CHILD THEN GET ID IN CORRECT FORMAT
             mongo.db.people.insert_one(child)
             child_id = mongo.db.people.find_one(child)["_id"]
+            # ADD THE NEW CHILD TO THE COMINED SIBLINGS
+            combined_childs_siblings.append(child_id)
 
         else:
             # ELSE THE CHILD DOES EXIST IN DB, SO WE UPDATE THEM
             found_child = mongo.db.people.find_one(
                 child_search)
             child_id = found_child["_id"]
+            # ADD THIS FOUND CHILD TO COMBINED SIBLINGS
+            if child_id not in combined_childs_siblings:
+                combined_childs_siblings.append(child_id)
+            # CHECK IF THIS CHILD ALREADY HAS SIBLINGS - WE WILL NEED TO
+            # ADD THEM TO COMBINED SIBLINGS.
+            childs_existing_siblings = found_child['siblings']
+            for item in childs_existing_siblings:
+                if item not in combined_childs_siblings:
+                    combined_childs_siblings.append(item)
 
         # GET THE SELECTED OTHER PARENT
         # WE NEED TO ONLY CHECK IF THE PERSON HAS A SPOUSE
@@ -608,6 +628,11 @@ def edit_children(person_id):
             selected_parent = mongo.db.people.find_one(
                 {"_id": ObjectId(selected_parents_in_form)})
             selected_parent_id = selected_parent["_id"]
+            selected_parent_children = selected_parent['children']
+            # ADD THIS PARENTS EXISTING CHILDREN TO THE LIST OF SIBLINGS
+            for item in selected_parent_children:
+                if item not in combined_childs_siblings:
+                    combined_childs_siblings.append(item)
 
         # LINK CHILD WITH THEIR PARENTS
         child_parents = {}
@@ -641,11 +666,18 @@ def edit_children(person_id):
             mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(selected_parent_id)},
                     {"$addToSet": {"children": child_id}})
-        
+
         # COMBINE ANY CHILDREN AS SIBLINGS - CIRCLES SEES HALF OR FULL
         # SIBLINGS AS REAL SIBLINGS. SO WE NEED TO LINK THEM ALL AS SIBLINGS
-        # OF EACHOTHER
-
+        # OF EACHOTHER.
+        for sibling in combined_childs_siblings:
+            my_siblings = combined_childs_siblings.copy()
+            my_siblings.remove(sibling)
+            for add_sibling in my_siblings:
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(sibling)},
+                    {"$addToSet": {"siblings": add_sibling}})
+                    
         flash("Circle has been updated")
         return redirect(url_for("edit_children", person_id=person_id))
 

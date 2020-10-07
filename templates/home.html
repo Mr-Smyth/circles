@@ -18,8 +18,8 @@
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
-                    <div class="row flash-messages">
-                        <h4 class="transparent darken-5 center-align text-shadow">{{ message }}</h4>
+                    <div class="row">
+                        <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
                     </div>
                 {% endfor %}
             {% endif %}
@@ -96,7 +96,7 @@
 						{% if (person.gender != "") %}
 						<p>Gender: <strong> {{ person.gender.capitalize() }}</strong></p>
 						{% endif %}
-						{% if (person.dob != "") %}
+                        {% if (person.dob != "") %}
 						<p>Date of Birth: <strong> {{ person.dob }}</strong></p>
 						{% endif %}
 						{% if (person.dod != "") %}
