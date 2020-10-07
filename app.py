@@ -550,8 +550,7 @@ def edit_children(person_id):
     # PERSONS SPOUSE_PARTNER - CHECK IF SPOUSE/PARTNERS ALREADY LINKED
     if len(persons_spouse_partners_list) > 0:
         # THEN PERSON HAS EXISTING SPOUSE_PARTNERS - SO GET THEM INTO
-        # A DICT, START INDEX AT ASCII 97 'a' WAS HAVING TROUBLE WITH
-        # '0' AS A KEY
+        # A DICT, START INDEX AT ASCII 97 'a'
         for index, spouse_partner in enumerate(
                 persons_spouse_partners_list, 97):
             persons_spouse_partners[chr(index)] = mongo.db.people.find_one({
@@ -568,14 +567,6 @@ def edit_children(person_id):
             "last_name": request.form.get("child_last_name").lower(),
             "dob": request.form.get("child_dob")
         }
-
-        # GET THE SELECTED OTHER PARENT
-        selected_parent_id = False
-        if len(persons_spouse_partners) != 0:
-            selected_parents_in_form = request.form.get("child_parents")
-            selected_parent = mongo.db.people.find_one(
-                {"_id": ObjectId(selected_parents_in_form)})
-            selected_parent_id = selected_parent["_id"]
 
         # SEE IF THE CHILD ENTERED ON FORM EXISTS
         if mongo.db.people.count_documents(child_search, limit=1) == 0:
@@ -608,6 +599,16 @@ def edit_children(person_id):
                 child_search)
             child_id = found_child["_id"]
 
+        # GET THE SELECTED OTHER PARENT
+        # WE NEED TO ONLY CHECK IF THE PERSON HAS A SPOUSE
+        # OR PARTNER
+        selected_parent_id = False
+        if len(persons_spouse_partners) != 0:
+            selected_parents_in_form = request.form.get("child_parents")
+            selected_parent = mongo.db.people.find_one(
+                {"_id": ObjectId(selected_parents_in_form)})
+            selected_parent_id = selected_parent["_id"]
+
         # LINK CHILD WITH THEIR PARENTS
         child_parents = {}
         # CHECK IF PERSON IS THE MOTHER
@@ -616,6 +617,7 @@ def edit_children(person_id):
             child_parents['father'] = ""
             if selected_parent_id:
                 child_parents['father'] = selected_parent_id
+
         # ELSE PERSON IS THE FATHER
         elif persons_gender == "male":
             child_parents['father'] = persons_id
@@ -625,8 +627,24 @@ def edit_children(person_id):
         else:
             child_parents = {"mother": "", "father": ""}
 
+        # UPDATE THE CHILD WITH THEIR PARENTS
         mongo.db.people.find_one_and_update(
             {"_id": ObjectId(child_id)}, {"$set": {"parents": child_parents}})
+
+        # UPDATE THE PERSON WITH THEIR CHILD
+        mongo.db.people.find_one_and_update(
+                {"_id": ObjectId(persons_id)},
+                {"$addToSet": {"children": child_id}})
+
+        # UPDATE THE PERSONS SPOUSE / PARTNER WITH THEIR CHILD
+        if selected_parent_id:
+            mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(selected_parent_id)},
+                    {"$addToSet": {"children": child_id}})
+        
+        # COMBINE ANY CHILDREN AS SIBLINGS - CIRCLES SEES HALF OR FULL
+        # SIBLINGS AS REAL SIBLINGS. SO WE NEED TO LINK THEM ALL AS SIBLINGS
+        # OF EACHOTHER
 
         flash("Circle has been updated")
         return redirect(url_for("edit_children", person_id=person_id))
