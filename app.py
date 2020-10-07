@@ -188,99 +188,74 @@ def edit_parents(person_id):
             "dob": request.form.get("fathers_dob")
         }
 
-        # INSERT PERSONS MOTHER FORM DATA
-        # IF PERSONS MOTHER IS NOT BLANK
-        if persons_mother_id != "":
-            # UPDATE MOTHERS RECORD WITH ANY CHANGE IN THE FORM TO
-            # FIRST/LAST OR DOB. AND PUSH CHILD(PERSON) INTO CHILDREN ARRAY
-            mongo.db.people.find_one_and_update(
-                {"_id": ObjectId(persons_mother_id)},
-                {"$addToSet": {"children": persons_id},
-                 "$set": mother})
-            mother_id = persons_mother_id
+        # FIRST WE CHECK IF MOTHER EXISTS ANYWHERE IN THE DB
+        if mongo.db.people.count_documents(mother, limit=1) == 0:
+            # IF THE COUNT IS == O, THEN WE INSERT A NEW MOTHER
+            mother = {
+                "family_name": person["family_name"].lower(),
+                "first_name": request.form.get(
+                    "mothers_first_name").lower(),
+                "last_name": request.form.get("mothers_last_name").lower(),
+                "birth_surname": "",
+                "parents": {"mother": "", "father": ""},
+                "siblings": [],
+                "spouse_partner": [],
+                "gender": "Female",
+                "dob": request.form.get("mothers_dob"),
+                "dod": "",
+                "birth_address": "",
+                "rel_address": "",
+                "information": "",
+                "children": [persons_id]
+            }
+            # INSERT THE NEW MOTHER, THEN GET BACK THE ID
+            mongo.db.people.insert_one(mother)
+            mother_id = mongo.db.people.find_one(mother)["_id"]
 
         else:
-            # FIRST WE CHECK IF MOTHER EXISTS ANYWHERE IN THE DB
-            if mongo.db.people.count_documents(mother, limit=1) == 0:
-                # IF THE COUNT IS == O, THEN WE INSERT A NEW MOTHER
-                mother = {
-                    "family_name": person["family_name"].lower(),
-                    "first_name": request.form.get(
-                        "mothers_first_name").lower(),
-                    "last_name": request.form.get("mothers_last_name").lower(),
-                    "birth_surname": "",
-                    "parents": {"mother": "", "father": ""},
-                    "siblings": [],
-                    "spouse_partner": [],
-                    "gender": "Female",
-                    "dob": request.form.get("mothers_dob"),
-                    "dod": "",
-                    "birth_address": "",
-                    "rel_address": "",
-                    "information": "",
-                    "children": [persons_id]
-                }
-                # INSERT THE NEW MOTHER, THEN GET BACK THE ID
-                mongo.db.people.insert_one(mother)
-                mother_id = mongo.db.people.find_one(mother)["_id"]
-
-            else:
-                # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR MOTHER
-                # SO WE UPDATE THAT MOTHER
-                found_mother = mongo.db.people.find_one(mother)["_id"]
-                mongo.db.people.find_one_and_update(
-                    {"_id": ObjectId(found_mother)},
-                    {"$addToSet": {"children": persons_id},
-                     "$set": mother})
-                mother_id = found_mother
-
-        # INSERT PERSONS FATHER FORM DATA
-        # IF PERSONS FATHER IS NOT BLANK
-        if persons_father_id != "":
-            # UPDATE FATHERS RECORD WITH ANY CHANGE IN THE FORM TO
-            # FIRST/LAST OR DOB. AND PUSH CHILD(PERSON) INTO CHILDREN ARRAY
+            # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR MOTHER
+            # SO WE UPDATE THAT MOTHER WITH THEIR NEW CHILD
+            found_mother = mongo.db.people.find_one(mother)["_id"]
             mongo.db.people.find_one_and_update(
-                {"_id": ObjectId(persons_father_id)},
+                {"_id": ObjectId(found_mother)},
+                {"$addToSet": {"children": persons_id}})
+            mother_id = found_mother
+
+        # NEXT WE CHECK IF FATHER EXISTS ANYWHERE IN THE DB
+        if mongo.db.people.count_documents(father, limit=1) == 0:
+            # IF THE COUNT IS == O, THEN WE INSERT A NEW FATHER
+            father = {
+                "family_name": person["family_name"].lower(),
+                "first_name": request.form.get(
+                    "fathers_first_name").lower(),
+                "last_name": request.form.get(
+                    "fathers_last_name").lower(),
+                "birth_surname": "",
+                "parents": {"mother": "", "father": ""},
+                "siblings": [],
+                "spouse_partner": [],
+                "gender": "Male",
+                "dob": request.form.get("fathers_dob"),
+                "dod": "",
+                "birth_address": "",
+                "rel_address": "",
+                "information": "",
+                "children": [persons_id]
+            }
+            # INSERT THE NEW FATHER, THEN GET BACK THE ID
+            mongo.db.people.insert_one(father)
+            father_id = mongo.db.people.find_one(father)["_id"]
+
+        else:
+            # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR FATHER
+            # WE ADD PERSON AS A CHILD
+            # WE UPDATE THAT FATHER
+            found_father = mongo.db.people.find_one(father)["_id"]
+            mongo.db.people.find_one_and_update(
+                {"_id": ObjectId(found_father)},
                 {"$addToSet": {"children": persons_id},
                  "$set": father})
-            father_id = persons_father_id
-
-        else:
-            # FIRST WE CHECK IF FATHER EXISTS ANYWHERE IN THE DB
-            if mongo.db.people.count_documents(father, limit=1) == 0:
-                # IF THE COUNT IS == O, THEN WE INSERT A NEW FATHER
-                father = {
-                    "family_name": person["family_name"].lower(),
-                    "first_name": request.form.get(
-                        "fathers_first_name").lower(),
-                    "last_name": request.form.get(
-                        "fathers_last_name").lower(),
-                    "birth_surname": "",
-                    "parents": {"mother": "", "father": ""},
-                    "siblings": [],
-                    "spouse_partner": [],
-                    "gender": "Male",
-                    "dob": request.form.get("fathers_dob"),
-                    "dod": "",
-                    "birth_address": "",
-                    "rel_address": "",
-                    "information": "",
-                    "children": [persons_id]
-                }
-                # INSERT THE NEW FATHER, THEN GET BACK THE ID
-                mongo.db.people.insert_one(father)
-                father_id = mongo.db.people.find_one(father)["_id"]
-
-            else:
-                # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR FATHER
-                # WE ADD PERSON AS A CHILD
-                # WE UPDATE THAT FATHER
-                found_father = mongo.db.people.find_one(father)["_id"]
-                mongo.db.people.find_one_and_update(
-                    {"_id": ObjectId(found_father)},
-                    {"$addToSet": {"children": persons_id},
-                     "$set": father})
-                father_id = found_father
+            father_id = found_father
 
         # HERE WE BUILD THE PARENTS INTO A DICT AND SET IT INSIDE THE PERSON
         parents = {"mother": mother_id, "father": father_id}
