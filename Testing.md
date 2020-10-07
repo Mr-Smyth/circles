@@ -8,7 +8,9 @@
 * [Testing of Search Functionality](#testing-of-search-functionality)
 * [Testing of Add Person Functionality](#testing-of-add-person-functionality)
 * [Testing of Edit Parents Functionality](#testing-of-edit-parents-functionality)
-* [Testing of Edit Spouse Functionality](#testing-of-edit-spouse-functionality)
+* [Testing of Add Spouse or Partner Functionality](#testing-of-edit-spouse-functionality)
+* [Testing of Add Sibling Functionality](#testing-of-edit-siblings-functionality)
+* [Testing of Add Children Functionality](#testing-of-edit-children-functionality)
 
 
 ---
@@ -265,7 +267,7 @@ The included form will allow for adding of more partners.
 
 ---
 
-## Edit Siblings:
+## Testing of Edit Siblings Functionality:
 The edit siblings page adds someone as the persons sibling, and vice versa.
 Also siblings of siblings also become siblings of eachother. As a result, of all this 'heavy lifting', a small delay on form submit is noticable with larger sibling groups.
 I am implementing a 'working' indicator for these situations.
@@ -303,7 +305,29 @@ I am implementing a 'working' indicator for these situations.
 
 ---
 
+## Testing of Add Children Functionality:
 
+### Initial Testing:
+
+#### After the initial setup of the **your function here** functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
+
+[Back to Index](#index)
+
+---
 
 ---
 ---

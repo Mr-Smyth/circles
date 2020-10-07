@@ -192,12 +192,13 @@ def edit_parents(person_id):
         # IF PERSONS MOTHER IS NOT BLANK
         if persons_mother_id != "":
             # UPDATE MOTHERS RECORD WITH ANY CHANGE IN THE FORM TO
-            # FIRST/LAST OR DOB. AND PUSH CHILD INTO CHILDREN ARRAY
+            # FIRST/LAST OR DOB. AND PUSH CHILD(PERSON) INTO CHILDREN ARRAY
             mongo.db.people.find_one_and_update(
                 {"_id": ObjectId(persons_mother_id)},
                 {"$addToSet": {"children": persons_id},
                  "$set": mother})
             mother_id = persons_mother_id
+
         else:
             # FIRST WE CHECK IF MOTHER EXISTS ANYWHERE IN THE DB
             if mongo.db.people.count_documents(mother, limit=1) == 0:
@@ -220,8 +221,9 @@ def edit_parents(person_id):
                     "children": [persons_id]
                 }
                 # INSERT THE NEW MOTHER, THEN GET BACK THE ID
-                new_mother = mongo.db.people.insert_one(mother)
-                mother_id = new_mother.inserted_id
+                mongo.db.people.insert_one(mother)
+                mother_id = mongo.db.people.find_one(mother)["_id"]
+
             else:
                 # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR MOTHER
                 # SO WE UPDATE THAT MOTHER
@@ -236,12 +238,13 @@ def edit_parents(person_id):
         # IF PERSONS FATHER IS NOT BLANK
         if persons_father_id != "":
             # UPDATE FATHERS RECORD WITH ANY CHANGE IN THE FORM TO
-            # FIRST/LAST OR DOB. AND PUSH CHILD INTO CHILDREN ARRAY
+            # FIRST/LAST OR DOB. AND PUSH CHILD(PERSON) INTO CHILDREN ARRAY
             mongo.db.people.find_one_and_update(
                 {"_id": ObjectId(persons_father_id)},
                 {"$addToSet": {"children": persons_id},
                  "$set": father})
             father_id = persons_father_id
+
         else:
             # FIRST WE CHECK IF FATHER EXISTS ANYWHERE IN THE DB
             if mongo.db.people.count_documents(father, limit=1) == 0:
@@ -265,8 +268,9 @@ def edit_parents(person_id):
                     "children": [persons_id]
                 }
                 # INSERT THE NEW FATHER, THEN GET BACK THE ID
-                new_father = mongo.db.people.insert_one(father)
-                father_id = new_father.inserted_id
+                mongo.db.people.insert_one(father)
+                father_id = mongo.db.people.find_one(father)["_id"]
+
             else:
                 # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR FATHER
                 # WE ADD PERSON AS A CHILD
@@ -282,6 +286,16 @@ def edit_parents(person_id):
         parents = {"mother": mother_id, "father": father_id}
         mongo.db.people.find_one_and_update(
             {"_id": ObjectId(person_id)}, {"$set": {"parents": parents}})
+
+        # WE ALSO NEED TO ADD THE PARENTS AS A SPOUSE / PARTNERS OF 
+        # EACH OTHER, BECAUSE THEY HAVE A SIGNIFICANT RELATIONSHIP
+        # DUE TO HAVING A CHILD TOGETHER
+        mongo.db.people.find_one_and_update(
+            {"_id": ObjectId(mother_id)},
+            {"$addToSet": {"spouse_partner": father_id}})
+        mongo.db.people.find_one_and_update(
+            {"_id": ObjectId(father_id)},
+            {"$addToSet": {"spouse_partner": mother_id}})
 
         flash("Circle has been updated")
         return redirect(url_for("edit_spouse_partner", person_id=person_id))
@@ -677,7 +691,7 @@ def edit_children(person_id):
                 mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(sibling)},
                     {"$addToSet": {"siblings": add_sibling}})
-                    
+
         flash("Circle has been updated")
         return redirect(url_for("edit_children", person_id=person_id))
 
