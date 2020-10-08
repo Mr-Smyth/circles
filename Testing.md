@@ -309,10 +309,10 @@ I am implementing a 'working' indicator for these situations.
 
 ### Initial Testing:
 
-#### After the initial setup of the **your function here** functionality, i performed the following tests
+#### After the initial setup of the Add Children functionality, i performed the following tests
 
 * :hammer: TEST: 
-    * test here..
+    * Add a new child, not in MongoDB
 * :clipboard: RESULT:
     * results here..
 

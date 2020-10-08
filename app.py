@@ -681,17 +681,60 @@ def edit_children(person_id):
         existing_children=existing_children, person=person)
 
 
-# ROUTE TO HANDLE REMOVING A SPOUSE OR PARTNER AS A SPOUSE OR PARTNER
-@app.route("/unlink_spouse_partner/<partner_id>/<person_id>", methods=["GET", "POST"])
-def unlink_spouse_partner(partner_id, person_id):
-    partner = mongo.db.people.find_one({"_id": ObjectId(partner_id)})
+# ROUTE TO MANAGE A RELATIONSHIP
+@app.route(
+    "/manage_relationship/<person_id>/<person2_id>",
+    methods=["GET", "POST"])
+def manage_relationship(person_id, person2_id):
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+    person2 = mongo.db.people.find_one({"_id": ObjectId(person2_id)})
+
+    unlink = False
 
     # NEED TO HANDLE A CHECK TO SEE IF THEY STILL HAVE COMMON CHILDREN
     # IF THEY DO, WE CANNOT REMOVE THEM
 
+    partner_children = person2['children']
+    person_children = person['children']
+    partners_id = person2['_id']
+    persons_id = person['_id']
+
+    for child in person_children:
+        if child in partner_children:
+            unlink = False
+            message = "These people have shared children \
+                    as a result we cannot seperate them as relevant partners"
+        else:
+            message = "These people have no shared children \
+                    it is safe to unlink them as relevant partners"
+            unlink = True
+
     # SETUP FUNCTIONALITY TO REMOVE THEM AS PARTNERS
-    return render_template("unlink_spouse_partner.html", partner=partner, person=person)
+    return render_template(
+        "manage_relationship.html", unlink=unlink, person2=person2,
+        person=person, message=message)
+
+
+# ROUTE TO HANDLE REMOVING A SPOUSE OR PARTNER AS A SPOUSE OR PARTNER
+@app.route(
+    "/delete_relationship/<person_id>/<person2_id>",
+    methods=["GET", "POST"])
+def delete_relationship(person_id, person2_id):
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+    person2 = mongo.db.people.find_one({"_id": ObjectId(person2_id)})
+    partners_id = person2['_id']
+    persons_id = person['_id']
+
+    mongo.db.people.update({"_id": ObjectId(partners_id)}, {
+        "$pull": {"spouse_partner": {"$in": [persons_id]}}})
+    mongo.db.people.update({"_id": ObjectId(persons_id)}, {
+        "$pull": {"spouse_partner": {"$in": [partners_id]}}})
+
+    flash("Relationship has been removed")
+    return redirect(url_for(
+            "edit_spouse_partner", person_id=person_id))
+    # SETUP FUNCTIONALITY TO REMOVE THEM AS PARTNERS
+    return render_template("edit_spouse_partner.html", person_id=person_id)
 
 
 # ROUTE TO HANDLE E404

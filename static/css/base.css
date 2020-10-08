@@ -26,6 +26,14 @@ body {
     background-color: transparent;
 }
 
+.top-space-large {
+    margin-top: 50px;
+}
+
+.space {
+    margin: 40px;
+}
+
 .text-shadow {
     text-shadow: 2px 1.5px 1.5px rgba(0, 0, 0, 0.5)
 }

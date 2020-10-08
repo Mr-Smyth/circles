@@ -31,10 +31,12 @@
 	{% if existing_spouse_partners|length > 0 %}
 	<div class="container info-box white box-shade">
 		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s Spouse / Relevant Partners: </h5>
+        <h5 class="text-shadow space">Click to Remove</h5>
 		{% for index, spouse_partner in existing_spouse_partners.items() %}
-		<a href="{{ url_for('unlink_spouse_partner', partner_id=spouse_partner._id, person_id=person._id) }}" class="btn-large indigo darken-4">{{ spouse_partner.first_name }}
+		<a href="{{ url_for('manage_relationship', person_id=person._id, person2_id=spouse_partner._id) }}" class="btn-large indigo darken-4">{{ spouse_partner.first_name }}
 			{{ spouse_partner.last_name }}</a>
 		{% endfor %}
+        
 	</div>
 	{% endif %}
 
