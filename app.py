@@ -690,24 +690,30 @@ def manage_relationship(person_id, person2_id):
     person2 = mongo.db.people.find_one({"_id": ObjectId(person2_id)})
 
     unlink = False
+    message = ""
 
     # NEED TO HANDLE A CHECK TO SEE IF THEY STILL HAVE COMMON CHILDREN
     # IF THEY DO, WE CANNOT REMOVE THEM
 
     partner_children = person2['children']
     person_children = person['children']
-    partners_id = person2['_id']
-    persons_id = person['_id']
-
-    for child in person_children:
-        if child in partner_children:
+    # CHECK IF PERSON HAS ANY CHILDREN - IF HE DOES
+    # CHECK DO THEY MATCH ANY OF THE PARTNERS CHILDREN
+    # IF THEY DO, WE MUST NOT UNLINK
+    if len(person_children) > 0:
+        check = any(
+            item in person_children for item in partner_children)
+ 
+        if check is True:
             unlink = False
             message = "These people have shared children \
-                    as a result we cannot seperate them as relevant partners"
-        else:
-            message = "These people have no shared children \
+                            as a result we cannot seperate them as \
+                            relevant partners"
+    else :
+        unlink = True
+        message = "These people have no shared children \
                     it is safe to unlink them as relevant partners"
-            unlink = True
+        
 
     # SETUP FUNCTIONALITY TO REMOVE THEM AS PARTNERS
     return render_template(
