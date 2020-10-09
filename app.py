@@ -541,70 +541,37 @@ def edit_siblings(person_id):
              "children": {"$in": [found_sibling_id]}}}, multi=True)
 
             # STAGE 3 -
-            # UPDATE THE FOUND SIBLING WITH THE SELECTED PARENTS, IN CASE
+            # UPDATE THE FOUND SIBLING AND THE SELECTED PARENTS, IN CASE
             # THEY NEED TO BE CHANGED
-            found_sibling['parents'] = selected_parents
+            mongo.db.people.find_one_and_update(
+                {"_id": ObjectId(found_sibling_id)},
+                {"$set": {"parents": selected_parents}})
+            for key, value in selected_parents.items():
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(value)}, {"$addToSet": {
+                        "children": found_sibling_id}})
 
             # STAGE 4 -
             # SEE IF THE EXISTING SIBLING WITHIN THE DB HAS
             # ANY EXISTING SIBLINGS
             found_sibling_siblings_ids = found_sibling["siblings"]
-            sibling_siblings_id_list = []
 
             # STAGE 5 -
             # NOW LOOP OVER THE FOUND SIBLING SIBLINGS ARRAY AND BUILD
             # A LIST OF THEIR OBJECT ID'S
+            sibling_siblings_id_list = []
             for id in found_sibling_siblings_ids:
                 obj = mongo.db.people.find_one({"_id": ObjectId(id)})
                 obj_id = obj["_id"]
                 sibling_siblings_id_list.append(obj_id)
 
             # STAGE 6 -
-            # FOR EACH OF THESE FOUND SIBLING SIBLINGS, WE NEED TO
-            # CHECK IF AT LEAST ONE PARENT MATCHES THE ID OF ONE
-            # OF PERSONS PARENTS.
-            # THIS IS SO WE DONT GET A SITUATION WHERE: -
-            # IF I LINK TO AN EXISTING PERSON WHO IS A HALF SIBLING,
-            # THIS CODE SEARCHES FOR SIBLINGS OF SIBLINGS.
-            # IF ONE OF THOSE SIBLINGS OF SIBLINGS IS A HALF SIBLING
-            # OF THE HALF SIBLING IM LINKING TO, THEN THAT PERSON IS NOT
-            # A SIBLING - DIFFERENT PARENTS ENTIRELY(POSSIBLY)
-            #
-            # SO HERE WE WILL ADD SIBLINGS TO A LIST OF PROPPER_SIBLINGS
-            # IF THEY HAVE AT LEAST ONE PARENT IN COMMON
-            propper_sibling = []
-
-            # START BY GETTING AN ARRAY OF THE ID OF EACH SIBLINGS SIBLING
-            # AND COMBINING IT WITH SIBLINGS CURRENT SIBLINGS
-            all_other_siblings = list(set(
-                persons_siblings_ids + sibling_siblings_id_list))
-            for sibling in all_other_siblings:
-                sibling_data = mongo.db.people.find_one(
-                    {"_id": ObjectId(sibling)})
-                sibling_parents = [
-                    sibling_data['parents']['father'],
-                    sibling_data['parents']['mother']]
-                persons_parents = [
-                    person['parents']['father'],
-                    person['parents']['mother']]
-                for sib_parent in sibling_parents:
-                    for parent in persons_parents:
-                        print("***********************")
-                        print("***********************")
-                        print("sib_parent , parent")
-                        print(sib_parent , parent)
-                        print("***********************")
-                        print("***********************")
-                        if sib_parent == parent:
-                            propper_sibling.append(sibling)
-
-            # STAGE 7 -
             # COMBINE THESE LISTS OF SIBLINGS
             person_and_sibling_list = [persons_id, found_sibling_id]
             combined_siblings = list(set(
-                person_and_sibling_list + propper_sibling))
+                person_and_sibling_list + sibling_siblings_id_list))
 
-            # STAGE 8 -
+            # STAGE 7 -
             # PUSH EACH MY_SIBLINGS LIST TO EACH SIBLING
             # CREATE A MY_SIBLING_LIST - THIS LIST IS FOR ADDING TO EACH
             # SIBLING
@@ -614,13 +581,34 @@ def edit_siblings(person_id):
             # ADD THE CURRENT MY_SIBLINGS TO THE ID OF THE CURRENT
             # SIBLING IN THE ITERATION
             my_siblings = []
-            for sibling in combined_siblings:
-                my_siblings = combined_siblings.copy()
-                my_siblings.remove(sibling)
-                for add_sibling in my_siblings:
-                    mongo.db.people.find_one_and_update(
-                        {"_id": ObjectId(sibling)},
-                        {"$addToSet": {"siblings": add_sibling}})
+            for main_sibling in combined_siblings:
+                possible_siblings = combined_siblings.copy()
+                possible_siblings.remove(main_sibling)
+                # HERE WE WILL CHECK TO SEE THAT ANY SIBLING IN THIS LIST
+                # HAS AT LEAST ONE MATCHING PARENT. ELSE THEY ARE NOT
+                # REAL SIBLINGS OR HALF SIBLINGS:
+                for sibling_in_list in possible_siblings:
+                    # GET THE PARENTS THE OF MAIN SIBLING IN THE LOOP
+                    main_sibling_data = mongo.db.people.find_one(
+                        {"_id": ObjectId(main_sibling)})
+                    main_sibling_parents = [
+                        main_sibling_data['parents']['father'],
+                        main_sibling_data['parents']['mother']]
+                    # GET THE PARENTS OF SIBLING IN LIST
+                    sibling_in_list_data = mongo.db.people.find_one(
+                        {"_id": ObjectId(sibling_in_list)})
+                    sibling_in_list_parents = [
+                        sibling_in_list_data['parents']['father'],
+                        sibling_in_list_data['parents']['mother']]
+                    # COMPARE THE PARENTS OF MAIN SIBLING AND SIBLING IN LIST
+                    for sibling_parent in main_sibling_parents:
+                        for sib_parent in sibling_in_list_parents:
+                            # IF ANY OF THE PARENTS MATCH THEN WE CAN ADD
+                            # SIBLING_IN_LIST TO THE MAIN SIBLING
+                            mongo.db.people.find_one_and_update(
+                                {"_id": ObjectId(main_sibling)},
+                                {"$addToSet": {
+                                    "siblings": sibling_in_list}})
 
         flash("Circle has been updated")
         return redirect(url_for(
