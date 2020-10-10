@@ -514,14 +514,14 @@ def edit_siblings(person_id):
             # SIBLINGS
             # ADD THE CURRENT MY_SIBLINGS TO THE ID OF THE CURRENT
             # SIBLING IN THE ITERATION
-            my_siblings = []
-            for sibling in combined_siblings:
-                my_siblings = combined_siblings.copy()
-                my_siblings.remove(sibling)
-                for add_sibling in my_siblings:
-                    mongo.db.people.find_one_and_update(
-                        {"_id": ObjectId(sibling)},
-                        {"$addToSet": {"siblings": add_sibling}})
+            #my_siblings = []
+            #for sibling in combined_siblings:
+                #my_siblings = combined_siblings.copy()
+                #my_siblings.remove(sibling)
+                #for add_sibling in my_siblings:
+                    #mongo.db.people.find_one_and_update(
+                        #{"_id": ObjectId(sibling)},
+                        #{"$addToSet": {"siblings": add_sibling}})
 
         else:
             # ELSE THE SIBLING DOES EXIST IN DB, SO WE UPDATE THEM:
@@ -571,40 +571,44 @@ def edit_siblings(person_id):
             combined_siblings = list(set(
                 person_and_sibling_list + sibling_siblings_id_list))
 
-            # STAGE 7 -
-            # PUSH EACH MY_SIBLINGS LIST TO EACH SIBLING
-            # CREATE A MY_SIBLING_LIST - THIS LIST IS FOR ADDING TO EACH
-            # SIBLING
-            # MAKE MY_SIBLINGS EQUAL A COPY OF COMBINED SIBLINGS
-            # THEN REMOVE CURRENT SIBLING IN THE ITERATION FROM MY
-            # SIBLINGS
-            # ADD THE CURRENT MY_SIBLINGS TO THE ID OF THE CURRENT
-            # SIBLING IN THE ITERATION
-            my_siblings = []
-            for main_sibling in combined_siblings:
-                possible_siblings = combined_siblings.copy()
-                possible_siblings.remove(main_sibling)
-                # HERE WE WILL CHECK TO SEE THAT ANY SIBLING IN THIS LIST
-                # HAS AT LEAST ONE MATCHING PARENT. ELSE THEY ARE NOT
-                # REAL SIBLINGS OR HALF SIBLINGS:
-                for sibling_in_list in possible_siblings:
-                    # GET THE PARENTS THE OF MAIN SIBLING IN THE LOOP
-                    main_sibling_data = mongo.db.people.find_one(
-                        {"_id": ObjectId(main_sibling)})
-                    main_sibling_parents = [
-                        main_sibling_data['parents']['father'],
-                        main_sibling_data['parents']['mother']]
-                    # GET THE PARENTS OF SIBLING IN LIST
-                    sibling_in_list_data = mongo.db.people.find_one(
-                        {"_id": ObjectId(sibling_in_list)})
-                    sibling_in_list_parents = [
-                        sibling_in_list_data['parents']['father'],
-                        sibling_in_list_data['parents']['mother']]
-                    # COMPARE THE PARENTS OF MAIN SIBLING AND SIBLING IN LIST
-                    for sibling_parent in main_sibling_parents:
-                        for sib_parent in sibling_in_list_parents:
-                            # IF ANY OF THE PARENTS MATCH THEN WE CAN ADD
-                            # SIBLING_IN_LIST TO THE MAIN SIBLING
+        # STAGE 7 -
+        # THIS HANDLES BOTH NEW AND EXISTING CASES -
+        # PUSH EACH MY_SIBLINGS LIST TO EACH SIBLING
+        # CREATE A MY_SIBLING_LIST - THIS LIST IS FOR ADDING TO EACH
+        # SIBLING
+        # MAKE MY_SIBLINGS EQUAL A COPY OF COMBINED SIBLINGS
+        # THEN REMOVE CURRENT SIBLING IN THE ITERATION FROM MY
+        # SIBLINGS
+        # ADD THE CURRENT MY_SIBLINGS TO THE ID OF THE CURRENT
+        # SIBLING IN THE ITERATION
+        my_siblings = []
+        for main_sibling in combined_siblings:
+            possible_siblings = combined_siblings.copy()
+            possible_siblings.remove(main_sibling)
+            # HERE WE WILL CHECK TO SEE THAT ANY SIBLING IN THIS LIST
+            # HAS AT LEAST ONE MATCHING PARENT. ELSE THEY ARE NOT
+            # REAL SIBLINGS OR HALF SIBLINGS:
+            for sibling_in_list in possible_siblings:
+                # GET THE PARENTS THE OF MAIN SIBLING IN THE LOOP
+                main_sibling_data = mongo.db.people.find_one(
+                    {"_id": ObjectId(main_sibling)})
+                main_sibling_parents = [
+                    main_sibling_data['parents']['father'],
+                    main_sibling_data['parents']['mother']]
+                # GET THE PARENTS OF SIBLING IN LIST
+                sibling_in_list_data = mongo.db.people.find_one(
+                    {"_id": ObjectId(sibling_in_list)})
+                sibling_in_list_parents = [
+                    sibling_in_list_data['parents']['father'],
+                    sibling_in_list_data['parents']['mother']]
+                # COMPARE THE PARENTS OF MAIN SIBLING AND SIBLING IN LIST
+                for sibling_parent in main_sibling_parents:
+                    for sib_parent in sibling_in_list_parents:
+                        # IF ANY OF THE PARENTS MATCH THEN WE CAN ADD
+                        # SIBLING_IN_LIST TO THE MAIN SIBLING
+                        print("#############################################################################")
+                        print(sibling_parent, sib_parent)
+                        if sibling_parent == sib_parent:
                             mongo.db.people.find_one_and_update(
                                 {"_id": ObjectId(main_sibling)},
                                 {"$addToSet": {
@@ -619,6 +623,31 @@ def edit_siblings(person_id):
         persons_parents=persons_parents,
         mothers_partners_list=mothers_partners_list,
         fathers_partners_list=fathers_partners_list, person=person)
+
+
+@app.route("/check_if_partner_exists/<person_id>")
+def check_if_partner_exists(person_id):
+
+    # FUNCTION THAT CHECKS IF PERSON BEING EDITED HAS ANY PARTNERS
+    # IF YES- CONTINUE TO EDIT CHILDREN
+    # IF NO - GIVE OPTION SCREEN WHAT TO DO NEXT
+
+    # SETUP VARIABLES
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+    persons_id = person["_id"]
+    persons_spouse_partner_ids = person["spouse_partner"]
+
+    # RUN THE CHECK
+    if len(persons_spouse_partner_ids) > 0:
+        return redirect(url_for(
+            "edit_children", person_id=person_id))
+    else:
+        message = "This person has no spouse or partner"
+        message2 = "Circles needs a person to have both parents assigned before adding children"
+
+    return render_template("check_if_partner_exists.html", person=person, message=message, message2=message2)
+
+
 
 
 # ROUTE TO HANDLE ADDING OF CHILDREN TO PERSON
