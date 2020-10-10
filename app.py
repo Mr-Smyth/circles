@@ -15,45 +15,50 @@ if os.path.exists("env.py"):
 
 app = Flask(__name__)
 
-# SETUP OUR env VARIABLES
-# MONGO DBNAME
+#   SETUP OUR env VARIABLES
+#   MONGO DBNAME
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
-# GET THE MONGO URI OR CONNECTION STRING
+#   GET THE MONGO URI OR CONNECTION STRING
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
-# GET THE SECRET KEY WHICH IS REQUIRED FOR PARTS OF FLASK, LIKE FLASH
+#    GET THE SECRET KEY WHICH IS REQUIRED FOR PARTS OF FLASK, LIKE FLASH
 app.secret_key = os.environ.get("MONGO_DBNAME")
 
-# SETUP INSTANCE OF PyMongo AND ADD IN app.py
+#   SETUP INSTANCE OF PyMongo AND ADD IN app.py
 mongo = PyMongo(app)
 
 
-# BASE ROUTE
+#   BASE ROUTE
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template("home.html")
 
-# SEARCH
+#   SEARCH ROUTE
 @app.route("/search", methods=["GET", "POST"])
 def search():
+
+    #   FUNCTION PURPOSE -
+    #   TO BUILD A SEARCH QUERY FROM WHATEVER THE USER CHOOSES TO
+    #       ENTER AND RUN THE SEARCH AND RETURN RESULTS
+
     if request.method == "POST":
-        # SETUP A DICTIONARY THAT HOLDS THE INFOR WE CAN QUERY
-        # IT WILL POPULATE FROM THE FORM.
+        #   SETUP A DICTIONARY THAT HOLDS THE INFO WE CAN QUERY
+        #   IT WILL POPULATE FROM THE FORM.
         searchInput = {
             "first_name": request.form.get("searchFirstName").lower(),
             "last_name": request.form.get("searchLastName").lower(),
             "dob": request.form.get("searchDob"),
             }
-        # SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
-        # searchInput ABOVE TO BUILD A QUERY FROM ONLY POPULATED
-        # VALUES
+        #   SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
+        #       searchInput ABOVE TO BUILD A QUERY FROM ONLY POPULATED
+        #       VALUES
         query = {}
         for k, v in searchInput.items():
             if len(v) > 0:
                 query[k] = v
 
-        # CHECK IF THE QUERY IS NOT  BLANK - SOMEONE JUST CLICKED
-        # SEARCH WITHOUT ANY ENTRIES
+        #   CHECK IF THE QUERY IS NOT BLANK - SOMEONE JUST CLICKED
+        #       SEARCH WITHOUT ANY ENTRIES?
         if len(query) > 0:
             people = list(mongo.db.people.find(query))
             error = "Sorry we have no records matching your query."
@@ -64,25 +69,29 @@ def search():
     return render_template("home.html", people=people, error=error)
 
 
-# ADD PERSON ROUTE
+#   ADD PERSON ROUTE
 @app.route("/add_person/", methods=["GET", "POST"])
 def add_person():
 
+    #   FUNCTION PURPOSE -
+    #   GETS INFORMATION FROM THE FORM AND CREATES A NEW
+    #       PERSON IN CIRCLES
+
     if request.method == "POST":
-        # USED TO SEARCH FOR EXISTING PERSON
+        #   USED TO SEARCH FOR EXISTING PERSON - AVOIDING DUPLICATION
         person_search = {
             "first_name": request.form.get("first_name").lower(),
             "last_name": request.form.get("last_name").lower(),
-            "gender": request.form.get("gender"),
+            "gender": request.form.get("gender").lower(),
             "dob": request.form.get("dob"),
         }
-        # USED TO UPDATE AN EXISTING PERSON
+        #   USED TO UPDATE AN EXISTING PERSON
         person_update = {
             "family_name": request.form.get("family_name").lower(),
             "first_name": request.form.get("first_name").lower(),
             "last_name": request.form.get("last_name").lower(),
             "birth_surname": request.form.get("birth_surname"),
-            "gender": request.form.get("gender"),
+            "gender": request.form.get("gender").lower(),
             "dob": request.form.get("dob"),
             "dod": request.form.get("dod"),
             "birth_address": request.form.get("birth_address"),
@@ -90,7 +99,7 @@ def add_person():
             "information": request.form.get("person_info"),
         }
 
-        # CHECK TO SEE IF PERSON ALREADY EXISTS
+        #    CHECK TO SEE IF PERSON ALREADY EXISTS
         if mongo.db.people.count_documents(person_search, limit=1) == 0:
             # SETUP DICTIONARY FOR IMPORTING PERSON TO MONGO DB
             person = {
@@ -101,7 +110,7 @@ def add_person():
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
                 "spouse_partner": [],
-                "gender": request.form.get("gender"),
+                "gender": request.form.get("gender").lower(),
                 "dob": request.form.get("dob"),
                 "dod": request.form.get("dod"),
                 "birth_address": request.form.get("birth_address"),
@@ -109,11 +118,11 @@ def add_person():
                 "information": request.form.get("person_info"),
                 "children": []
             }
-            # ADD THE PERSON DICTIONARY TO MONGO
+            #   ADD THE PERSON DICTIONARY TO MONGO
             person_inserted = mongo.db.people.insert_one(person)
             person_id = person_inserted.inserted_id
         else:
-            # THEN PERSON ALREADY EXISTS, WE CAN UPDATE THEM
+            #   THEN PERSON ALREADY EXISTS, WE CAN UPDATE THEM
             person_id = mongo.db.people.find_one(
                 person_search)["_id"]
             mongo.db.people.find_one_and_update(
@@ -132,72 +141,85 @@ def add_person():
         "add_person.html", families=families)
 
 
-# EDIT PARENTS ROUTE AND FUNCTION
+#   EDIT PARENTS ROUTE AND FUNCTION
 @app.route("/edit_parents/<person_id>", methods=["GET", "POST"])
 def edit_parents(person_id):
 
-    # SETUP SOME REQUIRED VARIABLES
+    # FUNCTION PURPOSE -
+    # 1.    GET AND DISPLAY EXISTING PARENTS IN FORM.
+    # 2.    ANY NEW NAME ENTERED IN FORM WILL BECOME THE NEW PARENT - IT
+    #       DOES NOT EDIT EXISTING PARENT, IT SEARCHES TO SEE IF THE PARENT
+    #       EXISTS, IF YES, THEN THEY ARE UPDATED AS A PARENT OF THE PERSON
+    #       BEING EDITED, OTHERWISE THEY ARE CREATED.
+    # 3.    IT ALSO MAKES SURE THAT THE 2 PARENTS ARE CONNECTED AS
+    #       SPOUSE_PARTNER AS THEY HAVE A RELEVANT RELATIONSHIP DUE TO HAVING
+    #       A CHILD.
+    # 4.    ON SUBMIT WE ALSO CHECK FOR EXISTING CHILDREN OF THE PARENTS, AND
+    #       ADD THEM AS SIBLINGS TO THE PERSON BEING EDITED AND VICE-VERSA
+
+    #   SETUP REQUIRED VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
     persons_mother_id = person["parents"]["mother"]
     persons_father_id = person["parents"]["father"]
 
-    # PERSONS MOTHER - CHECK IF MOTHER ALREADY LINKED
+    #   PREP FOR RENDER TEMPLATE -
+    #   PERSONS MOTHER - CHECK IF MOTHER ALREADY LINKED
     if persons_mother_id != "":
-        # THEN IT HAS EXISTING MOTHER - SO ASSIGN THE ID
+        #   THEN IT HAS EXISTING MOTHER - SO ASSIGN THE ID
         existing_mother = mongo.db.people.find_one({
             "_id": ObjectId(persons_mother_id)
             })
     else:
-        # ITS A NEW MOTHER - NO TEMPLATE YET
-        # SO WE GIVE IT ONE
+        #   ITS A NEW MOTHER - NO TEMPLATE YET
+        #   SO WE GIVE IT ONE
         existing_mother = {
             "first_name": "",
             "last_name": "",
             "dob": ""
         }
 
-    # PERSONS FATHER - CHECK IF FATHER ALREADY LINKED
+    #   PERSONS FATHER - CHECK IF FATHER ALREADY LINKED
     if persons_father_id != "":
-        # THEN IT HAS EXISTING FATHER - SO ASSIGN THE ID
+        #   THEN IT HAS EXISTING FATHER - SO ASSIGN THE ID
         existing_father = mongo.db.people.find_one({
             "_id": ObjectId(persons_father_id)
             })
     else:
-        # ITS A NEW FATHER - NO TEMPLATE YET
-        # SO WE GIVE IT ONE
+        #    ITS A NEW FATHER - NO TEMPLATE YET
+        #   SO WE GIVE IT ONE
         existing_father = {
             "first_name": "",
             "last_name": "",
             "dob": ""
         }
 
-    # WHEN FORM IS SUBMITTED / UPDATED
+    #   WHEN FORM IS SUBMITTED / UPDATED
     if request.method == "POST":
 
-        # IMPORTANT - WE REMOVE THE PERSONS ID FROM ANY CHILDREN
-        # ARRAY - THIS IS BECAUSE WE ARE POSTING NEW PARENTS.
-        # FOR EXAMPLE: WE DONT WANT PERSON HAVING 2 BIRTH MOTHERS.
+        #   IMPORTANT - WE REMOVE THE PERSONS ID FROM ANY CHILDREN
+        #   ARRAY - THIS IS BECAUSE WE ARE POSTING NEW PARENTS.
+        #   FOR EXAMPLE: WE DONT WANT PERSON HAVING 2 BIRTH MOTHERS.
         mongo.db.people.update({}, {"$pull": {
              "children": {"$in": [persons_id]}}}, multi=True)
 
-        # GET THE TEMPLTE FROM THE FORM
-        # FOR MOTHER
+        #   GET THE TEMPLTE FROM THE FORM
+        #   FOR MOTHER
         mother = {
             "first_name": request.form.get("mothers_first_name").lower(),
             "last_name": request.form.get("mothers_last_name").lower(),
             "dob": request.form.get("mothers_dob")
         }
-        # FOR FATHER
+        #   FOR FATHER
         father = {
             "first_name": request.form.get("fathers_first_name").lower(),
             "last_name": request.form.get("fathers_last_name").lower(),
             "dob": request.form.get("fathers_dob")
         }
 
-        # FIRST WE CHECK IF MOTHER EXISTS ANYWHERE IN THE DB
+        #   FIRST WE CHECK IF MOTHER EXISTS ANYWHERE IN THE DB
         if mongo.db.people.count_documents(mother, limit=1) == 0:
-            # IF THE COUNT IS == O, THEN WE INSERT A NEW MOTHER
+            #   IF THE COUNT IS == O, THEN WE INSERT A NEW MOTHER
             mother = {
                 "family_name": person["family_name"].lower(),
                 "first_name": request.form.get(
@@ -207,7 +229,7 @@ def edit_parents(person_id):
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
                 "spouse_partner": [],
-                "gender": "Female",
+                "gender": "female",
                 "dob": request.form.get("mothers_dob"),
                 "dod": "",
                 "birth_address": "",
@@ -215,22 +237,22 @@ def edit_parents(person_id):
                 "information": "",
                 "children": [persons_id]
             }
-            # INSERT THE NEW MOTHER, THEN GET BACK THE ID
+            #   INSERT THE NEW MOTHER, THEN GET BACK THE ID
             mongo.db.people.insert_one(mother)
             mother_id = mongo.db.people.find_one(mother)["_id"]
 
         else:
-            # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR MOTHER
-            # SO WE UPDATE THAT MOTHER WITH THEIR NEW CHILD
+            #   IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR MOTHER
+            #   SO WE UPDATE THAT MOTHER WITH THEIR NEW CHILD
             found_mother = mongo.db.people.find_one(mother)["_id"]
             mongo.db.people.find_one_and_update(
                 {"_id": ObjectId(found_mother)},
                 {"$addToSet": {"children": persons_id}})
             mother_id = found_mother
 
-        # NEXT WE CHECK IF FATHER EXISTS ANYWHERE IN THE DB
+        #   NEXT WE CHECK IF FATHER EXISTS ANYWHERE IN THE DB
         if mongo.db.people.count_documents(father, limit=1) == 0:
-            # IF THE COUNT IS == O, THEN WE INSERT A NEW FATHER
+            #   IF THE COUNT IS == O, THEN WE INSERT A NEW FATHER
             father = {
                 "family_name": person["family_name"].lower(),
                 "first_name": request.form.get(
@@ -241,7 +263,7 @@ def edit_parents(person_id):
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
                 "spouse_partner": [],
-                "gender": "Male",
+                "gender": "male",
                 "dob": request.form.get("fathers_dob"),
                 "dod": "",
                 "birth_address": "",
@@ -249,14 +271,14 @@ def edit_parents(person_id):
                 "information": "",
                 "children": [persons_id]
             }
-            # INSERT THE NEW FATHER, THEN GET BACK THE ID
+            #   INSERT THE NEW FATHER, THEN GET BACK THE ID
             mongo.db.people.insert_one(father)
             father_id = mongo.db.people.find_one(father)["_id"]
 
         else:
-            # IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR FATHER
-            # WE ADD PERSON AS A CHILD
-            # WE UPDATE THAT FATHER
+            #   IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR FATHER
+            #   WE ADD PERSON AS A CHILD
+            #   WE UPDATE THAT FATHER
             found_father = mongo.db.people.find_one(father)["_id"]
             mongo.db.people.find_one_and_update(
                 {"_id": ObjectId(found_father)},
@@ -264,14 +286,14 @@ def edit_parents(person_id):
                  "$set": father})
             father_id = found_father
 
-        # HERE WE BUILD THE PARENTS INTO A DICT AND SET IT INSIDE THE PERSON
+        #   HERE WE BUILD THE PARENTS INTO A DICT AND SET IT INSIDE THE PERSON
         parents = {"mother": mother_id, "father": father_id}
         mongo.db.people.find_one_and_update(
             {"_id": ObjectId(person_id)}, {"$set": {"parents": parents}})
 
-        # WE ALSO NEED TO ADD THE PARENTS AS A SPOUSE / PARTNERS OF
-        # EACH OTHER, BECAUSE THEY HAVE A SIGNIFICANT RELATIONSHIP
-        # DUE TO HAVING A CHILD TOGETHER
+        #   WE ALSO NEED TO ADD THE PARENTS AS A SPOUSE / PARTNERS OF
+        #   EACH OTHER, BECAUSE THEY HAVE A SIGNIFICANT RELATIONSHIP
+        #   DUE TO HAVING A CHILD TOGETHER
         mongo.db.people.find_one_and_update(
             {"_id": ObjectId(mother_id)},
             {"$addToSet": {"spouse_partner": father_id}})
@@ -286,16 +308,37 @@ def edit_parents(person_id):
         fathers_children = mongo.db.people.find_one(
             {"_id": ObjectId(father_id)})["children"]
         combined_children = list(set(mothers_children + fathers_children))
-        for child in combined_children:
-            mongo.db.people.find_one_and_update(
-                {"_id": ObjectId(person_id)},
-                {"$addToSet": {"siblings": child}})
 
-
-         # COMBINE THESE LISTS OF SIBLINGS
-          #  person_and_sibling_list = [persons_id, found_sibling_id]
-           # combined_siblings = list(set(
-            #    person_and_sibling_list + sibling_siblings_id_list))
+        #   MAKE A LIST OF SIBLINGS FOR EACH SIBLING.
+        #   EACH SIBLING MUST HAVE AT LEAST ONE MATCHING PARENT
+        for main_sibling in combined_children:
+            possible_siblings = combined_children.copy()
+            possible_siblings.remove(main_sibling)
+            #   HERE WE WILL CHECK TO SEE THAT ANY SIBLING IN THIS LIST
+            #   HAS AT LEAST ONE MATCHING PARENT.
+            for sibling_in_list in possible_siblings:
+                #   GET THE PARENTS THE OF MAIN SIBLING IN THE LOOP
+                main_sibling_data = mongo.db.people.find_one(
+                    {"_id": ObjectId(main_sibling)})
+                main_sibling_parents = [
+                    main_sibling_data['parents']['father'],
+                    main_sibling_data['parents']['mother']]
+                #   GET THE PARENTS OF SIBLING IN LIST
+                sibling_in_list_data = mongo.db.people.find_one(
+                    {"_id": ObjectId(sibling_in_list)})
+                sibling_in_list_parents = [
+                    sibling_in_list_data['parents']['father'],
+                    sibling_in_list_data['parents']['mother']]
+                #   COMPARE THE PARENTS OF MAIN SIBLING AND SIBLING IN LIST
+                for sibling_parent in main_sibling_parents:
+                    for sib_parent in sibling_in_list_parents:
+                        #   IF ANY OF THE PARENTS MATCH THEN WE CAN ADD
+                        #   SIBLING_IN_LIST TO THE MAIN SIBLING
+                        if sibling_parent == sib_parent:
+                            mongo.db.people.find_one_and_update(
+                                {"_id": ObjectId(main_sibling)},
+                                {"$addToSet": {
+                                    "siblings": sibling_in_list}})
 
         flash("Circle has been updated")
         return redirect(url_for("edit_spouse_partner", person_id=person_id))
@@ -353,7 +396,7 @@ def edit_spouse_partner(person_id):
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
                 "spouse_partner": [],
-                "gender": request.form.get("gender"),
+                "gender": request.form.get("gender").lower(),
                 "dob": request.form.get("spouse_partner_dob"),
                 "dod": "",
                 "birth_address": "",
@@ -507,7 +550,7 @@ def edit_siblings(person_id):
                 "parents": selected_parents,
                 "siblings": [],
                 "spouse_partner": [],
-                "gender": request.form.get("gender"),
+                "gender": request.form.get("gender").lower(),
                 "dob": request.form.get("sibling_dob"),
                 "dod": "",
                 "birth_address": "",
@@ -646,14 +689,12 @@ def check_if_partner_exists(person_id):
     return render_template("check_if_partner_exists.html", person=person, message=message, message2=message2)
 
 
-
-
 # ROUTE TO HANDLE ADDING OF CHILDREN TO PERSON
 @app.route("/edit_children/<person_id>", methods=["GET", "POST"])
 def edit_children(person_id):
 
-    # FUNCTION  - CHECKS FOR PERSONS EXISTING CHILDREN
-    #           
+    # FUNCTION PURPOSE - CHECKS FOR PERSONS EXISTING CHILDREN
+    #
 
     # SETUP SOME REQUIRED VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
@@ -698,8 +739,7 @@ def edit_children(person_id):
             "dob": request.form.get("child_dob")
         }
 
-        # COMBINED SIBLINGS WILL BE USED TO CREATE THE SIBLING LINK
-        # BETWEEN THIS CHILD AND ALL OTHER POSSIBLE SIBLINGS
+        # COMBINED CHILDS SIBLINGS WILL BE USED TO CREATE THE SIBLING LINKS
         combined_childs_siblings = []
         persons_children = person['children']
         for item in persons_children:
@@ -719,7 +759,7 @@ def edit_children(person_id):
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
                 "spouse_partner": [],
-                "gender": request.form.get("gender"),
+                "gender": request.form.get("gender").lower(),
                 "dob": request.form.get("child_dob"),
                 "dod": "",
                 "birth_address": "",
@@ -727,10 +767,16 @@ def edit_children(person_id):
                 "information": "",
                 "children": []
             }
-            # INSERT THE NEW CHILD THEN GET ID IN CORRECT FORMAT
+            #   INSERT THE NEW CHILD THEN GET ID IN CORRECT FORMAT
             mongo.db.people.insert_one(child)
             child_id = mongo.db.people.find_one(child)["_id"]
-            # ADD THE NEW CHILD TO THE COMINED SIBLINGS
+
+            #   UPDATE THE PERSON WITH THIS NEW CHILD:
+            #mongo.db.people.find_one_and_update(
+             #       {"_id": ObjectId(person_id)},
+              #      {"$addToSet": {"children": child_id}})
+
+            #   ADD THE NEW CHILD TO THE COMINED SIBLINGS
             combined_childs_siblings.append(child_id)
 
         else:
@@ -749,8 +795,8 @@ def edit_children(person_id):
                     combined_childs_siblings.append(item)
 
         # GET THE SELECTED OTHER PARENT
-        # WE NEED TO ONLY CHECK IF THE PERSON HAS A SPOUSE
-        # OR PARTNER
+        # WE NEED TO CHECK IF THE PERSON HAS A SPOUSE
+        # OR PARTNER PROPERLY LINKED
         selected_parent_id = False
         if len(persons_spouse_partners) != 0:
             selected_parents_in_form = request.form.get("child_parents")
@@ -779,7 +825,7 @@ def edit_children(person_id):
             if selected_parent_id:
                 child_parents['mother'] = selected_parent_id
         else:
-            child_parents = {"mother": "", "father": ""}
+            child_parents = {"mother": "9", "father": "6"}
 
         # UPDATE THE CHILD WITH THEIR PARENTS
         mongo.db.people.find_one_and_update(
@@ -796,16 +842,37 @@ def edit_children(person_id):
                     {"_id": ObjectId(selected_parent_id)},
                     {"$addToSet": {"children": child_id}})
 
-        # COMBINE ANY CHILDREN AS SIBLINGS - CIRCLES SEES HALF OR FULL
-        # SIBLINGS AS REAL SIBLINGS. SO WE NEED TO LINK THEM ALL AS SIBLINGS
-        # OF EACHOTHER.
-        for sibling in combined_childs_siblings:
-            my_siblings = combined_childs_siblings.copy()
-            my_siblings.remove(sibling)
-            for add_sibling in my_siblings:
-                mongo.db.people.find_one_and_update(
-                    {"_id": ObjectId(sibling)},
-                    {"$addToSet": {"siblings": add_sibling}})
+        #   MAKE A LIST OF SIBLINGS FOR EACH SIBLING.
+        #   EACH SIBLING MUST HAVE AT LEAST ONE MATCHING PARENT
+        #   THEN ADD TO EACH SIBLING
+        for main_sibling in combined_childs_siblings:
+            possible_siblings = combined_childs_siblings.copy()
+            possible_siblings.remove(main_sibling)
+            # HERE WE WILL CHECK TO SEE THAT ANY SIBLING IN THIS LIST
+            # HAS AT LEAST ONE MATCHING PARENT.
+            for sibling_in_list in possible_siblings:
+                # GET THE PARENTS THE OF MAIN SIBLING IN THE LOOP
+                main_sibling_data = mongo.db.people.find_one(
+                    {"_id": ObjectId(main_sibling)})
+                main_sibling_parents = [
+                    main_sibling_data['parents']['father'],
+                    main_sibling_data['parents']['mother']]
+                # GET THE PARENTS OF SIBLING IN LIST
+                sibling_in_list_data = mongo.db.people.find_one(
+                    {"_id": ObjectId(sibling_in_list)})
+                sibling_in_list_parents = [
+                    sibling_in_list_data['parents']['father'],
+                    sibling_in_list_data['parents']['mother']]
+                # COMPARE THE PARENTS OF MAIN SIBLING AND SIBLING IN LIST
+                for sibling_parent in main_sibling_parents:
+                    for sib_parent in sibling_in_list_parents:
+                        # IF ANY OF THE PARENTS MATCH THEN WE CAN ADD
+                        # SIBLING_IN_LIST TO THE MAIN SIBLING
+                        if sibling_parent == sib_parent:
+                            mongo.db.people.find_one_and_update(
+                                {"_id": ObjectId(main_sibling)},
+                                {"$addToSet": {
+                                    "siblings": sibling_in_list}})
 
         flash("Circle has been updated")
         return redirect(url_for("edit_children", person_id=person_id))
