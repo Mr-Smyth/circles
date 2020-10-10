@@ -279,6 +279,24 @@ def edit_parents(person_id):
             {"_id": ObjectId(father_id)},
             {"$addToSet": {"spouse_partner": mother_id}})
 
+        #   GET THE CHILDREN OF BOTH PARENTS AND ADD THEM AS SIBLINGS OF
+        #   THE PERSON BEING EDITED
+        mothers_children = mongo.db.people.find_one(
+            {"_id": ObjectId(mother_id)})["children"]
+        fathers_children = mongo.db.people.find_one(
+            {"_id": ObjectId(father_id)})["children"]
+        combined_children = list(set(mothers_children + fathers_children))
+        for child in combined_children:
+            mongo.db.people.find_one_and_update(
+                {"_id": ObjectId(person_id)},
+                {"$addToSet": {"siblings": child}})
+
+
+         # COMBINE THESE LISTS OF SIBLINGS
+          #  person_and_sibling_list = [persons_id, found_sibling_id]
+           # combined_siblings = list(set(
+            #    person_and_sibling_list + sibling_siblings_id_list))
+
         flash("Circle has been updated")
         return redirect(url_for("edit_spouse_partner", person_id=person_id))
 
@@ -385,6 +403,19 @@ def edit_spouse_partner(person_id):
 # ROUTE TO HANDLE ADDING OF A SIBLING
 @app.route("/edit_siblings/<person_id>", methods=["GET", "POST"])
 def edit_siblings(person_id):
+
+    #   FUNCTION PURPOSE -
+    #   GETS THE PERSONS SIBLING INFORMATION AND DISPLATS IT WITHIN
+    #       THE TEMPLATE.
+    #   ON POST -
+    #   SEARCH FOR THE SIBLING ENTERED FROM THE FORM
+    #   GRAB PARENTS FROM THE FORM
+    #   IF SIBLING DOES NOT EXIST - CREATE IT, LINK ITS SIBLINGS,
+    #       UPDATE OTHER SIBLINGS, PARENTS AND INSERT INTO PARENTS CHILDREN
+    #   ELSE IF THE SIBLING DOES EXIST - LINK IT TO ITS NEW SIBLINGS,
+    #       UPDATE ITS NEW SIBLINGS. UPDATE PARENTS AND UPDATE NEW AND
+    #       OLD PARENTS CHILDREN
+
     # SETUP SOME REQUIRED VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
@@ -441,19 +472,15 @@ def edit_siblings(person_id):
 
     # WHEN FORM IS SUBMITTED / UPDATED
     if request.method == "POST":
-        # GET THE TEMPLTE FROM THE FORM
-        # FOR SIBLING
+        # GET THE TEMPLTE FROM THE FORM FOR SIBLING
         sibling_search = {
             "first_name": request.form.get("sibling_first_name").lower(),
             "last_name": request.form.get("sibling_last_name").lower(),
             "dob": request.form.get("sibling_dob")
         }
 
-        # GET THIS NEW SIBLINGS SELECTED PARENTS FROM FORM AND
-        # INSERT THEM INTO THE NEW SIBLING AS THE PARENTS OF
-        # THE NEW SIBLING
-        # IT WILL RETURN IN THE FORMAT: 'MOTHER_ID, FATHER_ID'
-        # SO WE WILL NEED TO CONVERT IT BACK TO PROPPER ID'S
+        # GET THE 2 SELECTED PARENTS FROM THE FORM
+        # EXTRACT THE 2 ID'S FROM THE RETURNED STRING
         selected_parents = {"mother": "", "father": ""}
         if len(persons_parents) != 0:
             selected_parents_in_form = request.form.get(
@@ -470,8 +497,7 @@ def edit_siblings(person_id):
 
         # SEE IF PERSON ENTERED ON FORM EXISTS
         if mongo.db.people.count_documents(sibling_search, limit=1) == 0:
-            # THIS IS THE CASE THAT THIS ENTERED SIBLING DOES NOT EXIST
-            # IN THE DB. IT IS TEMPLATE WE USE TO CREATE A NEW SIBLING
+            # FORM USED TO CREATE A NEW SIBLING
             sibling = {
                 "family_name": person["family_name"].lower(),
                 "first_name": request.form.get(
@@ -489,74 +515,59 @@ def edit_siblings(person_id):
                 "information": "",
                 "children": []
             }
-            # INSERT THE NEW SIBLING THEN GET ID IN CORRECT FORMAT
+            # INSERT THE NEW SIBLING THEN GET ID:
             mongo.db.people.insert_one(sibling)
             new_sibling_id = mongo.db.people.find_one(sibling)["_id"]
 
-            # UPDATE PERSONS SIBLING ARRAY WITH ID FROM NEW SIBLING
+            # UPDATE PERSONS SIBLING ARRAY WITH ID FROM NEW SIBLING:
             mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(person_id)},
                     {"$addToSet": {"siblings": new_sibling_id}})
 
-            # UPDATE PERSONS FULL OR HALF SIBLINGS WITH THIS NEW SIBLING -
+            # UPDATE THE PARENTS OF THIS NEW SIBLING AS THEIR NEW CHILD:
+            for key, value in selected_parents.items():
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(value)}, {"$addToSet": {
+                        "children": new_sibling_id}})
 
-            # PERSONS SIBLING + PERSONS_ID IS THE FULL SIBLING LIST
+            # BUILD LIST OF FULL OR HALF SIBLINGS.
             combined_siblings = persons_siblings_ids.copy()
             combined_siblings.append(persons_id)
             combined_siblings.append(new_sibling_id)
 
-            # ADD THIS LIST, TO ALL SIBLINGS, BUT REMOVE EACH SIBLING
-            # FROM OWN LIST:
-            # SO CREATE A MY_SIBLING_LIST - THIS LIST IS FOR ADDING
-            # TO EACH SIBLING
-            # THEN MAKE MY_SIBLINGS EQUAL A COPY OF COMBINED SIBLINGS
-            # THEN REMOVE CURRENT SIBLING IN THE ITERATION FROM MY
-            # SIBLINGS
-            # ADD THE CURRENT MY_SIBLINGS TO THE ID OF THE CURRENT
-            # SIBLING IN THE ITERATION
-            #my_siblings = []
-            #for sibling in combined_siblings:
-                #my_siblings = combined_siblings.copy()
-                #my_siblings.remove(sibling)
-                #for add_sibling in my_siblings:
-                    #mongo.db.people.find_one_and_update(
-                        #{"_id": ObjectId(sibling)},
-                        #{"$addToSet": {"siblings": add_sibling}})
-
         else:
-            # ELSE THE SIBLING DOES EXIST IN DB, SO WE UPDATE THEM:
+            #   ELSE THE SIBLING DOES EXIST IN DB, SO WE UPDATE THEM:
 
-            # STAGE 1 -
-            # GET THE FOUND SIBLING
+            #   GET THE FOUND SIBLING
             found_sibling = mongo.db.people.find_one(sibling_search)
             found_sibling_id = found_sibling["_id"]
 
-            # STAGE 2 -
-            # WE ARE GOING TO USE THE PARENT SELECTION FROM THE FORM
-            # TO UPDATE THE FOUND SIBLINGS PARENTS
-            # FIRST WE REMOVE THE SIBLINGS ID FROM ANY CHILDREN
-            # ARRAY - THIS IS BECAUSE WE ARE POSTING NEW PARENTS.
-            # FOR EXAMPLE: WE DONT WANT SIBLING HAVING 2 BIRTH MOTHERS.
+            #   WE REMOVE THE FOUND SIBLING ID FROM ANY CHILDREN
+            #       ARRAY - THIS IS BECAUSE WE ARE POSTING NEW PARENTS.
+            #   FOR EXAMPLE: WE DONT WANT SIBLING HAVING 2 BIRTH MOTHERS.
             mongo.db.people.update({}, {"$pull": {
              "children": {"$in": [found_sibling_id]}}}, multi=True)
 
-            # STAGE 3 -
-            # UPDATE THE FOUND SIBLING AND THE SELECTED PARENTS, IN CASE
-            # THEY NEED TO BE CHANGED
+            #   WE REMOVE THE FOUND SIBLING ID FROM ANY SIBLING
+            #       ARRAY - THIS IS IF THE PARENTS ARE CHANGING THEN SIBLINGS
+            mongo.db.people.update({}, {"$pull": {
+             "sibling": {"$in": [found_sibling_id]}}}, multi=True)
+
+            # UPDATE THE FOUND SIBLING WITH NEW PARENTS.
             mongo.db.people.find_one_and_update(
                 {"_id": ObjectId(found_sibling_id)},
                 {"$set": {"parents": selected_parents}})
+
+            # ADD FOUND SIBLING TO THE PARENTS CHILDREN ARRAY
             for key, value in selected_parents.items():
                 mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(value)}, {"$addToSet": {
                         "children": found_sibling_id}})
 
-            # STAGE 4 -
             # SEE IF THE EXISTING SIBLING WITHIN THE DB HAS
             # ANY EXISTING SIBLINGS
             found_sibling_siblings_ids = found_sibling["siblings"]
 
-            # STAGE 5 -
             # NOW LOOP OVER THE FOUND SIBLING SIBLINGS ARRAY AND BUILD
             # A LIST OF THEIR OBJECT ID'S
             sibling_siblings_id_list = []
@@ -565,29 +576,18 @@ def edit_siblings(person_id):
                 obj_id = obj["_id"]
                 sibling_siblings_id_list.append(obj_id)
 
-            # STAGE 6 -
             # COMBINE THESE LISTS OF SIBLINGS
             person_and_sibling_list = [persons_id, found_sibling_id]
             combined_siblings = list(set(
                 person_and_sibling_list + sibling_siblings_id_list))
 
-        # STAGE 7 -
-        # THIS HANDLES BOTH NEW AND EXISTING CASES -
-        # PUSH EACH MY_SIBLINGS LIST TO EACH SIBLING
-        # CREATE A MY_SIBLING_LIST - THIS LIST IS FOR ADDING TO EACH
-        # SIBLING
-        # MAKE MY_SIBLINGS EQUAL A COPY OF COMBINED SIBLINGS
-        # THEN REMOVE CURRENT SIBLING IN THE ITERATION FROM MY
-        # SIBLINGS
-        # ADD THE CURRENT MY_SIBLINGS TO THE ID OF THE CURRENT
-        # SIBLING IN THE ITERATION
-        my_siblings = []
+        #   MAKE A LIST OF SIBLINGS FOR EACH SIBLING.
+        #   EACH SIBLING MUST HAVE AT LEAST ONE MATCHING PARENT
         for main_sibling in combined_siblings:
             possible_siblings = combined_siblings.copy()
             possible_siblings.remove(main_sibling)
             # HERE WE WILL CHECK TO SEE THAT ANY SIBLING IN THIS LIST
-            # HAS AT LEAST ONE MATCHING PARENT. ELSE THEY ARE NOT
-            # REAL SIBLINGS OR HALF SIBLINGS:
+            # HAS AT LEAST ONE MATCHING PARENT.
             for sibling_in_list in possible_siblings:
                 # GET THE PARENTS THE OF MAIN SIBLING IN THE LOOP
                 main_sibling_data = mongo.db.people.find_one(
@@ -606,8 +606,6 @@ def edit_siblings(person_id):
                     for sib_parent in sibling_in_list_parents:
                         # IF ANY OF THE PARENTS MATCH THEN WE CAN ADD
                         # SIBLING_IN_LIST TO THE MAIN SIBLING
-                        print("#############################################################################")
-                        print(sibling_parent, sib_parent)
                         if sibling_parent == sib_parent:
                             mongo.db.people.find_one_and_update(
                                 {"_id": ObjectId(main_sibling)},
