@@ -33,6 +33,7 @@ mongo = PyMongo(app)
 def home():
     return render_template("home.html")
 
+
 #   SEARCH ROUTE
 @app.route("/search", methods=["GET", "POST"])
 def search():
@@ -882,18 +883,18 @@ def edit_children(person_id):
         existing_children=existing_children, person=person)
 
 
-# ROUTE TO MANAGE A RELATIONSHIP
+# ROUTE TO MANAGE A SPOUSE OR PARTNER RELATIONSHIP
 @app.route(
-    "/manage_relationship/<person_id>/<person2_id>",
-    methods=["GET", "POST"])
-def manage_relationship(person_id, person2_id):
+    "/manage_partner_relationship/<person_id>/<person2_id>")
+def manage_partner_relationship(person_id, person2_id):
 
-    # FUNCTION  - A BUFFER/CONFIRMATION HANDLER FOR THE UNLINKING
-    #           - OF A PERSON FROM A SPOUSE/PARTNER
-    #           - THIS FUNCTION DECIDES IF THE USER SHOULD BE ABLE
-    #           - TO UNLINK A SPOUSE OR PARTNER.
-    #           - UNLINK=TRUE OR FALSE IS THE KEY, TO ALLOWING
-    #           - JINGA TO SHOW CORRECT OPTION
+    # FUNCTION PURPOSE - 
+    # 1.    A BUFFER/CONFIRMATION HANDLER FOR THE UNLINKING
+    #           OF A PERSON FROM A SPOUSE/PARTNER
+    # 2.    THIS FUNCTION DECIDES IF THE USER SHOULD BE ABLE
+    #           TO UNLINK A SPOUSE OR PARTNER.
+    # 3.    UNLINK=TRUE OR FALSE IS THE KEY, TO ALLOWING
+    #           JINGA TO SHOW CORRECT OPTION
 
     # SETUP VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
@@ -903,38 +904,42 @@ def manage_relationship(person_id, person2_id):
     unlink = False
     message = ""
 
-    # CHECK IF PERSON HAS ANY CHILDREN - IF HE DOES
-    # CHECK DO THEY MATCH ANY OF THE PARTNERS CHILDREN
-    # IF THEY DO, WE MUST NOT UNLINK
+    #   CHECK IF PERSON HAS ANY CHILDREN - IF HE DOES
+    #   CHECK DO THEY MATCH ANY OF THE PARTNERS CHILDREN
+    #   IF THEY DO, WE MUST NOT UNLINK
 
-    # DOES PERSON HAVE ANY CHILDREN
+    #   DOES PERSON HAVE ANY CHILDREN
     if len(person_children) > 0:
-        # IF YES, THEN CHECK IF ANY MATCH THE PARTNERS CHILDREN
+        #   IF YES, THEN CHECK IF ANY MATCH THE PARTNERS CHILDREN
         check = any(
             item in person_children for item in partner_children)
 
-        # IF THERE IS A MATCH - THEN DO NOT ALLOW UNLINKING
+        #   IF THERE IS A MATCH - THEN DO NOT ALLOW UNLINKING
         if check is True:
             unlink = False
             message = "These people have shared children \
                             as a result we cannot seperate them as \
                             relevant partners"
-    # ELSE WE CAN ALLOW UNLINKING
+        else:
+            unlink = True
+            message = "These people have no shared children \
+                    it is safe to unlink them as relevant partners"
+    #   ELSE WE CAN ALLOW UNLINKING
     else:
         unlink = True
         message = "These people have no shared children \
                     it is safe to unlink them as relevant partners"
 
     return render_template(
-        "manage_relationship.html", unlink=unlink, person2=person2,
+        "manage_partner_relationship.html", unlink=unlink, person2=person2,
         person=person, message=message)
 
 
-# ROUTE TO HANDLE REMOVING A SPOUSE OR PARTNER AS A SPOUSE OR PARTNER
+#   FUNCTION TO REMOVE A SPOUSE OR PARTNER AS A SPOUSE OR PARTNER
 @app.route(
-    "/delete_relationship/<person_id>/<person2_id>",
+    "/delete_partner_relationship/<person_id>/<person2_id>",
     methods=["GET", "POST"])
-def delete_relationship(person_id, person2_id):
+def delete_partner_relationship(person_id, person2_id):
 
     # FUNCTION  - PERFORMS THE UNLINKING OF A
     #           - PERSON AND A SPOUSE_PARTNER
@@ -952,9 +957,55 @@ def delete_relationship(person_id, person2_id):
         "$pull": {"spouse_partner": {"$in": [partners_id]}}})
 
     # RETURN PERSON_ID TO THE EDIT SPOUSE ROUTE
-    flash("Relationship has been removed")
+    flash("Spouse / Partner relationship has been removed")
     return redirect(url_for(
             "edit_spouse_partner", person_id=person_id))
+
+    return render_template("edit_spouse_partner.html", person_id=person_id)
+
+
+#   ROUTE TO MANAGE A SIBLING RELATIONSHIP
+@app.route(
+    "/manage_sibling_relationship/<person_id>/<person2_id>")
+def manage_sibling_relationship(person_id, person2_id):
+
+    # FUNCTION PURPOSE - 
+    # 1.    A BUFFER/CONFIRMATION HANDLER FOR THE UNLINKING
+    #           OF A PERSON FROM A SIBLING
+    # 2.    THIS FUNCTION SIMPLY REMINDS THE USER OF WHAT THEY
+    #           ARE DOING, AND GIVES THEM A CHOICE OF ACTIONS
+
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+    person2 = mongo.db.people.find_one({"_id": ObjectId(person2_id)})
+
+    return render_template(
+        "manage_sibling_relationship.html", person2=person2,
+        person=person)
+
+
+# ROUTE TO HANDLE REMOVING A SIBLING
+@app.route(
+    "/delete_sibling_relationship/<person_id>/<person2_id>",
+    methods=["GET", "POST"])
+def delete_sibling_relationship(person_id, person2_id):
+
+    # FUNCTION  - PERFORMS THE UNLINKING OF A
+    #           - PERSON AND A SIBLING
+
+    # SETUP VARIABLES
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})['_id']
+    sibling = mongo.db.people.find_one({"_id": ObjectId(person2_id)})['_id']
+
+    # REMOVE SIBLING LINKS
+    mongo.db.people.update({"_id": ObjectId(person)}, {
+        "$pull": {"siblings": {"$in": [sibling]}}})
+    mongo.db.people.update({"_id": ObjectId(sibling)}, {
+        "$pull": {"siblings": {"$in": [person]}}})
+   
+    # RETURN PERSON_ID TO THE EDIT SPOUSE ROUTE
+    flash("Sibling relationship has been removed")
+    return redirect(url_for(
+            "edit_siblings", person_id=person_id))
 
     return render_template("edit_spouse_partner.html", person_id=person_id)
 

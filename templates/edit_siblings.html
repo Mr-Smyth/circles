@@ -31,8 +31,8 @@
 	{% if existing_siblings|length > 0 %}
 	<div class="container info-box white box-shade">
 		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s current siblings: </h5>
-        {% for sibling, item in existing_siblings.items() %}
-            <a href="{{ url_for('edit_siblings', person_id=item._id) }}" class="btn-large indigo darken-4">{{ item.first_name }} {{ item.last_name }}</a>
+        {% for index, sibling in existing_siblings.items() %}
+            <a href="{{ url_for('manage_sibling_relationship', person_id=person._id, person2_id=sibling._id) }}" class="btn-large indigo darken-4">{{ sibling.first_name }} {{ sibling.last_name }}</a>
         {% endfor %}
 	</div>
     {% endif %}
