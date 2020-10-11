@@ -10,6 +10,7 @@
 * [Testing of Edit Parents Functionality](#testing-of-edit-parents-functionality)
 * [Testing of Add Spouse or Partner Functionality](#testing-of-edit-spouse-functionality)
 * [Testing of Add Sibling Functionality](#testing-of-edit-siblings-functionality)
+* [Testing of Check for Spouse Functionality](#testing-of-check-for-spouse-functionality)
 * [Testing of Add Children Functionality](#testing-of-edit-children-functionality)
 
 
@@ -277,20 +278,74 @@ I am implementing a 'working' indicator for these situations.
 #### After the initial setup of the edit_siblings functionality, i performed the following tests
 
 * :hammer: TEST: 
-    * Enter a new sibling into the form and click Add Sibling.
+    * Enter a new sibling - (person did not pre-exist in DB) into the form and click Add Sibling.
 * :clipboard: RESULT:
-    * MongoDB showed sibling correctly added to person array, and person added to siblings sibling array.
-    The page displayed the correct siblings for the person being edited, and i was able to click on the sibling
-    to change to that person.
+    * MongoDB showed sibling correctly added to person array, and the person was added to the sibling within the sibling array.
+    Any existing siblings of the person being edited were added to the new sibling as siblings.
+
+* :hammer: TEST: 
+    * Created 2 seperate 2 child families - (Family A and Family B). I then added a new person (Steve) and
+    made Steves mother the family A mother, and Steves father the family B father.   
+    In the edit siblings page i added a child from family A as a sibling. And also added one child from family B as a sibling of Steve. 
+* :clipboard: RESULT:
+    * The result was Steve had 4 new siblings, 2 from each family. But due to the parent check within the function
+    Children in family A did not gain the children of family B as Siblings, and vice versa, Instead they just gained Steve, because 
+    Steve had one common parent.
+
+** ***Update : The above test will mostly be redundant as some adding siblings functionality now exists in the 
+edit parents function. This was to make the whole building process faster. ie: if i add my father, and he has children, 
+then those children can become my siblings.  
+However the functionality will remain in place to protect against incorrect siblings of siblings being added***
+
 * :hammer: TEST: 
     * I linked person(A) to 2 siblings. Then linked another person(B) to 2 siblings. I then 
     linked person(A) to person(B) as a sibling.
 * :clipboard: RESULT:
-    * All person(A)'s siblings became siblings of person(B) and vice versa. also all of their siblings became siblings of eachother.
+    * All person(A)'s siblings became siblings of person(B) and vice versa. also all of their siblings became 
+    siblings of eachother, if they had at least one matching parent.
+
 * :hammer: TEST: 
     * Click submit without filling in the form.
 * :clipboard: RESULT:
     * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
+
+[Back to Index](#index)
+
+---
+
+## Testing for check for spouse:
+This function checks if the current person being edited has anyone linked as a spouse or a partner. 
+If a partner or spouse exists, then the user gets automatically passed on to the edit children page. 
+If there is no spouse or partner the user gets passed to a decision page where they can opt to edit 
+the person, or return home.
+
+### Initial Testing:
+
+#### After the initial setup of the **your function here** functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * Setup a person with no spouse or partner and clicked 'skip to next step' 
+    from within the edit siblings page. 
+* :clipboard: RESULT:
+    * I was taken to a decision page where i clicked edit 'persons name' 
+    and i was taken back to the persons edit spouse page, where i could add a spouse/partner. 
+    I also repeated this test and clicked on the home link and was taken back to the home screen.
+    These results were as expected and correct.  
+
+* :hammer: TEST: 
+    * Setup a person with a spouse or partner and clicked 'skip to next step' 
+    from within the edit siblings page. 
+* :clipboard: RESULT:
+    * I was taken to the edit childrens page which is correct.
 
 ### Final Testing:
 
