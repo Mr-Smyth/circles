@@ -9,9 +9,10 @@
 * [Testing of Add Person Functionality](#testing-of-add-person-functionality)
 * [Testing of Edit Parents Functionality](#testing-of-edit-parents-functionality)
 * [Testing of Add Spouse or Partner Functionality](#testing-of-edit-spouse-functionality)
+* [Testing of Manage Relationship Functionality](#testing-of-the-manage-relationship-functionality)
 * [Testing of Add Sibling Functionality](#testing-of-edit-siblings-functionality)
 * [Testing of Check for Spouse Functionality](#testing-of-check-for-spouse-functionality)
-* [Testing of Add Children Functionality](#testing-of-edit-children-functionality)
+* [Testing of Add Children Functionality](#testing-of-add-children-functionality)
 
 
 ---
@@ -295,7 +296,7 @@ The included form will allow for adding of more partners.
 
 ---
 
-## Test the Manage Relationship Functionality:
+## Testing of the Manage Relationship Functionality:
 This small function is called if an existing spouse/partner is clicked on to remove it. The function checks to see
 if the 2 people have any common children, if they do, then Circles will not allow them to be 'Un-Tied' from eachother. The reason
 is that if they have a shared child then they are relevant partners within the structure of someones family Circle
@@ -395,7 +396,7 @@ However the functionality will remain in place to protect against incorrect sibl
 
 ---
 
-## Testing for check for spouse:
+## Testing for check for spouse Functionality:
 This function checks if the current person being edited has anyone linked as a spouse or a partner. 
 If a partner or spouse exists, then the user gets automatically passed on to the edit children page. 
 If there is no spouse or partner the user gets passed to a decision page where they can opt to edit 
