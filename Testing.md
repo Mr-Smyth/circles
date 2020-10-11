@@ -50,6 +50,14 @@
     * The home page rendered as expected.
 	* The resposiveness was good for initial testing.
 
+<br>
+
+* :hammer: TEST: 
+    * Clicked the search input
+* :clipboard: RESULT:
+    * The search input dissappeared and the search form appeared. All displayed as expected.
+
+*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
 ### Final Testing:
 
@@ -108,6 +116,8 @@ Visually all results were displayed in a colapsible element, which was otherwise
     * The error message passed into the home template from the search function, was succesfully displayed in bold.
 
 This did not freeze or break the site, and allowed the user to click on the search button, and attempt another search. The message reflected the error.
+
+*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
 ### Final Testing:
 
@@ -169,7 +179,7 @@ This did not freeze or break the site, and allowed the user to click on the sear
 * :clipboard: RESULT:
     * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
 
-
+*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
 ### Final Testing:
 
@@ -199,11 +209,17 @@ It also allows for editing/updating of the parents.
     **Add Parents** which then took the user to the next stage.  
      On checking MongoDB each document showed the proper linking between the person and the parents, 
      via a parents dictionary within the person. Each parent had a children array containing the personID, which is their child.
+
+<br>
+
 * :hammer: TEST: 
     * Case where user enters parents name that would match an existing person.
 * :clipboard: RESULT:
     * The function successfully detected any existing documents within MongoDb that matched the user entry into 
     the form, and so eliminates duplication. The existing documents as well as the person were updated accordingly
+
+<br>
+
 * :hammer: TEST: 
     * Case where user is editing a person that has existing parents.
 * :clipboard: RESULT:
@@ -213,10 +229,15 @@ It also allows for editing/updating of the parents.
     ***! This is not entirely desirable in all cases***, so to allow for changing of parents to a different parent, 
     a reset parents button would need to be developed and used, to reset any links between existing parents and the person.
     Then return a blank for for editing.
+
+<br>
+
 * :hammer: TEST: 
     * Click submit without filling in the form.
 * :clipboard: RESULT:
     * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
+
+*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
 ### Final Testing:
 
@@ -243,10 +264,14 @@ The included form will allow for adding of more partners.
     * Added a spouse details, and clicked Add Spouse.  
 * :clipboard: RESULT:
     * Result was the person was linked to the spouse, but found that the spouse was not linked to the person. Added an update to add the spouse to the person. Re-test showed results as expected.
+
+<br>
+
 * :hammer: TEST: 
     * Click submit without filling in the form.
 * :clipboard: RESULT:
-    * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
+    * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.   
+
 ### After refactor to change spouse / partner to an array:
 #### After this development stage, i performed the following tests
 
@@ -255,6 +280,48 @@ The included form will allow for adding of more partners.
 * :clipboard: RESULT:
     * Results in Database were correct and as expected. The results on screen showed the persons spouse / partner list. This list is clickable and clicking on a name, changes the person being edited to the person clicked.
 
+*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * test here..
+* :clipboard: RESULT:
+    * results here..
+
+[Back to Index](#index)
+
+---
+
+## Test the Manage Relationship Functionality:
+This small function is called if an existing spouse/partner is clicked on to remove it. The function checks to see
+if the 2 people have any common children, if they do, then Circles will not allow them to be 'Un-Tied' from eachother. The reason
+is that if they have a shared child then they are relevant partners within the structure of someones family Circle
+and must remain as partners. The user is taken to a page where they are either allowed to undo the relationship, or informed that they
+cannot do that.
+
+### Initial Testing:
+
+#### After the initial setup of the Manage Relationship functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * click on a spouse/partner to remove, from within in the edit spouse/ partner page, where the person clicked
+    has a common child with the person being edited.
+* :clipboard: RESULT:
+    * The user is informed that they cannot do this and given the option to return back to the spouse page.   
+
+<br>
+
+* :hammer: TEST: 
+    * click on a spouse/partner to remove, from within in the edit spouse/ partner page, where the person clicked
+    has no common child with the person being edited.
+* :clipboard: RESULT:
+    * The user is informed that they can do this and given the option to remove the person as a spouse/partner and also 
+    the option to return back to the spouse page.
+
+*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 ### Final Testing:
 
 #### After the development stage, i performed the following tests
@@ -283,14 +350,17 @@ I am implementing a 'working' indicator for these situations.
     * MongoDB showed sibling correctly added to person array, and the person was added to the sibling within the sibling array.
     Any existing siblings of the person being edited were added to the new sibling as siblings.
 
+<br>
+
 * :hammer: TEST: 
     * Created 2 seperate 2 child families - (Family A and Family B). I then added a new person (Steve) and
     made Steves mother the family A mother, and Steves father the family B father.   
-    In the edit siblings page i added a child from family A as a sibling. And also added one child from family B as a sibling of Steve. 
+    In the edit siblings page i added a child from family A as a sibling of Steve. And also added one child from family B as
+    a sibling of Steve. 
 * :clipboard: RESULT:
-    * The result was Steve had 4 new siblings, 2 from each family. But due to the parent check within the function
-    Children in family A did not gain the children of family B as Siblings, and vice versa, Instead they just gained Steve, because 
-    Steve had one common parent.
+    * The result was Steve had 4 new siblings, 2 from each family. By adding the one sibling, Circles checked and added the sibling of the sibling
+    But due to the parent check within the function the Children in family A did not gain the children of family B as Siblings, 
+    and vice versa, Instead they just gained Steve, because Steve had one common parent.
 
 ** ***Update : The above test will mostly be redundant as some adding siblings functionality now exists in the 
 edit parents function. This was to make the whole building process faster. ie: if i add my father, and he has children, 
@@ -304,11 +374,14 @@ However the functionality will remain in place to protect against incorrect sibl
     * All person(A)'s siblings became siblings of person(B) and vice versa. also all of their siblings became 
     siblings of eachother, if they had at least one matching parent.
 
+<br>
+
 * :hammer: TEST: 
     * Click submit without filling in the form.
 * :clipboard: RESULT:
     * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
 
+*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 ### Final Testing:
 
 #### After the development stage, i performed the following tests
@@ -341,6 +414,8 @@ the person, or return home.
     I also repeated this test and clicked on the home link and was taken back to the home screen.
     These results were as expected and correct.  
 
+<br>
+
 * :hammer: TEST: 
     * Setup a person with a spouse or partner and clicked 'skip to next step' 
     from within the edit siblings page. 
@@ -361,16 +436,37 @@ the person, or return home.
 ---
 
 ## Testing of Add Children Functionality:
+I have made a change that restricts the user from getting to this page unless the person being edited has a spouse or a partner setup.
+The Add children function gets the persons current children and displays them on screen. It also allows the user to 
+enter a child to add to the list of persons children. The childs parent selection, and the smart sibling linking means that adding 
+one child will update that child with parents and siblings (if present) and vice versa. 
 
 ### Initial Testing:
 
 #### After the initial setup of the Add Children functionality, i performed the following tests
 
 * :hammer: TEST: 
-    * Add a new child, not in MongoDB
+    * Add a new child, not in MongoDB as a child of a new person.
 * :clipboard: RESULT:
-    * results here..
+    * Child was updated in both parents documents, in the children array. Also the childs parents field was updated.   
 
+<br>
+
+
+* :hammer: TEST: 
+    * Add a new child, not in MongoDB as a child of a person with 1 existing child. 
+* :clipboard: RESULT:
+    * Child was updated in both parents documents, in the children array. Also the childs parents field was updated. The siblings field
+    of bothe children were updated.
+
+<br>
+
+* :hammer: TEST: 
+    * Add a child, that already existed in Mongo DB, that had existing half siblings from another set of parents,
+     as a child of a person with 1 existing child. 
+* :clipboard: RESULT:
+    * Child was updated in both parents documents, in the children array. Also the childs parents field was updated. 
+    The sibling fields of any children with a common parent were updated.
 ### Final Testing:
 
 #### After the development stage, i performed the following tests
@@ -383,6 +479,7 @@ the person, or return home.
 [Back to Index](#index)
 
 ---
+
 
 ---
 ---
