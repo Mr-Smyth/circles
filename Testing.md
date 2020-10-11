@@ -8,7 +8,7 @@
 * [Testing of Search Functionality](#testing-of-search-functionality)
 * [Testing of Add Person Functionality](#testing-of-add-person-functionality)
 * [Testing of Edit Parents Functionality](#testing-of-edit-parents-functionality)
-* [Testing of Add Spouse or Partner Functionality](#testing-of-edit-spouse-functionality)
+* [Testing of Add Spouse or Partner Functionality](#testing-for-edit-spouse-or-partner-functionality)
 * [Testing of Manage Relationship Functionality](#testing-of-the-manage-relationship-functionality)
 * [Testing of Add Sibling Functionality](#testing-of-edit-siblings-functionality)
 * [Testing of Check for Spouse Functionality](#testing-of-check-for-spouse-functionality)
@@ -253,7 +253,7 @@ It also allows for editing/updating of the parents.
 
 ---
 
-## Testing for Edit Spouse Functionality:
+## Testing for Edit Spouse or Partner Functionality:
 Edit spouse / partner will grab the persons spouse / partners and display them on screen. These partners name are clickable, and for now return you to the same page where you may edit their partners. 
 The included form will allow for adding of more partners.
 
@@ -396,7 +396,7 @@ However the functionality will remain in place to protect against incorrect sibl
 
 ---
 
-## Testing for check for spouse Functionality:
+## Testing of check for spouse Functionality:
 This function checks if the current person being edited has anyone linked as a spouse or a partner. 
 If a partner or spouse exists, then the user gets automatically passed on to the edit children page. 
 If there is no spouse or partner the user gets passed to a decision page where they can opt to edit 
