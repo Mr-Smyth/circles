@@ -40,7 +40,7 @@
 
     <div class="container white box-shade">
 		<div class="row">
-			<form class="col s12" method="POST" action="{{ url_for('edit_children', person_id=person._id) }}" autocomplete="off">
+			<form class="col s12" method="POST" action="{{ url_for('assign_children', person_id=person._id) }}" autocomplete="off">
 				<!-- ENTER CHILDS INFORMATION -->
                 <!-- SELECT THE CHILDS PARENTS -->
                 {% if persons_spouse_partners|length > 0 %}
@@ -101,7 +101,7 @@
 				        </button>
                     </div>
                     <div class="col s12 center-align">
-                        <a href="{{ url_for('edit_children', person_id=person._id) }}" class="btn-large green darken-4 text-shadow">skip</a>
+                        <a href="{{ url_for('assign_children', person_id=person._id) }}" class="btn-large green darken-4 text-shadow">Skip to Next Step</a>
                     </div>
 				</div>
 			</form>

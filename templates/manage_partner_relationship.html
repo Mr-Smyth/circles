@@ -18,7 +18,7 @@
                 as a result we cannot seperate them as relevant partners"</h5>
             </div>
             <div class="row center-align">
-                <a href="{{ url_for('edit_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large indigo darken-4">Return to edit {{ person.first_name }}'s Spouse & Partner</a>
+                <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large indigo darken-4">Return to edit {{ person.first_name }}'s Spouse & Partner</a>
             </div>
     </section>
     {% else %}
@@ -31,7 +31,7 @@
                 <a href="{{ url_for('delete_partner_relationship', person_id=person._id, person2_id=person2._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large red darken-4">Remove {{ person2.first_name }} {{ person2.last_name }} </a>
             </div>
             <div class="row top-space-large center-align">
-                <a href="{{ url_for('edit_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large green darken-4">Cancel</a>
+                <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large green darken-4">Cancel</a>
             </div>
     </section>
 

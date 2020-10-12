@@ -31,7 +31,7 @@
     
     <div class="container white box-shade">
 		<div class="row">
-			<form class="col s12" method="POST" action="{{ url_for('edit_parents', person_id=person._id) }}" autocomplete="off">
+			<form class="col s12" method="POST" action="{{ url_for('assign_parents', person_id=person._id) }}" autocomplete="off">
 				<!-- ENTER MOTHERS INFORMATION -->
                 <!-- FIRST NAME -->
 				<div class="row"> 
@@ -91,6 +91,11 @@
 				            Add Parents <i class="fas fa-user-friends left"></i>                     
 				        </button>
                     </div>
+                    {% if both_parents == True %}
+                        <div class="col s12 center-align">
+                        <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="btn-large green darken-4 text-shadow">Skip to Next Step</a>
+                    </div>
+                    {% endif %}
 				</div>
 			</form>
 		</div>

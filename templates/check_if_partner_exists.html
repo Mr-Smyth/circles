@@ -21,7 +21,7 @@
                 {{ person.first_name.capitalize() }}'s Spouse or Partner'</h5>
             </div>
             <div class="row center-align">
-                <a href="{{ url_for('edit_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large indigo darken-4">Edit {{ person.first_name }}</a>
+                <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large indigo darken-4">Edit {{ person.first_name }}</a>
                 <a href="{{ url_for('home') }}" class="col s8 col m6 offset-s2 offset-m3 btn-large green darken-4">Go to Home Screen</a>
             </div>
     </section>

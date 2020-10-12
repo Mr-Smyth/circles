@@ -167,6 +167,44 @@ The viewing of a persons circle will be interactive and each member of the circl
 
 # Features
 
+Circles will Intelligently guide the user through the Family Circle building process. From a blank Database, the user can click **Add Person** from
+the navbar menu. This will take the user to step 1 of 5 optional steps, in building a family circle.
+Add Person will provide a form for the user to fill in the details of the new person.   
+
+
+Clicking Add Person at the foot of the form will add  the person to the database and move the user to Step 2, where they can fill in the persons parents details.
+This step cannot be skipped unless details have already been entered.   
+This is also where Circles begins to help out -   
+Circles will grab the parent information and obviously link them as parents of the person being edited, and add the person as a child of the parents.
+But also Circles will then check if those parents have any children, if yes then they will be added as a sibling of the new person, and the new
+person will be added to those siblings as a sibling. Certain additional checks are carried out in this procedure, such as checking if the siblings
+we are linking to has at least one common parent. The reverse check of having Circles check if the person being added has any siblings relevant to the 
+parent being added, greatly slowed the processing time and, as ther are other methods in place for dealing with adding children, 
+i decided it was not worth reducing the performance of the app for this small gain.
+Both Parents are automatically added as Spouse / partner, as they have a relationship relevant to the family circle.   
+
+
+Step 3, is about entering a spouse or partners details, this stage can be skipped if not applicable. 
+Existing Spouse and partners will be displayed and these links can be clicked on. When clicked on they perform a check to see if they can be removed as a 
+spouse or partner, the user will be given the appropriate message and options.
+A form allows the user to enter a spouse/partner, again circles will create the new spouse/partner, if they do not already exist. If they do exist, Circles will 
+update the relevant relationships.
+Having a spouse/partner linked will allow the user to add children to the person at stage 5.
+
+Step 4, is all about entering siblings and again this stage can be skipped if not relevant. 
+Existing Siblings will be displayed and these links can be clicked on. When clicked the user will be advised on what they are doing and given 
+ the appropriate message and options.
+ A form allows the user to enter a Sibling, again circles will create the new Sibling, if they do not already exist. If they do exist, Circles will 
+update the relevant relationships.
+
+Step 5, is all about entering children and again this stage can be skipped if not relevant. But this page can only be reached if the person has a spouse / partner.
+Existing Children will be displayed and these links can be clicked on. When clicked the user will be advised on what they are doing and given 
+the appropriate message and options.
+A form allows the user to enter a Child, again circles will create the new Child, if they do not already exist. If they do exist, Circles will 
+update the relevant relationships.
+
+## Layout
+
 ## Home Page
 The Home screen opens with the site logo prominant mid screen. This sits on a circular gradient sky blue background, which 
 i choose to best match the site logo. The search bar which sits under the logo, has a subtle hover effect, and opens into a small search form when clicked.
@@ -209,7 +247,9 @@ In both cases Circles will ensure that both parents are linked to eachother as p
 relationship.    
 
 Clicking on Add Parents, will perform the above CRUD, and automatically take the user to step 3 - Edit Spouse.
-Clicking skip, will take the user to the next step - Edit Spouse.
+Clicking skip, will take the user to the next step - Edit Spouse.   
+
+**Note:** ***Skip will only be available if the persons parents have already been entered***
 
 [Back to Index](#index)
 ## Edit / Add Spouse_Partner Page
@@ -239,7 +279,7 @@ When the user is finished with this stage, clicking Skip / Next, will take the u
 This page is reachable from completing or skipping the edit spouse / partner page. 
 The page includes common site navigation and a reduced logo pushed to the top left.
 The page will display the Siblings of the person being edited, in a row of links, within
-a top seperated window. These links are clickable and when clicked, ****** UPDATE HERE******.   
+a top seperated window. These links are clickable and when clicked, allow the user to remove the clicked sibling if you choose to.   
 
 Below this window is a blank form, which will allow the user to add a sibling or partner for the person being edited.
 Once added, a new spouse or partner will be displayed at the top of the page.
@@ -267,7 +307,8 @@ When the user is finished with this stage, clicking Skip / Next, will take the u
 This page is reachable from completing or skipping the edit sibling page, and only when the person being edited has an existing spouse or partner. 
 The page includes common site navigation and a reduced logo pushed to the top left.
 The page will display the Children of the person being edited, in a row of links, within
-a top seperated window. These links are clickable and when clicked, ****** UPDATE HERE******. 
+a top seperated window. These links are clickable and when clicked, allow the user to remove the clicked child if you choose to, this will 
+also remove the link between the child and the parent being edited. All other links will remain in place
 
 Below this window is a blank form, which will allow the user to add a Child for the person being edited.
 Once added, the new child will be displayed at the top of the page.

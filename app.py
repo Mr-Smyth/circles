@@ -163,6 +163,9 @@ def assign_parents(person_id):
     persons_id = person["_id"]
     persons_mother_id = person["parents"]["mother"]
     persons_father_id = person["parents"]["father"]
+    mother_entered = False
+    father_entered = False
+    both_parents = False
 
     #   PREP FOR RENDER TEMPLATE -
     #   PERSONS MOTHER - CHECK IF MOTHER ALREADY LINKED
@@ -171,6 +174,7 @@ def assign_parents(person_id):
         existing_mother = mongo.db.people.find_one({
             "_id": ObjectId(persons_mother_id)
             })
+        mother_entered = True
     else:
         #   ITS A NEW MOTHER - NO TEMPLATE YET
         #   SO WE GIVE IT ONE
@@ -186,6 +190,7 @@ def assign_parents(person_id):
         existing_father = mongo.db.people.find_one({
             "_id": ObjectId(persons_father_id)
             })
+        father_entered = True
     else:
         #    ITS A NEW FATHER - NO TEMPLATE YET
         #   SO WE GIVE IT ONE
@@ -194,6 +199,11 @@ def assign_parents(person_id):
             "last_name": "",
             "dob": ""
         }
+
+    if mother_entered and father_entered:
+        both_parents = True
+    else:
+        both_parents = False
 
     #   WHEN FORM IS SUBMITTED / UPDATED
     if request.method == "POST":
@@ -346,7 +356,8 @@ def assign_parents(person_id):
 
     return render_template(
         "assign_parents.html", existing_mother=existing_mother,
-        existing_father=existing_father, person=person)
+        existing_father=existing_father, person=person,
+        both_parents=both_parents)
 
 
 # ROUTE TO HANDLE ADDING A SPOUSE/PARTNER
@@ -671,7 +682,7 @@ def assign_siblings(person_id):
 def check_if_partner_exists(person_id):
 
     # FUNCTION THAT CHECKS IF PERSON BEING EDITED HAS ANY PARTNERS
-    # IF YES- CONTINUE TO EDIT CHILDREN
+    # IF YES- CONTINUE TO ASSIGN CHILDREN
     # IF NO - GIVE OPTION SCREEN WHAT TO DO NEXT
 
     # SETUP VARIABLES
@@ -952,7 +963,7 @@ def delete_partner_relationship(person_id, person2_id):
     mongo.db.people.update({"_id": ObjectId(persons_id)}, {
         "$pull": {"spouse_partner": {"$in": [partners_id]}}})
 
-    #   RETURN PERSON_ID TO THE EDIT SPOUSE ROUTE
+    #   RETURN PERSON_ID TO THE ASSIGN SPOUSE ROUTE
     flash("Spouse / Partner relationship has been removed")
     return redirect(url_for(
             "assign_spouse_partner", person_id=person_id))
@@ -1057,7 +1068,7 @@ def delete_child_relationship(person_id, person2_id):
                 {"_id": ObjectId(child_id)},
                 {"$set": {"parents": child_parents}})
 
-    # RETURN PERSON_ID TO THE EDIT CHILDREN ROUTE
+    # RETURN PERSON_ID TO THE ASSIGN CHILDREN ROUTE
     flash("Children relationship has been removed")
     return redirect(url_for(
             "assign_children", person_id=person_id))
