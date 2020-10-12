@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+
+	<!-- LOGO CONTAINER -->
+    <div id="top-logo-container">
+      <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+    </div>
+    <!-- DELETE SIBLING RELATIONSHIP CONFIRMATION -->
+    <section>
+            <div class="row center-align flash-messages">
+                <h4 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1 ">Important!</h4>
+                <h5 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1 ">This will remove the Parent/Child relationship between 
+                {{ person.first_name.capitalize() }} and {{ person2.first_name.capitalize() }}, Are you sure you want to continue?</h5>
+                <h6 class="col s12 col m8 offset-m2 grey-text text-darken-4 ">
+                Please be aware that this operation will remove {{ person2.first_name.capitalize() }} as a child of {{ person.first_name.capitalize() }}. This will also remove
+                {{ person.first_name.capitalize() }} as a parent of {{ person2.first_name.capitalize() }}. As every child should have both parents set, make sure to
+                edit {{ person2.first_name.capitalize() }}'s details and assign them the correct parent.'</h6>
+            </div>
+            <div class="row top-space-large center-align">
+                <a href="{{ url_for('delete_child_relationship', person_id=person._id, person2_id=person2._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large red darken-4">Remove {{ person2.first_name }}</a>
+            </div>
+            <div class="row top-space-large center-align">
+                <a href="{{ url_for('edit_children', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large green darken-4">Cancel</a>
+            </div>
+    </section>
+
+   
+{% endblock %}
+

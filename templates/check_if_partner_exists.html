@@ -14,8 +14,11 @@
 
     <section>
             <div class="row center-align flash-messages">
-                <h4 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1 ">{{ message }} </h4>
-                <h4 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1 ">{{ message2 }} </h4>
+                <h4 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1 ">{{ person.first_name.capitalize() }} has no 
+                Spouse or partner yet, so cannot setup any children.</h4>
+                <h5 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1 ">Circles needs the information from 2 parents to properly setup a new child. 
+                If this is a mistake you can select the edit button below, and this will take you to where you can enter 
+                {{ person.first_name.capitalize() }}'s Spouse or Partner'</h5>
             </div>
             <div class="row center-align">
                 <a href="{{ url_for('edit_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large indigo darken-4">Edit {{ person.first_name }}</a>

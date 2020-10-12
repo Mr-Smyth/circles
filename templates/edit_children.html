@@ -31,8 +31,9 @@
 	{% if existing_children|length > 0 %}
 	<div class="container info-box white box-shade">
 		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s current children: </h5>
-        {% for child, item in existing_children.items() %}
-            <a href="{{ url_for('edit_siblings', person_id=item._id) }}" class="btn-large indigo darken-4">{{ item.first_name }} {{ item.last_name }}</a>
+        <h5 class="text-shadow space-bottom">Click on any of these links to Remove them:</h5>
+        {% for item, child in existing_children.items() %}
+            <a href="{{ url_for('manage_child_relationship', person_id=person._id, person2_id=child._id) }}" class="btn-large indigo darken-4">{{ child.first_name }} {{ child.last_name }}</a>
         {% endfor %}
 	</div>
     {% endif %}
