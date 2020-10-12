@@ -226,7 +226,7 @@ A clear heading, shows the user what page they are on, and clear indication of t
 process. 
 This page includes a detailed form for the user to fill in, to create a person in Circles.  
 Clicking on Add Person, will perform the above CRUD, and will automatically take the user to step 2 - Edit Parents.
-Clicking skip, will take the user to the next step - Edit Spouse.
+
 
 
 [Back to Index](#index)
@@ -247,7 +247,7 @@ In both cases Circles will ensure that both parents are linked to eachother as p
 relationship.    
 
 Clicking on Add Parents, will perform the above CRUD, and automatically take the user to step 3 - Edit Spouse.
-Clicking skip, will take the user to the next step - Edit Spouse.   
+Clicking skip, is only available, if parents details have been already entered and it will take the user to the next step - Assign Spouse.
 
 **Note:** ***Skip will only be available if the persons parents have already been entered***
 

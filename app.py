@@ -1076,6 +1076,30 @@ def delete_child_relationship(person_id, person2_id):
     return render_template("assign_spouse_partner.html", person_id=person_id)
 
 
+#   EDIT PERSON ROUTE
+@app.route("/edit_person/<person_id>", methods=["GET", "POST"])
+def edit_person(person_id):
+
+    # FUNCTION PURPOSE -
+    # 1.    GETS INFORMATION FROM THE PERSON BEING EDITED AND DISPLAYS
+    #       IT IN A FORM.
+    # 2.    ALLOW THE USER TO EDIT THIS FORM AND UPDATE THE PERSON IN THE DB
+    # 3     THE USER ENTERED DATA WILL BE ASSIGNED TO THE ORIGINAL PERSON ID
+    #       UNLESS THERE IS A MATCHING FIRST NAME, LAST NAME AND DOB IN THE DB.
+    #       IN THIS CASE THE USER WILL BE NOTIFIED, THE POST CANCELLED,
+    #       AND THE USER WILL BE RETURNED TO THE ORIGINAL EDIT FORM.
+
+    # GETTING INFORMATION
+    # SETUP REQ VARIABLES
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+
+    genders = ['male', 'female']
+    families = mongo.db.family.find().sort("family_name", 1)
+    # RETURN THE FAMILIES TO THE ADD_PERSON PAGE FOR JINGA
+    return render_template(
+        "edit_person.html", person=person, families=families)
+
+
 @app.route("/delete_all_documents")
 def delete_all_documents():
     mongo.db.people.remove({})
