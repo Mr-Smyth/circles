@@ -132,7 +132,7 @@ def add_person():
 
         flash("This Person has bees successfully added to Circles")
         return redirect(url_for(
-            "edit_parents", person_id=person_id))
+            "assign_parents", person_id=person_id))
 
     # GET THE FAMILY COLLECTION NAMES, FOR THE FAMILY
     # SELECTION DROP DOWN
@@ -142,9 +142,9 @@ def add_person():
         "add_person.html", families=families)
 
 
-#   EDIT PARENTS ROUTE AND FUNCTION
-@app.route("/edit_parents/<person_id>", methods=["GET", "POST"])
-def edit_parents(person_id):
+#   ASSIGN PARENTS ROUTE AND FUNCTION
+@app.route("/assign_parents/<person_id>", methods=["GET", "POST"])
+def assign_parents(person_id):
 
     # FUNCTION PURPOSE -
     # 1.    GET AND DISPLAY EXISTING PARENTS IN FORM.
@@ -342,16 +342,16 @@ def edit_parents(person_id):
                                     "siblings": sibling_in_list}})
 
         flash("Circle has been updated")
-        return redirect(url_for("edit_spouse_partner", person_id=person_id))
+        return redirect(url_for("assign_spouse_partner", person_id=person_id))
 
     return render_template(
-        "edit_parents.html", existing_mother=existing_mother,
+        "assign_parents.html", existing_mother=existing_mother,
         existing_father=existing_father, person=person)
 
 
 # ROUTE TO HANDLE ADDING A SPOUSE/PARTNER
-@app.route("/edit_spouse_partner/<person_id>", methods=["GET", "POST"])
-def edit_spouse_partner(person_id):
+@app.route("/assign_spouse_partner/<person_id>", methods=["GET", "POST"])
+def assign_spouse_partner(person_id):
 
     # SETUP SOME REQUIRED VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
@@ -437,16 +437,16 @@ def edit_spouse_partner(person_id):
 
         flash("Circle has been updated")
         return redirect(url_for(
-            "edit_spouse_partner", person_id=person_id))
+            "assign_spouse_partner", person_id=person_id))
 
     return render_template(
-        "edit_spouse_partner.html",
+        "assign_spouse_partner.html",
         existing_spouse_partners=existing_spouse_partners, person=person)
 
 
 # ROUTE TO HANDLE ADDING OF A SIBLING
-@app.route("/edit_siblings/<person_id>", methods=["GET", "POST"])
-def edit_siblings(person_id):
+@app.route("/assign_siblings/<person_id>", methods=["GET", "POST"])
+def assign_siblings(person_id):
 
     #   FUNCTION PURPOSE -
     #   GETS THE PERSONS SIBLING INFORMATION AND DISPLATS IT WITHIN
@@ -658,15 +658,15 @@ def edit_siblings(person_id):
 
         flash("Circle has been updated")
         return redirect(url_for(
-            "edit_siblings", person_id=person_id))
+            "assign_siblings", person_id=person_id))
 
     return render_template(
-        "edit_siblings.html", existing_siblings=existing_siblings,
+        "assign_siblings.html", existing_siblings=existing_siblings,
         persons_parents=persons_parents,
         mothers_partners_list=mothers_partners_list,
         fathers_partners_list=fathers_partners_list, person=person)
 
-
+# CHECK PARTNER EXISTS ROUTE
 @app.route("/check_if_partner_exists/<person_id>")
 def check_if_partner_exists(person_id):
 
@@ -681,17 +681,21 @@ def check_if_partner_exists(person_id):
     # RUN THE CHECK
     if len(persons_spouse_partner_ids) > 0:
         return redirect(url_for(
-            "edit_children", person_id=person_id))
+            "assign_children", person_id=person_id))
 
     return render_template("check_if_partner_exists.html", person=person)
 
+# ASSIGN CHILDREN ROUTE
+@app.route("/assign_children/<person_id>", methods=["GET", "POST"])
+def assign_children(person_id):
 
-# ROUTE TO HANDLE ADDING OF CHILDREN TO PERSON
-@app.route("/edit_children/<person_id>", methods=["GET", "POST"])
-def edit_children(person_id):
-
-    # FUNCTION PURPOSE - CHECKS FOR PERSONS EXISTING CHILDREN
-    #
+    # FUNCTION PURPOSE -
+    # 1.    CHECKS FOR PERSONS EXISTING CHILDREN.
+    # 2.    DISPLAYS CURRENT CHILDREN.
+    # 3.    SEARCHES FOR A MATCH FOR A NEWLY ENTERED CHILD, IF NONE IS FOUND
+    #       THE CHILD IS CREATED.
+    # 4.    IF A MATCH IS FOUND, SETUP THE PROPPER
+    #       LINKS BETWEEN CHILD-PARENT AND CHILD-SIBLING.
 
     # SETUP SOME REQUIRED VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
@@ -768,11 +772,6 @@ def edit_children(person_id):
             mongo.db.people.insert_one(child)
             child_id = mongo.db.people.find_one(child)["_id"]
 
-            #   UPDATE THE PERSON WITH THIS NEW CHILD:
-            #mongo.db.people.find_one_and_update(
-             #       {"_id": ObjectId(person_id)},
-              #      {"$addToSet": {"children": child_id}})
-
             #   ADD THE NEW CHILD TO THE COMINED SIBLINGS
             combined_childs_siblings.append(child_id)
 
@@ -781,9 +780,16 @@ def edit_children(person_id):
             found_child = mongo.db.people.find_one(
                 child_search)
             child_id = found_child["_id"]
+
+            #   WE REMOVE THE PERSONS ID FROM ANY SIBLINGS
+            #   ARRAY - THIS IS BECAUSE WE ARE POSTING NEW SIBLINGS.
+            mongo.db.people.update({}, {"$pull": {
+             "siblings": {"$in": [child_id]}}}, multi=True)
+
             # ADD THIS FOUND CHILD TO COMBINED SIBLINGS
             if child_id not in combined_childs_siblings:
                 combined_childs_siblings.append(child_id)
+
             # CHECK IF THIS CHILD ALREADY HAS SIBLINGS - WE WILL NEED TO
             # ADD THEM TO COMBINED SIBLINGS.
             childs_existing_siblings = found_child['siblings']
@@ -872,25 +878,25 @@ def edit_children(person_id):
                                     "siblings": sibling_in_list}})
 
         flash("Circle has been updated")
-        return redirect(url_for("edit_children", person_id=person_id))
+        return redirect(url_for("assign_children", person_id=person_id))
 
     return render_template(
-        'edit_children.html', persons_spouse_partners=persons_spouse_partners,
+        'assign_children.html', persons_spouse_partners=persons_spouse_partners,
         existing_children=existing_children, person=person)
 
 
-# ROUTE TO MANAGE A SPOUSE OR PARTNER RELATIONSHIP
+#   MANAGE A SPOUSE OR PARTNER RELATIONSHIP ROUTE
 @app.route(
     "/manage_partner_relationship/<person_id>/<person2_id>")
 def manage_partner_relationship(person_id, person2_id):
 
     # FUNCTION PURPOSE -
     # 1.    A BUFFER/CONFIRMATION HANDLER FOR THE UNLINKING
-    #           OF A PERSON FROM A SPOUSE/PARTNER
+    #       OF A PERSON FROM A SPOUSE/PARTNER
     # 2.    THIS FUNCTION DECIDES IF THE USER SHOULD BE ABLE
-    #           TO UNLINK A SPOUSE OR PARTNER.
+    #       TO UNLINK A SPOUSE OR PARTNER.
     # 3.    UNLINK=TRUE OR FALSE IS THE KEY, TO ALLOWING
-    #           JINGA TO SHOW CORRECT OPTION
+    #       JINGA TO SHOW CORRECT OPTION
 
     # SETUP VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
@@ -904,7 +910,7 @@ def manage_partner_relationship(person_id, person2_id):
     #   CHECK DO THEY MATCH ANY OF THE PARTNERS CHILDREN
     #   IF THEY DO, WE MUST NOT UNLINK
 
-    #   DOES PERSON HAVE ANY CHILDREN
+    #   DOES PERSON BEING EDITED HAVE ANY CHILDREN
     if len(person_children) > 0:
         #   IF YES, THEN CHECK IF ANY MATCH THE PARTNERS CHILDREN
         check = any(
@@ -924,14 +930,15 @@ def manage_partner_relationship(person_id, person2_id):
         person=person, message=message)
 
 
-#   FUNCTION TO REMOVE A SPOUSE OR PARTNER AS A SPOUSE OR PARTNER
+#   REMOVE A SPOUSE OR PARTNER AS A SPOUSE OR PARTNER ROUTE
 @app.route(
     "/delete_partner_relationship/<person_id>/<person2_id>",
     methods=["GET", "POST"])
 def delete_partner_relationship(person_id, person2_id):
 
-    # FUNCTION  - PERFORMS THE UNLINKING OF A
-    #           - PERSON AND A SPOUSE_PARTNER
+    # FUNCTION PURPOSE -
+    # 1.    PERFORMS THE UNLINKING OF A
+    #       PERSON AND A SPOUSE_PARTNER
 
     #   SETUP VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
@@ -948,21 +955,21 @@ def delete_partner_relationship(person_id, person2_id):
     #   RETURN PERSON_ID TO THE EDIT SPOUSE ROUTE
     flash("Spouse / Partner relationship has been removed")
     return redirect(url_for(
-            "edit_spouse_partner", person_id=person_id))
+            "assign_spouse_partner", person_id=person_id))
 
-    # return render_template("edit_spouse_partner.html", person_id=person_id)
+    # return render_template("assign_spouse_partner.html", person_id=person_id)
 
 
-#   ROUTE TO MANAGE A SIBLING RELATIONSHIP
+#   MANAGE A SIBLING RELATIONSHIP ROUTE
 @app.route(
     "/manage_sibling_relationship/<person_id>/<person2_id>")
 def manage_sibling_relationship(person_id, person2_id):
 
     # FUNCTION PURPOSE -
     # 1.    A BUFFER/CONFIRMATION HANDLER FOR THE UNLINKING
-    #           OF A PERSON FROM A SIBLING
+    #       OF A PERSON FROM A SIBLING
     # 2.    THIS FUNCTION SIMPLY REMINDS THE USER OF WHAT THEY
-    #           ARE DOING, AND GIVES THEM A CHOICE OF ACTIONS
+    #       ARE DOING, AND GIVES THEM A CHOICE OF ACTIONS
 
     #   SETUP SOME REQ VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
@@ -972,15 +979,15 @@ def manage_sibling_relationship(person_id, person2_id):
         "manage_sibling_relationship.html", person2=person2,
         person=person)
 
-
-# ROUTE TO HANDLE REMOVING A SIBLING
+# DELETE SIBLING ROUTE
 @app.route(
     "/delete_sibling_relationship/<person_id>/<person2_id>",
     methods=["GET", "POST"])
 def delete_sibling_relationship(person_id, person2_id):
 
-    # FUNCTION  - PERFORMS THE UNLINKING OF A
-    #           - PERSON AND A SIBLING
+    # FUNCTION PURPOSE -
+    # 1.    PERFORMS THE UNLINKING OF A
+    #       PERSON AND A SIBLING
 
     # SETUP VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})['_id']
@@ -992,12 +999,12 @@ def delete_sibling_relationship(person_id, person2_id):
     mongo.db.people.update({"_id": ObjectId(sibling)}, {
         "$pull": {"siblings": {"$in": [person]}}})
 
-    # RETURN PERSON_ID TO THE EDIT SIBLING ROUTE
+    # RETURN PERSON_ID TO THE ASSIGN SIBLING ROUTE
     flash("Sibling relationship has been removed")
     return redirect(url_for(
-            "edit_siblings", person_id=person_id))
+            "assign_siblings", person_id=person_id))
 
-    # return render_template("edit_spouse_partner.html", person_id=person_id)
+    # return render_template("assign_spouse_partner.html", person_id=person_id)
 
 
 #  ROUTE TO MANAGE A CHILD RELATIONSHIP
@@ -1053,9 +1060,9 @@ def delete_child_relationship(person_id, person2_id):
     # RETURN PERSON_ID TO THE EDIT CHILDREN ROUTE
     flash("Children relationship has been removed")
     return redirect(url_for(
-            "edit_children", person_id=person_id))
+            "assign_children", person_id=person_id))
 
-    return render_template("edit_spouse_partner.html", person_id=person_id)
+    return render_template("assign_spouse_partner.html", person_id=person_id)
 
 
 @app.route("/delete_all_documents")
