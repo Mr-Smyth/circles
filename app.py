@@ -46,9 +46,9 @@ def search():
         #   SETUP A DICTIONARY THAT HOLDS THE INFO WE CAN QUERY
         #   IT WILL POPULATE FROM THE FORM.
         searchInput = {
-            "first_name": request.form.get("searchFirstName").lower(),
-            "last_name": request.form.get("searchLastName").lower(),
-            "dob": request.form.get("searchDob"),
+            "first_name": request.form.get("searchFirstName").lower().strip(),
+            "last_name": request.form.get("searchLastName").lower().strip(),
+            "dob": request.form.get("searchDob").strip(),
             }
         #   SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
         #       searchInput ABOVE TO BUILD A QUERY FROM ONLY POPULATED
@@ -81,22 +81,22 @@ def add_person():
     if request.method == "POST":
         #   USED TO SEARCH FOR EXISTING PERSON - AVOIDING DUPLICATION
         person_search = {
-            "first_name": request.form.get("first_name").lower(),
-            "last_name": request.form.get("last_name").lower(),
-            "gender": request.form.get("gender").lower(),
+            "first_name": request.form.get("first_name").lower().strip(),
+            "last_name": request.form.get("last_name").lower().strip(),
+            "gender": request.form.get("gender").lower().strip(),
             "dob": request.form.get("dob"),
         }
         #   USED TO UPDATE AN EXISTING PERSON
         person_update = {
-            "family_name": request.form.get("family_name").lower(),
-            "first_name": request.form.get("first_name").lower(),
-            "last_name": request.form.get("last_name").lower(),
-            "birth_surname": request.form.get("birth_surname"),
-            "gender": request.form.get("gender").lower(),
+            "family_name": request.form.get("family_name").lower().strip(),
+            "first_name": request.form.get("first_name").lower().strip(),
+            "last_name": request.form.get("last_name").lower().strip(),
+            "birth_surname": request.form.get("birth_surname").strip(),
+            "gender": request.form.get("gender").lower().strip(),
             "dob": request.form.get("dob"),
             "dod": request.form.get("dod"),
-            "birth_address": request.form.get("birth_address"),
-            "rel_address": request.form.get("rel_address"),
+            "birth_address": request.form.get("birth_address").strip(),
+            "rel_address": request.form.get("rel_address").strip(),
             "information": request.form.get("person_info"),
         }
 
@@ -104,19 +104,19 @@ def add_person():
         if mongo.db.people.count_documents(person_search, limit=1) == 0:
             # SETUP DICTIONARY FOR IMPORTING PERSON TO MONGO DB
             person = {
-                "family_name": request.form.get("family_name").lower(),
-                "first_name": request.form.get("first_name").lower(),
-                "last_name": request.form.get("last_name").lower(),
-                "birth_surname": request.form.get("birth_surname"),
+                "family_name": request.form.get("family_name").lower().strip(),
+                "first_name": request.form.get("first_name").lower().strip(),
+                "last_name": request.form.get("last_name").lower().strip(),
+                "birth_surname": request.form.get("birth_surname").strip(),
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
                 "spouse_partner": [],
-                "gender": request.form.get("gender").lower(),
+                "gender": request.form.get("gender").lower().strip(),
                 "dob": request.form.get("dob"),
                 "dod": request.form.get("dod"),
-                "birth_address": request.form.get("birth_address"),
-                "rel_address": request.form.get("rel_address"),
-                "information": request.form.get("person_info"),
+                "birth_address": request.form.get("birth_address").strip(),
+                "rel_address": request.form.get("rel_address").strip(),
+                "information": request.form.get("person_info").strip(),
                 "children": []
             }
             #   ADD THE PERSON DICTIONARY TO MONGO
@@ -217,14 +217,14 @@ def assign_parents(person_id):
         #   GET THE TEMPLTE FROM THE FORM
         #   FOR MOTHER
         mother = {
-            "first_name": request.form.get("mothers_first_name").lower(),
-            "last_name": request.form.get("mothers_last_name").lower(),
+            "first_name": request.form.get("mothers_first_name").lower().strip(),
+            "last_name": request.form.get("mothers_last_name").lower().strip(),
             "dob": request.form.get("mothers_dob")
         }
         #   FOR FATHER
         father = {
-            "first_name": request.form.get("fathers_first_name").lower(),
-            "last_name": request.form.get("fathers_last_name").lower(),
+            "first_name": request.form.get("fathers_first_name").lower().strip(),
+            "last_name": request.form.get("fathers_last_name").lower().strip(),
             "dob": request.form.get("fathers_dob")
         }
 
@@ -232,16 +232,16 @@ def assign_parents(person_id):
         if mongo.db.people.count_documents(mother, limit=1) == 0:
             #   IF THE COUNT IS == O, THEN WE INSERT A NEW MOTHER
             mother = {
-                "family_name": person["family_name"].lower(),
+                "family_name": person["family_name"].lower().strip(),
                 "first_name": request.form.get(
-                    "mothers_first_name").lower(),
-                "last_name": request.form.get("mothers_last_name").lower(),
+                    "mothers_first_name").lower().strip(),
+                "last_name": request.form.get("mothers_last_name").lower().strip(),
                 "birth_surname": "",
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
                 "spouse_partner": [],
                 "gender": "female",
-                "dob": request.form.get("mothers_dob"),
+                "dob": request.form.get("mothers_dob").strip(),
                 "dod": "",
                 "birth_address": "",
                 "rel_address": "",
@@ -265,11 +265,11 @@ def assign_parents(person_id):
         if mongo.db.people.count_documents(father, limit=1) == 0:
             #   IF THE COUNT IS == O, THEN WE INSERT A NEW FATHER
             father = {
-                "family_name": person["family_name"].lower(),
+                "family_name": person["family_name"].lower().strip(),
                 "first_name": request.form.get(
-                    "fathers_first_name").lower(),
+                    "fathers_first_name").lower().strip(),
                 "last_name": request.form.get(
-                    "fathers_last_name").lower(),
+                    "fathers_last_name").lower().strip(),
                 "birth_surname": "",
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
@@ -387,8 +387,8 @@ def assign_spouse_partner(person_id):
         # GET THE TEMPLATE FROM THE FOR PARTNER/SPOUSE
         spouse_partner_search = {
             "first_name": request.form.get(
-                "spouse_partner_first_name").lower(),
-            "last_name": request.form.get("spouse_partner_last_name").lower(),
+                "spouse_partner_first_name").lower().strip(),
+            "last_name": request.form.get("spouse_partner_last_name").lower().strip(),
             "dob": request.form.get("spouse_partner_dob")
         }
 
@@ -399,17 +399,17 @@ def assign_spouse_partner(person_id):
             # THIS IS THE CASE THAT THIS ENTERED SPOUSE/PARTNER DOES NOT EXIST
             # IN THE DB. IT IS TEMPLATE WE USE TO CREATE A NEW SPOUSE/PARTNER
             spouse_partner = {
-                "family_name": person["family_name"].lower(),
+                "family_name": person["family_name"].lower().strip(),
                 "first_name": request.form.get(
-                    "spouse_partner_first_name").lower(),
+                    "spouse_partner_first_name").lower().strip(),
                 "last_name": request.form.get(
-                    "spouse_partner_last_name").lower(),
+                    "spouse_partner_last_name").lower().strip(),
                 "birth_surname": "",
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
                 "spouse_partner": [],
                 "gender": request.form.get("gender").lower(),
-                "dob": request.form.get("spouse_partner_dob"),
+                "dob": request.form.get("spouse_partner_dob").strip(),
                 "dod": "",
                 "birth_address": "",
                 "rel_address": "",
@@ -529,8 +529,8 @@ def assign_siblings(person_id):
     if request.method == "POST":
         # GET THE TEMPLTE FROM THE FORM FOR SIBLING
         sibling_search = {
-            "first_name": request.form.get("sibling_first_name").lower(),
-            "last_name": request.form.get("sibling_last_name").lower(),
+            "first_name": request.form.get("sibling_first_name").lower().strip(),
+            "last_name": request.form.get("sibling_last_name").lower().strip(),
             "dob": request.form.get("sibling_dob")
         }
 
@@ -554,16 +554,16 @@ def assign_siblings(person_id):
         if mongo.db.people.count_documents(sibling_search, limit=1) == 0:
             # FORM USED TO CREATE A NEW SIBLING
             sibling = {
-                "family_name": person["family_name"].lower(),
+                "family_name": person["family_name"].lower().strip(),
                 "first_name": request.form.get(
-                    "sibling_first_name").lower(),
-                "last_name": request.form.get("sibling_last_name").lower(),
-                "birth_surname": person["birth_surname"].lower(),
+                    "sibling_first_name").lower().strip(),
+                "last_name": request.form.get("sibling_last_name").lower().strip(),
+                "birth_surname": person["birth_surname"].lower().strip(),
                 "parents": selected_parents,
                 "siblings": [],
                 "spouse_partner": [],
-                "gender": request.form.get("gender").lower(),
-                "dob": request.form.get("sibling_dob"),
+                "gender": request.form.get("gender").lower().strip(),
+                "dob": request.form.get("sibling_dob").strip(),
                 "dod": "",
                 "birth_address": "",
                 "rel_address": "",
@@ -677,6 +677,7 @@ def assign_siblings(person_id):
         mothers_partners_list=mothers_partners_list,
         fathers_partners_list=fathers_partners_list, person=person)
 
+
 # CHECK PARTNER EXISTS ROUTE
 @app.route("/check_if_partner_exists/<person_id>")
 def check_if_partner_exists(person_id):
@@ -695,6 +696,7 @@ def check_if_partner_exists(person_id):
             "assign_children", person_id=person_id))
 
     return render_template("check_if_partner_exists.html", person=person)
+
 
 # ASSIGN CHILDREN ROUTE
 @app.route("/assign_children/<person_id>", methods=["GET", "POST"])
@@ -746,9 +748,9 @@ def assign_children(person_id):
     if request.method == "POST":
         # GET THE TEMPLTE FROM THE FORM FOR CHILD
         child_search = {
-            "first_name": request.form.get("child_first_name").lower(),
-            "last_name": request.form.get("child_last_name").lower(),
-            "dob": request.form.get("child_dob")
+            "first_name": request.form.get("child_first_name").lower().strip(),
+            "last_name": request.form.get("child_last_name").lower().strip(),
+            "dob": request.form.get("child_dob").strip()
         }
 
         # COMBINED CHILDS SIBLINGS WILL BE USED TO CREATE THE SIBLING LINKS
@@ -763,16 +765,16 @@ def assign_children(person_id):
             # THIS IS THE CASE THAT THIS ENTERED CHILD DOES NOT EXIST
             # IN THE DB. IT IS TEMPLATE WE USE TO CREATE A NEW CHILD
             child = {
-                "family_name": person["family_name"].lower(),
+                "family_name": person["family_name"].lower().strip(),
                 "first_name": request.form.get(
-                    "child_first_name").lower(),
-                "last_name": request.form.get("child_last_name").lower(),
-                "birth_surname": person["birth_surname"].lower(),
+                    "child_first_name").lower().strip(),
+                "last_name": request.form.get("child_last_name").lower().strip(),
+                "birth_surname": person["birth_surname"].lower().strip(),
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
                 "spouse_partner": [],
-                "gender": request.form.get("gender").lower(),
-                "dob": request.form.get("child_dob"),
+                "gender": request.form.get("gender").lower().strip(),
+                "dob": request.form.get("child_dob").strip(),
                 "dod": "",
                 "birth_address": "",
                 "rel_address": "",
@@ -892,7 +894,8 @@ def assign_children(person_id):
         return redirect(url_for("assign_children", person_id=person_id))
 
     return render_template(
-        'assign_children.html', persons_spouse_partners=persons_spouse_partners,
+        'assign_children.html',
+        persons_spouse_partners=persons_spouse_partners,
         existing_children=existing_children, person=person)
 
 
@@ -1092,12 +1095,79 @@ def edit_person(person_id):
     # GETTING INFORMATION
     # SETUP REQ VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
-
-    genders = ['male', 'female']
     families = mongo.db.family.find().sort("family_name", 1)
+
+    if request.method == "POST":
+        #   USED TO SEARCH FOR EXISTING PERSON - AVOIDING DUPLICATION
+        person_search = {
+            "first_name": request.form.get("first_name").lower(),
+            "last_name": request.form.get("last_name").lower(),
+            "gender": request.form.get("gender").lower(),
+            "dob": request.form.get("dob").strip(),
+        }
+        #   USED TO UPDATE AN EXISTING PERSON
+        person_update = {
+            "family_name": request.form.get("family_name").lower().strip(),
+            "first_name": request.form.get("first_name").lower().strip(),
+            "last_name": request.form.get("last_name").lower().strip(),
+            "birth_surname": request.form.get("birth_surname"),
+            "gender": request.form.get("gender").lower().strip(),
+            "dob": request.form.get("dob").strip(),
+            "dod": request.form.get("dod").strip(),
+            "birth_address": request.form.get("birth_address"),
+            "rel_address": request.form.get("rel_address"),
+            "information": request.form.get("person_info"),
+        }
+
+        #    CHECK TO SEE IF PERSON ALREADY EXISTS
+        if mongo.db.people.count_documents(person_search, limit=1) == 0:
+            #   ADD THE PERSON DICTIONARY TO MONGO
+            # INSERT NEW PERSON
+            mongo.db.people.find_one_and_update(
+                {"_id": ObjectId(person_id)},
+                {"$set": person_update})
+
+            flash("Circle has been updated")
+            return redirect(url_for(
+                "assign_parents", person_id=person_id))
+        else:
+            #   THEN PERSON ALREADY EXISTS, GET THE DUPLICATE
+            #   THEN WE INFORM USER
+            duplicate_id = mongo.db.people.find_one(
+                person_search)['_id']
+            person_id = mongo.db.people.find_one(
+                {"_id": ObjectId(person_id)})['_id']
+
+            # IF THE DUPLICATE FOUND IS THE PERSON BEING EDITED
+            if duplicate_id == person_id:
+                # UPDATE ANYWAY
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(person_id)},
+                    {"$set": person_update})
+
+                flash("Circle has been updated")
+                return redirect(url_for(
+                    "assign_parents", person_id=person_id))
+
+            return redirect(url_for("notify_duplicate", person_id=person_id,
+                                    duplicate_id=duplicate_id))
+
     # RETURN THE FAMILIES TO THE ADD_PERSON PAGE FOR JINGA
     return render_template(
         "edit_person.html", person=person, families=families)
+
+
+@app.route("/notify_duplicate/<person_id>/<duplicate_id>")
+def notify_duplicate(person_id, duplicate_id):
+
+    # FUNCTION PURPOSE -
+    # 1.       TO NOTIFY USER OF DUPLICATION AND PROVIDE OPTIONS
+
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+    duplicate = mongo.db.people.find_one({"_id": ObjectId(duplicate_id)})
+
+    return render_template(
+        "notify_duplicate.html", person=person, duplicate=duplicate)
 
 
 @app.route("/delete_all_documents")

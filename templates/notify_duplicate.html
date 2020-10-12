@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+
+	<!-- LOGO CONTAINER -->
+    <div id="top-logo-container">
+      <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+    </div>
+    <!-- DELETE SIBLING RELATIONSHIP CONFIRMATION -->
+    <section>
+            <div class="row center-align flash-messages">
+                <h5 class="col s12 col m8 offset-m2 text-shadow red-text text-darken-4 ">The details you entered match another person on the Circles DB!</h5>
+                <h5 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1 ">Circles presumes that there cannot be 2 people with the same
+                Names and Date of Birth in your family circle, therefore its possible the person you are trying to edit, already exists.</h5>
+                <h6 class="col s12 col m8 offset-m2 grey-text text-darken-4 ">
+                Below is a link to return to the form you just edited, and a link to the person your edit matched with. Alternatively, click Home</h6>
+            </div>
+            <div class="row top-space-large center-align">
+                <a href="{{ url_for('edit_person', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large indigo darken-4">Return to {{ person.first_name }}</a>
+            </div>
+            <div class="row top-space-large center-align">
+                <a href="{{ url_for('edit_person', person_id=duplicate._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large indigo darken-4">Edit {{ duplicate.first_name }} ( Duplicate )</a>
+            </div>
+            <div class="row top-space-large center-align">
+                <a href="{{ url_for('home') }}" class="col s8 col m6 offset-s2 offset-m3 btn-large green darken-4">Home</a>
+            </div>
+    </section>
+
+   
+{% endblock %}
+
