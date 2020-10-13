@@ -1,0 +1,98 @@
+/* LOGO RELATED STYLING */
+ #logo-container {
+     height: 300px;
+     width: 100%;
+     background-color: transparent;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+ #logo-image{
+     background-image: url("../images/circles-logo-1024x.png");
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: contain;
+     width: 300px;
+     height: 100%;
+}
+.heading-container{
+    margin-top: 80px;
+    width: 100%;
+}
+.circles-heading{
+    color: rgb(59, 9, 59);
+    font-size: 2.2rem;
+    text-align: center;
+    text-shadow: 1px 1px 1.5px rgba(87,15,87,1);
+}
+
+.circles-subheading{
+    color: rgb(59, 9, 59);
+    font-size: 1.8rem;
+    text-align: center;
+    text-shadow: 1px 1px 1.5px rgba(87,15,87,1);
+}
+
+.my-circles-row{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.my-circles-container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.circles-item {
+    background-color: transparent;
+    height: 170px;
+    min-width: 170px;
+    align-content: center;
+    margin: 10px 0 0 10px;
+}
+
+.circles-item-text{
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    font-size: 1.2rem;   
+    color: #c4cace;
+}
+
+.circles-image{
+    background-image: url("../images/empty-multi-circle.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+    margin-top:-10px;
+    display: flex;
+}
+
+.circles-name{
+    font-size: 1rem;   
+    color: rgb(59, 9, 59);
+    font-weight: 800;
+    width: 70px;
+    margin: auto;
+    overflow: hidden;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+/* MEDIA QUERIES */
+/* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+@media (min-width:600px){
+
+
+}
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+@media (min-width:801px) {
+
+}
+/* big landscape tablets, laptops, and desktops */
+@media (min-width:1025px) {
+
+}

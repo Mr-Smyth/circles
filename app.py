@@ -1122,7 +1122,7 @@ def edit_person(person_id):
         #    CHECK TO SEE IF PERSON ALREADY EXISTS
         if mongo.db.people.count_documents(person_search, limit=1) == 0:
             #   ADD THE PERSON DICTIONARY TO MONGO
-            # INSERT NEW PERSON
+            #   INSERT NEW PERSON
             mongo.db.people.find_one_and_update(
                 {"_id": ObjectId(person_id)},
                 {"$set": person_update})
@@ -1157,6 +1157,7 @@ def edit_person(person_id):
         "edit_person.html", person=person, families=families)
 
 
+# NOTIFY IF DUPLICATE PERSON ROUTE
 @app.route("/notify_duplicate/<person_id>/<duplicate_id>")
 def notify_duplicate(person_id, duplicate_id):
 
@@ -1168,6 +1169,49 @@ def notify_duplicate(person_id, duplicate_id):
 
     return render_template(
         "notify_duplicate.html", person=person, duplicate=duplicate)
+
+
+# VIEW CIRCLE ROUTE
+@app.route("/view_circle/<person_id>")
+def view_circle(person_id):
+
+    # FUNCTION PURPOSE -
+    # 1.    TO DISPLAY A CHOSEN FAMILY CIRCLE
+
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+    persons_mother = person["parents"]["mother"]
+    persons_father = person["parents"]["father"]
+    mother = {}
+    father = {}
+    spouse_partner = person['spouse_partner']
+    spouse_partner_list = []
+
+
+    #   GET PARENTS
+    if persons_mother != "":
+        #   THEN IT HAS EXISTING MOTHER - SO ASSIGN THE ID
+        mother = mongo.db.people.find_one({
+            "_id": ObjectId(persons_mother)
+            })
+    if persons_father != "":
+        #   THEN IT HAS EXISTING FATHER - SO ASSIGN THE ID
+        father = mongo.db.people.find_one({
+            "_id": ObjectId(persons_father)
+            })
+
+    #   GET SPOUSE/PARTNERS
+    for partner in spouse_partner:
+        spouse_partner_list.append(mongo.db.people.find_one({
+            "_id": ObjectId(partner)
+            }))
+
+
+    
+    children = person['children']
+    siblings = person['siblings']
+    return render_template(
+        "view_circle.html", person=person, mother=mother, father=father,
+        spouse_partner_list=spouse_partner_list)
 
 
 @app.route("/delete_all_documents")

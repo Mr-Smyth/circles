@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block head %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/view_circle.css')}}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+
+    <!-- LOGO CONTAINER -->
+    <div id="top-logo-container">
+      <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+    </div>
+
+    <!-- PAGE HEADING -->
+    <div class="heading-container">
+        <h1 class="circles-heading">{{ person.first_name.capitalize() }}'s Family Circle</h1>
+    </div>
+    
+    <!-- PARENTS -->
+    <div class="my-circles-row">
+        <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Parents</h2>
+        
+		<div class="my-circles-container">
+            {% if mother|length > 0 %}
+			<div class="circles-item">
+                <h3 class="circles-item-text">Mother</h3>
+				<a href="" class="circles-image">
+					<span class="circles-name">{{ mother.first_name.capitalize() }} {{ mother.last_name.capitalize() }}
+		            </span>
+				</a>
+			</div>
+            {% else %}
+            <div class="circles-item">
+                <h3 class="circles-item-text">No Mother Set!</h3>
+				<a href="{{ url_for('assign_parents', person_id=person._id) }}" class="circles-image">
+					<span class="circles-name blue-text text-darken-4">Assign a Mother
+		            </span>
+				</a>
+			</div>
+            {% endif %}
+            {% if father|length > 0 %}
+            <div class="circles-item">
+                <h3 class="circles-item-text">Father</h3>
+				<a href="" class="circles-image">
+					<span class="circles-name">{{ father.first_name.capitalize() }} {{ father.last_name.capitalize() }}
+		            </span>
+				</a>
+			</div>
+            {% else %}
+            <div class="circles-item">
+                <h3 class="circles-item-text">No Father Set!</h3>
+				<a href="{{ url_for('assign_parents', person_id=person._id) }}" class="circles-image">
+					<span class="circles-name blue-text text-darken-4">Assign a Father
+		            </span>
+				</a>
+			</div>
+            {% endif %}
+		</div>
+	</div>
+    <!-- SPOUSE / PARTNER -->
+	<div class="my-circles-row">
+        <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Spouse / Partners</h2>
+        {% if spouse_partner_list|length > 0 %}
+		<div class="my-circles-container">
+            {% for partner in spouse_partner_list %}
+			<div class="circles-item">
+                <h3 class="circles-item-text">Spouse / Partner</h3>
+				<a href="" class="circles-image">
+					<span class="circles-name">{{ partner.first_name.capitalize() }} {{ partner.last_name.capitalize() }}
+		            </span>
+				</a>
+			</div>
+            {% endfor %}
+		</div>
+        {% else %}
+        <div class="my-circles-container">
+			<div class="circles-item">
+                <h3 class="circles-item-text"> No Spouse/Partner Yet!</h3>
+				<a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="circles-image">
+					<span class="circles-name blue-text text-darken-4">Assign Spouse/ Partner
+		            </span>
+				</a>
+			</div>
+		</div>
+        {% endif %}
+	</div>
+
+    
+    <!-- <div class="row">
+        
+        {% for partner in spouse_partner_list %}
+        <div class="col s3">
+            <div class="row">
+                <h3 class="col s12 circle-name center-align">Mother</h3>
+                <div class="col s12">
+                    <div class="circle-container">
+                        <a href="" class="circle-image">
+                            <span class="circle-name">{{ partner.first_name.capitalize() }} {{ partner.last_name.capitalize() }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div> -->
+        
+
+	
+
+{% endblock %}
+{% block scripts %}
+  
+{% endblock scripts %}
