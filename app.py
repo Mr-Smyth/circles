@@ -1185,6 +1185,10 @@ def view_circle(person_id):
     father = {}
     spouse_partner = person['spouse_partner']
     spouse_partner_list = []
+    siblings = person['siblings']
+    siblings_list = []
+    children = person['children']
+    children_list = []
 
 
     #   GET PARENTS
@@ -1205,13 +1209,22 @@ def view_circle(person_id):
             "_id": ObjectId(partner)
             }))
 
+    #   GET SIBLINGS
+    for sibling in siblings:
+        siblings_list.append(mongo.db.people.find_one({
+            "_id": ObjectId(sibling)
+            }))
 
-    
-    children = person['children']
-    siblings = person['siblings']
+    #   GET CHILDREN
+    for child in children:
+        children_list.append(mongo.db.people.find_one({
+            "_id": ObjectId(child)
+            }))
+
     return render_template(
         "view_circle.html", person=person, mother=mother, father=father,
-        spouse_partner_list=spouse_partner_list)
+        spouse_partner_list=spouse_partner_list, siblings_list=siblings_list,
+        children_list=children_list)
 
 
 @app.route("/delete_all_documents")

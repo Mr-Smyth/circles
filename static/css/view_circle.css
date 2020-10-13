@@ -75,7 +75,7 @@
     font-size: 1rem;   
     color: rgb(59, 9, 59);
     font-weight: 800;
-    width: 70px;
+    width: 75px;
     margin: auto;
     overflow: hidden;
     text-align: center;
@@ -85,12 +85,31 @@
 /* MEDIA QUERIES */
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
 @media (min-width:600px){
-
-
+        .circles-item {
+        height: 220px;
+        min-width: 220px;
+    }
+    .circles-item-text{
+        font-size: 1.3rem;   
+    }
+    .circles-name{
+        width: 90px;
+        font-size: 1.2rem;
+    }
 }
 /* tablet, landscape iPad, lo-res laptops ands desktops */
-@media (min-width:801px) {
-
+@media (min-width:801px){
+    .circles-item {
+        height: 250px;
+        min-width: 250px;
+    }
+    .circles-item-text{
+        font-size: 1.5rem;   
+    }
+    .circles-name{
+        width: 120px;
+        font-size: 1.4rem;
+    }
 }
 /* big landscape tablets, laptops, and desktops */
 @media (min-width:1025px) {

@@ -15,20 +15,20 @@
     <div class="heading-container">
         <h1 class="circles-heading">{{ person.first_name.capitalize() }}'s Family Circle</h1>
     </div>
-    
     <!-- PARENTS -->
     <div class="my-circles-row">
         <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Parents</h2>
-        
 		<div class="my-circles-container">
+        <!-- CHECK TO SEE IF THERE IS ANY MOTHER -->
             {% if mother|length > 0 %}
 			<div class="circles-item">
                 <h3 class="circles-item-text">Mother</h3>
-				<a href="" class="circles-image">
+				<a href="{{ url_for('view_circle', person_id=mother._id) }}" class="circles-image">
 					<span class="circles-name">{{ mother.first_name.capitalize() }} {{ mother.last_name.capitalize() }}
 		            </span>
 				</a>
 			</div>
+            <!-- IF NO MOTHER, THEN SHOW ALT CIRCLE -->
             {% else %}
             <div class="circles-item">
                 <h3 class="circles-item-text">No Mother Set!</h3>
@@ -38,14 +38,16 @@
 				</a>
 			</div>
             {% endif %}
+            <!-- CHECK TO SEE IF THERE IS ANY FATHER -->
             {% if father|length > 0 %}
             <div class="circles-item">
                 <h3 class="circles-item-text">Father</h3>
-				<a href="" class="circles-image">
+				<a href="{{ url_for('view_circle', person_id=father._id) }}" class="circles-image">
 					<span class="circles-name">{{ father.first_name.capitalize() }} {{ father.last_name.capitalize() }}
 		            </span>
 				</a>
 			</div>
+            <!-- IF NO FATHER, THEN SHOW ALT CIRCLE -->
             {% else %}
             <div class="circles-item">
                 <h3 class="circles-item-text">No Father Set!</h3>
@@ -60,18 +62,20 @@
     <!-- SPOUSE / PARTNER -->
 	<div class="my-circles-row">
         <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Spouse / Partners</h2>
+        <!-- CHECK TO SEE IF THERE IS ANY SPOUSE/PARTNER -->
         {% if spouse_partner_list|length > 0 %}
 		<div class="my-circles-container">
             {% for partner in spouse_partner_list %}
 			<div class="circles-item">
                 <h3 class="circles-item-text">Spouse / Partner</h3>
-				<a href="" class="circles-image">
+				<a href="{{ url_for('view_circle', person_id=partner._id) }}" class="circles-image">
 					<span class="circles-name">{{ partner.first_name.capitalize() }} {{ partner.last_name.capitalize() }}
 		            </span>
 				</a>
 			</div>
             {% endfor %}
 		</div>
+        <!-- IF NO PARTNER/SPOUSE, THEN SHOW ALT CIRCLE -->
         {% else %}
         <div class="my-circles-container">
 			<div class="circles-item">
@@ -84,29 +88,65 @@
 		</div>
         {% endif %}
 	</div>
+    <!-- SIBLINGS -->
+	<div class="my-circles-row">
+        <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Siblings</h2>
+        <!-- CHECK TO SEE IF THERE IS ANY SIBLINGS -->
+        {% if siblings_list|length > 0 %}
+		<div class="my-circles-container">
+            {% for sibling in siblings_list %}
+			<div class="circles-item">
+                <h3 class="circles-item-text">Sibling</h3>
+				<a href="{{ url_for('view_circle', person_id=sibling._id) }}" class="circles-image">
+					<span class="circles-name">{{ sibling.first_name.capitalize() }} {{ sibling.last_name.capitalize() }}
+		            </span>
+				</a>
+			</div>
+            {% endfor %}
+		</div>
+        <!-- IF NO SIBLING, THEN SHOW ALT CIRCLE -->
+        {% else %}
+        <div class="my-circles-container">
+			<div class="circles-item">
+                <h3 class="circles-item-text"> No Siblings Yet!</h3>
+				<a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="circles-image">
+					<span class="circles-name blue-text text-darken-4">Assign a Sibling
+		            </span>
+				</a>
+			</div>
+		</div>
+        {% endif %}
+	</div>
+    <!-- CHILDREN -->
+	<div class="my-circles-row">
+        <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Children</h2>
+        <!-- CHECK TO SEE IF THERE IS ANY CHILDREN -->
+        {% if children_list|length > 0 %}
+		<div class="my-circles-container">
+            {% for child in children_list %}
+			<div class="circles-item">
+                <h3 class="circles-item-text">Child</h3>
+				<a href="{{ url_for('view_circle', person_id=child._id) }}" class="circles-image">
+					<span class="circles-name">{{ child.first_name.capitalize() }} {{ child.last_name.capitalize() }}
+		            </span>
+				</a>
+			</div>
+            {% endfor %}
+		</div>
+        <!-- IF NO CHILDREN, THEN SHOW ALT CIRCLE -->
+        {% else %}
+        <div class="my-circles-container">
+			<div class="circles-item">
+                <h3 class="circles-item-text"> No Siblings Yet!</h3>
+				<a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="circles-image">
+					<span class="circles-name blue-text text-darken-4">Assign a Sibling
+		            </span>
+				</a>
+			</div>
+		</div>
+        {% endif %}
+	</div>
 
-    
-    <!-- <div class="row">
-        
-        {% for partner in spouse_partner_list %}
-        <div class="col s3">
-            <div class="row">
-                <h3 class="col s12 circle-name center-align">Mother</h3>
-                <div class="col s12">
-                    <div class="circle-container">
-                        <a href="" class="circle-image">
-                            <span class="circle-name">{{ partner.first_name.capitalize() }} {{ partner.last_name.capitalize() }}
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div> -->
-        
-
-	
 
 {% endblock %}
 {% block scripts %}
