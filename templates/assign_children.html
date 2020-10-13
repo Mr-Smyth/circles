@@ -26,7 +26,7 @@
     
     
     <h2 class="page-heading text-shadow">Add {{ person.first_name.capitalize() }}'s Children
-    <br><strong class="text-shadow"><h4>Step 4 of 5</h4></strong>
+    <br><strong class="text-shadow"><h4>Step 5 of 5</h4></strong>
     </h2>
 	{% if existing_children|length > 0 %}
 	<div class="container info-box white box-shade">
@@ -101,7 +101,7 @@
 				        </button>
                     </div>
                     <div class="col s12 center-align">
-                        <a href="{{ url_for('assign_children', person_id=person._id) }}" class="btn-large green darken-4 text-shadow">Skip to Next Step</a>
+                        <a href="{{ url_for('view_circle', person_id=person._id) }}" class="btn-large gold darken-4 text-shadow">Finished! View {{ person.first_name }}</a>
                     </div>
 				</div>
 			</form>

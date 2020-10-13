@@ -71,6 +71,19 @@
     display: flex;
 }
 
+/* USING CSS GLOW ON .CIRCLES CLASS - IM CALLING A SLIGHTLY
+DIFFERENT IMAGE - TO GIVE A SLOW SUBTLE PULSING EFFECT */
+.circles-image:hover{
+    background-image: url("../images/empty-multi-circle-hover.png");
+    animation: glow 1.5s linear infinite alternate;
+}
+
+@keyframes glow{
+    to {
+    background-image: url("../images/empty-multi-circle.png");
+    }
+}
+
 .circles-name{
     font-size: 1rem;   
     color: rgb(59, 9, 59);
