@@ -1266,10 +1266,7 @@ def manage_people():
         if len(query) > 0:
             people = list(mongo.db.people.find(query))
             error = "Sorry we have no records matching your query."
-            # return redirect(url_for("manage_people", people=people, error=error))
-            print("IM IN THE LEN LOOP")
         else:
-            print("IM OUTSIDE THE LEN LOOP")
             return redirect(url_for("manage_people"))
 
     return render_template("manage_people.html", people=people, error=error)
@@ -1285,6 +1282,7 @@ def delete_person(person_id):
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
 
+    # REMOVE THE ID FROM RELATED ANY ARRAYS IN THE COLLECTION
     mongo.db.people.remove({"_id": ObjectId(persons_id)})
     mongo.db.people.update({}, {"$pull": {
              "siblings": {"$in": [persons_id]}}}, multi=True)
@@ -1292,10 +1290,29 @@ def delete_person(person_id):
              "children": {"$in": [persons_id]}}}, multi=True)
     mongo.db.people.update({}, {"$pull": {
              "spouse_partner": {"$in": [persons_id]}}}, multi=True)
-    mongo.db.people.update({}, {"$pull": {
-             "parents": {"mother": {"$in": [persons_id]}}}}, multi=True)
-    mongo.db.people.update({}, {"$pull": {
-             "parents": {"father": {"$in": [persons_id]}}}}, multi=True)
+
+    #   BECAUSE CHILDREN HAVE A LINK TO A PARENTS VIA AN OBJECT
+    #   HERE I GET EACH PARENTS OBJECT AND REMOVE THE ID OF THE
+    #   PERSON WE ARE REMOVING.
+    #   GET CHILDREN
+    children = person['children']
+    children_list = []
+    for child in children:
+        children_list.append(mongo.db.people.find_one({
+            "_id": ObjectId(child)
+            }))
+
+    # LOOP OVER THE LIST OF CHILDREN AND CHECK FOR A
+    # MATCHING ID, IF FOUND REPLACE WITH DEFAULT "".
+    # THEN UPDATE THAT CHILD.
+    for child in children_list:
+        parents_dict = child['parents']
+        for key, value in parents_dict.items():
+            if value == persons_id:
+                parents_dict[key] = ""
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(child['_id'])},
+                    {"$set": {"parents": parents_dict}})
 
     return render_template("manage_people.html")
 
