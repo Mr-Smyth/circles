@@ -28,12 +28,12 @@
 	<section>
 		<div class="row">
 			<button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
-			        Search Circles
-			    </button>
+			    Delete A Person?
+			</button>
 		</div>
 		<!-- SEARCH FORM  -->
 		<div class="row search-container container">
-			<form id="person-search" action="{{ url_for('search') }}" method="POST" autocomplete="off">
+			<form id="person-search" action="{{ url_for('manage_people') }}" method="POST" autocomplete="off">
 				<div class="row center-align">
 					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
 						<input id="searchFirstName" name="searchFirstName" type="text" placeholder="Enter a First Name" class="validate" onfocus="this.select()">
@@ -57,30 +57,7 @@
 			</form>
 		</div>
 	</section>
-    <!-- DELETE EVERYONE -->
-    <!-- SEARCH BUTTON THAT REVEALS FORM WHEN CLICKED -->
-	<section>
-		<div class="row">
-			<button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent delete-button">
-				Delete Everyone
-			</button>
-		</div>
-		<!-- SEARCH FORM  -->
-		<div class="row delete-container container">
-			<form id="password_for_delete" action="{{ url_for('delete_all_documents') }}" method="POST" autocomplete="off">
-				<div class="row center-align">
-					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-						<input id="password" name="password" type="text" placeholder="Enter Deletion Password" class="validate" onfocus="this.select()">
-					</div>
-				</div>
-                <div class="row">
-					<button type="submit" class="col s10 m4 offset-s0 offset-m4 delete-btn">
-				        <i class="fas fa-trash-alt icon-4x"></i>
-				    </button>
-				</div>
-			</form>
-		</div>
-	</section>
+
     <!-- RESULTS PANEL -->
 	<section>
 		<div class="row">
@@ -96,13 +73,9 @@
 							<strong>{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }}:<br> </strong>{{ person.dob }}
 						</div>
 						<div class="row col s5 search-result-buttons">
-							<div class="col s10 m5 offset-s1 pull-m1">
-								<a href="{{ url_for('edit_person', person_id=person._id) }}"
-									class="center-align btn-small indigo darken-4">Edit</a>
-							</div>
-							<div class="col s10 m5 offset-s1 pull-m1">
-								<a href="{{ url_for('delete_all_documents') }}"
-									class="center-align btn-small indigo darken-4">Delete Everyone</a>
+							<div class="col s10 m10 offset-s1">
+								<a href="{{ url_for('delete_person', person_id=person._id) }}"
+									class="center-align btn-small indigo darken-4">Delete</a>
 							</div>
 						</div>
 					</div>
@@ -138,6 +111,32 @@
 		</div>
 		{% endif %}
 	</section>
+
+    <!-- DELETE EVERYONE -->
+    <!-- DELETE BUTTON THAT REVEALS PASSWORD FOR DELETION CLICKED -->
+	<section>
+		<div class="row">
+			<button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent delete-button">
+				Delete Everyone?
+			</button>
+		</div>
+		<!-- PASSWORD ENTRY FORM  -->
+		<div class="row delete-container container">
+			<form id="password_for_delete" action="{{ url_for('delete_all_documents') }}" method="POST" autocomplete="off">
+				<div class="row center-align">
+					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+						<input id="password" name="password" type="text" placeholder="Enter Deletion Password" class="validate" onfocus="this.select()">
+					</div>
+				</div>
+                <div class="row">
+					<button type="submit" class="col s10 m4 offset-s0 offset-m4 delete-btn">
+				        <i class="fas fa-trash-alt icon-4x"></i>
+				    </button>
+				</div>
+			</form>
+		</div>
+	</section>
+
 
 {% endblock %}
 {% block scripts %}

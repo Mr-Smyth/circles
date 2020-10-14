@@ -109,7 +109,7 @@
         <div class="my-circles-container">
 			<div class="circles-item">
                 <h3 class="circles-item-text"> No Siblings Yet!</h3>
-				<a href="{{ url_for('assign_sibling', person_id=sibling._id) }}" class="circles-image">
+				<a href="{{ url_for('assign_siblings', person_id=person._id) }}" class="circles-image">
 					<span class="circles-name assign-text">Assign a Sibling
 		            </span>
 				</a>
@@ -137,9 +137,9 @@
         {% else %}
         <div class="my-circles-container">
 			<div class="circles-item">
-                <h3 class="circles-item-text"> No Siblings Yet!</h3>
-				<a href="{{ url_for('assign_children', person_id=children._id) }}" class="circles-image">
-					<span class="circles-name assign-text">Assign a Sibling
+                <h3 class="circles-item-text"> No Children Yet!</h3>
+				<a href="{{ url_for('assign_children', person_id=person._id) }}" class="circles-image">
+					<span class="circles-name assign-text">Assign a Child
 		            </span>
 				</a>
 			</div>

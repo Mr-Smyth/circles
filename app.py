@@ -217,13 +217,15 @@ def assign_parents(person_id):
         #   GET THE TEMPLTE FROM THE FORM
         #   FOR MOTHER
         mother = {
-            "first_name": request.form.get("mothers_first_name").lower().strip(),
+            "first_name": request.form.get(
+                "mothers_first_name").lower().strip(),
             "last_name": request.form.get("mothers_last_name").lower().strip(),
             "dob": request.form.get("mothers_dob")
         }
         #   FOR FATHER
         father = {
-            "first_name": request.form.get("fathers_first_name").lower().strip(),
+            "first_name": request.form.get(
+                "fathers_first_name").lower().strip(),
             "last_name": request.form.get("fathers_last_name").lower().strip(),
             "dob": request.form.get("fathers_dob")
         }
@@ -235,7 +237,8 @@ def assign_parents(person_id):
                 "family_name": person["family_name"].lower().strip(),
                 "first_name": request.form.get(
                     "mothers_first_name").lower().strip(),
-                "last_name": request.form.get("mothers_last_name").lower().strip(),
+                "last_name": request.form.get(
+                    "mothers_last_name").lower().strip(),
                 "birth_surname": "",
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
@@ -388,7 +391,8 @@ def assign_spouse_partner(person_id):
         spouse_partner_search = {
             "first_name": request.form.get(
                 "spouse_partner_first_name").lower().strip(),
-            "last_name": request.form.get("spouse_partner_last_name").lower().strip(),
+            "last_name": request.form.get(
+                "spouse_partner_last_name").lower().strip(),
             "dob": request.form.get("spouse_partner_dob")
         }
 
@@ -484,7 +488,7 @@ def assign_siblings(person_id):
     mothers_partners_list = []
     fathers_partners_list = []
     persons_parents = []
-    if person['parents']['father'] or person['parents']['father']:
+    if person['parents']['father'] or person['parents']['mother']:
         persons_parents = [
             mongo.db.people.find_one(
                 {"_id": ObjectId(person['parents']['father'])}),
@@ -529,7 +533,8 @@ def assign_siblings(person_id):
     if request.method == "POST":
         # GET THE TEMPLTE FROM THE FORM FOR SIBLING
         sibling_search = {
-            "first_name": request.form.get("sibling_first_name").lower().strip(),
+            "first_name": request.form.get(
+                "sibling_first_name").lower().strip(),
             "last_name": request.form.get("sibling_last_name").lower().strip(),
             "dob": request.form.get("sibling_dob")
         }
@@ -557,7 +562,8 @@ def assign_siblings(person_id):
                 "family_name": person["family_name"].lower().strip(),
                 "first_name": request.form.get(
                     "sibling_first_name").lower().strip(),
-                "last_name": request.form.get("sibling_last_name").lower().strip(),
+                "last_name": request.form.get(
+                    "sibling_last_name").lower().strip(),
                 "birth_surname": person["birth_surname"].lower().strip(),
                 "parents": selected_parents,
                 "siblings": [],
@@ -580,10 +586,11 @@ def assign_siblings(person_id):
                     {"$addToSet": {"siblings": new_sibling_id}})
 
             # UPDATE THE PARENTS OF THIS NEW SIBLING AS THEIR NEW CHILD:
-            for key, value in selected_parents.items():
-                mongo.db.people.find_one_and_update(
-                    {"_id": ObjectId(value)}, {"$addToSet": {
-                        "children": new_sibling_id}})
+            if any(x != "" for x in selected_parents.values()):
+                for key, value in selected_parents.items():
+                    mongo.db.people.find_one_and_update(
+                        {"_id": ObjectId(value)}, {"$addToSet": {
+                            "children": new_sibling_id}})
 
             # BUILD LIST OF FULL OR HALF SIBLINGS.
             combined_siblings = persons_siblings_ids.copy()
@@ -604,7 +611,7 @@ def assign_siblings(person_id):
              "children": {"$in": [found_sibling_id]}}}, multi=True)
 
             #   WE REMOVE THE FOUND SIBLING ID FROM ANY SIBLING
-            #       ARRAY - THIS IS IF THE PARENTS ARE CHANGING THEN SIBLINGS
+            #       ARRAY - THIS IS IF THE PARENTS ARE CHANGING THEIR SIBLINGS
             mongo.db.people.update({}, {"$pull": {
              "sibling": {"$in": [found_sibling_id]}}}, multi=True)
 
@@ -614,10 +621,11 @@ def assign_siblings(person_id):
                 {"$set": {"parents": selected_parents}})
 
             # ADD FOUND SIBLING TO THE PARENTS CHILDREN ARRAY
-            for key, value in selected_parents.items():
-                mongo.db.people.find_one_and_update(
-                    {"_id": ObjectId(value)}, {"$addToSet": {
-                        "children": found_sibling_id}})
+            if any(x != "" for x in selected_parents.values()):
+                for key, value in selected_parents.items():
+                    mongo.db.people.find_one_and_update(
+                        {"_id": ObjectId(value)}, {"$addToSet": {
+                            "children": found_sibling_id}})
 
             # SEE IF THE EXISTING SIBLING WITHIN THE DB HAS
             # ANY EXISTING SIBLINGS
@@ -768,7 +776,8 @@ def assign_children(person_id):
                 "family_name": person["family_name"].lower().strip(),
                 "first_name": request.form.get(
                     "child_first_name").lower().strip(),
-                "last_name": request.form.get("child_last_name").lower().strip(),
+                "last_name": request.form.get(
+                    "child_last_name").lower().strip(),
                 "birth_surname": person["birth_surname"].lower().strip(),
                 "parents": {"mother": "", "father": ""},
                 "siblings": [],
@@ -992,6 +1001,7 @@ def manage_sibling_relationship(person_id, person2_id):
     return render_template(
         "manage_sibling_relationship.html", person2=person2,
         person=person)
+
 
 # REMOVE SIBLING RELATIONSHIP ROUTE
 @app.route(
@@ -1227,8 +1237,66 @@ def view_circle(person_id):
 
 
 # MANAGE PEOPLE ROUTE
-@app.route("/manage_people")
+@app.route("/manage_people", methods=["GET", "POST"])
 def manage_people():
+
+    # FUNCTION PURPOSE -
+    # 1.    CHECKS AND FINDS THE SEARCHED FOR PERSON
+    # 2.    GIVES THE RESULTS WITH OPTION TO REMOVE PERSON
+    people = {}
+    error = ""
+    if request.method == "POST":
+        #   SETUP A DICTIONARY THAT HOLDS THE INFO WE CAN QUERY
+        #   IT WILL POPULATE FROM THE FORM.
+        searchInput = {
+            "first_name": request.form.get("searchFirstName").lower().strip(),
+            "last_name": request.form.get("searchLastName").lower().strip(),
+            "dob": request.form.get("searchDob").strip(),
+            }
+        #   SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
+        #       searchInput ABOVE TO BUILD A QUERY FROM ONLY POPULATED
+        #       VALUES
+        query = {}
+        for k, v in searchInput.items():
+            if len(v) > 0:
+                query[k] = v
+
+        #   CHECK IF THE QUERY IS NOT BLANK - SOMEONE JUST CLICKED
+        #       SEARCH WITHOUT ANY ENTRIES?
+        if len(query) > 0:
+            people = list(mongo.db.people.find(query))
+            error = "Sorry we have no records matching your query."
+            # return redirect(url_for("manage_people", people=people, error=error))
+            print("IM IN THE LEN LOOP")
+        else:
+            print("IM OUTSIDE THE LEN LOOP")
+            return redirect(url_for("manage_people"))
+
+    return render_template("manage_people.html", people=people, error=error)
+
+
+# DELETE PERSON ROUTE
+@app.route("/delete_person/<person_id>", methods=["GET", "POST"])
+def delete_person(person_id):
+
+    # FUNCTION PURPOSE -
+    # 1.    DELETES THE DOCUMENT FOR THE USER ID PASSED IN
+    # 2.    DELETES ANY FOREIGN KEYS
+    person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
+    persons_id = person["_id"]
+
+    mongo.db.people.remove({"_id": ObjectId(persons_id)})
+    mongo.db.people.update({}, {"$pull": {
+             "siblings": {"$in": [persons_id]}}}, multi=True)
+    mongo.db.people.update({}, {"$pull": {
+             "children": {"$in": [persons_id]}}}, multi=True)
+    mongo.db.people.update({}, {"$pull": {
+             "spouse_partner": {"$in": [persons_id]}}}, multi=True)
+    mongo.db.people.update({}, {"$pull": {
+             "parents": {"mother": {"$in": [persons_id]}}}}, multi=True)
+    mongo.db.people.update({}, {"$pull": {
+             "parents": {"father": {"$in": [persons_id]}}}}, multi=True)
+
     return render_template("manage_people.html")
 
 
@@ -1242,12 +1310,13 @@ def delete_all_documents():
 
     if request.method == "POST":
         if password == request.form.get("password"):
-            # mongo.db.people.remove({})
+            mongo.db.people.remove({})
             flash("Circles has been Deleted")
             return redirect(url_for("manage_people"))
         else:
-            flash("The password you entered was incorrect. Circles has not been Deleted.")
-    
+            flash("The password you entered was incorrect.\
+                Circles has not been Deleted.")
+
     return render_template("manage_people.html")
 
 
