@@ -1313,6 +1313,8 @@ def delete_person(person_id):
                 mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(child['_id'])},
                     {"$set": {"parents": parents_dict}})
+    
+    flash("Person has been successfully removed from Circles")
 
     return render_template("manage_people.html")
 
