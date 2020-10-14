@@ -993,7 +993,7 @@ def manage_sibling_relationship(person_id, person2_id):
         "manage_sibling_relationship.html", person2=person2,
         person=person)
 
-# DELETE SIBLING ROUTE
+# REMOVE SIBLING RELATIONSHIP ROUTE
 @app.route(
     "/delete_sibling_relationship/<person_id>/<person2_id>",
     methods=["GET", "POST"])
@@ -1190,7 +1190,6 @@ def view_circle(person_id):
     children = person['children']
     children_list = []
 
-
     #   GET PARENTS
     if persons_mother != "":
         #   THEN IT HAS EXISTING MOTHER - SO ASSIGN THE ID
@@ -1227,11 +1226,29 @@ def view_circle(person_id):
         children_list=children_list)
 
 
-@app.route("/delete_all_documents")
+# MANAGE PEOPLE ROUTE
+@app.route("/manage_people")
+def manage_people():
+    return render_template("manage_people.html")
+
+
+@app.route("/delete_all_documents", methods=["GET", "POST"])
 def delete_all_documents():
-    mongo.db.people.remove({})
-    flash("Circles has been Deleted")
-    return render_template("home.html")
+
+    # FUNCTION PURPOSE -
+    # 1.    CHECKS IF CORRECT DELETION PASSWORD HAS BEEN ENTERED
+    # 2.    DELETES ALL PEOPLE FROM DB
+    password = "password"
+
+    if request.method == "POST":
+        if password == request.form.get("password"):
+            # mongo.db.people.remove({})
+            flash("Circles has been Deleted")
+            return redirect(url_for("manage_people"))
+        else:
+            flash("The password you entered was incorrect. Circles has not been Deleted.")
+    
+    return render_template("manage_people.html")
 
 
 # ROUTE TO HANDLE E404
