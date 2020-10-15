@@ -43,53 +43,20 @@ body {
     border-radius: 30px;
 }
 
-.btn-blue{
-    font-size: 1.1rem;
-    color: grey;
-    font-weight: 500;
-    background: rgb(47,37,177);
-    background: linear-gradient(4deg, rgba(47,37,177,1) 12%, rgb(95, 101, 206) 95%, rgba(7,22,70,1) 100%);
-    transition: 0.5s;
-}
-
-.btn-blue:hover{
-    font-size: 1.1rem;
-    color: #c0c0c0;
-    background: rgb(47,37,177);
-    background: linear-gradient(4deg, rgb(95, 101, 206) 12%, rgba(7,22,70,1) 95%, rgba(7,22,70,1) 100%);
-}
-
-.btn-green{
+.form-button{
     font-size: 1.1rem;
     color: #c0c0c0;
     font-weight: 500;
-    background: rgb(18,107,29);
-    background: linear-gradient(4deg, rgba(18,107,29,1) 12%, rgba(153,240,140,1) 95%, rgba(5,50,19,1) 100%);
     transition: 0.5s;
+    background-color: #0d47a1;
 }
 
-.btn-green:hover{
+.form-button:hover{
     font-size: 1.1rem;
-    color: #ffffff;
-    background: rgb(18,107,29);
-    background: linear-gradient(4deg, rgba(153,240,140,1) 12%, rgba(5,50,19,1) 95%, rgba(5,50,19,1) 100%);
+    color: #eeeeee;
+    background-color: #0b3574;
 }
 
-.btn-purple{
-    font-size: 1.1rem;
-    color: #c0c0c0;
-    font-weight: 500;
-    background: rgb(101,39,162);
-    background: linear-gradient(4deg, rgba(101,39,162,1) 12%, rgba(158,121,238,1) 95%, rgba(69,19,91,1) 100%);
-    transition: 0.5s;
-}
-
-.btn-purple:hover{
-    font-size: 1.1rem;
-    color: #ffffff;
-    background: rgb(101,39,162);
-    background: linear-gradient(4deg, rgba(158,121,238,1) 12%, rgba(69,19,91,1) 95%, rgba(69,19,91,1) 100%);
-}
 
 .clear {
     background-color: transparent;

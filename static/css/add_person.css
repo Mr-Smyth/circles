@@ -7,6 +7,11 @@
     border-radius: 10px;
 }
 
+.page-heading{
+    font-size: 2rem;
+    text-align: center;
+}
+
 .radioSpacer {
     margin-top: 20px;
 }

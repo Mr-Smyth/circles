@@ -87,15 +87,23 @@
                 <!-- SUBMIT BUTTON -->
 				<div class="row">
 					<div class="col s12 center-align">
-						<button type="submit" class="btn-large deep-purple darken-2 text-shadow">
-				            Add Parents <i class="fas fa-user-friends left"></i>                     
+						<button type="submit" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
+				            Add Parents<i class="fas fa-user-plus left"></i>                     
 				        </button>
+                        <a href="{{ url_for('assign_parents', person_id=person._id) }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
+                        Cancel<i class="fas fa-times-circle left"></i> </a>
                     </div>
-                    {% if both_parents == True %}
-                        <div class="col s12 center-align">
-                        <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="btn-large green darken-4 text-shadow">Skip to Next Step</a>
+                    <div class="col s12 center-align">
+                        {% if both_parents == True %}
+                        <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
+                        Next<i class="fas fa-arrow-alt-circle-right left"></i> </a>
+					    <a href="{{ url_for('view_circle', person_id=person._id) }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
+                        <i class="fas fas fa-street-view left"></i>View {{ person.first_name }}</a>
+                        {% else %}
+                        <a href="{{ url_for('view_circle', person_id=person._id) }}" class="col s10 push-s1 m11 xl4 offset-xl4 btn-large form-button text-shadow">
+                        <i class="fas fas fa-street-view left"></i>View {{ person.first_name }}</a>
+                        {% endif %}
                     </div>
-                    {% endif %}
 				</div>
 			</form>
 		</div>
