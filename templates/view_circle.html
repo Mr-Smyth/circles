@@ -146,6 +146,13 @@
 		</div>
         {% endif %}
 	</div>
+    <!-- BUTTONS -->
+				<div class="row top-space-xlarge">
+					<div class="col s12 center-align">
+						<a href="{{ url_for('edit_person', person_id=person._id) }}" class="col s10 push-s1 m11 xl4 offset-xl4 btn-large form-button text-shadow">
+                        <i class="fas fas fa-street-view left"></i>Edit {{ person.first_name }}</a>
+                    </div>
+				</div>
 
 
 {% endblock %}

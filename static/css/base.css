@@ -62,6 +62,10 @@ body {
     background-color: transparent;
 }
 
+.top-space-xlarge {
+    margin-top: 150px;
+}
+
 .top-space-large {
     margin-top: 50px;
 }
