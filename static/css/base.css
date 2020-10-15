@@ -43,6 +43,54 @@ body {
     border-radius: 30px;
 }
 
+.btn-blue{
+    font-size: 1.1rem;
+    color: grey;
+    font-weight: 500;
+    background: rgb(47,37,177);
+    background: linear-gradient(4deg, rgba(47,37,177,1) 12%, rgb(95, 101, 206) 95%, rgba(7,22,70,1) 100%);
+    transition: 0.5s;
+}
+
+.btn-blue:hover{
+    font-size: 1.1rem;
+    color: #c0c0c0;
+    background: rgb(47,37,177);
+    background: linear-gradient(4deg, rgb(95, 101, 206) 12%, rgba(7,22,70,1) 95%, rgba(7,22,70,1) 100%);
+}
+
+.btn-green{
+    font-size: 1.1rem;
+    color: #c0c0c0;
+    font-weight: 500;
+    background: rgb(18,107,29);
+    background: linear-gradient(4deg, rgba(18,107,29,1) 12%, rgba(153,240,140,1) 95%, rgba(5,50,19,1) 100%);
+    transition: 0.5s;
+}
+
+.btn-green:hover{
+    font-size: 1.1rem;
+    color: #ffffff;
+    background: rgb(18,107,29);
+    background: linear-gradient(4deg, rgba(153,240,140,1) 12%, rgba(5,50,19,1) 95%, rgba(5,50,19,1) 100%);
+}
+
+.btn-purple{
+    font-size: 1.1rem;
+    color: #c0c0c0;
+    font-weight: 500;
+    background: rgb(101,39,162);
+    background: linear-gradient(4deg, rgba(101,39,162,1) 12%, rgba(158,121,238,1) 95%, rgba(69,19,91,1) 100%);
+    transition: 0.5s;
+}
+
+.btn-purple:hover{
+    font-size: 1.1rem;
+    color: #ffffff;
+    background: rgb(101,39,162);
+    background: linear-gradient(4deg, rgba(158,121,238,1) 12%, rgba(69,19,91,1) 95%, rgba(69,19,91,1) 100%);
+}
+
 .clear {
     background-color: transparent;
 }
@@ -169,4 +217,71 @@ label.active {
 
 .dropdown-content li>a, .dropdown-content li>span {
     color: royalblue;
+}
+
+/* FOOTER */
+#circles-footer{
+    min-height: 150px;
+    margin-top: 50px;
+    color: silver;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    
+}
+
+#copyright{
+    text-align: center;
+}
+
+#social-links{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#social-links i{
+    font-size: 2rem;
+    transition: all 0.55s ease-in-out;
+}
+
+#social-links i:hover{
+    color: rgba(87,15,87,1);
+    text-shadow: 0px 0px 10px rgb(240, 239, 175);
+}
+
+/* MEDIA QUERIES */
+/* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+@media (min-width:600px){
+    .btn-blue,
+    .btn-green,
+    .btn-purple{
+        font-size: 1.3rem;
+        font-weight: 500;
+    }
+    .btn-blue:hover,
+    .btn-green:hover,
+    .btn-purple:hover{
+        font-size: 1.3rem;
+        font-weight: 500;
+    }
+}
+
+
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+@media (min-width:801px) {
+    #social-links{
+    width: 50%;
+    }
+}
+
+/* big landscape tablets, laptops, and desktops */
+@media (min-width:1025px) {
+    #social-links{
+    width: 30%;
+    }
+
 }

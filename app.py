@@ -130,7 +130,7 @@ def add_person():
                 {"_id": ObjectId(person_id)},
                 {"$set": person_update})
 
-        flash("This Person has bees successfully added to Circles")
+        flash("This Person has been successfully added to Circles")
         return redirect(url_for(
             "assign_parents", person_id=person_id))
 
