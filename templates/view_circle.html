@@ -13,6 +13,35 @@
 
     <!-- PAGE HEADING -->
     <div class="heading-container">
+        <h1 id="person-heading">{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }}</h1>
+    </div>
+    <div class="person-details-container">
+        <div id="person-information">
+            <p>{{ person.information }}</p>
+        </div>
+        <div id="person-details">
+			{% if (person.family_name != "") %}
+			<p>Family Name : <strong> {{ person.family_name.capitalize() }}</strong></p>
+			{% endif %}
+			{% if (person.birth_surname != "") %}
+			<p>Maiden Name: <strong> {{ person.birth_surname.capitalize() }}</strong></p>
+			{% endif %}
+			{% if (person.gender != "") %}
+			<p>Gender: <strong> {{ person.gender.capitalize() }}</strong></p>
+			{% endif %}
+            {% if (person.dob != "") %}
+			<p>Date of Birth: <strong> {{ person.dob }}</strong></p>
+			{% endif %}
+			{% if (person.dod != "") %}
+			<p>Date of Death: <strong> {{ person.dod }}</strong></p>
+			{% endif %}
+		</div>
+    </div>
+    
+    
+
+    <!-- CIRCLE HEADING -->
+    <div class="circle-heading-container">
         <h1 class="circles-heading">{{ person.first_name.capitalize() }}'s Family Circle</h1>
     </div>
     <!-- PARENTS -->
@@ -149,11 +178,10 @@
     <!-- BUTTONS -->
 				<div class="row top-space-xlarge">
 					<div class="col s12 center-align">
-						<a href="{{ url_for('edit_person', person_id=person._id) }}" class="col s10 push-s1 m11 xl4 offset-xl4 btn-large form-button text-shadow">
+						<a href="{{ url_for('edit_person', person_id=person._id) }}" class="col s10 push-s1 m6 push-m3 xl4 push-xl4 btn-large form-button text-shadow">
                         <i class="fas fas fa-street-view left"></i>Edit {{ person.first_name }}</a>
                     </div>
 				</div>
-
 
 {% endblock %}
 {% block scripts %}
