@@ -98,6 +98,11 @@ button:focus {
     box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
     overflow: hidden;
 }
+.search-result:hover{
+    background-color: #5a1da5;
+    color: #eee;
+    box-shadow: 0px 0px 10px 1px rgb(39, 6, 39);
+}
 .search-result i{
     display: none;
     width: 50px;

@@ -53,6 +53,7 @@ def search():
         #   SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
         #       searchInput ABOVE TO BUILD A QUERY FROM ONLY POPULATED
         #       VALUES
+        error = ""
         query = {}
         for k, v in searchInput.items():
             if len(v) > 0:

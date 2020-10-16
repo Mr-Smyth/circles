@@ -59,7 +59,7 @@
             <!-- IF NO MOTHER, THEN SHOW ALT CIRCLE -->
             {% else %}
             <div class="circles-item">
-                <h3 class="circles-item-text">No Mother Set!</h3>
+                <h3 class="circles-item-text red-text text-darken-4">No Mother Set!</h3>
 				<a href="{{ url_for('assign_parents', person_id=person._id) }}" class="circles-image">
 					<span class="circles-name  assign-text">Assign a Mother
 		            </span>
@@ -78,7 +78,7 @@
             <!-- IF NO FATHER, THEN SHOW ALT CIRCLE -->
             {% else %}
             <div class="circles-item">
-                <h3 class="circles-item-text">No Father Set!</h3>
+                <h3 class="circles-item-text red-text text-darken-4">No Father Set!</h3>
 				<a href="{{ url_for('assign_parents', person_id=person._id) }}" class="circles-image">
 					<span class="circles-name  assign-text">Assign a Father
 		            </span>
@@ -107,7 +107,7 @@
         {% else %}
         <div class="my-circles-container">
 			<div class="circles-item">
-                <h3 class="circles-item-text"> No Spouse/Partner Yet!</h3>
+                <h3 class="circles-item-text red-text text-darken-4"> No Spouse/Partner Yet!</h3>
 				<a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="circles-image">
 					<span class="circles-name assign-text">Assign Spouse/ Partner
 		            </span>
@@ -118,9 +118,9 @@
 	</div>
     <!-- SIBLINGS -->
 	<div class="my-circles-row">
-        <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Siblings</h2>
         <!-- CHECK TO SEE IF THERE IS ANY SIBLINGS -->
         {% if siblings_list|length > 0 %}
+        <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Siblings</h2>
 		<div class="my-circles-container">
             {% for sibling in siblings_list %}
 			<div class="circles-item">
@@ -133,10 +133,11 @@
             {% endfor %}
 		</div>
         <!-- IF NO SIBLING, THEN SHOW ALT CIRCLE -->
-        {% else %}
+        {% elif mother|length > 0 and father|length > 0 %} %}
+        <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Siblings</h2>
         <div class="my-circles-container">
 			<div class="circles-item">
-                <h3 class="circles-item-text"> No Siblings Yet!</h3>
+                <h3 class="circles-item-text red-text text-darken-4"> No Siblings Yet!</h3>
 				<a href="{{ url_for('assign_siblings', person_id=person._id) }}" class="circles-image">
 					<span class="circles-name assign-text">Assign a Sibling
 		            </span>
@@ -147,9 +148,9 @@
 	</div>
     <!-- CHILDREN -->
 	<div class="my-circles-row">
-        <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Children</h2>
         <!-- CHECK TO SEE IF THERE IS ANY CHILDREN -->
         {% if children_list|length > 0 %}
+        <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Children</h2>
 		<div class="my-circles-container">
             {% for child in children_list %}
 			<div class="circles-item">
@@ -162,10 +163,11 @@
             {% endfor %}
 		</div>
         <!-- IF NO CHILDREN, THEN SHOW ALT CIRCLE -->
-        {% else %}
+        {% elif spouse_partner_list|length > 0 %}
+        <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Children</h2>
         <div class="my-circles-container">
 			<div class="circles-item">
-                <h3 class="circles-item-text"> No Children Yet!</h3>
+                <h3 class="circles-item-text red-text text-darken-4"> No Children Yet!</h3>
 				<a href="{{ url_for('assign_children', person_id=person._id) }}" class="circles-image">
 					<span class="circles-name assign-text">Assign a Child
 		            </span>
@@ -178,7 +180,7 @@
 				<div class="row top-space-xlarge">
 					<div class="col s12 center-align">
 						<a href="{{ url_for('edit_person', person_id=person._id) }}" class="col s10 push-s1 m6 push-m3 xl4 push-xl4 btn-large form-button text-shadow">
-                        <i class="fas fas fa-street-view left"></i>Edit {{ person.first_name }}</a>
+                        <i class="fas fa-user-edit left"></i>Edit {{ person.first_name }}</a>
                     </div>
 				</div>
 
