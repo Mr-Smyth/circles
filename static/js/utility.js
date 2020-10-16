@@ -12,10 +12,22 @@ document.addEventListener('DOMContentLoaded', function () {
             done: "Select"
         }
     });
+    
     let collapsibles = document.querySelectorAll(".collapsible");
     let collapsiblesInstance = M.Collapsible.init(collapsibles);
 
-     /** MAKE SELECT FEATURE HAVE VALIDATION */
+    /** SET THE LOADER TO START WHENEVER A SUBMIT BUTTON IS CLICKED  */
+    let btn = document.querySelector("button[type=submit]");
+    btn.addEventListener('click', function(){
+        let overlay = document.getElementById("overlay")
+        overlay.style.display = "flex"
+    })
+
+     /** MAKE SELECT FEATURE HAVE VALIDATION 
+      * CREDIT TIM IN CODE INSTITUTE FOR THIS CODE FROM THE COURSE
+      * MINI PROJECT TO GET MATERIALIZE DROP DOWN OPTION LISTS TO HAVE
+      * VALIDATION
+     */
     validateMaterializeSelect();
     function validateMaterializeSelect() {
         /** Set up to new variables that will match the materialize validation */
@@ -30,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
          * MATERIALIZE HIDES SELECT ELEMENTS, BUT WE NEED THEM ON THE DOM.
          * AND BECAUSE IT IS ON THE DOM, IT WILL NOT ALLOW SUBMIT, AS IT IS REQUIRED
         */
-
         if (selectValidate != null && selectValidate.hasAttribute("required")) {
             selectValidate.style.cssText = "display: block; height: 0; padding: 0; width: 0; position: absolute;";
         }
@@ -52,11 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
 
-            /** aDD EVENT LISTENER TO WRAPPER INPUT ELEMENTS - FOR A CLICK
+            /** ADD EVENT LISTENER TO WRAPPER INPUT ELEMENTS - FOR A CLICK
              * WE TRAVERSE THE DOM UP AND DOWN USING PARENT AND CHILD EVENT LISTENERS
              * IF sELECTED ITEM HAS CLASS OF SELECTED AND IS NOT DISABLED then 
              * CLASS IS VALID AND SO THE LINE REMAINS GREEN
-             * ELSE IF THE FOCUS LEAVES THE LIST, tHE CLASS BECOMES INVALID, AND
+             * ELSE IF THE FOCUS LEAVES THE LIST, THE CLASS BECOMES INVALID, AND
              * SO THE LINE IS RED.
              * I THINK THIS IS FOR CASES WHEN REENTERING THE LIST?
              */
@@ -79,3 +90,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
+
+/** SWITCH OFF THE LOADER WHEN PAGE LOADS */
+let overlay = document.getElementById("overlay")
+window.addEventListener('load',function(){
+    overlay.style.display = 'none';
+});
+
+
