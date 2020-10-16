@@ -11,9 +11,14 @@
       <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
     </div>
 
+    <!-- CIRCLE HEADING -->
+    <div class="circle-heading-container">
+        <h1 class="circles-heading">{{ person.first_name.capitalize() }}'s Family Circle</h1>
+    </div>
+
     <!-- PAGE HEADING -->
     <div class="heading-container">
-        <h1 id="person-heading">{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }}</h1>
+        <h1 id="person-heading">About {{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }}</h1>
     </div>
     <div class="person-details-container">
         <div id="person-information">
@@ -38,12 +43,6 @@
 		</div>
     </div>
     
-    
-
-    <!-- CIRCLE HEADING -->
-    <div class="circle-heading-container">
-        <h1 class="circles-heading">{{ person.first_name.capitalize() }}'s Family Circle</h1>
-    </div>
     <!-- PARENTS -->
     <div class="my-circles-row">
         <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Parents</h2>

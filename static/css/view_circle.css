@@ -23,33 +23,34 @@
     justify-content: start;
 }
 #person-heading{
-    font-size: 2.2rem;
+    font-size: 1.6rem;
     color: #444444;
     width: 90%;
     margin: auto;
     border-bottom: 0.5px solid #c0c0c0;
 }
 .person-details-container{
-    padding: 20px 0 20px 0;
     margin: 0 auto;
     width: 90%;
     display: flex;
     flex-wrap: wrap-reverse;
 }
 #person-information{
-    padding: 0 10px 0 0;
+    margin: 20px 20px 20px 0;
     font-size: 1.1rem;
-    color: #444444;
+    color: #eee;
     width: 100px;
     flex-grow: 5;
     min-width: 300px;
 }
 #person-details{
+    margin: 20px 0 0 0;
+    padding: 10px;
     background-color: rgba(251, 248, 248, 0.192);
     border: solid 1px #c0c0c0;
+    border-radius: 4px;
     font-size: 1.1rem;
     color: #444444;
-    padding: 20px;
     width: 100px;
     flex-grow: 1;
     min-width: 200px;
