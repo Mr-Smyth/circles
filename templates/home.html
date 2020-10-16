@@ -64,57 +64,28 @@
 	<section>
 		<div class="row">
 			{% if people|length > 0 %}
-			<ul class="col s12 m10 offset-s0 offset-m1 collapsible">
+            
+            <h1 class="results-heading">Your Search Results</h1>
 				{% for person in people %}
-				<li>
-					<div class="collapsible-header col s12 white-text dark purple darken-3 text-shadow">
-						<div class="col s2 valign-wrapper">
-							<i class="fas fa-chevron-circle-down"></i>
+				<div class="row">
+					<div class="col s10 push-s1 m8 push-m2">
+                    <a href="{{ url_for('view_circle', person_id=person._id) }}">
+						<div class="card-panel search-result">
+							<span>{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }}:
+				        </span>
+                        <span>{{ person.dob }}
+				        </span>
 						</div>
-						<div class="col s5 search-result-details">
-							<strong>{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }}:<br> </strong>{{ person.dob }}
-						</div>
-						<div class="row col s5 search-result-buttons">
-							<div class="col s10 m5 offset-s1 pull-m1">
-								<a href="{{ url_for('edit_person', person_id=person._id) }}"
-									class="center-align btn-small indigo darken-4">Edit</a>
-							</div>
-							<div class="col s10 m5 offset-s1 pull-m1">
-								<a href="{{ url_for('view_circle', person_id=person._id) }}"
-									class="center-align btn-small indigo darken-4">View</a>
-							</div>
-						</div>
+                        </a>
 					</div>
-	
-					<div class="collapsible-body">
-						{% if (person.family_name != "") %}
-						<p>Family Name : <strong> {{ person.family_name.capitalize() }}</strong></p>
-						{% endif %}
-						{% if (person.birth_surname != "") %}
-						<p>Maiden Name: <strong> {{ person.birth_surname.capitalize() }}</strong></p>
-						{% endif %}
-						{% if (person.gender != "") %}
-						<p>Gender: <strong> {{ person.gender.capitalize() }}</strong></p>
-						{% endif %}
-                        {% if (person.dob != "") %}
-						<p>Date of Birth: <strong> {{ person.dob }}</strong></p>
-						{% endif %}
-						{% if (person.dod != "") %}
-						<p>Date of Death: <strong> {{ person.dod }}</strong></p>
-						{% endif %}
-						{% if (person.information != "") %}
-						<p><i class="fas fa-info-circle"></i></p>
-						<p>Information: <strong> {{ person.information.capitalize() }}</strong></p>
-						{% endif %}
-					</div>
-				</li>
+				</div>
 				{% endfor %}
-			</ul>
-			{% else %}
-            <div class="row">
-			    <h4 class="center-align red-text text-darken-4">{{ error }}</h4>
+                {% else %}
+                <div class="row">
+                    <h4 class="center-align red-text text-darken-4">{{ error }}</h4>
+                </div>
             </div>
-		</div>
+	
 		{% endif %}
 	</section>
 

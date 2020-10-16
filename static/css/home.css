@@ -72,39 +72,40 @@ button:focus {
     background-color: transparent;
 }
 
-/* TO REMOVE DEFAULT STYLING FROM THE MATERIALIZE COLLAPSIBLE CLASS */
-.collapsible-header, .collapsible-body, .collapsible, ul.collapsible>li 
-{
-    border: none;
-    box-shadow: none;
-    color: #eeeeee;
-    font-size: 1.2rem;
-    border-radius: 20px;
-    margin-bottom: 15px;
-}
-.collapsible-header {
-    box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
-}
-
 .col{
     padding-left: 40px;
+}
+
+.results-heading{
+    width: 100%;
+    font-size: 2rem;
+    text-align: center;
+    box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
+    padding: 10px;
+    color: #9fc5f8;
+}
+
+.search-result{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    background-color: #4a148c;
+    color: #c0c0c0;
+    font-size: 1.4rem;
+    height: 80px;
+    border-radius: 40px;
+    box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
+    overflow: hidden;
 }
 
 /* MEDIA QUERIES */
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
 @media (min-width:600px){
-    .collapsible-header, .collapsible-body, .collapsible, ul.collapsible>li 
-    {
-        font-size: 1.4rem;
-    }
 }
 
 /* tablet, landscape iPad, lo-res laptops ands desktops */
 @media (min-width:801px) {
-    .collapsible-header, .collapsible-body, .collapsible, ul.collapsible>li 
-    {
-        font-size: 1.5rem;
-    }
     .btn-small {
         font-size: 1.4rem;
     }   
