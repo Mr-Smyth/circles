@@ -9,6 +9,10 @@ from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
 
+from utils import call_search
+from create_update import (
+    blank_template, call_person_update, call_create_person)
+
 # Import env.py if it exists
 if os.path.exists("env.py"):
     import env
@@ -43,21 +47,8 @@ def search():
     #       ENTER AND RUN THE SEARCH AND RETURN RESULTS
 
     if request.method == "POST":
-        #   SETUP A DICTIONARY THAT HOLDS THE INFO WE CAN QUERY
-        #   IT WILL POPULATE FROM THE FORM.
-        searchInput = {
-            "first_name": request.form.get("searchFirstName").lower().strip(),
-            "last_name": request.form.get("searchLastName").lower().strip(),
-            "dob": request.form.get("searchDob").strip(),
-            }
-        #   SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
-        #       searchInput ABOVE TO BUILD A QUERY FROM ONLY POPULATED
-        #       VALUES
-        error = ""
-        query = {}
-        for k, v in searchInput.items():
-            if len(v) > 0:
-                query[k] = v
+
+        query = call_search()
 
         #   CHECK IF THE QUERY IS NOT BLANK - SOMEONE JUST CLICKED
         #       SEARCH WITHOUT ANY ENTRIES?
@@ -76,55 +67,28 @@ def search():
 def add_person():
 
     #   FUNCTION PURPOSE -
-    #   GETS INFORMATION FROM THE FORM AND CREATES A NEW
+    # 1.    GETS INFORMATION FROM THE FORM AND CREATES A NEW
     #       PERSON IN CIRCLES
+    # 2.    IF PERSON ENTERED EXISTS - THEN PERSON WILL NOT BE DUPLICATED
+    #       AND ANY EXTRA INFORMATION WILL BE UPDATED TO THE EXISTING PERSON
 
     if request.method == "POST":
-        #   USED TO SEARCH FOR EXISTING PERSON - AVOIDING DUPLICATION
-        person_search = {
-            "first_name": request.form.get("first_name").lower().strip(),
-            "last_name": request.form.get("last_name").lower().strip(),
-            "gender": request.form.get("gender").lower().strip(),
-            "dob": request.form.get("dob"),
-        }
-        #   USED TO UPDATE AN EXISTING PERSON
-        person_update = {
-            "family_name": request.form.get("family_name").lower().strip(),
-            "first_name": request.form.get("first_name").lower().strip(),
-            "last_name": request.form.get("last_name").lower().strip(),
-            "birth_surname": request.form.get("birth_surname").strip(),
-            "gender": request.form.get("gender").lower().strip(),
-            "dob": request.form.get("dob"),
-            "dod": request.form.get("dod"),
-            "birth_address": request.form.get("birth_address").strip(),
-            "rel_address": request.form.get("rel_address").strip(),
-            "information": request.form.get("person_info"),
-        }
+        #   GET CALL_SEARCH RESULT QUERY
+        person_search = call_search()
 
-        #    CHECK TO SEE IF PERSON ALREADY EXISTS
+        #   CHECK TO SEE IF PERSON ALREADY EXISTS
         if mongo.db.people.count_documents(person_search, limit=1) == 0:
-            # SETUP DICTIONARY FOR IMPORTING PERSON TO MONGO DB
-            person = {
-                "family_name": request.form.get("family_name").lower().strip(),
-                "first_name": request.form.get("first_name").lower().strip(),
-                "last_name": request.form.get("last_name").lower().strip(),
-                "birth_surname": request.form.get("birth_surname").strip(),
-                "parents": {"mother": "", "father": ""},
-                "siblings": [],
-                "spouse_partner": [],
-                "gender": request.form.get("gender").lower().strip(),
-                "dob": request.form.get("dob"),
-                "dod": request.form.get("dod"),
-                "birth_address": request.form.get("birth_address").strip(),
-                "rel_address": request.form.get("rel_address").strip(),
-                "information": request.form.get("person_info").strip(),
-                "children": []
-            }
-            #   ADD THE PERSON DICTIONARY TO MONGO
+
+            #   GET A TEMPLATE FOR IMPORTING NEW PERSON
+            person = call_create_person()
+            #   ADD THE PERSON DICTIONARY TO MONGO AND GET THE ID BACK
             person_inserted = mongo.db.people.insert_one(person)
             person_id = person_inserted.inserted_id
         else:
+
             #   THEN PERSON ALREADY EXISTS, WE CAN UPDATE THEM
+            #   GET TEMPLATE FOR UPDATING EXISTING PERSON
+            person_update = call_person_update()
             person_id = mongo.db.people.find_one(
                 person_search)["_id"]
             mongo.db.people.find_one_and_update(
@@ -179,11 +143,7 @@ def assign_parents(person_id):
     else:
         #   ITS A NEW MOTHER - NO TEMPLATE YET
         #   SO WE GIVE IT ONE
-        existing_mother = {
-            "first_name": "",
-            "last_name": "",
-            "dob": ""
-        }
+        existing_mother = blank_template()
 
     #   PERSONS FATHER - CHECK IF FATHER ALREADY LINKED
     if persons_father_id != "":
@@ -195,11 +155,7 @@ def assign_parents(person_id):
     else:
         #    ITS A NEW FATHER - NO TEMPLATE YET
         #   SO WE GIVE IT ONE
-        existing_father = {
-            "first_name": "",
-            "last_name": "",
-            "dob": ""
-        }
+        existing_father = blank_template()
 
     if mother_entered and father_entered:
         both_parents = True
