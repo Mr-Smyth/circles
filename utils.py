@@ -104,3 +104,19 @@ def get_fathers_partners(person, persons_parents):
             fathers_partners_list.append(partner_data)
 
     return fathers_partners_list
+
+
+def get_persons_siblings(person):
+
+    # FUNCTION PURPOSE -
+    # 1.    TO RETURN A LIST OF THE PERSONS SIBLINGS IN OBJECT FORM
+
+    persons_siblings_ids = person["siblings"]
+    existing_siblings = []
+
+    if len(persons_siblings_ids) > 0:
+        # THEN PERSON HAS EXISTING SIBLINGS - SO GET THEM INTO A LIST
+        for sib_id in persons_siblings_ids:
+            existing_siblings.append(mongo.db.people.find_one({"_id": sib_id}))
+
+    return existing_siblings

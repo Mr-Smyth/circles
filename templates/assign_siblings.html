@@ -32,7 +32,7 @@
 	<div class="container info-box white box-shade">
 		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s current siblings: </h5>
         <h5 class="text-shadow space-bottom">Click on any of these links to Remove them:</h5>
-        {% for index, sibling in existing_siblings.items() %}
+        {% for sibling in existing_siblings %}
             <a href="{{ url_for('manage_sibling_relationship', person_id=person._id, person2_id=sibling._id) }}" class="btn-large indigo darken-4">{{ sibling.first_name }} {{ sibling.last_name }}</a>
         {% endfor %}
 	</div>

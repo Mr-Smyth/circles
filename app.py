@@ -10,7 +10,8 @@ from werkzeug.security import (
     generate_password_hash, check_password_hash)
 
 from utils import (
-    call_search, get_parents, get_mothers_partners, get_fathers_partners)
+    call_search, get_parents, get_mothers_partners, get_fathers_partners,
+    get_persons_siblings)
 
 from create_update import (
     blank_template, call_person_update, call_create_person)
@@ -408,7 +409,6 @@ def assign_siblings(person_id):
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
     persons_siblings_ids = person["siblings"]
-    existing_siblings = {}
 
     # I NEED TO SEND A LIST OF POSSIBLE PARENTS TO THE TEMPLATE
     # FORCING A PARENT SELECTION WHEN ADDING A SIBLING WILL ALLOW
@@ -418,19 +418,9 @@ def assign_siblings(person_id):
     mothers_partners_list = get_mothers_partners(person, persons_parents)
     fathers_partners_list = get_fathers_partners(person, persons_parents)
 
-    # PERSONS SIBLING - CHECK IF SIBLINGS ALREADY LINKED
-    if len(persons_siblings_ids) > 0:
-        # THEN PERSON HAS EXISTING SIBLINGS - SO GET THEM INTO
-        # A DICT, START INDEX AT ASCII 97 'a' WAS HAVING TROUBLE WITH
-        # '0' AS A KEY
-        for index, sibling in enumerate(persons_siblings_ids, 97):
-            existing_siblings[chr(index)] = mongo.db.people.find_one({
-                "_id": ObjectId(sibling)
-                })
-    else:
-        # WE PASS AN EMPTY DICT INTO THE TEMPLATE
-        existing_siblings = {}
-
+    # GET EXISTING SIBLINGS TO RETURN TO TEMPLATE FOR DISPLAYING
+    existing_siblings = get_persons_siblings(person)
+ 
     # PREP FOR COMPARISONS RAN IN POST SECTION:
 
     # GET A LIST OF SIBLINGS, ADD PERSON TO IT
