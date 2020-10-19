@@ -9,7 +9,9 @@ from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
 
-from utils import call_search
+from utils import (
+    call_search, get_parents, get_mothers_partners, get_fathers_partners)
+
 from create_update import (
     blank_template, call_person_update, call_create_person)
 
@@ -38,7 +40,7 @@ def home():
     return render_template("home.html")
 
 
-#   SEARCH ROUTE
+#   SEARCH VIEW
 @app.route("/search", methods=["GET", "POST"])
 def search():
 
@@ -62,7 +64,7 @@ def search():
     return render_template("home.html", people=people, error=error)
 
 
-#   ADD PERSON ROUTE
+#   ADD PERSON VIEW
 @app.route("/add_person/", methods=["GET", "POST"])
 def add_person():
 
@@ -107,7 +109,7 @@ def add_person():
         "add_person.html", families=families)
 
 
-#   ASSIGN PARENTS ROUTE AND FUNCTION
+#   ASSIGN PARENTS VIEW
 @app.route("/assign_parents/<person_id>", methods=["GET", "POST"])
 def assign_parents(person_id):
 
@@ -412,36 +414,9 @@ def assign_siblings(person_id):
     # FORCING A PARENT SELECTION WHEN ADDING A SIBLING WILL ALLOW
     # MORE ACCURATE SEARCHING WHEN TRYING TO MATCH HALF OR
     # FULL SIBLINGS AND I WANT TO DO THIS WHERE POSSIBLE
-    mothers_partners_list = []
-    fathers_partners_list = []
-    persons_parents = []
-    if person['parents']['father'] or person['parents']['mother']:
-        persons_parents = [
-            mongo.db.people.find_one(
-                {"_id": ObjectId(person['parents']['father'])}),
-            mongo.db.people.find_one(
-                {"_id": ObjectId(person['parents']['mother'])})
-        ]
-
-        # SETUP MOTHERS PARTNERS TO APPEND TO MOTHERS PARTNERS LIST
-        mothers_partners = persons_parents[1]['spouse_partner']
-        # REMOVE THE FATHER FROM PARTNERS AS HE IS ALREADY
-        # ACCOUNTED FOR
-        mothers_partners.remove(person['parents']['father'])
-        for partner in mothers_partners:
-            partner_data = mongo.db.people.find_one(
-                {"_id": ObjectId(partner)})
-            mothers_partners_list.append(partner_data)
-
-        # SETUP FATHERS PARTNERS TO APPEND TO FATHERS PARTNERS LIST
-        fathers_partners = persons_parents[0]['spouse_partner']
-        # REMOVE THE MOTHER FROM PARTNERS AS SHE IS ALREADY
-        # ACCOUNTED FOR
-        fathers_partners.remove(person['parents']['mother'])
-        for partner in fathers_partners:
-            partner_data = mongo.db.people.find_one(
-                {"_id": ObjectId(partner)})
-            fathers_partners_list.append(partner_data)
+    persons_parents = get_parents(person)
+    mothers_partners_list = get_mothers_partners(person, persons_parents)
+    fathers_partners_list = get_fathers_partners(person, persons_parents)
 
     # PERSONS SIBLING - CHECK IF SIBLINGS ALREADY LINKED
     if len(persons_siblings_ids) > 0:
