@@ -11,7 +11,7 @@ from werkzeug.security import (
 
 from utils import (
     call_search, get_parents, get_mothers_partners, get_fathers_partners,
-    get_persons_siblings)
+    get_persons_siblings, build_target_list)
 
 from create_update import (
     blank_template, call_person_update, call_create_person)
@@ -421,33 +421,15 @@ def assign_siblings(person_id):
     # GET EXISTING SIBLINGS TO RETURN TO TEMPLATE FOR DISPLAYING
     existing_siblings = get_persons_siblings(person)
  
-    # PREP FOR COMPARISONS RAN IN POST SECTION:
-
-    # GET A LIST OF SIBLINGS, ADD PERSON TO IT
-    all_siblings = persons_siblings_ids.copy()
-    all_siblings.insert(0, persons_id)
-
-    # GET EACH SIBLING AND THEIR PARENTS INTO AN ARRAY IN THE FORMAT
-    # [SIBLING,MOTHER,FATHER]
-    sibling_and_parent_list = []
-    # circle through sibling list as it stands
-    for sibling in all_siblings:
-        # GET THE SIBLINGS OBJECT
-        sibling_object = mongo.db.people.find_one(
-            {"_id": ObjectId(sibling)}
-        )
-        # EXTRACT PARENTS FROM SIBLING OBJECT
-        sibling_and_parent_element = []
-        sibling_and_parent_element.append(sibling)
-        sibling_and_parent_element.append(
-            sibling_object['parents']['mother'])
-        sibling_and_parent_element.append(
-            sibling_object['parents']['father'])
-        # BUILD EACH SIBLING, PARENT ELEMENT INTO LIST
-        sibling_and_parent_list.append(sibling_and_parent_element)
-
-    # AT THIS POINT REF_SIBLING AND PARENT_LIST IS A LIST OF ALL SIBLINGS
-    # AND THEIR PARENTS.
+    sibling_and_parent_list = build_target_list(person, 'siblings')
+    print("==================================================")
+    print("==================================================")
+    print("==================================================")
+    print("SIBLING AND PARENT LIST")
+    print(sibling_and_parent_list)
+    print("==================================================")
+    print("==================================================")
+    print("==================================================")
 
     # WHEN FORM IS SUBMITTED / UPDATED
     if request.method == "POST":

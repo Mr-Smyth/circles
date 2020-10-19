@@ -120,3 +120,47 @@ def get_persons_siblings(person):
             existing_siblings.append(mongo.db.people.find_one({"_id": sib_id}))
 
     return existing_siblings
+
+
+def build_target_list(person, target):
+
+    # FUNCTION PURPOSE -
+    # 1.    TO RETURN A LIST OF EITHER SIBLING, MOTHER,FATHER
+    #       OR A LIST OF CHILD, MOTHER, FATHER
+    #       DEPENDING ON ARGUMENT PASSED TO TARGET.
+    #       - THE LIST IS USED IN COMPARING SIBLINGS OR CHILDREN
+    #       TO SEE IF THEY ARE FULL OR HALF SIBLINGS
+
+    all_targets = []
+
+    if target == 'siblings':
+        persons_target_ids = person['siblings']
+        all_targets = persons_target_ids.copy()
+        all_targets.insert(0, person['_id'])
+    elif target == 'children':
+        all_targets = person['children']
+
+    # GET EACH TARGET AND THEIR PARENTS INTO AN ARRAY IN THE FORMAT
+    # [TARGET,MOTHER,FATHER]
+    target_and_parent_list = []
+    # circle through sibling list as it stands
+    for target in all_targets:
+        # GET THE SIBLINGS OBJECT
+        target_object = mongo.db.people.find_one(
+            {"_id": ObjectId(target)}
+        )
+        # EXTRACT PARENTS FROM TARGET OBJECT
+        target_and_parent_element = []
+        target_and_parent_element.append(target)
+        target_and_parent_element.append(
+            target_object['parents']['mother'])
+        target_and_parent_element.append(
+            target_object['parents']['father'])
+        # BUILD EACH TARGET, PARENT ELEMENT INTO LIST
+        target_and_parent_list.append(target_and_parent_element)
+
+    # AT THIS POINT TARGET_AND_PARENT_LIST IS A LIST OF ALL TARGETS
+    # AND THEIR PARENTS AND WILL BE USED FOR COMPARISONS IN SIBLINGS
+    # AND CHILDREN TO DETERMINE SIBLINGS
+
+    return target_and_parent_list
