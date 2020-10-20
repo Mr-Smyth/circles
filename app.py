@@ -421,25 +421,14 @@ def assign_siblings(person_id):
     # GET EXISTING SIBLINGS TO RETURN TO TEMPLATE FOR DISPLAYING
     existing_siblings = get_persons_siblings(person)
  
+    # BUILD A LIST OF SIBLINGS, WITH PARENTS FOR COMPARISON
+    # LATER IN POST SECTION
     sibling_and_parent_list = build_target_list(person, 'siblings')
-    print("==================================================")
-    print("==================================================")
-    print("==================================================")
-    print("SIBLING AND PARENT LIST")
-    print(sibling_and_parent_list)
-    print("==================================================")
-    print("==================================================")
-    print("==================================================")
 
     # WHEN FORM IS SUBMITTED / UPDATED
     if request.method == "POST":
         # GET THE TEMPLTE FROM THE FORM FOR SIBLING
-        sibling_search = {
-            "first_name": request.form.get(
-                "sibling_first_name").lower().strip(),
-            "last_name": request.form.get("sibling_last_name").lower().strip(),
-            "dob": request.form.get("sibling_dob")
-        }
+        sibling_search = call_search()
 
         # GET THE 2 SELECTED PARENTS FROM THE FORM
         # EXTRACT THE 2 ID'S FROM THE RETURNED STRING
@@ -462,24 +451,9 @@ def assign_siblings(person_id):
             # IF THEY DONT EXIST:
 
             # FORM USED TO CREATE A NEW SIBLING
-            sibling = {
-                "family_name": person["family_name"].lower().strip(),
-                "first_name": request.form.get(
-                    "sibling_first_name").lower().strip(),
-                "last_name": request.form.get(
-                    "sibling_last_name").lower().strip(),
-                "birth_surname": person["birth_surname"].lower().strip(),
-                "parents": selected_parents,
-                "siblings": [],
-                "spouse_partner": [],
-                "gender": request.form.get("gender").lower().strip(),
-                "dob": request.form.get("sibling_dob").strip(),
-                "dod": "",
-                "birth_address": "",
-                "rel_address": "",
-                "information": "",
-                "children": []
-            }
+
+            sibling = call_create_person(person, selected_parents)
+
             # INSERT THE NEW SIBLING THEN GET ID:
             mongo.db.people.insert_one(sibling)
             new_sibling_id = mongo.db.people.find_one(sibling)["_id"]
