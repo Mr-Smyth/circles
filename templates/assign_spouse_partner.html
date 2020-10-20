@@ -32,7 +32,7 @@
 	<div class="container info-box white box-shade">
 		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s Spouse / Relevant Partners: </h5>
         <h5 class="text-shadow space-bottom">Click on any of these links to Remove them:</h5>
-		{% for index, spouse_partner in existing_spouse_partners.items() %}
+		{% for spouse_partner in existing_spouse_partners %}
 		<a href="{{ url_for('manage_partner_relationship', person_id=person._id, person2_id=spouse_partner._id) }}" class="btn-large indigo darken-4">{{ spouse_partner.first_name }}
 			{{ spouse_partner.last_name }}</a>
 		{% endfor %}
@@ -49,24 +49,24 @@
                     <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s spouse</h5>
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="spouse_partner_first_name" name="spouse_partner_first_name" type="text" class="validate" required>
-						<label for="spouse_partner_first_name">First Name</label>
+						<input id="first_name" name="first_name" type="text" class="validate" required>
+						<label for="first_name">First Name</label>
 					</div>
 				</div>
                 <!-- LAST NAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="spouse_partner_last_name" name="spouse_partner_last_name" type="text" class="validate" required>
-						<label for="spouse_partner_last_name">Last Name</label>
+						<input id="last_name" name="last_name" type="text" class="validate" required>
+						<label for="last_name">Last Name</label>
 					</div>
 				</div>
                 <!-- BIRTH SURNAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="spouse_partner_birth_surname" name="spouse_partner_birth_surname" type="text" class="validate">
-						<label for="spouse_partner_birth_surname">Maiden (Birth) Surname</label>
+						<input id="birth_surname" name="birth_surname" type="text" class="validate">
+						<label for="birth_surname">Maiden (Birth) Surname</label>
 					</div>
 				</div>
                 <!-- SELECT GENDER -->
@@ -85,8 +85,8 @@
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
                         <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
-                        <input id="spouse_partner_dob" name="spouse_partner_dob" type="text" class="validate datepicker" required>
-                        <label for="spouse_partner_dob">Date of Birth</label>
+                        <input id="dob" name="dob" type="text" class="validate datepicker" required>
+                        <label for="dob">Date of Birth</label>
                     </div>
                 </div>
                 <!-- SUBMIT BUTTON -->

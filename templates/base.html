@@ -43,17 +43,17 @@
             <div class="nav-wrapper">
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right clear"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('home') }}">Home</a></li>
-                    <li><a href="{{ url_for('add_person') }}">Add Person</a></li>
-                    <li><a href="{{ url_for('manage_people') }}">Manage People</a></li>
+                    <li><a href="{{ url_for('home') }}" aria-label="Click for Home screen">Home</a></li>
+                    <li><a href="{{ url_for('add_person') }}" aria-label="Click for Add a new Person">Add Person</a></li>
+                    <li><a href="{{ url_for('manage_people') }}" aria-label="Click to manage people">Manage People</a></li>
                 </ul>
             </div>
         
             <!-- SIDE NAV BAR -->
             <ul class="sidenav" id="mobile-demo">
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('add_person') }}">Add Person</a></li>
-                <li><a href="{{ url_for('manage_people') }}">Manage People</a></li>
+                    <li><a href="{{ url_for('home') }}" aria-label="Click for Home screen">Home</a></li>
+                    <li><a href="{{ url_for('add_person') }}" aria-label="Click for Add a new Person">Add Person</a></li>
+                    <li><a href="{{ url_for('manage_people') }}" aria-label="Click to manage people">Manage People</a></li>
             </ul>
         </nav>
 	</header>

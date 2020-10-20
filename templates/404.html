@@ -3,10 +3,13 @@
 
 
 {% block content %}
-<div class="container center-align ">
-	<h4><strong>404</strong> Thats an error</h4>
-	<p>Sorry All we know is that page does not exist right now</p>
+<!-- 404 ERROR -->
+<div class="container">
+	<div class="row center-align red-text text-darken-4">
+		<h4 class="col s12"><strong>404</strong> Thats an error</h4>
+		<h5 class="col s12">Sorry but we have not been able to find your page, you can return home by clicking below</h5>
+		<a href="{{ url_for('home') }}" class="col s10 offset-s1 btn-large form-button text-shadow top-space-xlarge">
+			Home<i class="fas fa-arrow-alt-circle-right left"></i> </a>
+	</div>
 </div>
-
-
 {% endblock %}

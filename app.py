@@ -12,7 +12,8 @@ from werkzeug.security import (
 from utils import (
     call_search, get_parents, get_mothers_partners, get_fathers_partners,
     get_persons_data, build_target_list, merge_target_parent_list,
-    link_real_siblings, get_selected_parents, get_chosen_parent)
+    link_real_siblings, get_selected_parents, get_chosen_parent,
+    remove_all_links, remove_parent_link)
 
 from create_update import (
     blank_template, call_person_update, call_create_person)
@@ -285,84 +286,51 @@ def assign_parents(person_id):
         both_parents=both_parents)
 
 
-# ROUTE TO HANDLE ADDING A SPOUSE/PARTNER
+# TO HANDLE ADDING A SPOUSE/PARTNER VIEW
 @app.route("/assign_spouse_partner/<person_id>", methods=["GET", "POST"])
 def assign_spouse_partner(person_id):
 
     # SETUP SOME REQUIRED VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
-    persons_spouse_partner_ids = person["spouse_partner"]
-    existing_spouse_partners = {}
 
-    # PERSONS SPOUSE_PARTNER - CHECK IF SPOUSE/PARTNERS ALREADY LINKED
-    if len(persons_spouse_partner_ids) > 0:
-        # THEN PERSON HAS EXISTING SPOUSE_PARTNERS - SO GET THEM INTO
-        # A DICT, START INDEX AT ASCII 97 'a' WAS HAVING TROUBLE WITH
-        # '0' AS A KEY
-        for index, spouse_partner in enumerate(persons_spouse_partner_ids, 97):
-            existing_spouse_partners[chr(index)] = mongo.db.people.find_one({
-                "_id": ObjectId(spouse_partner)
-                })
-    else:
-        # PASS AN EMPTY DICT INTO THE TEMPLATE
-        existing_spouse_partners = {}
+    # GET EXISTING SPOUSE_PARTNERS TO RETURN TO TEMPLATE FOR DISPLAYING
+    existing_spouse_partners = get_persons_data(person, 'spouse_partner')
 
     if request.method == "POST":
-        # GET THE TEMPLATE FROM THE FOR PARTNER/SPOUSE
-        spouse_partner_search = {
-            "first_name": request.form.get(
-                "spouse_partner_first_name").lower().strip(),
-            "last_name": request.form.get(
-                "spouse_partner_last_name").lower().strip(),
-            "dob": request.form.get("spouse_partner_dob")
-        }
+        # BUILD A SEARCH OBJECT FROM DATA IN THE FORM
+        spouse_partner_search = call_search()
 
         # SEE IF PERSON ENTERED ON FORM EXISTS
         if mongo.db.people.count_documents(
                 spouse_partner_search, limit=1) == 0:
 
-            # THIS IS THE CASE THAT THIS ENTERED SPOUSE/PARTNER DOES NOT EXIST
-            # IN THE DB. IT IS TEMPLATE WE USE TO CREATE A NEW SPOUSE/PARTNER
-            spouse_partner = {
-                "family_name": person["family_name"].lower().strip(),
-                "first_name": request.form.get(
-                    "spouse_partner_first_name").lower().strip(),
-                "last_name": request.form.get(
-                    "spouse_partner_last_name").lower().strip(),
-                "birth_surname": "",
-                "parents": {"mother": "", "father": ""},
-                "siblings": [],
-                "spouse_partner": [],
-                "gender": request.form.get("gender").lower(),
-                "dob": request.form.get("spouse_partner_dob").strip(),
-                "dod": "",
-                "birth_address": "",
-                "rel_address": "",
-                "information": "",
-                "children": []
-            }
+            # GET A SPOUSE/PARTNER OBJECT TO CREATE THIS PERSON
+            spouse_partner = call_create_person(person)
+
             # INSERT THE NEW SPOUSE/PARTNER THEN GET ID IN CORRECT FORMAT
             mongo.db.people.insert_one(spouse_partner)
             new_spouse_partner_id = mongo.db.people.find_one(
                 spouse_partner)["_id"]
+
+            # ADD PERSON AS A SPOUSE/PARTNER OF THE NEW SPOUSE/PARTNER
             mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(new_spouse_partner_id)},
                     {"$addToSet": {"spouse_partner": persons_id}})
 
-            # UPDATE PERSONS SPOUSE/PARTNER ARRAY WITH ID
-            # FROM NEW SPOUSE/PARTNER
+            # UPDATE PERSON WITH THE NEW SPOUSE/PARTNER
             mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(person_id)},
                     {"$addToSet": {"spouse_partner": new_spouse_partner_id}})
 
         else:
-            # ELSE THE SPOUSE/PARTNER DOES EXIST IN DB, SO WE UPDATE THEM
+            # ELSE THE SPOUSE/PARTNER DOES EXIST IN DB
+            # SO WE FIND THEM
             found_spouse_partner = mongo.db.people.find_one(
                 spouse_partner_search)
             found_spouse_partner_id = found_spouse_partner["_id"]
 
-            # ADD PERSON ID TO FOUND SPOUSE_PARTNER
+            # ADD PERSONS ID TO FOUND SPOUSE_PARTNER
             mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(found_spouse_partner_id)},
                     {"$addToSet": {"spouse_partner": persons_id}})
@@ -381,7 +349,7 @@ def assign_spouse_partner(person_id):
         existing_spouse_partners=existing_spouse_partners, person=person)
 
 
-# ROUTE TO HANDLE ADDING OF A SIBLING
+# TO HANDLE ADDING OF A SIBLING VIEW
 @app.route("/assign_siblings/<person_id>", methods=["GET", "POST"])
 def assign_siblings(person_id):
 
@@ -535,7 +503,7 @@ def assign_siblings(person_id):
         fathers_partners_list=fathers_partners_list, person=person)
 
 
-# CHECK PARTNER EXISTS ROUTE
+# CHECK PARTNER EXISTS VIEW
 @app.route("/check_if_partner_exists/<person_id>")
 def check_if_partner_exists(person_id):
 
@@ -555,7 +523,7 @@ def check_if_partner_exists(person_id):
     return render_template("check_if_partner_exists.html", person=person)
 
 
-# ASSIGN CHILDREN ROUTE
+# ASSIGN CHILDREN VIEW
 @app.route("/assign_children/<person_id>", methods=["GET", "POST"])
 def assign_children(person_id):
 
@@ -713,7 +681,7 @@ def assign_children(person_id):
         existing_children=existing_children, person=person)
 
 
-#   MANAGE A SPOUSE OR PARTNER RELATIONSHIP ROUTE
+#   MANAGE A SPOUSE OR PARTNER RELATIONSHIP VIEW
 @app.route(
     "/manage_partner_relationship/<person_id>/<person2_id>")
 def manage_partner_relationship(person_id, person2_id):
@@ -758,7 +726,7 @@ def manage_partner_relationship(person_id, person2_id):
         person=person, message=message)
 
 
-#   REMOVE A SPOUSE OR PARTNER AS A SPOUSE OR PARTNER ROUTE
+#   REMOVE A SPOUSE OR PARTNER AS A SPOUSE OR PARTNER VIEW
 @app.route(
     "/delete_partner_relationship/<person_id>/<person2_id>",
     methods=["GET", "POST"])
@@ -788,7 +756,7 @@ def delete_partner_relationship(person_id, person2_id):
     # return render_template("assign_spouse_partner.html", person_id=person_id)
 
 
-#   MANAGE A SIBLING RELATIONSHIP ROUTE
+#   MANAGE A SIBLING RELATIONSHIP VIEW
 @app.route(
     "/manage_sibling_relationship/<person_id>/<person2_id>")
 def manage_sibling_relationship(person_id, person2_id):
@@ -808,7 +776,7 @@ def manage_sibling_relationship(person_id, person2_id):
         person=person)
 
 
-# REMOVE SIBLING RELATIONSHIP ROUTE
+# REMOVE SIBLING RELATIONSHIP VIEW
 @app.route(
     "/delete_sibling_relationship/<person_id>/<person2_id>",
     methods=["GET", "POST"])
@@ -836,7 +804,7 @@ def delete_sibling_relationship(person_id, person2_id):
     # return render_template("assign_spouse_partner.html", person_id=person_id)
 
 
-#  ROUTE TO MANAGE A CHILD RELATIONSHIP
+#  MANAGE A CHILD RELATIONSHIP VIEW
 @app.route("/manage_child_relationship/<person_id>/<person2_id>")
 def manage_child_relationship(person_id, person2_id):
 
@@ -855,7 +823,7 @@ def manage_child_relationship(person_id, person2_id):
         person=person)
 
 
-# ROUTE TO HANDLE REMOVING A CHILD
+# HANDLE REMOVING A CHILD VIEW
 @app.route(
     "/delete_child_relationship/<person_id>/<person2_id>",
     methods=["GET", "POST"])
@@ -894,7 +862,7 @@ def delete_child_relationship(person_id, person2_id):
     return render_template("assign_spouse_partner.html", person_id=person_id)
 
 
-#   EDIT PERSON ROUTE
+#   EDIT PERSON VIEW
 @app.route("/edit_person/<person_id>", methods=["GET", "POST"])
 def edit_person(person_id):
 
@@ -913,26 +881,11 @@ def edit_person(person_id):
     families = mongo.db.family.find().sort("family_name", 1)
 
     if request.method == "POST":
-        #   USED TO SEARCH FOR EXISTING PERSON - AVOIDING DUPLICATION
-        person_search = {
-            "first_name": request.form.get("first_name").lower(),
-            "last_name": request.form.get("last_name").lower(),
-            "gender": request.form.get("gender").lower(),
-            "dob": request.form.get("dob").strip(),
-        }
-        #   USED TO UPDATE AN EXISTING PERSON
-        person_update = {
-            "family_name": request.form.get("family_name").lower().strip(),
-            "first_name": request.form.get("first_name").lower().strip(),
-            "last_name": request.form.get("last_name").lower().strip(),
-            "birth_surname": request.form.get("birth_surname"),
-            "gender": request.form.get("gender").lower().strip(),
-            "dob": request.form.get("dob").strip(),
-            "dod": request.form.get("dod").strip(),
-            "birth_address": request.form.get("birth_address"),
-            "rel_address": request.form.get("rel_address"),
-            "information": request.form.get("person_info"),
-        }
+        #   SEARCH FOR EXISTING PERSON - AVOIDING DUPLICATION
+        person_search = call_search()
+
+        #   BUILD AN UPDATE FOR AN EXISTING PERSON
+        person_update = call_person_update()
 
         #    CHECK TO SEE IF PERSON ALREADY EXISTS
         if mongo.db.people.count_documents(person_search, limit=1) == 0:
@@ -964,6 +917,7 @@ def edit_person(person_id):
                 return redirect(url_for(
                     "assign_parents", person_id=person_id))
 
+            # NOTIFY USER OF ENTRY CONFLICT WITH ANOTHER PERSON
             return redirect(url_for("notify_duplicate", person_id=person_id,
                                     duplicate_id=duplicate_id))
 
@@ -972,7 +926,7 @@ def edit_person(person_id):
         "edit_person.html", person=person, families=families)
 
 
-# NOTIFY IF DUPLICATE PERSON ROUTE
+# NOTIFY IF DUPLICATE PERSON VIEW
 @app.route("/notify_duplicate/<person_id>/<duplicate_id>")
 def notify_duplicate(person_id, duplicate_id):
 
@@ -986,7 +940,7 @@ def notify_duplicate(person_id, duplicate_id):
         "notify_duplicate.html", person=person, duplicate=duplicate)
 
 
-# VIEW CIRCLE ROUTE
+# VIEW CIRCLE VIEW
 @app.route("/view_circle/<person_id>")
 def view_circle(person_id):
 
@@ -1046,25 +1000,15 @@ def view_circle(person_id):
 def manage_people():
 
     # FUNCTION PURPOSE -
-    # 1.    CHECKS AND FINDS THE SEARCHED FOR PERSON
-    # 2.    GIVES THE RESULTS WITH OPTION TO REMOVE PERSON
+    # 1.    DISPLAY THE MANAGE PEOPLE PAGE
+    # 2.    ENABLE SEARCH AND FIND PERSON TO DELETE
+    # 3.    GIVES THE RESULTS WITH OPTION TO REMOVE PERSON
+
     people = {}
     error = ""
     if request.method == "POST":
-        #   SETUP A DICTIONARY THAT HOLDS THE INFO WE CAN QUERY
-        #   IT WILL POPULATE FROM THE FORM.
-        searchInput = {
-            "first_name": request.form.get("searchFirstName").lower().strip(),
-            "last_name": request.form.get("searchLastName").lower().strip(),
-            "dob": request.form.get("searchDob").strip(),
-            }
-        #   SETUP A BLANK QUERY DICTIONARY AND THEN LOOP OVER
-        #       searchInput ABOVE TO BUILD A QUERY FROM ONLY POPULATED
-        #       VALUES
-        query = {}
-        for k, v in searchInput.items():
-            if len(v) > 0:
-                query[k] = v
+        #   BUILD A SEARCH OBJECT
+        query = call_search()
 
         #   CHECK IF THE QUERY IS NOT BLANK - SOMEONE JUST CLICKED
         #       SEARCH WITHOUT ANY ENTRIES?
@@ -1087,38 +1031,13 @@ def delete_person(person_id):
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
 
-    # REMOVE THE ID FROM RELATED ANY ARRAYS IN THE COLLECTION
-    mongo.db.people.remove({"_id": ObjectId(persons_id)})
-    mongo.db.people.update({}, {"$pull": {
-             "siblings": {"$in": [persons_id]}}}, multi=True)
-    mongo.db.people.update({}, {"$pull": {
-             "children": {"$in": [persons_id]}}}, multi=True)
-    mongo.db.people.update({}, {"$pull": {
-             "spouse_partner": {"$in": [persons_id]}}}, multi=True)
+    # REMOVE ALL INSTANCES WHERE THIS PERSONS ID IS A FOREIGN
+    # ID IN ANOTHER DOCUMENTS ARRAY
+    remove_all_links(persons_id)
 
-    #   BECAUSE CHILDREN HAVE A LINK TO A PARENTS VIA AN OBJECT
-    #   HERE I GET EACH PARENTS OBJECT AND REMOVE THE ID OF THE
-    #   PERSON WE ARE REMOVING.
-    #   GET CHILDREN
-    children = person['children']
-    children_list = []
-    for child in children:
-        children_list.append(mongo.db.people.find_one({
-            "_id": ObjectId(child)
-            }))
+    # REMOVE ANY LINKS TO PARENTS AS THIS IS AN OBJECT
+    remove_parent_link(person)
 
-    # LOOP OVER THE LIST OF CHILDREN AND CHECK FOR A
-    # MATCHING ID, IF FOUND REPLACE WITH DEFAULT "".
-    # THEN UPDATE THAT CHILD.
-    for child in children_list:
-        parents_dict = child['parents']
-        for key, value in parents_dict.items():
-            if value == persons_id:
-                parents_dict[key] = ""
-                mongo.db.people.find_one_and_update(
-                    {"_id": ObjectId(child['_id'])},
-                    {"$set": {"parents": parents_dict}})
-    
     flash("Person has been successfully removed from Circles")
 
     return render_template("manage_people.html")
@@ -1148,6 +1067,12 @@ def delete_all_documents():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html")
+
+
+# ROUTE TO HANDLE E500
+@app.errorhandler(500)
+def server_error(e):
+    return render_template("500.html")
 
 
 # TELL OUR APP, HOW AND WHERE TO RUN OUR APPLICATION

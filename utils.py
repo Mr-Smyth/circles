@@ -275,3 +275,47 @@ def get_chosen_parent(partners):
             {"_id": ObjectId(selected_parents_in_form)})
 
     return selected_parent
+
+
+def remove_all_links(persons_id):
+
+    # FUNCTION PURPOSE -
+    # 1.    REMOVE THE PERSONS ID FROM ANY RELATED ARRAYS IN THE COLLECTION
+
+    mongo.db.people.remove({"_id": ObjectId(persons_id)})
+    mongo.db.people.update({}, {"$pull": {
+             "siblings": {"$in": [persons_id]}}}, multi=True)
+    mongo.db.people.update({}, {"$pull": {
+             "children": {"$in": [persons_id]}}}, multi=True)
+    mongo.db.people.update({}, {"$pull": {
+             "spouse_partner": {"$in": [persons_id]}}}, multi=True)
+
+
+def remove_parent_link(person):
+
+    # FUNCTION PURPOSE -
+    # 1.    BECAUSE CHILDREN HAVE A LINK TO A PARENT VIA AN OBJECT
+    #       HERE I GET EACH PARENTS OBJECT AND REMOVE THE ID OF THE
+    #       PERSON WE ARE REMOVING.
+
+    persons_id = person["_id"]
+
+    #       GET CHILDREN
+    children = person['children']
+    children_list = []
+    for child in children:
+        children_list.append(mongo.db.people.find_one({
+            "_id": ObjectId(child)
+            }))
+
+    # LOOP OVER THE LIST OF CHILDREN AND CHECK FOR A
+    # MATCHING ID, IF FOUND REPLACE WITH DEFAULT "".
+    # THEN UPDATE THAT CHILD.
+    for child in children_list:
+        parents_dict = child['parents']
+        for key, value in parents_dict.items():
+            if value == persons_id:
+                parents_dict[key] = ""
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(child['_id'])},
+                    {"$set": {"parents": parents_dict}})
