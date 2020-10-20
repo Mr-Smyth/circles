@@ -32,7 +32,7 @@
 	<div class="container info-box white box-shade">
 		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s current children: </h5>
         <h5 class="text-shadow space-bottom">Click on any of these links to Remove them:</h5>
-        {% for item, child in existing_children.items() %}
+        {% for child in existing_children %}
             <a href="{{ url_for('manage_child_relationship', person_id=person._id, person2_id=child._id) }}" class="btn-large indigo darken-4">{{ child.first_name }} {{ child.last_name }}</a>
         {% endfor %}
 	</div>
@@ -47,7 +47,7 @@
 				<div class="row">
                 <h5 class="text-shadow">Add {{ person.first_name.capitalize() }}'s Children</h5>
 					<h6 class="col s12 m10 offset-s0 offset-m1"><strong>Firtly, lets select this childs parents:</strong></h6>
-					{% for key, spouse_partner in persons_spouse_partners.items() %}
+					{% for spouse_partner in persons_spouse_partners %}
 					<p class="col s12 m10 offset-s0 offset-m1">
 						<label>
 							<input class="with-gap" id="child_parents" name="child_parents" type="radio" value="{{ spouse_partner._id }}" required/>
@@ -61,16 +61,16 @@
 				<div class="row"> 
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="child_first_name" name="child_first_name" type="text" class="validate" required>
-						<label for="child_first_name">First Name</label>
+						<input id="first_name" name="first_name" type="text" class="validate" required>
+						<label for="first_name">First Name</label>
 					</div>
 				</div>
                 <!-- LAST NAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="child_last_name" name="child_last_name" type="text" class="validate" required>
-						<label for="child_last_name">Last Name</label>
+						<input id="last_name" name="last_name" type="text" class="validate" required>
+						<label for="last_name">Last Name</label>
 					</div>
 				</div>
                 <!-- SELECT GENDER -->
@@ -89,8 +89,8 @@
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
                         <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
-                        <input id="child_dob" name="child_dob" type="text" class="validate datepicker" required>
-                        <label for="child_dob">Date of Birth</label>
+                        <input id="dob" name="dob" type="text" class="validate datepicker" required>
+                        <label for="dob">Date of Birth</label>
                     </div>
                 </div>
                 <!-- SUBMIT BUTTON -->

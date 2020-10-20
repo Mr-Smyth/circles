@@ -106,22 +106,6 @@ def get_fathers_partners(person, persons_parents):
     return fathers_partners_list
 
 
-def get_persons_siblings(person):
-
-    # FUNCTION PURPOSE -
-    # 1.    TO RETURN A LIST OF THE PERSONS SIBLINGS IN OBJECT FORM
-
-    persons_siblings_ids = person["siblings"]
-    existing_siblings = []
-
-    if len(persons_siblings_ids) > 0:
-        # THEN PERSON HAS EXISTING SIBLINGS - SO GET THEM INTO A LIST
-        for sib_id in persons_siblings_ids:
-            existing_siblings.append(mongo.db.people.find_one({"_id": sib_id}))
-
-    return existing_siblings
-
-
 def build_target_list(person, target):
 
     # FUNCTION PURPOSE -
@@ -130,6 +114,7 @@ def build_target_list(person, target):
     #       DEPENDING ON ARGUMENT PASSED TO TARGET.
     #       - THE LIST IS USED IN COMPARING SIBLINGS OR CHILDREN
     #       TO SEE IF THEY ARE FULL OR HALF SIBLINGS
+    # 2.    USED FOR SIBLINGS AND CHILDREN, HENCE GENERAL NAME OF TARGET
 
     all_targets = []
 
@@ -164,3 +149,129 @@ def build_target_list(person, target):
     # AND CHILDREN TO DETERMINE SIBLINGS
 
     return target_and_parent_list
+
+
+def merge_target_parent_list(
+        found_targets_list, target_and_parent_list):
+
+    # FUNCTION PURPOSE -
+    # 1.    COMBINE THE 2 LISTS INTO A LIST OF THE FORMAT
+    #       [ [ TARGET, MOTHER, FATHER ], [ TARGET, MOTHER, FATHER ] ]
+    #       THIS WILL SERVE BOTH ASSIGN SIBLINGS AND ALSO ASSIGN CHILDREN
+
+    for target in found_targets_list:
+        # GET THE TARGETS OBJECT
+        target_object = mongo.db.people.find_one(
+            {"_id": ObjectId(target)}
+        )
+        # EXTRACT PARENTS FROM TARGET OBJECT
+        target_and_parent_element = []
+        target_and_parent_element.append(target)
+        target_and_parent_element.append(
+            target_object['parents']['mother'])
+        target_and_parent_element.append(
+            target_object['parents']['father'])
+        # BUILD EACH TARGET, PARENT ELEMENT INTO LIST
+        target_and_parent_list.append(
+            target_and_parent_element)
+
+    return target_and_parent_list
+
+
+def link_real_siblings(full_list):
+
+    # FUNCTION PURPOSE -
+    # 1.    CHECK OVER THIS COMPLETE LIST OF SIBLINGS
+    #       CHECK IF AT LEAST ONE PARENT MATCHES, IF A PARENT
+    #       MATCHES WE CAN ADD AS A SIBLING, ELSE - NOT A SIBLING.
+    #       THIS IS NEEDED BECAUSE SOME SIBLINGS MAY HAVE HALF SIBLINGS
+    #       NOT RELATED TO NEW SIBLINGS
+
+    for this_person in full_list:
+        # THIS_PERSON IS AN ELEMENT CONTAINING
+        # [SIBLING, MOTHER, FATHER]
+
+        possible_siblings = full_list.copy()
+        # REMOVE THIS PERSON SO WE DONT MAKE THEM A SIBLING OF THEMSELVES
+        possible_siblings.remove(this_person)
+        persons_real_siblings = []
+
+        # CHECK FOR MATCHING PARENTS
+        for check_sibling in possible_siblings:
+            if (this_person != check_sibling and
+                    this_person[1] == check_sibling[1]):
+                persons_real_siblings.append(
+                    ObjectId(check_sibling[0]))
+            elif (this_person != check_sibling and
+                    this_person[2] == check_sibling[2]):
+                persons_real_siblings.append(
+                    ObjectId(check_sibling[0]))
+
+        # UPDATE EACH SIBLING
+        for sibling in persons_real_siblings:
+            mongo.db.people.find_one_and_update(
+                {"_id": this_person[0]}, {"$addToSet": {
+                    "siblings": sibling}})
+
+
+def get_persons_data(person, target):
+
+    # FUNCTION PURPOSE -
+    # 1.    TO RETURN A LIST OF THE PERSONS - WHATEVER IS IN 'target' IN
+    #       OBJECT FORM
+
+    req_data = person[target]
+    returned_data = []
+
+    if len(req_data) > 0:
+        # THEN PERSON HAS EXISTING SIBLINGS - SO GET THEM INTO A LIST
+        for data in req_data:
+            returned_data.append(mongo.db.people.find_one({"_id": data}))
+
+    return returned_data
+
+
+def get_selected_parents(person, partners=[]):
+
+    persons_gender = person["gender"]
+    persons_id = person["_id"]
+    selected_parent_id = ""
+    child_parents = {}
+    # CHECK THAT PARTNERS IS NOT EMPTY
+    if len(partners) != 0:
+        selected_parents_in_form = request.form.get("child_parents")
+        selected_parent = mongo.db.people.find_one(
+            {"_id": ObjectId(selected_parents_in_form)})
+        selected_parent_id = selected_parent["_id"]
+
+        # CHECK IF PERSON IS THE MOTHER
+        if persons_gender == "female":
+            child_parents['mother'] = persons_id
+            child_parents['father'] = ""
+            if selected_parent_id:
+                child_parents['father'] = selected_parent_id
+
+        # ELSE PERSON IS THE FATHER
+        elif persons_gender == "male":
+            child_parents['father'] = persons_id
+            child_parents['mother'] = ""
+            if selected_parent_id:
+                child_parents['mother'] = selected_parent_id
+            else:
+                child_parents = {"mother": "", "father": ""}
+
+    return child_parents
+
+
+def get_chosen_parent(partners):
+
+    # FUNCTION PURPOSE -
+    # 1.    RETURN THE ID OF THE PARENT(OTHER THAN THE PERSON)
+    #       SELECTED IN THE FORM
+
+    if len(partners) != 0:
+        selected_parents_in_form = request.form.get("child_parents")
+        selected_parent = mongo.db.people.find_one(
+            {"_id": ObjectId(selected_parents_in_form)})
+
+    return selected_parent

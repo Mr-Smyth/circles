@@ -53,10 +53,12 @@ def call_person_update():
     return person_update
 
 
-def call_create_person(person={"family_name": ""}, parents={"mother": "", "father": ""}):
+def call_create_person(
+    person={"family_name": ""}, parents={
+        "mother": "", "father": ""}):
 
     # FUNCTION PURPOSE -
-    # 1.    TO PROVIDE A TEMPLATE FOR INSERTING A NEW PERSON.
+    # 1.    TO PROVIDE A TEMPLATE OBJECT FOR INSERTING A NEW PERSON.
 
     # setup some variable for forms that do not contain all required fields
     if person['family_name']:
