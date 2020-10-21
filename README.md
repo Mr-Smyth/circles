@@ -61,7 +61,7 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 
 ## Purpose and Goals
 
-Circles is a web based application, designed to help the user build a family tree - or Circle!  
+Circles is a web based application, designed to help the user build a family tree - or in this case, Circle!  
 
 There are many Genealogy building websites available today, and many of my friends , as well as myself have tried many of them. And whereas their complexity and effort to cover all 
 bases is to be admired, i have found that in that effort lies a flaw for the casual user.   
@@ -70,12 +70,20 @@ My experience of friends and family is that from first click, the interface eith
 The user is forced into making decisions about how they should structure their data, "Do i start with a person or a family?" 
 and left wondering what an event should include, or a citation should be.  
 
-So the goal of the website is to fulfil a simple need for people to know and document their family - Simply. It wont cover every base, and there wont
+So the goal of this website is to fulfil a simple need for people to know and document their family - Simply. It wont cover every base, and there wont
 be fancy graphs - To start with anyway.   
 What Circles will provide is simplicity of use, a simple guided building structure built around the model of a family being a circle, comprising
-of one person at its hub. The circle will comprise of, Parents, Siblings, Spuse/key-Partner, and children, all displayed on one page.  
-This will also allow a user to click on any of the other people within this circle, to put them at the hub of their own family page. Each family circle page, will contain information about the "Hub" person
-and in this way, will replace all the awkward confusing entries requested by more complex family tree builders.
+of one person at its hub. The circle will comprise of, Parents, Siblings, Spuse/Partners, and children, all displayed on one page.  
+This will also allow a user to click on any of the other people within this circle, to put them at the hub of their own family page. 
+Each family circle page, will contain information about the "Hub" person and in this way, will replace all the awkward confusing entries 
+requested by more complex family tree builders. It also will allow, once the data has been entered, an interesting journey down the rabbit hole of 
+family history and relations.  
+
+For this project version, there will be no user login, anybody who visits the site will be able to begin to add there own family. Future release may include 
+'ring-fenced' Circles for each member, but for now i would like to let each circle grow into eachother, and see where it leads. 
+Each person is unique in Circles, insofar as the combination of their first and last names combined with the correct date of birth is unique, should this become
+a problem, another field could be added to define the uniquness of each person.
+
 
 This is also complemented by a search feature on the home page allowing you to jump to any person you have created within the database. 
 I have chosen this design, as i feel that this is what common people like me want from a genealogy building tool, to keep a track of family connections and information.
@@ -88,11 +96,11 @@ The Application is intended for users of any age who are deciding on a location 
 
 The following user stories have been identified:
 
-1.  As a user, I want the home screen to be simple with a clear indication of what im supposed to do. 
+1.  As a user, I want the home screen to be simple with a clear indication of what i can do. 
 2.  As a user, I want to be able to enter my own family tree information.
 3.  As a user, I want a simple way to enter a new person.
 4.  As a user, I dont want to have to think about how to connect people in the family circle.
-5.  As a user, I want to be able to search my family for a specific person
+5.  As a user, I want to be able to search my family for a specific person.
 6.  As a user, I want to be able to see my parental lineage within the database.
 
 [Back to Index](#index)
@@ -110,7 +118,7 @@ The following user stories have been identified:
 |**Enter Own Family Circle Data** | 5 | 5 |
 |**Remove need for user planning of structure**| 5 | 5 |
 |**Search Feature** | 5 | 5 |
-|**See Parental/Maternal Lineage** | 3 | 4 |
+|**See Parental/Maternal Lineage** | 2 | 3 |
 
 
 </div>
@@ -121,17 +129,22 @@ The following user stories have been identified:
 
 # UI 
 Simple clean interface is key, the heavy lifting must be done behind the scenes. So i want to keep
-the front end completll clutter free. Ideally i am aiming for the user to only need to interact with the search bar, and everything after that
+the front end completely clutter free. Ideally i am aiming for the user to only need to interact with the search bar, and everything after that
 is very intuitive with the correct amount of guidance, and action buttons, with clearly understandable purposes.
 
 I designed the logo first on this application, and found that the logo sat really nicely on a blue background. So the background will be a radial gradient of several similar, subtle shades of blue.
 The other colours in use will be shades of indigo and purple for box shading.
 
 I dont want to bamboozle the user with decisions, the person creation procedure takes you through
-a defined number of steps, so the user always knows where they are in the process.
+a defined number of steps, so the user always knows where they are in the process. As a result i need to hard-wire the procedure, and set certain priorities. For
+example, Circles does not allow skipping of entering parents in the build process, as parents are something everyone had to have had, to be alive, It is a key piece of information and
+aids in the adding of siblings further along. Also it is not possible to advance to step 5 - Assign Siblings, unless you have setup a partner, this is because,
+ and i tread carefully here, It is usually required that you have 2 biological parents, 1 of either sex.   
+ 
+ So this is not something the user has to be aware of when starting their circle, It will be either impossible to pass required stages or a notification with a choice
+ will be displayed. The focus should be on simply filling in the blanks, answering the questions and circles should do the rest.
 
-After that, i want the search and view to be simple. The user will search for a person, and have the option to view or edit. A drop down container will also 
-be included in the search results, to aid in selecting the correct 'John Smith' for example.
+After that, i want the search and view to be simple. The user will search for a person, and have clear results showing name and DOB.
 
 The viewing of a persons circle will be interactive and each member of the circle, upon clicking,  will lead the user down a new rabbit hole of discovery.   
 
