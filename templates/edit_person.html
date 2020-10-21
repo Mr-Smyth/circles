@@ -92,7 +92,7 @@
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
                         <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
-                        <input id="dob" name="dob" type="text" value = "{{ person.dob }}" class="validate datepicker" required>
+                        <input id="dob" name="dob" type="text" value = "{{ person.dob }}" class="validate datepicker" readonly="readonly" required>
                         <label for="dob">Date of Birth (*Req)</label>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
                         <i class="fas fa-calendar-times prefix blue-text text-darken-4"></i>
-                        <input id="dod" name="dod" type="text" value = "{{ person.dod }}" class="validate datepicker">
+                        <input id="dod" name="dod" type="text" value = "{{ person.dod }}" readonly="readonly" class="validate datepicker">
                         <label for="dod">Date of Death</label>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
 						<i class="fas fa-info-circle prefix blue-text text-darken-4"></i>
 					    <textarea id="person_info" name="person_info" minlength="0"
-				                    maxlength="1000" class="materialize-textarea validate">{{ person.information.capitalize() }}</textarea>
+				                    maxlength="2000" class="materialize-textarea validate">{{ person.information.capitalize() }}</textarea>
 					    <label for="person_info">Relevant Information</label>
 					</div>
 				</div>

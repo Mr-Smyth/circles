@@ -16,6 +16,19 @@
      height: 100%;
 }
 
+/* USING CSS GLOW ON .CIRCLES CLASS - IM CALLING A SLIGHTLY
+DIFFERENT IMAGE - TO GIVE A SLOW SUBTLE PULSING EFFECT TO THE LOGO */
+#logo-image:hover{
+    background-image: url("../images/circles-logo-1024x.png");
+    animation: glow 1.5s linear infinite alternate;
+}
+
+@keyframes glow{
+    to {
+    background-image: url("../images/circles-logo-1024x-strong.png");
+    }
+}
+
 /* SEARCH */
 .search-button,
 .delete-button {
