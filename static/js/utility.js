@@ -18,10 +18,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /** SET THE LOADER TO START WHENEVER A SUBMIT BUTTON IS CLICKED  */
     let btn = document.querySelector("button[type=submit]");
-    btn.addEventListener('click', function(){
-        let overlay = document.getElementById("overlay")
-        overlay.style.display = "flex"
-    })
+        btn.addEventListener('click', function(){
+            const formStatus = document.querySelector("form").checkValidity();
+            console.log(formStatus)
+            if (formStatus == true){
+                let overlay = document.getElementById("overlay")
+                overlay.style.display = "flex"
+            }
+        })
+    
 
      /** MAKE SELECT FEATURE HAVE VALIDATION 
       * CREDIT TIM IN CODE INSTITUTE FOR THIS CODE FROM THE COURSE
