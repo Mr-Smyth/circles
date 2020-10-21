@@ -4,7 +4,7 @@
 
 ![Circles logo](https://github.com/Mr-Smyth/circles/blob/master/static/images/circles-logo-400x.png "Site logo")
 
-Circles is a Data Centric, user friendly full stack website. 
+Circles is a Data Centric, user friendly, Responsive full stack website. 
 
 </div>
 
@@ -144,7 +144,7 @@ aids in the adding of siblings further along. Also it is not possible to advance
  So this is not something the user has to be aware of when starting their circle, It will be either impossible to pass required stages or a notification with a choice
  will be displayed. The focus should be on simply filling in the blanks, answering the questions and circles should do the rest.
 
-After that, i want the search and view to be simple. The user will search for a person, and have clear results showing name and DOB.
+After that, i want the search and view to be simple. The user will search for a person, and have clear clickable results showing name and DOB.
 
 The viewing of a persons circle will be interactive and each member of the circle, upon clicking,  will lead the user down a new rabbit hole of discovery.   
 
@@ -182,90 +182,106 @@ The viewing of a persons circle will be interactive and each member of the circl
 
 Circles will Intelligently guide the user through the Family Circle building process. From a blank Database, the user can click **Add Person** from
 the navbar menu. This will take the user to step 1 of 5 optional steps, in building a family circle.
-Add Person will provide a form for the user to fill in the details of the new person.   
+Add Person will provide a form for the user to fill in the details of a new person.   
 
 
-Clicking Add Person at the foot of the form will add  the person to the database and move the user to Step 2, where they can fill in the persons parents details.
+Clicking Add Person at the foot of the form will add the person to the database and move the user to Step 2, where they can fill in the persons parents details.
 This step cannot be skipped unless details have already been entered.   
 This is also where Circles begins to help out -   
 Circles will grab the parent information and obviously link them as parents of the person being edited, and add the person as a child of the parents.
-But also Circles will then check if those parents have any children, if yes then they will be added as a sibling of the new person, and the new
-person will be added to those siblings as a sibling. Certain additional checks are carried out in this procedure, such as checking if the siblings
-we are linking to has at least one common parent. The reverse check of having Circles check if the person being added has any siblings relevant to the 
-parent being added, greatly slowed the processing time and, as ther are other methods in place for dealing with adding children, 
-i decided it was not worth reducing the performance of the app for this small gain.
 Both Parents are automatically added as Spouse / partner, as they have a relationship relevant to the family circle.   
-
 
 Step 3, is about entering a spouse or partners details, this stage can be skipped if not applicable. 
 Existing Spouse and partners will be displayed and these links can be clicked on. When clicked on they perform a check to see if they can be removed as a 
-spouse or partner, the user will be given the appropriate message and options.
+spouse or partner, the user will be given the appropriate message and options - If the person being edited, and the spouse/partner clicked on, have 
+any existing children, then circles will **NOT** allow the removal of the relationship, as they have a child and therfore are key in the childs circle.
 A form allows the user to enter a spouse/partner, again circles will create the new spouse/partner, if they do not already exist. If they do exist, Circles will 
 update the relevant relationships.
 Having a spouse/partner linked will allow the user to add children to the person at stage 5.
 
 Step 4, is all about entering siblings and again this stage can be skipped if not relevant. 
-Existing Siblings will be displayed and these links can be clicked on. When clicked the user will be advised on what they are doing and given 
- the appropriate message and options.
- A form allows the user to enter a Sibling, again circles will create the new Sibling, if they do not already exist. If they do exist, Circles will 
-update the relevant relationships.
 
-Step 5, is all about entering children and again this stage can be skipped if not relevant. But this page can only be reached if the person has a spouse / partner.
-Existing Children will be displayed and these links can be clicked on. When clicked the user will be advised on what they are doing and given 
-the appropriate message and options.
-A form allows the user to enter a Child, again circles will create the new Child, if they do not already exist. If they do exist, Circles will 
-update the relevant relationships.
+This is also where Circles manages a lot of the complicated relationships. 
+Existing Siblings will be displayed and these links can be clicked on. Clicking on a sibling gives the user the option to remove the sibling, as a sibling.
+ When clicked the user will be advised on what they are doing and given the appropriate message and options.
+ A form allows the user to enter a Sibling, again circles will create the new Sibling, if they do not already exist, and update parents and possible 
+ siblings with this new sibling.  
+ If the sibling entered matches an exiting person on the DB, then that person will be selected as a new sibling. Circles will then remove all links, linking the sibling to previous
+ parents and siblings, and then begin a process of matching new siblings based on the premise that to be a sibling, in a genealogical way, you must have at 
+ least one matching parent. So Circles performs this check on the found sibling, his existing siblings and the siblings of the person being edited. Once 
+ that is complete, each sibling will be updated with his or hers own 'Propper' Siblings.
+
+
+Step 5, is all about entering children and again this stage can be skipped if not relevant.  
+This page can only be reached if the person has a spouse / partner.  
+Existing Children will be displayed and these links can be clicked on. Clicking on a child gives the user the option to remove the child as a child. 
+When clicked the user will be advised on what they are doing and given the appropriate message and options.
+A form allows the user to enter a Child, again circles will create the new Child, if they do not already exist, and update parents and possible 
+ siblings with this new Child.
+
+If the Child entered matches an exiting person on the DB, then that person will be selected as a new Child.  
+Circles will then remove all links, linking the Child to previous parents and siblings, and then begin a process of matching new siblings 
+based on the premise that to be a sibling, in a genealogical way, you must have at  least one matching parent. So Circles performs this check on 
+the found Child, his existing siblings and the siblings of the person being edited. Once that is complete, each sibling will be updated with his or 
+hers own 'Propper' Siblings.   
+
+
+It is then possible to view this persons circle, and any other circle within.
 
 ## Layout
 
 ## Home Page
 The Home screen opens with the site logo prominant mid screen. This sits on a circular gradient sky blue background, which 
-i choose to best match the site logo. The search bar which sits under the logo, has a subtle hover effect, and opens into a small search form when clicked.
+i choose to best match the site logo. The Logo will glow slightly when hovered over.
+There are 3 options in the common Site Navigation, in the top right:
+
+* Home.
+* Add Person.
+* Manage People.
+
+These are available in a side loading bar in mobile view also.
+
+The search bar which sits under the logo, has a subtle hover effect, and opens into a small search form when clicked.
 The search form will search MongoDb, for any or all of the entered data, and return a list of results.
 
-These results are in the form of a collapsible list, each result shows the full name and the Date of Birth - 
-the 2 key pieces of information for finding the person you want. When the collapsible is clicked, 
-more information relating to that person will be displayed, to give greater clarification, 
-and confirm that you are selecting the correct 'John Smith'!  
+These results are in the form of a large buttoned list, each result shows the full name and the Date of Birth - 
+the 2 key pieces of information for finding the person you want. Clicking on any result will take the user to that persons Circle page.
 
 It is paramount that the page is simple, the process has been made simple so the Home page must be a prelude to this.
 
 [Back to Index](#index)
 ## Add Person Page
 ### Step 1 of 5 
-This is selected from the menu. 
-The page includes common navigation, and a reduced logo pushed to the top left.
+This is selected from the common site navigation bar. 
+The page includes common site navigation, and a reduced logo pushed to the top left.
 A clear heading, shows the user what page they are on, and clear indication of the stage they are at, in the guided Add Person
 process. 
 This page includes a detailed form for the user to fill in, to create a person in Circles.  
-Clicking on Add Person, will perform the above CRUD, and will automatically take the user to step 2 - Edit Parents.
+Clicking on Add Person, will perform the above CRUD, and will automatically take the user to step 2 - Assign Parents.
+Clicking Clear will reset the form.
 
 
 
 [Back to Index](#index)
-## Edit Parents Page
+## Assign Parents Page
 ### Step 2 of 5
-This page is reachable from either completing the setup a new person page, or by clicking edit on a search result from the
-home page. The page includes common site navigation and a reduced logo pushed to the top left. The persons
-parents (if linked in the DB) will be displayed in form,. The form can be edited. 
-Editing a parent will first force Circles to remove the persons id from any children field in the DB, this is because if we are 
-reassigning parents, the person cannot be a child of someone else.
-Circles will then search for a match, if a match is found then that found person will become the parent. The person will then be added as a child of the new parent
-and any existing children of the parent will be updated with a new sibling, as will the person also.   
+This page is reachable from either completing the Add Person (Step 1) or Edit Person (Step1).
+The page includes common site navigation and a reduced logo pushed to the top left. The persons parents (if already linked in the DB) will be displayed in form. Otherwise
+A blank form can be used to enter the persons parents.   
+If the Parents are already displayed, then it is still possible to change the parents. However, editing a parent form will not edit the parents details, ***(if you require to
+edit a person there is a place for that, which can be accessed from the view circle page)***. Editing or changing the parent form will force Circles to search
+for a match, if one is found that person becomes the parent, if no match is found, then a new person is automatically created to become the parent. In this way it 
+is not nesseccarry to create each and every person, using the Add person feature, instead they can be added, on the go at each step! 
 
-If no match is found, then the entered information will be used to create a new parent. The operations linking new parent to child, and child to parent will all
-take place.   
+Important relationship checks, are performed, Person is automatically removed from existing parents as a child, and reassigned to new parents as a child, and 
+their parents object is updated accordingly. This is all to ensure, nobody ends up being the son of 2 different mothers.
 
-In both cases Circles will ensure that both parents are linked to eachother as partners / spouse as having a child is a relevant 
-relationship.    
-
-Clicking on Add Parents, will perform the above CRUD, and automatically take the user to step 3 - Edit Spouse.
-Clicking skip, is only available, if parents details have been already entered and it will take the user to the next step - Assign Spouse.
-
-**Note:** ***Skip will only be available if the persons parents have already been entered***
+Clicking on Add Parents, will perform the above CRUD, and automatically take the user to step 3 - Assign Spouse.
+Clicking Next, is only available, if parents details have been already entered and it will take the user to the next step - Assign Spouse.
 
 [Back to Index](#index)
-## Edit / Add Spouse_Partner Page
+
+## Assign Spouse_Partner Page
 ### Step 3 of 5
 This page is reachable only by completing the Edit Parents page. 
 The page includes common site navigation and a reduced logo pushed to the top left.
