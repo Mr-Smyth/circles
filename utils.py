@@ -319,3 +319,26 @@ def remove_parent_link(person):
                 mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(child['_id'])},
                     {"$set": {"parents": parents_dict}})
+
+
+def choose_sibling_parents(persons_parents):
+
+    # FUNCTION PURPOSE -
+    # 1.    TO RETURN A DICT OF THE SIBLINGS CHOSEN PARENTS
+    #       IN ASSIGN SIBLINGS
+
+    selected_parents = {"mother": "", "father": ""}
+    if len(persons_parents) != 0:
+        selected_parents_in_form = request.form.get(
+            "sibling_parents")
+        # STRIP THE STRING DOWN TO THE ID'S
+        sel_parents_string = selected_parents_in_form.replace(
+            "(", "").replace(")", "").replace(
+                "'", "").replace("ObjectId", ""). replace(" ", "")
+        sel_parents_array = sel_parents_string.split(",")
+        selected_parents = {'mother': mongo.db.people.find_one(
+                    {"_id": ObjectId(sel_parents_array[0])})['_id'],
+                    'father': mongo.db.people.find_one(
+                    {"_id": ObjectId(sel_parents_array[1])})['_id']}
+
+    return selected_parents

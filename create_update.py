@@ -112,3 +112,50 @@ def call_create_person(
     }
     return person
 
+
+def create_parent(person, parent):
+
+    # FUNCTION PURPOSE -
+    # 1.    RETURN A PARENT TEMPLATE TO CREATE A NEW PARENT
+
+    if parent == 'mother':
+        mother = {
+                    "family_name": person["family_name"].lower().strip(),
+                    "first_name": request.form.get(
+                        "mothers_first_name").lower().strip(),
+                    "last_name": request.form.get(
+                        "mothers_last_name").lower().strip(),
+                    "birth_surname": "",
+                    "parents": {"mother": "", "father": ""},
+                    "siblings": [],
+                    "spouse_partner": [],
+                    "gender": "female",
+                    "dob": request.form.get("mothers_dob").strip(),
+                    "dod": "",
+                    "birth_address": "",
+                    "rel_address": "",
+                    "information": "",
+                    "children": []
+                }
+        return mother
+
+    if parent == 'father':
+        father = {
+                "family_name": person["family_name"].lower().strip(),
+                "first_name": request.form.get(
+                    "fathers_first_name").lower().strip(),
+                "last_name": request.form.get(
+                    "fathers_last_name").lower().strip(),
+                "birth_surname": "",
+                "parents": {"mother": "", "father": ""},
+                "siblings": [],
+                "spouse_partner": [],
+                "gender": "male",
+                "dob": request.form.get("fathers_dob"),
+                "dod": "",
+                "birth_address": "",
+                "rel_address": "",
+                "information": "",
+                "children": []
+                }
+        return father
