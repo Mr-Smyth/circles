@@ -64,6 +64,11 @@ body {
     border-radius: 30px;
 }
 
+/* OVERRIDE MATERIALISE BUTTON FOCUS */
+.btn:focus, .btn-large:focus, .btn-small:focus, .btn-floating:focus {
+    background-color: #608bcc;
+}
+
 .form-button{
     font-size: 1.1rem;
     color: #c0c0c0;
@@ -142,29 +147,33 @@ body {
     background: rgb(60,81,152);
     background: radial-gradient(circle, rgba(60,81,152,1) 2%, rgba(17,42,124,1) 72%);
     padding-top: 20px;
+    
 }
 
 .sidenav li>a {
     color: rgb(159, 197, 248);
-    font-size: 1.2rem;
-    transition: 1.2s;
+    font-size: 1.8rem;
+    transition: 1s;
 }
 
 .sidenav li>a:hover {
     background-color: transparent;
-    color:  rgb(116, 105, 192);
+    font-weight: 600;
+    color:  rgb(80, 60, 133);
+    text-shadow: 1px 1px 1px rgb(253, 253, 253)
 }
 
 nav ul a {
-    color: rgb(159, 197, 248);
+    color: rgb(253, 253, 253);
     font-size: 1.5rem;
     font-weight: bold;
-    transition: 1.2s;
+    transition: 1s;
 }
 
 nav ul a:hover {
     background-color: transparent;
-    color:  rgb(153, 138, 240);
+    color:  rgb(80, 60, 133);
+    text-shadow: 2px 1.5px 1.5px rgba(219, 210, 210, 0.5)
 }
 
 /* REMOVE BOX SHADOW FROM MATERIALIZE NAVBAR  */
@@ -244,6 +253,39 @@ label.active {
     color: rgba(87,15,87,1);
     text-shadow: 0px 0px 10px rgb(240, 239, 175);
 }
+
+/* MODIFY DATE PICKER DEFAULT STYLE  */
+.datepicker-date-display {
+    background: rgb(34,65,167);
+    background: radial-gradient(circle, rgba(34,65,167,1) 0%, rgba(48,96,193,1) 15%, rgba(60,121,205,1) 31%, rgba(45,123,193,1) 52%, rgba(52,150,214,1) 68%, rgba(27,130,198,1) 80%);
+}
+
+.datepicker-cancel,
+.datepicker-clear,
+.datepicker-today,
+.datepicker-done {
+    font-weight: 600;
+    color: rgb(34,65,167);
+}
+
+.datepicker-day-button:hover,
+.datepicker-day-button:focus,
+button:focus{
+    background-color: rgb(116, 140, 219);
+    color: #000;
+}
+
+.datepicker-table td.is-selected {
+    background-color: rgb(116, 140, 219);
+    color: #000;
+}
+
+.datepicker-table td.is-today{
+    background-color: rgb(34,65,167);
+    color: #fff;
+}
+
+
 
 /* MEDIA QUERIES */
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */

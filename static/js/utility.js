@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var instances = M.FormSelect.init(elems);
     let datepickers = document.querySelectorAll(".datepicker");
     let datepickersInstance = M.Datepicker.init(datepickers, {
-        format: "dd mmmm, yyyy",
+        format: "dd mmmm yyyy",
         yearRange: 150,
         showClearBtn: true,
         i18n: {

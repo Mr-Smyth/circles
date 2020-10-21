@@ -3,7 +3,6 @@ from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
-from pymongo import ReturnDocument 
 
 from bson.objectid import ObjectId
 from werkzeug.security import (
@@ -1020,7 +1019,7 @@ def delete_all_documents():
     # FUNCTION PURPOSE -
     # 1.    CHECKS IF CORRECT DELETION PASSWORD HAS BEEN ENTERED
     # 2.    DELETES ALL PEOPLE FROM DB
-    password = "password"
+    password = mongo.db.users.find_one({'user_name': 'eamonn'})["del_password"]
 
     if request.method == "POST":
         if password == request.form.get("password"):

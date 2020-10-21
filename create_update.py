@@ -39,7 +39,7 @@ def call_person_update():
     # 1.    TO PROVIDE AN UPDATE TEMPLATE FOR UPDATING A PERSON
 
     person_update = {
-            "family_name": request.form.get("family_name").lower().strip(),
+            "family_name": 'My Circle',
             "first_name": request.form.get("first_name").lower().strip(),
             "last_name": request.form.get("last_name").lower().strip(),
             "birth_surname": request.form.get("birth_surname").strip(),
@@ -54,7 +54,7 @@ def call_person_update():
 
 
 def call_create_person(
-    person={"family_name": ""}, parents={
+    person={"family_name": "My Circle"}, parents={
         "mother": "", "father": ""}):
 
     # FUNCTION PURPOSE -
@@ -63,10 +63,8 @@ def call_create_person(
     # setup some variable for forms that do not contain all required fields
     if person['family_name']:
         family_name = person['family_name']
-    elif request.form.get("family_name"):
-        family_name = request.form.get("family_name").strip()
     else:
-        family_name = ""
+        family_name = "My Circle"
     if request.form.get("birth_surname"):
         birth_surname = request.form.get("birth_surname").strip()
     else:
@@ -120,7 +118,7 @@ def create_parent(person, parent):
 
     if parent == 'mother':
         mother = {
-                    "family_name": person["family_name"].lower().strip(),
+                    "family_name": 'My Circle',
                     "first_name": request.form.get(
                         "mothers_first_name").lower().strip(),
                     "last_name": request.form.get(
@@ -141,7 +139,7 @@ def create_parent(person, parent):
 
     if parent == 'father':
         father = {
-                "family_name": person["family_name"].lower().strip(),
+                "family_name": 'My Circle',
                 "first_name": request.form.get(
                     "fathers_first_name").lower().strip(),
                 "last_name": request.form.get(
