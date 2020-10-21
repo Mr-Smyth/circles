@@ -3,8 +3,14 @@
      height: 300px;
      width: 100%;
      background-color: transparent;
+     display: -webkit-box;
+     display: -ms-flexbox;
      display: flex;
+     -webkit-box-pack: center;
+     -ms-flex-pack: center;
      justify-content: center;
+     -webkit-box-align: center;
+     -ms-flex-align: center;
      align-items: center;
 }
  #logo-image{
@@ -15,158 +21,174 @@
      width: 300px;
      height: 100%;
 }
-.heading-container{
-    margin-top: 100px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
+ .heading-container{
+     margin-top: 100px;
+     width: 100%;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-orient: horizontal;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: row;
+     flex-direction: row;
+     -webkit-box-pack: start;
+     -ms-flex-pack: start;
+     justify-content: start;
 }
-#person-heading{
-    font-size: 1.6rem;
-    color: #444444;
-    width: 90%;
-    margin: auto;
-    border-bottom: 0.5px solid #c0c0c0;
+ #person-heading{
+     font-size: 1.6rem;
+     color: #444444;
+     width: 90%;
+     margin: auto;
+     border-bottom: 0.5px solid #c0c0c0;
 }
-.person-details-container{
-    margin: 0 auto;
-    width: 90%;
-    display: flex;
-    flex-wrap: wrap-reverse;
+ .person-details-container{
+     margin: 0 auto;
+     width: 90%;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -ms-flex-wrap: wrap-reverse;
+     flex-wrap: wrap-reverse;
 }
-#person-information{
-    margin: 20px 20px 20px 0;
-    font-size: 1.1rem;
-    color: #eee;
-    width: 100px;
-    flex-grow: 5;
-    min-width: 300px;
+ #person-information{
+     margin: 20px 20px 20px 0;
+     font-size: 1.1rem;
+     color: #eee;
+     width: 100px;
+     -webkit-box-flex: 5;
+     -ms-flex-positive: 5;
+     flex-grow: 5;
+     min-width: 300px;
 }
-#person-details{
-    margin: 20px 0 0 0;
-    padding: 10px;
-    background-color: rgba(251, 248, 248, 0.192);
-    border: solid 1px #c0c0c0;
-    border-radius: 4px;
-    font-size: 1.1rem;
-    color: #444444;
-    width: 100px;
-    flex-grow: 1;
-    min-width: 200px;
+ #person-details{
+     margin: 20px 0 0 0;
+     padding: 10px;
+     background-color: rgba(251, 248, 248, 0.192);
+     border: solid 1px #c0c0c0;
+     border-radius: 4px;
+     font-size: 1.1rem;
+     color: #444444;
+     width: 100px;
+     -webkit-box-flex: 1;
+     -ms-flex-positive: 1;
+     flex-grow: 1;
+     min-width: 200px;
 }
-
-.circle-heading-container{
-    margin-top: 50px;
-    width: 100%;
+ .circle-heading-container{
+     margin-top: 50px;
+     width: 100%;
 }
-.circles-heading{
-    color: rgb(59, 9, 59);
-    font-size: 2.2rem;
-    text-align: center;
-    text-shadow: 1px 1px 1.5px rgba(87,15,87,1);
+ .circles-heading{
+     color: rgb(59, 9, 59);
+     font-size: 2.2rem;
+     text-align: center;
+     text-shadow: 1px 1px 1.5px rgba(87,15,87,1);
 }
-
-.circles-subheading{
-    color: rgb(59, 9, 59);
-    font-size: 1.8rem;
-    text-align: center;
-    text-shadow: 1px 1px 1.5px rgba(87,15,87,1);
+ .circles-subheading{
+     color: rgb(59, 9, 59);
+     font-size: 1.8rem;
+     text-align: center;
+     text-shadow: 1px 1px 1.5px rgba(87,15,87,1);
 }
-
-.my-circles-row{
-    width: 100%;
-    margin: 0 auto;
+ .my-circles-row{
+     width: 100%;
+     margin: 0 auto;
 }
-
-.my-circles-container{
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
+ .my-circles-container{
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-orient: horizontal;
+     -webkit-box-direction: normal;
+     -ms-flex-flow: row wrap;
+     flex-flow: row wrap;
+     -webkit-box-pack: space-evenly;
+     -ms-flex-pack: space-evenly;
+     justify-content: space-evenly;
 }
-
-.circles-item {
-    background-color: transparent;
-    height: 170px;
-    min-width: 170px;
-    align-content: center;
-    margin: 10px 0 0 10px;
+ .circles-item {
+     background-color: transparent;
+     height: 170px;
+     min-width: 170px;
+     -ms-flex-line-pack: center;
+     align-content: center;
+     margin: 10px 0 0 10px;
 }
-
-.circles-item-text{
-    text-align: center;
-    margin: 0px;
-    padding: 0px;
-    font-size: 1.2rem;   
-    color: #c4cace;
+ .circles-item-text{
+     text-align: center;
+     margin: 0px;
+     padding: 0px;
+     font-size: 1.2rem;
+     color: #c4cace;
 }
-
-.circles-image{
-    background-image: url("../images/empty-multi-circle.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: 100%;
-    margin-top:-10px;
-    display: flex;
+ .circles-image{
+     background-image: url("../images/empty-multi-circle.png");
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: contain;
+     width: 100%;
+     height: 100%;
+     margin-top:-10px;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
 }
-
-/* USING CSS GLOW ON .CIRCLES CLASS - IM CALLING A SLIGHTLY
-DIFFERENT IMAGE - TO GIVE A SLOW SUBTLE PULSING EFFECT */
-.circles-image:hover{
-    background-image: url("../images/empty-multi-circle-hover.png");
-    animation: glow 1.5s linear infinite alternate;
+/* USING CSS GLOW ON .CIRCLES CLASS - IM CALLING A SLIGHTLY DIFFERENT IMAGE - TO GIVE A SLOW SUBTLE PULSING EFFECT */
+ .circles-image:hover{
+     background-image: url("../images/empty-multi-circle-hover.png");
+     -webkit-animation: glow 1.5s linear infinite alternate;
+     animation: glow 1.5s linear infinite alternate;
 }
-
-@keyframes glow{
-    to {
-    background-image: url("../images/empty-multi-circle.png");
+ @-webkit-keyframes glow{
+     to {
+         background-image: url("../images/empty-multi-circle.png");
     }
 }
-
-
-.circles-name{
-    font-size: 1rem;   
-    color: rgb(59, 9, 59);
-    font-weight: 800;
-    width: 75px;
-    margin: auto;
-    overflow: hidden;
-    text-align: center;
-    word-wrap: break-word;
+ @keyframes glow{
+     to {
+         background-image: url("../images/empty-multi-circle.png");
+    }
 }
-
+ .circles-name{
+     font-size: 1rem;
+     color: rgb(59, 9, 59);
+     font-weight: 800;
+     width: 75px;
+     margin: auto;
+     overflow: hidden;
+     text-align: center;
+     word-wrap: break-word;
+}
 /* MEDIA QUERIES */
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
-@media (min-width:600px){
-        .circles-item {
-        height: 220px;
-        min-width: 220px;
+ @media (min-width:600px){
+     .circles-item {
+         height: 220px;
+         min-width: 220px;
     }
-    .circles-item-text{
-        font-size: 1.3rem;   
+     .circles-item-text{
+         font-size: 1.3rem;
     }
-    .circles-name{
-        width: 90px;
-        font-size: 1.2rem;
+     .circles-name{
+         width: 90px;
+         font-size: 1.2rem;
     }
 }
 /* tablet, landscape iPad, lo-res laptops ands desktops */
-@media (min-width:801px){
-    .circles-item {
-        height: 250px;
-        min-width: 250px;
+ @media (min-width:801px){
+     .circles-item {
+         height: 250px;
+         min-width: 250px;
     }
-    .circles-item-text{
-        font-size: 1.5rem;   
+     .circles-item-text{
+         font-size: 1.5rem;
     }
-    .circles-name{
-        width: 120px;
-        font-size: 1.4rem;
+     .circles-name{
+         width: 120px;
+         font-size: 1.4rem;
     }
 }
 /* big landscape tablets, laptops, and desktops */
-@media (min-width:1025px) {
-
+ @media (min-width:1025px) {
 }
