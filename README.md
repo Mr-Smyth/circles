@@ -277,6 +277,8 @@ Note on above*. This option to Assign will only appear if certain situations arr
 * Assign Sibling: Will appear if no Siblings have been added, and also only if bothe parents have been set.
 * Assign Children: Will appear if no children have been added, and also only if the person has a spouse/partner set.   
 
+Any other situations where the user needs to edit, will be covered by clicking the edit button at the bottom of the screen.
+
 This is arranged in such a way to be logical to the user, and maintain a certain logic within Circles itself, 
 i.e You cannot have a child who has no parents etc.
 
@@ -432,32 +434,32 @@ Clicking **View** (Persons Name) will take the user to the **view Circle page**.
 
 ## Technologies Used:
 
-*   HTML.
-*   CSS.
-*   Javascript.
-*   Python.
-*   Flask micro web framework.
-*   Jinga2.
-*   MongoDB.
-*   GitHub.
-*   Heroku.
-*   Paint dot net.
-*   Balsamiq Wireframes.
+*   [HTML](https://github.com/Mr-Smyth/circles/tree/master/templates).
+*   [CSS](https://github.com/Mr-Smyth/circles/tree/master/static/css).
+*   [Javascript](https://github.com/Mr-Smyth/circles/tree/master/static/js).
+*   [Python 3.8.5](https://github.com/Mr-Smyth/circles/blob/master/app.py).
+    * [Python 3.8.5 Documentation](https://www.python.org/downloads/release/python-385/)
+*   [Flask micro web framework](https://flask.palletsprojects.com/en/1.1.x/).
+*   [Jinga2](https://jinja.palletsprojects.com/en/2.11.x/).
+*   [MongoDB](https://docs.mongodb.com/).
+*   [GitHub](https://github.com/).
+*   [Heroku](https://devcenter.heroku.com/categories/reference).
+*   [Paint dot net](https://www.getpaint.net/features.html).
+*   [Balsamiq Wireframes](https://balsamiq.com/).
 
 ## Resources Used:
 
-*   Font Awesome.
-*   Favicons.
-*   Google Fonts.
+*   [Font Awesome](https://fontawesome.com/).
+*   [Favicons](https://favicon.io/).
+*   [Google Fonts](https://fonts.google.com/).
 
 
 ## Logic Walkthrough
 
-*   [Planning stages Logic Walkthrough](https://github.com/Mr-Smyth/circles/blob/master/LogicWalkthrough.md)
-*   [Planning stages considered Schema](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/database-structure.pdf)
+*   [Planning stages Logic Walkthrough](https://github.com/Mr-Smyth/circles/blob/master/docs/LogicWalkthrough.md)
+*   [Planning stages considered Schema](https://github.com/Mr-Smyth/circles/blob/master/docs/database-structure.pdf)
 
 ## Development Walkthrough
-
 
 * Setup a new Database/Collection in MongoDB called Circles.
 * Initial setup of resources, libraries, env, gitignore, requirements and folder structure in Flask.
@@ -465,13 +467,40 @@ Clicking **View** (Persons Name) will take the user to the **view Circle page**.
 * Initial push to Github.
 * [Deploy to Heroku](#deploy-to-heroku)
 * Setup **Base** and **Home** page template.
-    *   This will include the key search feature.
+    *   This will include the key search feature. 
+    * Tested deployment and initial setup.
 * Setup the **add_person** page, route and function.
-* Setup the **edit_parents** page route and function.
-* Setup the **edit_spouse** page route and function.
-* Setup the **edit_spouse_partner** route and function.
-
-
+    * Tested add person functionality.
+* Setup core CSS Styling.
+* Setup the **Assign_parents** page route and function.
+    * Tested adding and changing parents functionality.
+* Setup the **Assign_spouse_Partner** page route and function.
+    * Tested adding Spouse / Partners functionality.
+* Setup the **Assign_siblings** route and function.
+    * Tested adding siblings and checking relationships.
+* Setup the **Assign_Children** route and function.
+    * Tested adding Children and checking relationships.
+* Setup the **Check_partner exists** route and function.
+    * Tested to make sure it detected partners, and allowed access to children.
+* Setup the **Manage_partner_relationship** page route and function.
+    * Tested removing Spouse / Partners functionality.
+* Setup the **Manage_sibling_relationship** page route and function.
+    * Tested removing Siblings functionality.
+* Setup the **Manage_child_relationship** page route and function.
+    * Tested removing a child / parent relationship functionality.
+* Setup the **Edit_Person** page route and function.
+    * Tested Editing a persons details.
+* Setup the **Notify_duplicate** page route and function.
+    * Tested check for duplication while editing a persons details.
+* Setup the **View_Circle** page route and function.
+    * Tested Viewing and changing persons functionality.
+* Setup the **Manage_People** page route and function.
+    * Tested removing People individually and delete all DB functionality.
+* Setup error handlers for 404 and 500.
+    * Tested these pages.
+* Refactored code in **app.py**, to use reusable functions setup within **utils.py** and **create_update.py**.
+* Complete CSS Styling.
+* Validate code.
 
 
 [Back to Index](#index)
