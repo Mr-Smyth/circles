@@ -128,6 +128,9 @@ The following user stories have been identified:
 <br>
 
 # UI 
+
+![Responsive Image](https://github.com/Mr-Smyth/circles/blob/master/static/images/responsive.png "Responsive-example")
+
 Simple clean interface is key, the heavy lifting must be done behind the scenes. So i want to keep
 the front end completely clutter free. Ideally i am aiming for the user to only need to interact with the search bar, and everything after that
 is very intuitive with the correct amount of guidance, and action buttons, with clearly understandable purposes.
