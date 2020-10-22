@@ -230,7 +230,7 @@ It is then possible to view this persons circle, and any other circle within.
 
 ## Layout
 
-## Home Page
+## Home
 The Home screen opens with the site logo prominant mid screen. This sits on a circular gradient sky blue background, which 
 i choose to best match the site logo. The Logo will glow slightly when hovered over.
 There are 3 options in the common Site Navigation, in the top right:
@@ -250,22 +250,73 @@ the 2 key pieces of information for finding the person you want. Clicking on any
 It is paramount that the page is simple, the process has been made simple so the Home page must be a prelude to this.
 
 [Back to Index](#index)
-## Add Person Page
+## View Circle
+View Circle is reachable from clicking on a search result in the home screen. It is also reachable from a link on each of the edit / Assign pages, within 
+the 5 step setup/edit person procedure.   
+The view circle page is the goal of the application. It provides a simple view of a persons family circle.   
+The page has common site styling with a small logo pushed to the top left of the page, and a common Navigation bar on the top right.
+The page heading clearly displays what, and who you are looking at, and immediately below this heading is a profile and information, displaying
+details of the person you are viewing, if these details have been entered.   
+
+Below this is each member of the circle, each within a logo-like circle. Hovering over these circles gives a very subtle glow effect, 
+similar to the logo on the home page.   
+
+The circles are all arranged with clear headings, displaying the relationship of the person. 
+At the bottom of the page is the **Edit (persons Name) Button** which takes the user through the edit process, outlined in the pages below.   
+
+Clicking on any of the Circles, that have names in them takes the user to that persons family circle page, and so on...
+
+You may notice in some cases that instead of a name, you get the option to Assign*, this link will enable you to quickly add a person, So if theperson you are viewing has no siblings, the Assign Sibling button
+will be displayed in place of any would be sibling. Clicking the link, will take the user straight to the add sibling page.
+
+Note on above*. This option to Assign will only appear if certain situations arrise. For Example:
+
+* Assign Mother: Will appear if no mother is set - possible in the case where the mother was deleted.   
+* Assign Father: Will appear if no father is set - possible in the case where the father was deleted.  
+* Assign Spouse / Partner: Will appear if no Spouse / Partner has been set.   
+* Assign Sibling: Will appear if no Siblings have been added, and also only if bothe parents have been set.
+* Assign Children: Will appear if no children have been added, and also only if the person has a spouse/partner set.   
+
+This is arranged in such a way to be logical to the user, and maintain a certain logic within Circles itself, 
+i.e You cannot have a child who has no parents etc.
+
+
+[Back to Index](#index)
+## Add Person
 ### Step 1 of 5 
 This is selected from the common site navigation bar. 
 The page includes common site navigation, and a reduced logo pushed to the top left.
 A clear heading, shows the user what page they are on, and clear indication of the stage they are at, in the guided Add Person
 process. 
 This page includes a detailed form for the user to fill in, to create a person in Circles.  
-Clicking on Add Person, will perform the above CRUD, and will automatically take the user to step 2 - Assign Parents.
-Clicking Clear will reset the form.
+Clicking on **Add Person**, will Insert the new person, and will automatically take the user to **Step 2 - Assign Parents**.
+Clicking **Clear** will reset the form.
 
 
 
 [Back to Index](#index)
-## Assign Parents Page
+## Edit Person
+### Step 1 of 5 
+This is also a Step 1 of 5, it becomes an option to go to this page, when viewing somebodys Circle. It is basically the same layout as Add Person
+Except that it is purely for editing existing information of a Person.
+This is only selected from the bottom of the view Circles page. 
+The page includes common site navigation, and a reduced logo pushed to the top left.
+A clear heading, shows the user what page they are on, and clear indication of the stage they are at, in the guided Add Person
+process. 
+This page includes a detailed form for the user to fill in, to create a person in Circles.  
+Clicking on **Update**, will update the person, and will automatically take the user to **Step 2 - Assign Parents**.
+Clicking **Clear** will reset the form.
+Clicking **Next** will skip to **Step 2 - Assign Parents**.
+Clicking **View** (Persons Name) will take the user to the **view Circle page**.
+
+
+
+
+[Back to Index](#index)
+## Assign Parents
 ### Step 2 of 5
-This page is reachable from either completing the Add Person (Step 1) or Edit Person (Step1).
+This page is reachable from either completing the **Add Person** (Step 1) or **Edit Person** (Step1). It is also possible to reach this page by clicking the 
+Assign mother or Assign father buttons in the View Circle page. These buttons are only visable if no mother, or no father is setup.
 The page includes common site navigation and a reduced logo pushed to the top left. The persons parents (if already linked in the DB) will be displayed in form. Otherwise
 A blank form can be used to enter the persons parents.   
 If the Parents are already displayed, then it is still possible to change the parents. However, editing a parent form will not edit the parents details, ***(if you require to
@@ -276,14 +327,19 @@ is not nesseccarry to create each and every person, using the Add person feature
 Important relationship checks, are performed, Person is automatically removed from existing parents as a child, and reassigned to new parents as a child, and 
 their parents object is updated accordingly. This is all to ensure, nobody ends up being the son of 2 different mothers.
 
-Clicking on Add Parents, will perform the above CRUD, and automatically take the user to step 3 - Assign Spouse.
-Clicking Next, is only available, if parents details have been already entered and it will take the user to the next step - Assign Spouse.
+Clicking on **Add Parents**, will perform the above CRUD, and automatically take the user to **Step 3 - Assign Spouse**.
+Clicking **Clear** will reset the form.
+Clicking **Next**, is only available, if parents details have been already entered and it will take the user to the next **Step 3 - Assign Spouse**.
+Clicking **View** (Persons Name) will take the user to the **view Circle page**.
+
+
 
 [Back to Index](#index)
 
-## Assign Spouse_Partner Page
+## Assign Spouse_Partner
 ### Step 3 of 5
-This page is reachable only by completing the Edit Parents page. 
+This page is reachable by completing the **Assign Parents** page, or by clicking the **Assign Spouse/Partner** link in the **View Circle** page. 
+This **Assign Spouse/Partner** button Is only visable in the view circle page, if no spouse / partenr had been setup already.   
 The page includes common site navigation and a reduced logo pushed to the top left.
 The page will display the Spouse and or Partners of the person being edited, in a row of links, within
 a top seperated window.  
@@ -291,29 +347,36 @@ Clicking on any of these links will give the option to remove the person as a sp
 It is not possible to remove someone as a spouse / partner if they have a shared child, 
 Circles considers having a child together as a relevant relationship and in this case wont allow the relationship to be
 removed.   
-To alter a childs parents search for, and then edit the child in the edit parents page.   
+To alter a childs parents first search for that child in the home page.   
+Next, Select the person and view their circle.
+Next, click Edit person at the bottom of the page.
+Follow through the steps until you get to Assign Parents, then simply give the person new parents.   
 
 Below this window is a blank form, which will allow the user to add a spouse or partner for the person being edited.
 Once added, a new spouse or partner will be immediatly displayed at the top of the page.
-Clicking Add Spouse Partner will first force Circles to search for a match, if a match is found then that found person
+Clicking **Add Spouse Partner** will first force Circles to search for a match, if a match is found then that found person
 will become a spouse/partner of the person being edited. If no match is found, then the entered information will be used to 
 create a new person, who will be a spouse of the person being edited.  
 Circles will then return the user to the Edit Spouse Partner page, so more relevant partners may be added.
-When the user is finished with this stage, clicking Skip / Next, will take the user to step 4 - Edit Siblings. 
+When the user is finished with this stage, clicking **Next**, will take the user to **Step 4 - Assign Siblings.** 
+Clicking **Clear** will reset the form.
+Clicking **View** (Persons Name) will take the user to the **view Circle page**.
 
 
 [Back to Index](#index)
-## Edit / Add Siblings Page
+## Assign Siblings
 ### Step 4 of 5
-This page is reachable from completing or skipping the edit spouse / partner page. 
+This page is reachable from completing or skipping the **Assign spouse / partner** page. This page is also reachable by clicking the **Assign Sibling** 
+in the view circle page, this button will only be available, if you the person has parents set, and has no existing siblings.
 The page includes common site navigation and a reduced logo pushed to the top left.
-The page will display the Siblings of the person being edited, in a row of links, within
+The page will display any existing Siblings of the person being edited, in a row of links, within
 a top seperated window. These links are clickable and when clicked, allow the user to remove the clicked sibling if you choose to.   
 
 Below this window is a blank form, which will allow the user to add a sibling or partner for the person being edited.
 Once added, a new spouse or partner will be displayed at the top of the page.
-Clicking Add Sibling will first force Circles to search for a match. If no match is found, then the entered information will be used to 
-create a new person, who will be a spouse of the person being edited.   
+Clicking **Add Sibling** will first force Circles to search for a match. If no match is found, then the entered information will be used to 
+create a new person, who will become a Sibling of the person being edited.    
+
 if a match is found then that found person will become a sibling of the person being edited. The found sibling is then removed from all children arrays
 in the DB, as they will be reassigned the correct parents from the form, and then added as children of them.   
 This approach reduces the risk of duplicating foriegn keys in redundant or non related documents. 
@@ -322,38 +385,46 @@ they had any existing siblings.
 A check is then done to add a list of siblings to each sibling, but each sibling that is added must have at least one parent 
 in common with the sibling hes being added to.
 Unfortunately on larger more complex sibling lists where they span accross half siblings of half siblings, this check can take 
-10 to 15 seconds in extreme cases. But the user is kept informed that the work is in process.   
+up to 8 - 10 seconds, when adding to sibling lists over 20 in qty. But the user is kept informed that the work is in process.  
+
 Providing this valuable logic, takes a lot of the head breaking work out of adding each sibling individually. So for example, 
 with this intelligent approach to adding siblings, adding one sibling will automatically add their 5 other siblings as siblings of you 
 and you of them, so long as you have at least one matching parent. 
   
-Circles will then return the user to the edit Sibling page, so more relevant partners may be added.
-When the user is finished with this stage, clicking Skip / Next, will take the user to step 4, as long as the person has a spouse or partner.
+Circles will then return the user to the edit Sibling page, so more Siblings may be added.
+When the user is finished with this stage, clicking **Next**, will take the user to **Step 4 Assign Children**, as long as the person has a 
+spouse or partner linked.
+Clicking **Clear** will reset the form.
+Clicking **View** (Persons Name) will take the user to the **view Circle page**.
 
 [Back to Index](#index)
-## Edit Children Page
+## Assign Children
 ### Step 5 of 5
-This page is reachable from completing or skipping the edit sibling page, and only when the person being edited has an existing spouse or partner. 
+This page is reachable from completing or skipping the Assign Sibling page, and only when the person being edited has an existing spouse or partner. 
+This page is also reachable, from the view circle page, if the person being viewed has a partner set, and also has no existing children.
 The page includes common site navigation and a reduced logo pushed to the top left.
-The page will display the Children of the person being edited, in a row of links, within
+The page will display the existing Children of the person being edited, in a row of links, within
 a top seperated window. These links are clickable and when clicked, allow the user to remove the clicked child if you choose to, this will 
 also remove the link between the child and the parent being edited. All other links will remain in place
 
 Below this window is a blank form, which will allow the user to add a Child for the person being edited.
 Once added, the new child will be displayed at the top of the page.
 
-On clicking Add this child, Circles will search the DB for a match, if none is found, a new person will be created and linked to the selected parents
+On clicking Add this child, Circles will search Circles for a match, if none is found, a new person will be created and linked to the selected parents
 and to the other children (if any) as siblings.
-If a match is found in the DB, fistly that found child will have their id removed from all children arrays
-in the DB, as they will be reassigned the correct parents from the form, and then added as children of them.   
-This approach reduces the risk of duplicating foriegn keys in redundant or non related documents. The found child is then updated with 
-the correct siblings and parents
-
+If a match is found in the DB, fistly that found child will have their id removed from all children arrays, and all sibling arrays in the DB, 
+as they will be reassigned the correct parents from the form, and then added as children of them.
+All possible siblings will then be collected and checked, then assigned to each propper sibling.
+This approach reduces the risk of duplicating foriegn keys in redundant or non related documents.
 Circles will then return the user to the edit Sibling page, so more relevant partners may be added.
-When the user is finished with this stage, clicking Done will return the user to the persons circle page.
+
+When the user is finished with this stage, clicking **Done** will return the user to the Home Page.
+Clicking **Clear** will reset the form.
+Clicking **View** (Persons Name) will take the user to the **view Circle page**.
 
 
-[Back to Index](#index)
+
+
 
 ---
 
