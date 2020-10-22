@@ -308,8 +308,12 @@ This is only selected from the bottom of the view Circles page.
 The page includes common site navigation, and a reduced logo pushed to the top left.
 A clear heading, shows the user what page they are on, and clear indication of the stage they are at, in the guided Add Person
 process. 
-This page includes a detailed form for the user to fill in, to create a person in Circles.  
-Clicking on **Update**, will update the person, and will automatically take the user to **Step 2 - Assign Parents**.
+This page includes a detailed form for the user to fill in, it is pre-populated with the data stored in the selected person. The user can edit any of the fields,
+But if the user changes info that then matches another person on the DB, then when the user clicks update person, they will be redirected to 
+The manage duplicates page, where the user can choose either to return to the person they were editing and change it correctly/differently, 
+or they can go to the duplicate person and edit them instead.
+In cases where there is no conflict of duplicates, clicking on **Update**, will update the person, and will automatically 
+take the user to **Step 2 - Assign Parents**.
 Clicking **Clear** will reset the form.
 Clicking **Next** will skip to **Step 2 - Assign Parents**.
 Clicking **View** (Persons Name) will take the user to the **view Circle page**.
@@ -446,6 +450,16 @@ There are 2 large buttons, one to remove the sibling, as a sibling. The other ca
 As the fact they are there means they have at least one common parent, so wanting to remove them could be for any number of reasons that are too numerous to 
 nail down to a background check. So therefore any sibling can be removed as a sibling, but the user is also presented with a message explaining that the sibling being removed
 Could be added again automatically, and suggests using Manage People as an alternative option.
+
+[Back to Index](#index)
+
+
+## Manage People
+
+This page is reachable from any page by the Manage People link in the Navigation Menu.
+The page opens, with a similar style to the home page, except the logo is pushed to the top left corner. " buttons are the main focus of the page
+**Delete a Person** and **DElete Everyone**.
+
 
 [Back to Index](#index)
 

@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700;800&display=swap');
+ /* GENERAL & COMMON SITE STYLING */
  * {
      font-family: 'Jost', sans-serif;
      padding: 0;
      margin: 0;
      -webkit-box-sizing: border-box;
              box-sizing: border-box;
+}
+ html {
+     scroll-behavior: smooth;
 }
  body {
      min-height: 100vh;

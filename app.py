@@ -1019,19 +1019,51 @@ def delete_all_documents():
     # FUNCTION PURPOSE -
     # 1.    CHECKS IF CORRECT DELETION PASSWORD HAS BEEN ENTERED
     # 2.    DELETES ALL PEOPLE FROM DB
-    password = mongo.db.users.find_one({'user_name': 'eamonn'})["del_password"]
 
-    if request.method == "POST":
-        if password == request.form.get("password"):
-            mongo.db.people.remove({})
-            flash("Circles has been Deleted")
-            return redirect(url_for("manage_people"))
-        else:
-            flash("The password you entered was incorrect.\
-                Circles has not been Deleted.")
+    if check_password_hash(
+                mongo.db.users.find_one(
+                    {'user_name': 'validation'})["del_password"],
+                request.form.get("password")):
+        # mongo.db.people.remove({})
+        flash("Circles has been Deleted")
+        return redirect(url_for("manage_people"))
+    else:
+        flash("The password you entered was incorrect.\
+            Circles has not been Deleted.")
 
     return render_template("manage_people.html")
 
+
+@app.route("/change_password", methods=["GET", "POST"])
+def change_password():
+
+    # FUNCTION PURPOSE -
+    # 1.    TO CHANGE THE DELETION PASSWORD
+
+    if request.method == "POST":
+        if check_password_hash(
+            mongo.db.users.find_one(
+                {'user_name': 'validation'})["del_password"], request.form.get(
+                    "existing_password")):
+            # DO ADDITIONAL CHECK TO CONFIRM NEW PASSWORDS MATCH
+            password1 = request.form.get("new_password")
+            password2 = request.form.get("repeat_new_password")
+            if password1 == password2:
+                new_password = {
+                    'del_password': generate_password_hash(
+                        request.form.get("new_password"))
+                }
+                # UPDATE THE NEW PASSWORD
+                mongo.db.users.find_one_and_update(
+                    {"user_name": "validation"}, {"$set": new_password})
+
+                flash("The password has been updated")
+
+        else:
+            flash("The password you entered did not match.\
+                The Password has not been changed")
+
+    return render_template("manage_people.html")
 
 # ROUTE TO HANDLE E404
 @app.errorhandler(404)

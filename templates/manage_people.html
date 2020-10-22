@@ -27,17 +27,21 @@
 	<!-- SEARCH BUTTON THAT REVEALS FORM WHEN CLICKED -->
 	<section>
 		<div class="row">
-			<button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
-			    Delete A Person?
-			</button>
+        <!-- POP VIEW BACK TO TOP WHEN CLICKED -->
+            <a href="#">
+			    <button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
+			        Delete A Person?
+			    </button>
+            </a>
 		</div>
 		<!-- SEARCH FORM  -->
 		<div class="row search-container container">
 			<form id="person-search" action="{{ url_for('manage_people') }}" method="POST" autocomplete="off">
 				<div class="row center-align">
-					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+					<div class="input-field col s10 m8 l6 offset-s1 offset-m2 offset-l3">
 						<input id="first_name" name="first_name" type="text" placeholder="Enter a First Name" class="validate" onfocus="this.select()">
-				    </div>
+                        <label for="password">SEARCH FOR SOMEONE</label>
+                    </div>
 				</div>
 				<div class="row">
 					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
@@ -94,17 +98,20 @@
     <!-- DELETE BUTTON THAT REVEALS PASSWORD FOR DELETION CLICKED -->
 	<section>
 		<div class="row">
-			<button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent delete-button">
-				Delete Everyone?
-			</button>
+            <a href="#password">
+			    <button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent delete-button">
+				    Delete Everyone?
+			    </button>
+            </a>
 		</div>
 		<!-- PASSWORD ENTRY FORM  -->
 		<div class="row delete-container container">
 			<form id="password_for_delete" action="{{ url_for('delete_all_documents') }}" method="POST" autocomplete="off">
 				<div class="row center-align">
-					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-						<input id="password" name="password" type="text" placeholder="Enter Deletion Password" class="validate" onfocus="this.select()">
-					</div>
+					<div class="input-field col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+						<input id="password" name="password" type="password" placeholder="Enter Deletion Password" class="validate" required>
+                        <label for="password">DELETE EVERYONE</label>
+                    </div>
 				</div>
                 <div class="row">
 					<button type="submit" class="col s10 m4 offset-s0 offset-m4 delete-btn">
@@ -114,9 +121,48 @@
 			</form>
 		</div>
 	</section>
+    <!-- PASSWORD RESET FORM -->
+    <section>
+		<div class="row top-space-large">
+            <a href="#existing_password">
+				<button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent change-password-button">
+						Change Password?
+				</button>
+			</a>
+		</div>
+		<!-- PASSWORD CHANGE FORM  -->
+		<div class="row password-container container">
+			<form id="password_reset" action="{{ url_for('change_password') }}" method="POST" autocomplete="off">
+            <!-- EXISTING PASSWORD -->
+				<div class="row center-align">
+					<div class="input-field col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+						<input id="existing_password" name="existing_password" type="password" placeholder="Enter Existing Password" class="validate" autocomplete="off" required>
+                        <label for="existing_password">CHANGE PASSWORD</label>
+                    </div>
+				</div>
+                <!-- NEW PASSWORD -->
+                <div class="row center-align">
+					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+						<input id="new_password" name="new_password" type="password" minlength="5" maxlength="20" pattern="^[a-zA-Z0-9]{5-15}$" placeholder="Enter New Password" class="validate" autocomplete="off" required>
+					</div>
+				</div>
+                <!-- CONFIRM NEW PASSWORD -->
+                <div class="row center-align">
+					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+						<input id="repeat_new_password" name="repeat_new_password" type="password" minlength="5" maxlength="20" pattern="^[a-zA-Z0-9]{5-15}$" placeholder="Confirm New Password" class="validate" autocomplete="off" required>
+					</div>
+				</div>
+                <div class="row">
+					<button type="submit" class="col s10 m4 offset-s0 offset-m4 delete-btn">
+				        <i class="fas fa-recycle icon-4x"></i>
+				    </button>
+				</div>
+			</form>
+		</div>
+	</section>
 
 
 {% endblock %}
 {% block scripts %}
-  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/manage_people.js') }}"></script>
 {% endblock scripts %}

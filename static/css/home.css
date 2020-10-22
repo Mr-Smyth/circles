@@ -38,7 +38,7 @@
     }
 }
 /* SEARCH */
- .search-button, .delete-button {
+ .search-button, .delete-button, .change-password-button {
      margin-top: 50px;
      height: 50px;
      padding-top: 20px;
@@ -50,7 +50,7 @@
      -o-transition: 1.2s;
      transition: 1.2s;
 }
- .search-button:hover, .delete-button:hover {
+ .search-button:hover, .delete-button:hover, .change-password-button:hover{
      -webkit-box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
      box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
      color: white;
@@ -59,6 +59,9 @@
      display: none;
 }
  .delete-container{
+     display: none;
+}
+ .password-container{
      display: none;
 }
  input:focus::-webkit-input-placeholder {
@@ -90,6 +93,9 @@
 }
  .search-result-details, .search-result-buttons {
      margin:auto;
+}
+ label.active {
+     color: rgb(162, 172, 192) !important;
 }
 /* To Eliminate small green Materialize box over search button */
  button:focus {
