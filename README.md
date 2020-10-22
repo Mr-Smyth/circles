@@ -427,9 +427,27 @@ When the user is finished with this stage, clicking **Done** will return the use
 Clicking **Clear** will reset the form.
 Clicking **View** (Persons Name) will take the user to the **view Circle page**.
 
+[Back to Index](#index)
+## Manage Partner Relationship
 
+This page is reachable from the Assign Spouse Partner page, by clicking on any existing Spouse or partner. Once a spouse or partner is clicked, the user 
+is taken to the manage partner relationship page. If the person being edited, and , the selected spouse/partner have no common children, then the user will have 
+the option to remove the selected spouse/partner as a spouse/partner.   
+Otherwise the user will get a message informing them that they :"have shared children as a result we cannot seperate them as relevant partners". A clear
+route back to the Assign_spouse Partner page is provided.
 
+[Back to Index](#index)
 
+## Manage Sibling Relationship
+
+This page is reachable from the Assign Sibling page, by clicking on any existing Sibling. Once a Sibling is clicked, the user 
+is taken to the manage sibling relationship page. The user is given information and a clear indication of the importance of what they are about to do.
+There are 2 large buttons, one to remove the sibling, as a sibling. The other cancels and returns the user to safety. There is no check here for parents etc,
+As the fact they are there means they have at least one common parent, so wanting to remove them could be for any number of reasons that are too numerous to 
+nail down to a background check. So therefore any sibling can be removed as a sibling, but the user is also presented with a message explaining that the sibling being removed
+Could be added again automatically, and suggests using Manage People as an alternative option.
+
+[Back to Index](#index)
 
 ---
 
