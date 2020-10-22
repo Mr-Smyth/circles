@@ -508,10 +508,6 @@ Clicking **View** (Persons Name) will take the user to the **view Circle page**.
 ---
 
 
-
-
-
-
 # Deploy To Heroku
 
 ### Setup Requirements:
@@ -580,6 +576,63 @@ Once the Config Vars have been entered you are ready for Automatic Deployment.
 4.  Click Deploy branch
 
 #### The Project is now deployed.
+
+[Back to Index](#index)
+
+
+## Local Deployment
+To run this project locally on your own system - you will need the following components installed on your system:
+
+* Python 3.8 including PIP.
+* An IDE for example - VS Code.
+* GIT for cloning and version control.
+* MongoDB to manage the database either locally or remotely on MongoDB Atlas.
+
+#### Then:
+
+1.  Clone the Circles GitHub repository by clicking the Code, button in GitHub and copying the HTTPS Link.   
+2.  Open a Git Bash Command line, in your preferred destination.
+3.  Enter git clone and paste in the link you copied.
+4.  CD into the circles folder and create a .env file with the credentials, example:
+5.  Create a .flaskenv file and add the following entries:
+    *   FLASK_APP=run.py
+    *   FLASK_ENV=development
+6.  Install all requirements from the requirements.txt file. To do this enter:
+    *   sudo -H pip3 -r requirements.txt
+7.  You should now be able to launch your app locally.
+8.  The app should now be running on localhost on an address similar to http://127.0.0.1:5000. Copy/paste this address into your browser.
+
+---
+
+[Back to Index](#index)
+
+
+# Credits
+
+## Content and code
+
+*   [MongoDB](https://docs.mongodb.com/) - For excellent documentation.
+*   [Code Institute/ Tim Nelson](https://github.com/TravelTimN) - For excellent support and really clear tutorial videos. Thank you so much, you set me on the right path here!
+*   [W3 Schools - Python MongoDB](https://www.w3schools.com/python/python_mongodb_getstarted.asp) - invaluable syntax correct help in piecing my
+DB calls together.
+*   [W3 resource.com](https://www.w3resource.com/mongodb/mongodb-array-update-operator-$push.php) - Helpful code examples.
+*   [coders block](https://codersblock.com/blog/creating-glow-effects-with-css/) - Clear instruction on how to implement a glow effect.
+
+## Media
+
+*   [Paint dot net](https://www.getpaint.net/features.html) - Used for creating my Logo and circles..
+*   [Font Awesome](https://fontawesome.com/) - Used quite a lot in this project, very happy with the outcome.
+*   [Favicons](https://favicon.io/) - Solid site icon as usual.
+
+## Acknowledgments
+
+*   Big thank you to my Mentor, Aaron - as always a source of good advice and information. Was very quick to accurately point out the possible sticking 
+points in this project, which really helped me to plan better and succeed.
+*   Thanks again to Tim Nelson, who was an invaluable support from the very start of the Data Centric Module right through to the Project stage. 
+*   Thank you to Family members and friends for giving their input on what would interest them in a Geneaology App.
+
+# Disclaimer
+The content of this Website is for educational purposes only. Users enter data at their own risk.
 
 [Back to Index](#index)
 
