@@ -561,16 +561,16 @@ clicking on a link in the results will remove that person and any links to that 
     * Tested adding and changing parents functionality.
 * Setup the **Assign_spouse_Partner** page route and function.
     * Tested adding Spouse / Partners functionality.
-* Setup the **Assign_siblings** route and function.
-    * Tested adding siblings and checking relationships.
-* Setup the **Assign_Children** route and function.
-    * Tested adding Children and checking relationships.
-* Setup the **Check_partner exists** route and function.
-    * Tested to make sure it detected partners, and allowed access to children.
 * Setup the **Manage_partner_relationship** page route and function.
     * Tested removing Spouse / Partners functionality.
+* Setup the **Assign_siblings** route and function.
+    * Tested adding siblings and checking relationships.
 * Setup the **Manage_sibling_relationship** page route and function.
     * Tested removing Siblings functionality.
+* Setup the **Check_partner exists** route and function.
+    * Tested to make sure it detected partners, and allowed access to children.
+* Setup the **Assign_Children** route and function.
+    * Tested adding Children and checking relationships.
 * Setup the **Manage_child_relationship** page route and function.
     * Tested removing a child / parent relationship functionality.
 * Setup the **Edit_Person** page route and function.

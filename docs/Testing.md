@@ -18,12 +18,12 @@
 * [Testing of Home page](#testing-of-home-page)
 * [Testing of Search Functionality](#testing-of-search-functionality)
 * [Testing of Add Person Functionality](#testing-of-add-person-functionality)
-* [Testing of Edit Parents Functionality](#testing-of-edit-parents-functionality)
-* [Testing of Add Spouse or Partner Functionality](#testing-for-edit-spouse-or-partner-functionality)
+* [Testing of Assign Parents Functionality](#testing-of-assign-parents-functionality)
+* [Testing of Assign Spouse or Partner Functionality](#testing-for-assign-spouse-or-partner-functionality)
 * [Testing of Manage Relationship Functionality](#testing-of-the-manage-relationship-functionality)
-* [Testing of Add Sibling Functionality](#testing-of-edit-siblings-functionality)
+* [Testing of Assign Sibling Functionality](#testing-of-assign-siblings-functionality)
 * [Testing of Check for Spouse Functionality](#testing-of-check-for-spouse-functionality)
-* [Testing of Add Children Functionality](#testing-of-add-children-functionality)
+* [Testing of Assign Children Functionality](#testing-of-add-children-functionality)
 
 
 ---
@@ -93,7 +93,7 @@
 ### Initial Testing:
 
 #### After the initial setup of the search functionality, i decided to move from a single full name search box to a more flexible Mini Form.
-I believ this gave me the experience that was more flexible and desirable, in that i could search by any of First name, last name or DOB, or all together.
+I believe provided an experience that was more flexible and desirable, in that i could search by any of First name, last name or DOB, or all together.
 
 * :hammer: TEST: 
     * Provided a name in mixed case to the first name only.
@@ -122,7 +122,7 @@ I believ this gave me the experience that was more flexible and desirable, in th
     * Results for that name, and DOB returned from MongoDB as expected.
 	* Results were filtered down to reflect the more detailed search.
 
-Visually all results were displayed in a colapsible element, which was otherwise hidden
+All results were displayed in a column of clickable results.
 
 ### In the case of Errors:
 
@@ -182,7 +182,7 @@ This did not freeze or break the site, and allowed the user to click on the sear
 * :hammer: TEST:
     * What happens when i try to submit an empty form
 * :clipboard: RESULT:   
-    * In form validation, using required, ensures that a minimum of somones Umbrella family Circle name, First name, Last name and Date of birth is required.
+    * In form validation, using required, ensures that a minimum of, First name, Last name and Date of birth is required.
 
 <br>
 
@@ -201,9 +201,9 @@ This did not freeze or break the site, and allowed the user to click on the sear
 <br>
 
 * :hammer: TEST: 
-    * After adding a loader gif - Check that gif was not loading unless validation was satisfied.
+    * After adding a loader gif linked to the submit button - Check that gif was not loading unless validation was satisfied.
 * :clipboard: RESULT:
-    * The form did not submit, unless all validation was true.
+    * The form did not submit, and the gif did not load, unless all validation was true.
 
 <br>
 
@@ -240,9 +240,8 @@ This did not freeze or break the site, and allowed the user to click on the sear
 
 ---
 
-## Testing of edit parents functionality:
-Edit Parents, will grab the parents, if they exist, of the person being created/edited, and display them.
-It also allows for editing/updating of the parents.
+## Testing of Assign parents functionality:
+Assign Parents, will grab the parents, if they exist, of the person being created/edited, and display them.
 
 ### Initial Testing:
 
@@ -271,11 +270,8 @@ It also allows for editing/updating of the parents.
 * :clipboard: RESULT:
     * The function will currently get the existing parents names, and display their details.  
     In the case where they are edited in any way the function will take the data from the form 
-    and use them to edit the existing parents data.  
-    ***! This is not entirely desirable in all cases***, so to allow for changing of parents to a different parent, 
-    a reset parents button would need to be developed and used, to reset any links between existing parents and the person.
-    Then return a blank for for editing.
-
+    and use them to select the correct parents from the DB, or create new ones.  
+    
 <br>
 
 * :hammer: TEST: 
@@ -290,26 +286,47 @@ It also allows for editing/updating of the parents.
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * test here..
+    * Checked the Assign Parents page/form on multiple browsers and devices
 * :clipboard: RESULT:
-    * results here..
+    * Page and form responded perfectly to all browsers.
+
+<br>
+
+* :hammer: TEST: 
+    * Performed multiple tests which tested form submission. I left out names and dates in various combinations, and attempted to submit.
+* :clipboard: RESULT:
+    * Form would not submit unless form validation was satisfied.
+
+* :hammer: TEST: 
+    * Performed multiple tests where i changed parents to new and/or existing people.
+* :clipboard: RESULT:
+    * The parent child relationship was always correct after submission.
+
+<br>
+
+* :hammer: TEST: 
+    * Performed multiple tests where i checked the 4 buttons available.
+* :clipboard: RESULT:
+    * The next button only displayed when parents were already selected, the update, clear and view person buttons as well as the next button, when visable, all
+    behaved and worked as expected.
 
 [Back to Index](#index)
 
 ---
 
-## Testing for Edit Spouse or Partner Functionality:
-Edit spouse / partner will grab the persons spouse / partners and display them on screen. These partners name are clickable, and for now return you to the same page where you may edit their partners. 
-The included form will allow for adding of more partners.
+## Testing for Assign Spouse or Partner Functionality:
+Assign spouse / partner will grab the persons spouse / partners and display them on screen. These partners name are clickable, which leads to a page where they can possibly be removed
+so long as they have no shared children. The included form will allow for adding of more partners.
 
 ### Initial Testing:
 
-#### After the initial setup of the edit_spouse_partner functionality, i performed the following tests
+#### After the initial setup of the Assign_spouse_partner functionality, i performed the following tests
 
 * :hammer: TEST: 
-    * Added a spouse details, and clicked Add Spouse.  
+    * Added a spouse details, and clicked Add Partner.  
 * :clipboard: RESULT:
-    * Result was the person was linked to the spouse, but found that the spouse was not linked to the person. Added an update to add the spouse to the person. Re-test showed results as expected.
+    * Result was the person was linked to the partner, but found that the spouse was not linked to the person. 
+    Added an update to add the spouse to the person. Re-test showed results as expected.
 
 <br>
 
@@ -326,6 +343,15 @@ The included form will allow for adding of more partners.
 * :clipboard: RESULT:
     * Results in Database were correct and as expected. The results on screen showed the persons spouse / partner list. This list is clickable and clicking on a name, changes the person being edited to the person clicked.
 
+<br>
+
+* :hammer: TEST: 
+    * Clicked on existing spouse/partner
+* :clipboard: RESULT:
+    * Result as expected. was taken to a manage spouse/partner page where, in the case of having no common children, was given the choice to remove
+    the person as a partner, or return back to the spouse/partner page.
+    * In the case where there were common children a message explained why i could not remove the partner, and gave me an option to return.
+
 *In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
 ### Final Testing:
@@ -333,9 +359,30 @@ The included form will allow for adding of more partners.
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * test here..
+    * Performed multiple tests where i added spouse/partners.
 * :clipboard: RESULT:
-    * results here..
+    * The spouse/partners always added as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Performed multiple tests where i removed spouse/partners.
+* :clipboard: RESULT:
+    * Circles removed the person and the relationship, where there were no children involved.
+
+<br>
+
+* :hammer: TEST: 
+    * Performed multiple tests where i partially completed the forms, leaving out required information.
+* :clipboard: RESULT:
+    * The form would not submit unless all required information had been entered.
+
+<br>
+
+* :hammer: TEST: 
+    * Performed multiple tests where i checked the 4 buttons available.
+* :clipboard: RESULT:
+    * All buttons behaved and worked as expected.
 
 [Back to Index](#index)
 
@@ -353,7 +400,7 @@ cannot do that.
 #### After the initial setup of the Manage Relationship functionality, i performed the following tests
 
 * :hammer: TEST: 
-    * click on a spouse/partner to remove, from within in the edit spouse/ partner page, where the person clicked
+    * click on a spouse/partner to remove, from within in the assign spouse/ partner page, where the person clicked
     has a common child with the person being edited.
 * :clipboard: RESULT:
     * The user is informed that they cannot do this and given the option to return back to the spouse page.   
@@ -361,8 +408,8 @@ cannot do that.
 <br>
 
 * :hammer: TEST: 
-    * click on a spouse/partner to remove, from within in the edit spouse/ partner page, where the person clicked
-    has no common child with the person being edited.
+    * click on a spouse/partner to remove, from within in the assign spouse/ partner page, where the person clicked
+    has no common child with the person being assigned.
 * :clipboard: RESULT:
     * The user is informed that they can do this and given the option to remove the person as a spouse/partner and also 
     the option to return back to the spouse page.
@@ -373,22 +420,22 @@ cannot do that.
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * test here..
+    * Tested thoughorly in the assign Spouse/partner section
 * :clipboard: RESULT:
-    * results here..
+    * Functionality was all good, worked as expected.
 
 [Back to Index](#index)
 
 ---
 
-## Testing of Edit Siblings Functionality:
-The edit siblings page adds someone as the persons sibling, and vice versa.
+## Testing of Assign Siblings Functionality:
+The Assign siblings page adds someone as the persons sibling, and vice versa.
 Also siblings of siblings also become siblings of eachother. As a result, of all this 'heavy lifting', a small delay on form submit is noticable with larger sibling groups.
-I am implementing a 'working' indicator for these situations.
+I am implementing a 'working'/'Please Wait' indicator for these situations.
 
 ### Initial Testing:
 
-#### After the initial setup of the edit_siblings functionality, i performed the following tests
+#### After the initial setup of the Assign_siblings functionality, i performed the following tests
 
 * :hammer: TEST: 
     * Enter a new sibling - (person did not pre-exist in DB) into the form and click Add Sibling.
@@ -401,7 +448,7 @@ I am implementing a 'working' indicator for these situations.
 * :hammer: TEST: 
     * Created 2 seperate 2 child families - (Family A and Family B). I then added a new person (Steve) and
     made Steves mother the family A mother, and Steves father the family B father.   
-    In the edit siblings page i added a child from family A as a sibling of Steve. And also added one child from family B as
+    In the assign siblings page i added a child from family A as a sibling of Steve. And also added one child from family B as
     a sibling of Steve. 
 * :clipboard: RESULT:
     * The result was Steve had 4 new siblings, 2 from each family. By adding the one sibling, Circles checked and added the sibling of the sibling
@@ -409,9 +456,16 @@ I am implementing a 'working' indicator for these situations.
     and vice versa, Instead they just gained Steve, because Steve had one common parent.
 
 ** ***Update : The above test will mostly be redundant as some adding siblings functionality now exists in the 
-edit parents function. This was to make the whole building process faster. ie: if i add my father, and he has children, 
+assign parents function. This was to make the whole building process faster. ie: if i add my father, and he has children, 
 then those children can become my siblings.  
 However the functionality will remain in place to protect against incorrect siblings of siblings being added***
+
+*** ***Update II: Removed the siblings being added at the assign parents stage, as it slowed the assign parents stage noticably.  my attempts to
+reduce the workload, and increase the automated process of adding to a family circle seemed to be skewing the logical flow of the site.
+It was slowing the Assign parents functionality just to add all the siblings and as a result rendered the siblings functionality largely
+redundant. 
+Sibling functionality should be kept in the Siblings page, so therefore apart from the children section, Assign Siblings is now the only page where you 
+can effectively add, or remove siblings***
 
 * :hammer: TEST: 
     * I linked person(A) to 2 siblings. Then linked another person(B) to 2 siblings. I then 
@@ -423,7 +477,7 @@ However the functionality will remain in place to protect against incorrect sibl
 <br>
 
 * :hammer: TEST: 
-    * Click submit without filling in the form.
+    * 
 * :clipboard: RESULT:
     * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
 
@@ -433,9 +487,31 @@ However the functionality will remain in place to protect against incorrect sibl
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * test here..
+    * Performed multiple tests where i added Siblings.
 * :clipboard: RESULT:
-    * results here..
+    * The Siblings always added as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Performed multiple tests where i removed Siblings.
+* :clipboard: RESULT:
+    * Circles removed the sibling.
+
+<br>
+
+* :hammer: TEST: 
+    * Performed multiple tests where i partially completed the forms, leaving out required information.
+* :clipboard: RESULT:
+    * The form would not submit unless all required information had been entered.
+
+<br>
+
+* :hammer: TEST: 
+    * Performed multiple tests where i checked the 4 buttons available.
+* :clipboard: RESULT:
+    * All buttons behaved and worked as expected.
+
 
 [Back to Index](#index)
 
@@ -443,7 +519,7 @@ However the functionality will remain in place to protect against incorrect sibl
 
 ## Testing of check for spouse Functionality:
 This function checks if the current person being edited has anyone linked as a spouse or a partner. 
-If a partner or spouse exists, then the user gets automatically passed on to the edit children page. 
+If a partner or spouse exists, then the user gets automatically passed on to the assign children page. 
 If there is no spouse or partner the user gets passed to a decision page where they can opt to edit 
 the person, or return home.
 
@@ -452,21 +528,21 @@ the person, or return home.
 #### After the initial setup of the **your function here** functionality, i performed the following tests
 
 * :hammer: TEST: 
-    * Setup a person with no spouse or partner and clicked 'skip to next step' 
-    from within the edit siblings page. 
+    * Setup a person with no spouse or partner and clicked 'Next' 
+    from within the assign siblings page. 
 * :clipboard: RESULT:
     * I was taken to a decision page where i clicked edit 'persons name' 
-    and i was taken back to the persons edit spouse page, where i could add a spouse/partner. 
+    and i was taken back to the persons assign spouse page, where i could add a spouse/partner. 
     I also repeated this test and clicked on the home link and was taken back to the home screen.
     These results were as expected and correct.  
 
 <br>
 
 * :hammer: TEST: 
-    * Setup a person with a spouse or partner and clicked 'skip to next step' 
-    from within the edit siblings page. 
+    * Setup a person with a spouse or partner and clicked 'Next' 
+    from within the assign siblings page. 
 * :clipboard: RESULT:
-    * I was taken to the edit childrens page which is correct.
+    * I was taken to the assign childrens page which is correct.
 
 ### Final Testing:
 
