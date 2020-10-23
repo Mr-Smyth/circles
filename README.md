@@ -71,7 +71,7 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 
 **<details><summary>Testing</summary>**
 
-* [Testing Documentation](https://github.com/Mr-Smyth/circles/blob/master/Testing.md)
+* [Testing Documentation](https://github.com/Mr-Smyth/circles/blob/master/docs/Testing.md)
     
 </details>
 

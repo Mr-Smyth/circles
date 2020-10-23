@@ -1,10 +1,13 @@
-
 # Logic Walkthrough for Circles:
 
 --- 
 This is a design stage, crude look through the possible logic required to achieve the goals of the Circles website.
+It was necessary to get ideas down on paper - so to speak - and identify the many possible sticking points and difficulties in attempting
+to catalogue family connections, in a simple way
 
-Please be aware the code blocks are purely to describe my logic process, and aid in my design/build process, and obviously do not represent exact code.
+Please be aware the code blocks are only to describe my logic process, and aid in my design/build process, and obviously do not represent exact code.
+
+[Back to Readme](https://github.com/Mr-Smyth/circles/blob/master/README.md)
 
 ---
 
@@ -23,10 +26,9 @@ Please be aware the code blocks are purely to describe my logic process, and aid
 
 ## Possible Data Structure:
 
-Using Mongo DB, the following structure i feel is the best for ease of updtae and scaling and speed of query.
+Using Mongo DB, the following structure I feel is the best for ease of update and scaling and speed of the query.
 
-* [Data Structure](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/database-structure.pdf
-)
+* [Data Structure](https://github.com/Mr-Smyth/circles/blob/master/docs/database-structure.pdf)
 
 ## Step 1: Register / Login
 
@@ -50,9 +52,9 @@ where they enter the following details for John Doe:
 
 * Click submit
 
-#### At this stage the person : A record for John Doe has been created in the People collection in MongoDB
+#### At this stage the person: A record for John Doe has been created in the People collection in MongoDB
 
-User can be automatically routed to the circle page, with John at its center. refer to as hub.
+User can be automatically routed to the circle page, with John at its centre. refer to as a hub.
 
 <br>
 
@@ -65,10 +67,10 @@ User can be automatically routed to the circle page, with John at its center. re
 * ### Register
 
 * ### Home: 
-    Will display a Hero image with center search bar, inviting the user to search for a person.
-    Results should be displayed in a list, and user can select one.  
+    Will display a Hero image with a centre search bar, inviting the user to search for a person.
+    Results should be displayed in a list, and the user can select one.  
 
-    When user selects a result, they should be routed to the family circle page
+    When a user selects a result, they should be routed to the family circle page
 
     If the user has authority, ***(using front end jinja if loops or python)*** to restrict buttons, an edit button can be clicked.  
     This button will take the user to the edit circle page.
@@ -78,8 +80,8 @@ User can be automatically routed to the circle page, with John at its center. re
     This is a page that will display a selected person, at its hub.  
     Above will be the parents.  
     Below the parents will be siblings.  
-    Below the siblings will be the hub person, with spouse if any.
-    Below this will be children, if any.
+    Below the siblings will be the hub person, with a spouse if any.
+    Below this will be children if any.
 
     This represents a query on the DB, as this information will have to be populated via relationships setup.
     An additional query could be included to check lineage of mothers or fathers (ie mother to mother to mother.... or father to father etc)
@@ -87,13 +89,13 @@ User can be automatically routed to the circle page, with John at its center. re
 
 * ### Edit circle page:
     This link will actually take the user through multiple pages, this will control the flow of data coming to the database into bitesize chunks.  
-    It will also serve to not overwhelm the user, as they will be propted for people relating to a chosen person, bit by bit.  
+    It will also serve to not overwhelm the user, as they will be prompted for people relating to a chosen person, bit by bit.  
 
     ***The user will arrive here by clicking an Edit link on a person in the search results***
 
 
     * **PAGE 1: Edit Parents**:  
-    The user will be taken to **edit_parents**, where their parents will be displayed in an editable form if present. Otherwise a search will be needed to find their parents within the DB.  
+    The user will be taken to **edit_parents**, where their parents will be displayed in an editable form if present. Otherwise, a search will be needed to find their parents within the DB.  
     If they are not in DB, they will need to fill out the enter parents form:
 
         #### FOR FATHER: 
@@ -133,21 +135,21 @@ User can be automatically routed to the circle page, with John at its center. re
             
                 # INSERT FATHER
                 {
-                FIRST_NAME : FORM FATHERS_FIRST_NAME
-                LAST_NAME : FORM FATHERS_LAST_NAME
-                DOB : FORM FATHERS_DOB
-                DOD : FORM FATHERS_DOD
-                GENDER : MALE
+                FIRST_NAME: FORM FATHERS_FIRST_NAME
+                LAST_NAME: FORM FATHERS_LAST_NAME
+                DOB: FORM FATHERS_DOB
+                DOD: FORM FATHERS_DOD
+                GENDER: MALE
                 CHILDREN : [ LIST_OF_CHILDREN]
                 },
                 # INSERT MOTHER
                 {
-                FIRST_NAME : FORM MOTHERS_FIRST_NAME
-                LAST_NAME : FORM MOTHERS_LAST_NAME
-                MAIDEN_NAME : FORM MOTHERS_MAIDEN_NAME
-                DOB : FORM MOTHERS_DOB
-                DOD : FORM MOTHERS_DOD
-                GENDER : FEMALE
+                FIRST_NAME: FORM MOTHERS_FIRST_NAME
+                LAST_NAME: FORM MOTHERS_LAST_NAME
+                MAIDEN_NAME: FORM MOTHERS_MAIDEN_NAME
+                DOB: FORM MOTHERS_DOB
+                DOD: FORM MOTHERS_DOD
+                GENDER: FEMALE
                 CHILDREN: [ LIST_OF_CHILDREN]
                 },
 
@@ -174,7 +176,7 @@ User can be automatically routed to the circle page, with John at its center. re
 
 
     * **PAGE 2: Edit Siblings**:  
-    The user will be taken to **edit_siblings**, where their siblings will be displayed in an editable form if present. Otherwise a search will be needed to find their parents within the DB.  
+    The user will be taken to **edit_siblings**, where their siblings will be displayed in an editable form if present. Otherwise, a search will be needed to find their parents within the DB.  
     If they are not in DB, they will need to fill out the enter siblings form:
 
         * Give her/him a first name. 
@@ -197,7 +199,7 @@ User can be automatically routed to the circle page, with John at its center. re
             # SETUP A SIBLING SEARCH FOR JOHN AND DISPLAY IF ANY RESULTS
 
             # I WILL NOT KNOW HOW MANY SIBLINGS THERE ARE AS HOPING TO ADD INPUTS DYNAMICALLY FOR SIBLINGS (USING JS) AS REQUIRED
-            # SO DO A LOOP?	
+            # SO DO A LOOP? 
 
             FOR I IN RANGE OF 0 TO 50
                 IF INPUT FROM FORM SIBLING[ i ] EXISTS
@@ -206,7 +208,7 @@ User can be automatically routed to the circle page, with John at its center. re
 
             # END RESULT HERE SHOULD HAVE A LIST DICTIONARIES CONTAINING ALL SIBLINGS
             
-            INSERT THE LIST_OF_SIBLINGS INTO MONGODB
+            INSERT THE LIST_OF_SIBLINGS INTO MongoDB
 
             THIS RETURNS A LIST OF THE IDS
             ADD JOHNS ID TO THIS LIST.
@@ -226,7 +228,7 @@ User can be automatically routed to the circle page, with John at its center. re
 
             CREATE A LIST OF IDS FOR EACH ID - MEANING A LIST FOR ID 10001, MUST NOT CONTAIN 10001. ETC
                 ADD THIS LIST TO THE CORRECT SIBLING
-                ADD MOTHER ID TO MOTHER WITHIN EACH SIBLINGS
+                ADD MOTHER ID TO MOTHER WITHIN EACH SIBLING
                 ADD FATHERS ID TO FATHER WITHIN EACH SIBLING
 
             # THAT SHOULD GET US TO THE STAGE WHERE WE HAVE A LIST OF SIBLING ID'S
@@ -240,7 +242,7 @@ User can be automatically routed to the circle page, with John at its center. re
     ---
 
     * **PAGE 3: Edit SPOUSE**:  
-    The user will be taken to **edit_spouse**, where their spouse will be displayed in an editable form if present. Otherwise a search will be needed to find their parents within the DB.  
+    The user will be taken to **edit_spouse**, where their spouse will be displayed in an editable form if present. Otherwise, a search will be needed to find their parents within the DB.  
     If they are not in DB, they will need to fill out the enter spouse form:
 
         * Give her/him a first name   
@@ -268,7 +270,7 @@ User can be automatically routed to the circle page, with John at its center. re
     ---
 
     * **PAGE 4: Edit Children**:  
-    The user will be taken to **edit_children**, where their children will be displayed in an editable form if present. Otherwise a search will be needed to find their parents within the DB.  
+    The user will be taken to **edit_children**, where their children will be displayed in an editable form if present. Otherwise, a search will be needed to find their parents within the DB.  
     If they are not in DB, they will need to fill out the enter children form:
     
         * Give her/him a first name   
@@ -288,7 +290,7 @@ User can be automatically routed to the circle page, with John at its center. re
             # SETUP A SEARCH FOR JOHNS CHILDREN - DISPLAY IF FOUND
 
             # I WILL NOT KNOW HOW MANY CHILDREN THERE ARE AS HOPING TO ADD INPUTS DYNAMICALLY FOR CHILDREN (USING JS) AS REQUIRED
-            # SO DO A LOOP?	
+            # SO DO A LOOP? 
 
             FOR I IN RANGE OF 0 TO 50
                 IF INPUT FROM FORM CHILD[ i ] EXISTS
@@ -297,7 +299,7 @@ User can be automatically routed to the circle page, with John at its center. re
 
             # END RESULT HERE SHOULD HAVE A LIST DICTIONARIES CONTAINING ALL CHILDREN
             
-            INSERT THE LIST_OF_CHILDREN INTO MONGODB
+            INSERT THE LIST_OF_CHILDREN INTO MongoDB
 
             THIS RETURNS A LIST OF THE IDS
 
@@ -315,7 +317,7 @@ User can be automatically routed to the circle page, with John at its center. re
             ALL_CHILDREN_ID = [30011, 30012, 30013, 30014 ]
 
             CREATE A LIST OF CHILD SIBLINGS FOR EACH CHILD SIBLING, BUT NOT INCLUDING THEMSELVES
-                MEANING : CHILD 30011, SHOULD HAVE A LIST OF SIBLINGS, NOT INCLUDING 30011.
+                MEANING: CHILD 30011, SHOULD HAVE A LIST OF SIBLINGS, NOT INCLUDING 30011.
                 ADD FATHER AND MOTHER ID TO EACH CHILD
                 
 
@@ -323,15 +325,3 @@ User can be automatically routed to the circle page, with John at its center. re
                 ALSO, EACH CHILD HAS A LINK TO THEIR PARENTS ID
             # A LIST OF CHILDREN ID'S SHOULD ALSO BE IN EACH PARENT.
             # AND EACH CHILD IS A SPOUSE OF THE OTHER
-
-
-
-
-
-
-
-
-
-
-		
-		

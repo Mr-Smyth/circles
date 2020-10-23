@@ -1,6 +1,10 @@
 # Manual ContinuousTesting
 (all Initial/continuous testing performed between Google Chrome and a Samsung Galaxy S7. Individual browser tests will be performed after main development stage)
 
+[Back to Readme](https://github.com/Mr-Smyth/circles/blob/master/README.md)
+
+---
+
 # Index
 
 * [Test the initial setup connection to Heroku](#test-connection-to-heroku)
