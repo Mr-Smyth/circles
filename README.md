@@ -250,6 +250,8 @@ The search form will search MongoDb, for any or all of the entered data, and ret
 These results are in the form of a large buttoned list, each result shows the full name and the Date of Birth - 
 the 2 key pieces of information for finding the person you want. Clicking on any result will take the user to that persons Circle page.
 
+The page is completed by site common social media links and copyright information.
+
 It is paramount that the page is simple, the process has been made simple so the Home page must be a prelude to this.
 
 [Back to Index](#index)
@@ -457,8 +459,15 @@ Could be added again automatically, and suggests using Manage People as an alter
 ## Manage People
 
 This page is reachable from any page by the Manage People link in the Navigation Menu.
-The page opens, with a similar style to the home page, except the logo is pushed to the top left corner. " buttons are the main focus of the page
-**Delete a Person** and **DElete Everyone**.
+The page opens, with a similar style to the home page, except the logo is pushed to the top left corner. 3 buttons are the main 
+focus of the page **Delete a Person**, **Delete Everyone** and change Password.
+**Delete a Person** allows you to search for a person by first, last or Date of birth. The user will get a list of results, 
+clicking on a link in the results will remove that person and any links to that person in every documents array, object or otherwise in the DB.   
+
+**Delete Everyone** gives you the ability to clear everything from the Circles DB. It is password protected for safety, contact the designer for a password.
+
+**Change Password** allows the user to change the delete password, by entering their existing password and entering a new one, then 
+confirming the new password. The user will be notified if the change was successful.
 
 
 [Back to Index](#index)
