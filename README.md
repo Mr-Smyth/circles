@@ -23,43 +23,73 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 
 ---
 # Index
-* [UX](#ux)
-    * [Purpose and Goals](#purpose-and-goals)
-    * [User Stories](#user-stories)
-    * [Opportunities arising from user stories](#opportunities-arising-from-user-stories)
 
-* <details><summary>UI</summary>
+**<details><summary>UX</summary>**
 
-    * [UI - General](#ui)   
-    * [Wireframes](#wireframes)
+* [UX - General](#ux)
+* [Purpose and Goals](#purpose-and-goals)
+* [User Stories](#user-stories)
+* [Opportunities arising from user stories](#opportunities-arising-from-user-stories)
+</details>
+
+**<details><summary>UI</summary>**
+
+* [UI - General](#ui)   
+* [Wireframes](#wireframes)
+</details>
+
+**<details><summary>Features</summary>**
+
+* [Features - General](#Features)
+* [Home Page](#Home)
+* [View Circle](#View-circle)
+* [Add Person](#Add-Person)
+* [Edit Person](#Edit-Person)
+* [Assign Parents](#Assign-Parents)
+* [Assign Spouse / Partner](#Assign-Spouse_Partner)
+* [Assign Siblings](#Assign-Siblings)
+* [Assign Children](#Assign-Children)
+* [Manage Partner Relationship](#Manage-partner-relationship)
+* [Manage Sibling Relationship](#Manage-sibling-relationship)
+* [Manage People](#Manage-people)
 
 </details>
 
-* <details><summary>Features</summary>
+**<details><summary>Development</summary>**
 
-    * [Features - General](#Features)
-    * [Home Page](#Home-Page)
-    * [Add Person](#Add-Person-Page)
-    * [Edit Parents](#Edit-Parents-Page)
-    * [Edit Spouse / Partner](#Edit-Spouse_Partner-Page)
-    * [Edit Siblings](#Edit-Siblings-Page)
-    * [Edit Children](#Edit-Children-Page)
-
-</details>
-
-* [Development](#development)  
-    * [Technologies Used](#technologies-used)
-    * [Resources Used](#resources-used)
+* [Development - General](#development)  
+* [Technologies Used](#technologies-used)
+* [Resources Used](#resources-used)
     
-     
+</details>
 
+**<details><summary>Testing</summary>**
 
+* [Testing Documentation](https://github.com/Mr-Smyth/circles/blob/master/Testing.md)
+    
+</details>
 
-
-
-* [Testing](https://github.com/Mr-Smyth/circles/blob/master/Testing.md)
+**<details><summary>Deployment</summary>**
 
 * [Deploy to Heroku](#deploy-to-heroku)
+* [Local Deployment](#local-deployment)
+    
+</details>
+
+**<details><summary>Credits</summary>**
+
+* [Content and Code](#Content-and-code)
+* [Media](#Media)
+* [Acknowledgments](#Acknowledgments)
+    
+</details>
+
+**<details><summary>Disclaimers</summary>**
+
+* [Disclaimer](#Disclaimer)
+
+</details>
+
 
 </div>
 ---
@@ -158,6 +188,7 @@ After that, i want the search and view to be simple. The user will search for a 
 
 The viewing of a persons circle will be interactive and each member of the circle, upon clicking,  will lead the user down a new rabbit hole of discovery.   
 
+[Back to Index](#index)
 
 ## Wireframes
 
@@ -237,6 +268,9 @@ hers own 'Propper' Siblings.
 
 
 It is then possible to view this persons circle, and any other circle within.
+
+[Back to Index](#index)
+
 
 ## Layout
 
@@ -498,12 +532,15 @@ confirming the new password. The user will be notified if the change was success
 *   [Paint dot net](https://www.getpaint.net/features.html).
 *   [Balsamiq Wireframes](https://balsamiq.com/).
 
+[Back to Index](#index)
+
 ## Resources Used:
 
 *   [Font Awesome](https://fontawesome.com/).
 *   [Favicons](https://favicon.io/).
 *   [Google Fonts](https://fonts.google.com/).
 
+[Back to Index](#index)
 
 ## Logic Walkthrough
 
@@ -558,8 +595,9 @@ confirming the new password. The user will be notified if the change was success
 
 ---
 
+# Deployment
 
-# Deploy To Heroku
+## Deploy To Heroku
 
 ### Setup Requirements:
 Make sure Requirements.txt is ***always*** up to date.  
@@ -653,9 +691,10 @@ To run this project locally on your own system - you will need the following com
 7.  You should now be able to launch your app locally.
 8.  The app should now be running on localhost on an address similar to http://127.0.0.1:5000. Copy/paste this address into your browser.
 
----
 
 [Back to Index](#index)
+
+---
 
 
 # Credits
@@ -669,11 +708,15 @@ DB calls together.
 *   [W3 resource.com](https://www.w3resource.com/mongodb/mongodb-array-update-operator-$push.php) - Helpful code examples.
 *   [coders block](https://codersblock.com/blog/creating-glow-effects-with-css/) - Clear instruction on how to implement a glow effect.
 
+[Back to Index](#index)
+
 ## Media
 
 *   [Paint dot net](https://www.getpaint.net/features.html) - Used for creating my Logo and circles..
 *   [Font Awesome](https://fontawesome.com/) - Used quite a lot in this project, very happy with the outcome.
 *   [Favicons](https://favicon.io/) - Solid site icon as usual.
+
+[Back to Index](#index)
 
 ## Acknowledgments
 
@@ -681,6 +724,10 @@ DB calls together.
 points in this project, which really helped me to plan better and succeed.
 *   Thanks again to Tim Nelson, who was an invaluable support from the very start of the Data Centric Module right through to the Project stage. 
 *   Thank you to Family members and friends for giving their input on what would interest them in a Geneaology App.
+
+[Back to Index](#index)
+
+---
 
 # Disclaimer
 The content of this Website is for educational purposes only. Users enter data at their own risk.
