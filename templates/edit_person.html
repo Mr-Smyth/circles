@@ -30,23 +30,6 @@
 	<div class="container white box-shade">
 		<div class="row">
 			<form class="col s12" method="POST" action="{{ url_for('edit_person', person_id=person._id) }}" autocomplete="off">
-                <!-- FAMILY -->
-				<div class="row">					
-					<div class="input-field col s12 m6 offset-s0 offset-m3">
-                        <i class="fas fa-users prefix blue-text text-darken-3"></i>
-						<select id="family_name" name="family_name" class="validate" required>
-				            <option value="" disabled selected>Select family</option>
-				            {% for family in families %}
-                            {% if family.family_name == person.family_name %}
-				                <option value="{{ family.family_name }}" selected>{{ person.family_name.capitalize() }}</option>
-                            {% else %}
-                                <option value="{{ family.family_name }}">{{ family.family_name }}</option>
-                            {% endif %}
-				            {% endfor %}
-				        </select>
-                        <label>Select The Persons Family to Begin</label>
-					</div>
-				</div>
                 <!-- FIRST NAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
