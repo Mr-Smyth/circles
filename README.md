@@ -4,6 +4,10 @@
 
 ![Circles logo](https://github.com/Mr-Smyth/circles/blob/master/static/images/circles-logo-400x.png "Site logo")
 
+
+[View the website Deployed using Heroku](https://mr-smyth-circles.herokuapp.com/)
+
+
 Circles is a Data Centric, user friendly, Responsive full stack website. 
 
 </div>
@@ -59,7 +63,9 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 
 * [Development - General](#development)  
 * [Technologies Used](#technologies-used)
-* [Resources Used](#resources-used)
+* [Resources Used](#Resources-used)
+* [Pre Project Logic Walkthrough notes](#Logic-Walkthrough)
+* [Development Walkthrough](#Development-walkthrough)
     
 </details>
 
@@ -502,12 +508,14 @@ Could be added again automatically, and suggests using Manage People as an alter
 This page is reachable from any page by the Manage People link in the Navigation Menu.
 The page opens, with a similar style to the home page, except the logo is pushed to the top left corner. 3 buttons are the main 
 focus of the page **Delete a Person**, **Delete Everyone** and change Password.
-**Delete a Person** allows you to search for a person by first, last or Date of birth. The user will get a list of results, 
+
+
+*   **Delete a Person** allows you to search for a person by first, last or Date of birth. The user will get a list of results, 
 clicking on a link in the results will remove that person and any links to that person in every documents array, object or otherwise in the DB.   
 
-**Delete Everyone** gives you the ability to clear everything from the Circles DB. It is password protected for safety, contact the designer for a password.
+*   **Delete Everyone** gives you the ability to clear everything from the Circles DB. It is password protected for safety, contact the designer for a password.
 
-**Change Password** allows the user to change the delete password, by entering their existing password and entering a new one, then 
+*   **Change Password** allows the user to change the delete password, by entering their existing password and entering a new one, then 
 confirming the new password. The user will be notified if the change was successful.
 
 
