@@ -28,10 +28,16 @@ common dataset. It will also demonstrate the technologies I have learned so far.
     * [User Stories](#user-stories)
     * [Opportunities arising from user stories](#opportunities-arising-from-user-stories)
 
-* [UI](#ui)   
-    * [Wireframes](#wireframes)   
+* <details><summary>UI</summary>
 
-* [Features](#Features)
+    * [UI - General](#ui)   
+    * [Wireframes](#wireframes)
+
+</details>
+
+* <details><summary>Features</summary>
+
+    * [Features - General](#Features)
     * [Home Page](#Home-Page)
     * [Add Person](#Add-Person-Page)
     * [Edit Parents](#Edit-Parents-Page)
@@ -39,6 +45,7 @@ common dataset. It will also demonstrate the technologies I have learned so far.
     * [Edit Siblings](#Edit-Siblings-Page)
     * [Edit Children](#Edit-Children-Page)
 
+</details>
 
 * [Development](#development)  
     * [Technologies Used](#technologies-used)

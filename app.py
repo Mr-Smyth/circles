@@ -368,7 +368,7 @@ def assign_siblings(person_id):
 
     # GET EXISTING SIBLINGS TO RETURN TO TEMPLATE FOR DISPLAYING
     existing_siblings = get_persons_data(person, 'siblings')
- 
+
     # BUILD A LIST OF SIBLINGS, WITH PARENTS FOR COMPARISON
     # LATER IN POST SECTION
     sibling_and_parent_list = build_target_list(person, 'siblings')
@@ -1065,6 +1065,7 @@ def change_password():
 
     return render_template("manage_people.html")
 
+
 # ROUTE TO HANDLE E404
 @app.errorhandler(404)
 def page_not_found(e):
@@ -1088,10 +1089,11 @@ if __name__ == "__main__":
 
 
 
+
 ###################################################################
 
-## remove debug
-## remove coment out on delete all circles
+                ## remove debug
+            ## remove coment out on delete all circles
 
 
 ###################################################################
