@@ -7,7 +7,14 @@
 
 # Index
 
+**<details><summary>Heroku</summary>**
+
 * [Test the initial setup connection to Heroku](#test-connection-to-heroku)
+
+</details>
+
+
+
 * [Testing of Home page](#testing-of-home-page)
 * [Testing of Search Functionality](#testing-of-search-functionality)
 * [Testing of Add Person Functionality](#testing-of-add-person-functionality)
@@ -35,9 +42,11 @@
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * Test here..
+    * After Development stage, checked deployed link on multiple browsers and continued to use the deployed heroku link
+    throughout post development testing
 * :clipboard: RESULT:
-    * Results here
+    * Website always displayed as expected.
+    * No errors in Heroku logs.
 
 [Back to Index](#index)
 
@@ -69,9 +78,11 @@
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * Test here..
+    * Checked the home page on multiple browsers and devices
 * :clipboard: RESULT:
-    * Results here
+    * Page rendered as expected.
+    * Firefox 79.0 did however show some jerky-ness in the glow animation of my logo, and also in the view circles. I have tried 
+    Stack overflow and other online resources but as yet have not found a solution for this.
 
 [Back to Index](#index)
 
@@ -129,9 +140,12 @@ This did not freeze or break the site, and allowed the user to click on the sear
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * Test here..
+    * Checked the home page/Search feature on multiple browsers and devices
 * :clipboard: RESULT:
-    * Results here
+    *  Search form opens upon clicking the search circles button.
+    * I was able to enter any part of a search - first name, last name or date of birth - and get expected results.
+    * Trailing Whitespace was ignored on form submission.
+    * Entering a name not in the DB, resulted in a message to inform the user of this. 
 
 [Back to Index](#index)
 
@@ -184,6 +198,27 @@ This did not freeze or break the site, and allowed the user to click on the sear
 * :clipboard: RESULT:
     * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
 
+<br>
+
+* :hammer: TEST: 
+    * After adding a loader gif - Check that gif was not loading unless validation was satisfied.
+* :clipboard: RESULT:
+    * The form did not submit, unless all validation was true.
+
+<br>
+
+* :hammer: TEST: 
+    * After changing date pickers for Date of Birth to readonly to avoid user input error, tested that form validation still worked
+* :clipboard: RESULT:
+    * The form submitted without required date of birth, this is not allowed and a script must be added to change this behavior.
+
+<br>
+
+* :hammer: TEST: 
+    * After adding additional form validation to force users to enter date of birth, into the readonly date of birth input.
+* :clipboard: RESULT:
+    * The form behaved as expected and required. The form did not submit until the user entered a Date of Birth. The user is guided to do this.
+
 *In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
 ### Final Testing:
@@ -191,10 +226,16 @@ This did not freeze or break the site, and allowed the user to click on the sear
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * test here..
+    * Checked the Add Person page/form on multiple browsers and devices
 * :clipboard: RESULT:
-    * results here..
+    * Page and form responded perfectly to all browsers.
 
+<br>
+
+* :hammer: TEST: 
+    * Checked adding new people, while leaving out first all, then certain required elements one by one.
+* :clipboard: RESULT:
+    * The form only submitted when all set requirements were met.
 [Back to Index](#index)
 
 ---

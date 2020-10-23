@@ -40,7 +40,7 @@
 
     <div class="container white box-shade">
 		<div class="row">
-			<form class="col s12" method="POST" action="{{ url_for('assign_siblings', person_id=person._id) }}" autocomplete="off">
+			<form name="form" class="col s12" method="POST" action="{{ url_for('assign_siblings', person_id=person._id) }}" autocomplete="off">
 				<!-- ENTER SIBLINGS INFORMATION -->
                 <!-- SELECT THE SIBLINGS PARENTS -->
                 {% if persons_parents|length > 0 %}

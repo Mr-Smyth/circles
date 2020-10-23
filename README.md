@@ -342,6 +342,7 @@ A clear heading shows the user what page they are on, and a clear indication of 
 process. 
 This page includes a detailed form for the user to fill in, to create a person in Circles.  
 Clicking on **Add Person** will Insert the new person, and will automatically take the user to **Step 2 - Assign Parents**.
+If the person added matches an existing person, then no duplicate will be made, the process will continue with the matching existing person.
 Clicking **Clear** will reset the form.
 
 

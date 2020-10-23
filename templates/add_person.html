@@ -29,7 +29,7 @@
     <!-- MATERIALIZE CONTAINER WITH FORM TEXT INPUT -->
 	<div class="container white box-shade">
 		<div class="row">
-			<form class="col s12" method="POST" action="{{ url_for('add_person') }}" autocomplete="off">
+			<form name="form" class="col s12" method="POST" action="{{ url_for('add_person') }}" autocomplete="off">
                 <!-- FIRST NAME -->
 				<div class="row">
 					<div class="input-field col s12 m10 offset-s0 offset-m1">
@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="input-field col s12 m10 offset-s0 offset-m1">
                         <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
-                        <input id="dob" name="dob" type="text" class="validate datepicker" readonly="readonly" required>
+                        <input id="dob" name="dob" type="text" class="validate datepicker" readonly="readonly">
                         <label for="dob">Date of Birth (*Req)</label>
                     </div>
                 </div>
