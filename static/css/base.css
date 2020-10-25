@@ -321,6 +321,9 @@
      background-color: rgb(34,65,167);
      color: #fff;
 }
+.dropdown-content {
+  top: 229.075px !important;
+}
 /* MEDIA QUERIES */
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
  @media (min-width:600px){

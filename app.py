@@ -129,18 +129,18 @@ def assign_parents(person_id):
     #   SETUP REQUIRED VARIABLES
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
-    persons_mother_id = person["parents"]["mother"]
-    persons_father_id = person["parents"]["father"]
+    mother_id = person["parents"]["mother"]
+    father_id = person["parents"]["father"]
     mother_entered = False
     father_entered = False
     both_parents = False
 
     #   PREP FOR RENDER TEMPLATE -
     #   PERSONS MOTHER - CHECK IF MOTHER ALREADY LINKED
-    if persons_mother_id != "":
+    if mother_id != "":
         #   THEN IT HAS EXISTING MOTHER - SO ASSIGN THE ID
         existing_mother = mongo.db.people.find_one({
-            "_id": ObjectId(persons_mother_id)
+            "_id": ObjectId(mother_id)
             })
         mother_entered = True
     else:
@@ -149,10 +149,10 @@ def assign_parents(person_id):
         existing_mother = blank_template()
 
     #   PERSONS FATHER - CHECK IF FATHER ALREADY LINKED
-    if persons_father_id != "":
+    if father_id != "":
         #   THEN IT HAS EXISTING FATHER - SO ASSIGN THE ID
         existing_father = mongo.db.people.find_one({
-            "_id": ObjectId(persons_father_id)
+            "_id": ObjectId(father_id)
             })
         father_entered = True
     else:
@@ -194,18 +194,29 @@ def assign_parents(person_id):
 
         #   FIRST WE CHECK IF MOTHER EXISTS ANYWHERE IN THE DB
         if mongo.db.people.count_documents(mother, limit=1) == 0:
-            #   IF THE COUNT IS == O, THEN WE INSERT A NEW MOTHER
-            # BUILD A NEW MOTHER OBJECT
-            mother = create_parent(person, 'mother')
+            #   SO THIS PERSON ENTERED DOES NOT EXIST - BUT WE HAVE TO CHECK
+            #   IS THERE ALREADY A mother - IF SO, WE MAY JUST BE EDITING.
 
-            #   INSERT THE NEW MOTHER, THEN GET BACK THE ID
-            mongo.db.people.insert_one(mother)
-            mother_id = mongo.db.people.find_one(mother)["_id"]
+            #   CHECK IS MOTHER HAS BEEN ALREADY ENTERED
+            if mother_entered:
+                #   THEN WE ARE EDITING EXISTING MOTHER
+                #   UPDATE EXISTING MOTHER
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(mother_id)},
+                    {"$set": mother})
+            else:
+                # NO EXISTING MOTHER, SO WE MAKE A NEW ONE
+                # BUILD A NEW MOTHER OBJECT
+                mother = create_parent(person, 'mother')
 
-            # ADD THE PERSON TO THEIR NEW MOTHER AS A CHILD
-            mongo.db.people.find_one_and_update(
-                {"_id": ObjectId(mother_id)},
-                {"$addToSet": {"children": persons_id}})
+                #   INSERT THE NEW MOTHER, THEN GET BACK THE ID
+                mongo.db.people.insert_one(mother)
+                mother_id = mongo.db.people.find_one(mother)["_id"]
+
+                # ADD THE PERSON TO THEIR NEW MOTHER AS A CHILD
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(mother_id)},
+                    {"$addToSet": {"children": persons_id}})
 
         else:
             #   IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR MOTHER
@@ -216,22 +227,31 @@ def assign_parents(person_id):
                 {"$addToSet": {"children": persons_id}})
             mother_id = found_mother
 
-        #   NEXT WE CHECK IF FATHER EXISTS ANYWHERE IN THE DB
+        #   NOW WE CHECK IF FATHER EXISTS ANYWHERE IN THE DB
         if mongo.db.people.count_documents(father, limit=1) == 0:
-            #   IF THE COUNT IS == O, THEN WE INSERT A NEW FATHER
-            # BUILD A NEW FATHER OBJECT
-            father = create_parent(person, 'father')
+            #   SO THIS PERSON ENTERED DOES NOT EXIST - BUT WE HAVE TO CHECK
+            #   IS THERE ALREADY A FATHER - IF SO, WE MAY JUST BE EDITING.
 
-            #   INSERT THE NEW FATHER, THEN GET BACK THE ID
-            print("======================================")
-            print(father)
-            mongo.db.people.insert_one(father)
-            father_id = mongo.db.people.find_one(father)["_id"]
+            #   CHECK IS FATHER HAS BEEN ALREADY ENTERED
+            if father_entered:
+                #   THEN WE ARE EDITING EXISTING MOTHER
+                #   UPDATE EXISTING FATHER
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(father_id)},
+                    {"$set": father})
+            else:
+                # NO EXISTING FATHER, SO WE MAKE A NEW ONE
+                # BUILD A NEW FATHER OBJECT
+                father = create_parent(person, 'father')
 
-            # ADD THE PERSON TO THEIR NEW FATHER AS A CHILD
-            mongo.db.people.find_one_and_update(
-                {"_id": ObjectId(father_id)},
-                {"$addToSet": {"children": persons_id}})
+                #   INSERT THE NEW FATHER, THEN GET BACK THE ID
+                mongo.db.people.insert_one(father)
+                father_id = mongo.db.people.find_one(father)["_id"]
+
+                # ADD THE PERSON TO THEIR NEW FATHER AS A CHILD
+                mongo.db.people.find_one_and_update(
+                    {"_id": ObjectId(father_id)},
+                    {"$addToSet": {"children": persons_id}})
 
         else:
             #   IF THE COUNT IS NOT == O, THEN WE HAVE A MATCH FOR FATHER
@@ -860,7 +880,7 @@ def edit_person(person_id):
         #    CHECK TO SEE IF PERSON ALREADY EXISTS
         if mongo.db.people.count_documents(person_search, limit=1) == 0:
             #   ADD THE PERSON DICTIONARY TO MONGO
-            #   INSERT NEW PERSON
+            #   UPDATE PERSON
             mongo.db.people.find_one_and_update(
                 {"_id": ObjectId(person_id)},
                 {"$set": person_update})

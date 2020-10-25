@@ -549,9 +549,10 @@ the person, or return home.
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * test here..
+    * Restested with and without spouse/partners setup.
 * :clipboard: RESULT:
-    * results here..
+    * Results as expected.
+    * No spouse or partner led the user to a page informing them that they cannot add children unless a partner is set.
 
 [Back to Index](#index)
 
