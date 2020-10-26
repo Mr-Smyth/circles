@@ -1,9 +1,14 @@
+
+<div align="center">
+
 # Manual ContinuousTesting
-(all Initial/continuous testing performed between Google Chrome and a Samsung Galaxy S7. Individual browser tests will be performed after main development stage)
+All Initial/continuous testing performed between Google Chrome and a Samsung Galaxy S7. Individual browser tests will be performed after main development stage.
 
 [Back to Readme](https://github.com/Mr-Smyth/circles/blob/master/README.md)
 
 ---
+
+</div>
 
 # Index
 
@@ -36,13 +41,17 @@
 ---
 ## Test connection to Heroku.
 
-#### After the initial setup of the flask app, and adding the relevent enviroment variables, and deployment to Heroku i performed the following tests.
+**<details><summary>After the initial setup of the flask app, and adding the relevent enviroment variables, 
+and deployment to Heroku i performed the following tests.</summary>**
+
 
 * :hammer: TEST:	
     * Setup a base route and function and entered a simple return text "This is Circles".
 * :clipboard: RESULT: 
     * The result displayed as expected on the local development server.
 	* The result displayed as expected on the deployed site via Heroku.
+
+</details>
 
 ### Final Testing:
 
