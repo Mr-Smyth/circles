@@ -41,8 +41,8 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 ---
 ## Test connection to Heroku.
 
-**<details><summary>After the initial setup of the flask app, and adding the relevent enviroment variables, 
-and deployment to Heroku i performed the following tests.</summary>**
+### Initial Testing:
+**<details><summary>After the initial setup of the flask app, and adding the relevent enviroment variables, and deployment to Heroku i performed the following tests:</summary>**
 
 
 * :hammer: TEST:	
@@ -55,7 +55,7 @@ and deployment to Heroku i performed the following tests.</summary>**
 
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * After Development stage, checked deployed link on multiple browsers and continued to use the deployed heroku link
@@ -63,6 +63,8 @@ and deployment to Heroku i performed the following tests.</summary>**
 * :clipboard: RESULT:
     * Website always displayed as expected.
     * No errors in Heroku logs.
+
+</details>
 
 [Back to Index](#index)
 
