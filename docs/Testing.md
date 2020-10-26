@@ -45,11 +45,15 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 **<details><summary>After the initial setup of the flask app, and adding the relevent enviroment variables, and deployment to Heroku i performed the following tests:</summary>**
 
 
+```
+
 * :hammer: TEST:	
     * Setup a base route and function and entered a simple return text "This is Circles".
 * :clipboard: RESULT: 
     * The result displayed as expected on the local development server.
 	* The result displayed as expected on the deployed site via Heroku.
+    
+```
 
 </details>
 
@@ -385,7 +389,7 @@ so long as they have no shared children. The included form will allow for adding
 </details>
    
 
-**<details><summary>After refactor to change spouse / partner to an array, i performed the following tests:/summary>**
+**<details><summary>After refactor to change spouse / partner to an array, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * After refactoring the code to convert the spouse link, to an Array, i performed multiple tests where i created a new person and added a spouse/Partner.
