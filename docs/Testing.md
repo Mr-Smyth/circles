@@ -74,7 +74,7 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 
 ### Initial visual tests:
 
-#### After initial layout and setup of basic navbar and logo, i performed the following tests
+**<details><summary>After initial layout and setup of basic navbar and logo, i performed the following tests</summary>**
 
 * :hammer: TEST: 
     * Viewed Page on various screen sizes to check for overflow and undesired behavior
@@ -91,9 +91,11 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 
 *In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests</summary>**
 
 * :hammer: TEST: 
     * Checked the home page on multiple browsers and devices
@@ -102,15 +104,20 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
     * Firefox 79.0 did however show some jerky-ness in the glow animation of my logo, and also in the view circles. I have tried 
     Stack overflow and other online resources but as yet have not found a solution for this.
 
+</details>
+
 [Back to Index](#index)
 
 ---
 
 ## Testing of Search Functionality:
+After the initial setup of the search functionality, i decided to move from a single full name search box to a more flexible Mini Form.
+I believe provided an experience that was more flexible and desirable, in that i could search by any of First name, last name or DOB, or all together.
 
 ### Initial Testing:
 
-#### After the initial setup of the search functionality, i decided to move from a single full name search box to a more flexible Mini Form.
+**<details><summary>After initial setup - i performed the following tests on the Search functionality</summary>**
+
 I believe provided an experience that was more flexible and desirable, in that i could search by any of First name, last name or DOB, or all together.
 
 * :hammer: TEST: 
@@ -153,9 +160,11 @@ This did not freeze or break the site, and allowed the user to click on the sear
 
 *In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests</summary>**
 
 * :hammer: TEST: 
     * Checked the home page/Search feature on multiple browsers and devices
@@ -164,6 +173,8 @@ This did not freeze or break the site, and allowed the user to click on the sear
     * I was able to enter any part of a search - first name, last name or date of birth - and get expected results.
     * Trailing Whitespace was ignored on form submission.
     * Entering a name not in the DB, resulted in a message to inform the user of this. 
+
+</details>
 
 [Back to Index](#index)
 
@@ -174,7 +185,7 @@ This page allows user to enter a new person.
 
 ### Initial Testing:
 
-#### After the initial setup of the Add person functionality, i performed the following tests
+**<details><summary>After the initial setup of the Add person functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Entered information into all fields in search form, and submitted
@@ -240,9 +251,11 @@ This page allows user to enter a new person.
 
 *In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Checked the Add Person page/form on multiple browsers and devices
@@ -264,6 +277,8 @@ This page allows user to enter a new person.
     * Upon adding the new person, the edit procedure grabbed the existing person, and continued the edit procedure with that existing person.
     * No duplicate person was created.
 
+</details>
+
 [Back to Index](#index)
 
 ---
@@ -273,7 +288,7 @@ Assign Parents, will grab the parents, if they exist, of the person being create
 
 ### Initial Testing:
 
-#### After the initial setup of the Assign Parents functionality, i performed the following tests
+**<details><summary>After the initial setup of the Assign Parents functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST:  
     * Case where user enters parents name that are new people.
@@ -309,9 +324,11 @@ Assign Parents, will grab the parents, if they exist, of the person being create
 
 *In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Checked the Assign Parents page/form on multiple browsers and devices
@@ -338,6 +355,8 @@ Assign Parents, will grab the parents, if they exist, of the person being create
     * The next button only displayed when parents were already selected, the update, clear and view person buttons as well as the next button, when visable, all
     behaved and worked as expected.
 
+</details>
+
 [Back to Index](#index)
 
 ---
@@ -348,7 +367,7 @@ so long as they have no shared children. The included form will allow for adding
 
 ### Initial Testing:
 
-#### After the initial setup of the Assign_spouse_partner functionality, i performed the following tests
+**<details><summary>After the initial setup of the Assign_spouse_partner functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Added a spouse details, and clicked Add Partner.  
@@ -361,10 +380,12 @@ so long as they have no shared children. The included form will allow for adding
 * :hammer: TEST: 
     * Click submit without filling in the form.
 * :clipboard: RESULT:
-    * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.   
+    * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
 
-### After refactor to change spouse / partner to an array:
-#### After this development stage, i performed the following tests
+</details>
+   
+
+**<details><summary>After refactor to change spouse / partner to an array, i performed the following tests:/summary>**
 
 * :hammer: TEST: 
     * After refactoring the code to convert the spouse link, to an Array, i performed multiple tests where i created a new person and added a spouse/Partner.
@@ -382,9 +403,11 @@ so long as they have no shared children. The included form will allow for adding
 
 *In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
 
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Performed multiple tests where i added spouse/partners.
@@ -412,6 +435,8 @@ so long as they have no shared children. The included form will allow for adding
 * :clipboard: RESULT:
     * All buttons behaved and worked as expected.
 
+</details>
+
 [Back to Index](#index)
 
 ---
@@ -425,7 +450,7 @@ cannot do that.
 
 ### Initial Testing:
 
-#### After the initial setup of the Manage Relationship functionality, i performed the following tests
+**<details><summary>After the initial setup of the Manage Relationship functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * click on a spouse/partner to remove, from within in the assign spouse/ partner page, where the person clicked
@@ -443,14 +468,22 @@ cannot do that.
     the option to return back to the spouse page.
 
 *In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
+
+</details>
+
+
+
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Tested thoughorly in the assign Spouse/partner section
 * :clipboard: RESULT:
     * Functionality was all good, worked as expected.
+
+</details>
 
 [Back to Index](#index)
 
@@ -463,7 +496,7 @@ I am implementing a 'working'/'Please Wait' indicator for these situations.
 
 ### Initial Testing:
 
-#### After the initial setup of the Assign_siblings functionality, i performed the following tests
+**<details><summary>After the initial setup of the Assign_siblings functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Enter a new sibling - (person did not pre-exist in DB) into the form and click Add Sibling.
@@ -510,9 +543,12 @@ can effectively add, or remove siblings***
     * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
 
 *In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
+
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Performed multiple tests where i partially completed the forms, leaving out required information.
@@ -545,6 +581,7 @@ can effectively add, or remove siblings***
     * I was returned to assign siblings page correctly.
     * all pages rendered as expected, with desired amount of information.
 
+</details>
 
 [Back to Index](#index)
 
@@ -558,7 +595,7 @@ the person, or return home.
 
 ### Initial Testing:
 
-#### After the initial setup of the Check for Spouse functionality, i performed the following tests
+**<details><summary>After the initial setup of the Check for Spouse functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Setup a person with no spouse or partner and clicked 'Next' 
@@ -577,15 +614,19 @@ the person, or return home.
 * :clipboard: RESULT:
     * I was taken to the assign childrens page which is correct.
 
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Restested with and without spouse/partners setup.
 * :clipboard: RESULT:
     * Results as expected.
     * No spouse or partner led the user to a page informing them that they cannot add children unless a partner is set.
+
+</details>
 
 [Back to Index](#index)
 
@@ -599,7 +640,7 @@ I have made a change that restricts the user from getting to this page unless th
 
 ### Initial Testing:
 
-#### After the initial setup of the Add Children functionality, i performed the following tests
+**<details><summary>After the initial setup of the Add Children functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Add a new child, not in MongoDB as a child of a new person.
@@ -623,9 +664,12 @@ I have made a change that restricts the user from getting to this page unless th
 * :clipboard: RESULT:
     * Child was updated in both parents documents, in the children array. Also the childs parents field was updated. 
     The sibling fields of any children with a common parent were updated.
+
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Performed multiple tests where i partially completed the forms, leaving out required information.
@@ -658,6 +702,8 @@ I have made a change that restricts the user from getting to this page unless th
     * I was returned to assign children page correctly.
     * all pages rendered as expected, with desired amount of information.
 
+</details>
+
 [Back to Index](#index)
 
 ---
@@ -667,7 +713,7 @@ This small function is called to handle removal of children. It consists of a la
 
 ### Initial Testing:
 
-#### After the initial setup of the Manage Child Relationship functionality, i performed the following tests
+**<details><summary>After the initial setup of the Manage Child Relationship functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * click on a Child to remove, from within in the assign Children page.
@@ -675,10 +721,11 @@ This small function is called to handle removal of children. It consists of a la
     * The user is informed and given correct options.
     * Removal handled correctly.   
 
+</details>
 
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Checked the Remove Children feature on multiple browsers and devices
@@ -686,6 +733,8 @@ This small function is called to handle removal of children. It consists of a la
     * Page rendered as expected
     * I was given clear information about what i was doing and given correct options.
     * After checking Mongo DB, i found that, the removal was handled correctly.
+
+</details>
 
 [Back to Index](#index)
 
@@ -696,7 +745,7 @@ This Function is to handle the editing of any person. It is reachable from a lin
 
 ### Initial Testing:
 
-#### After the initial setup of the Edit Person functionality, i performed the following tests
+**<details><summary>After the initial setup of the Edit Person functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Check that correct existing information was being populated to the edit form.
@@ -717,10 +766,11 @@ This Function is to handle the editing of any person. It is reachable from a lin
 * :clipboard: RESULT:
     * If a person was changed in such a way as to be a duplicate of an existing person, Then the user is notified via the notify duplicate functionality.
 
+</details>
 
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>#### After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Performed multiple tests where i checked the 4 buttons available.
@@ -738,7 +788,7 @@ This Function is to handle the editing of any person. It is reachable from a lin
     * Entering a name not in the DB, resulted in editing of current person correctly.
     * Entering a name in the DB, resulted in calling of the notify duplictaes functionality.
 
-<br>
+</details>
 
 [Back to Index](#index)
 
@@ -749,7 +799,7 @@ This small function is called to handle the case where editing of a person resul
 
 ### Initial Testing:
 
-#### After the initial setup of the Notify Duplicates functionality, i performed the following tests
+**<details><summary>After the initial setup of the Notify Duplicates functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * I edited an existing person to be a duplicate of another existing person.
@@ -757,16 +807,19 @@ This small function is called to handle the case where editing of a person resul
     * I was taken to a page where i was correctly informed about the conflict and given a choice to correctly edit the person, 
     or go to the person who was found to be a duplicate.
 
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Replicated a duplicate entry on multiple browsers and devices
 * :clipboard: RESULT:
     * Handling Page rendered as expected
     * I was able to reverse action and correct/adjust my entry.
-    
+
+</details>
 
 [Back to Index](#index)
 
@@ -776,7 +829,7 @@ This small function is called to handle the case where editing of a person resul
 
 ### Initial Testing:
 
-#### After the initial setup of the View Circle functionality, i performed the following tests
+**<details><summary>After the initial setup of the View Circle functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Visual test.
@@ -790,14 +843,18 @@ This small function is called to handle the case where editing of a person resul
 * :clipboard: RESULT:
     * Each circle redirected me to the correct users circle.
 
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Viewed various circles on multiple browsers and devices
 * :clipboard: RESULT:
     * Page rendered and behaved as expected.
+
+</details>
 
 [Back to Index](#index)
 
@@ -807,7 +864,7 @@ This small function is called to handle the case where editing of a person resul
 
 ### Initial Testing:
 
-#### After the initial setup of the Manage People functionality, i performed the following tests
+**<details><summary>After the initial setup of the Manage People functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Tested searching for a person by first name
@@ -874,14 +931,18 @@ This small function is called to handle the case where editing of a person resul
 * :clipboard: RESULT:
     * No remaining foreign id's existed within any related person.
 
+</details>
+
 ### Final Testing:
 
-#### After the development stage, i performed the following tests
+**<details><summary>After the development stage, i performed the following tests:</summary></summary>**
 
 * :hammer: TEST: 
     * Performed repeat tests as above on multiple browsers
 * :clipboard: RESULT:
     * results were as expected and all deletions / removal of relationships were performed cleanly and quickly.
+
+</details>
 
 [Back to Index](#index)
 
@@ -919,3 +980,10 @@ This small function is called to handle the case where editing of a person resul
 [Back to Index](#index)
 
 ---
+
+**<details><summary> - name here - </summary>**
+
+
+-----------  tests here
+
+</details>
