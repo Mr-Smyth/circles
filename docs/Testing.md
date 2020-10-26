@@ -487,20 +487,6 @@ can effectively add, or remove siblings***
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * Performed multiple tests where i added Siblings.
-* :clipboard: RESULT:
-    * The Siblings always added as expected.
-
-<br>
-
-* :hammer: TEST: 
-    * Performed multiple tests where i removed Siblings.
-* :clipboard: RESULT:
-    * Circles removed the sibling.
-
-<br>
-
-* :hammer: TEST: 
     * Performed multiple tests where i partially completed the forms, leaving out required information.
 * :clipboard: RESULT:
     * The form would not submit unless all required information had been entered.
@@ -511,6 +497,25 @@ can effectively add, or remove siblings***
     * Performed multiple tests where i checked the 4 buttons available.
 * :clipboard: RESULT:
     * All buttons behaved and worked as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Checked the Assign Siblings feature on multiple browsers and devices
+* :clipboard: RESULT:
+    * Page rendered as expected
+    * I was forced to enter the required information.
+    * Trailing Whitespace was ignored on form submission.
+    * Entering a name not in the DB, resulted in a creation of new sibling.
+    * Entering a name in the DB, resulted in correct linking of that person, as child to parents and sibling to other siblings.
+<br>
+
+* :hammer: TEST: 
+    * Checked the remove Sibling feature in assign children
+* :clipboard: RESULT:
+    * I was able to remove any child i clicked on.
+    * I was returned to assign siblings page correctly.
+    * all pages rendered as expected, with desired amount of information.
 
 
 [Back to Index](#index)
@@ -559,10 +564,10 @@ the person, or return home.
 ---
 
 ## Testing of Add Children Functionality:
-I have made a change that restricts the user from getting to this page unless the person being edited has a spouse or a partner setup.
 The Add children function gets the persons current children and displays them on screen. It also allows the user to 
 enter a child to add to the list of persons children. The childs parent selection, and the smart sibling linking means that adding 
 one child will update that child with parents and siblings (if present) and vice versa. 
+I have made a change that restricts the user from getting to this page unless the person being edited has a spouse or a partner setup.
 
 ### Initial Testing:
 
@@ -595,13 +600,268 @@ one child will update that child with parents and siblings (if present) and vice
 #### After the development stage, i performed the following tests
 
 * :hammer: TEST: 
-    * test here..
+    * Performed multiple tests where i partially completed the forms, leaving out required information.
 * :clipboard: RESULT:
-    * results here..
+    * The form would not submit unless all required information had been entered.
+
+<br>
+
+* :hammer: TEST: 
+    * Performed multiple tests where i checked the 4 buttons available.
+* :clipboard: RESULT:
+    * All buttons behaved and worked as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Checked the Assign Children feature on multiple browsers and devices
+* :clipboard: RESULT:
+    *  Page rendered as expected
+    * I was forced to enter the required information.
+    * Trailing Whitespace was ignored on form submission.
+    * Entering a name not in the DB, resulted in a creation of new child.
+    * Entering a name in the DB, resulted in correct linking of that person, as child to parents and sibling to other children.
+<br>
+
+* :hammer: TEST: 
+    * Checked the remove children feature in assign children
+* :clipboard: RESULT:
+    *  I was able to remove any child i clicked on.
+    * I was returned to assign children page correctly.
+    * all pages rendered as expected, with desired amount of information.
 
 [Back to Index](#index)
 
 ---
+
+## Testing of the Manage Child Relationship Functionality:
+This small function is called to handle removal of children. It consists of a landing page for info and calls delete_child to handle the removal. 
+
+### Initial Testing:
+
+#### After the initial setup of the Manage Child Relationship functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * click on a Child to remove, from within in the assign Children page.
+* :clipboard: RESULT:
+    * The user is informed and given correct options.
+    * Removal handled correctly.   
+
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * Checked the Remove Children feature on multiple browsers and devices
+* :clipboard: RESULT:
+    * Page rendered as expected
+    * I was given clear information about what i was doing and given correct options.
+    * After checking Mongo DB, i found that, the removal was handled correctly.
+
+[Back to Index](#index)
+
+---
+
+## Testing of the Edit Person Relationship Functionality:
+This Function is to handle the editing of any person. It is reachable from a link in the view circle page, at the bottom
+
+### Initial Testing:
+
+#### After the initial setup of the Edit Person functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * Check that correct existing information was being populated to the edit form.
+* :clipboard: RESULT:
+    * All information was displaying correctly
+
+<br>
+
+* :hammer: TEST: 
+    * Check that any user changes were updating the DB correctly.
+* :clipboard: RESULT:
+    * All information was updating correctly.
+
+<br>
+
+* :hammer: TEST: 
+    * Check that any changes that conflicted with another person were handled..
+* :clipboard: RESULT:
+    * If a person was changed in such a way as to be a duplicate of an existing person, Then the user is notified via the notify duplicate functionality.
+
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * Performed multiple tests where i checked the 4 buttons available.
+* :clipboard: RESULT:
+    * All buttons behaved and worked as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Checked the Update person feature on multiple browsers and devices
+* :clipboard: RESULT:
+    *  Page rendered as expected
+    * I was able to skip page if no editing was needed.
+    * Trailing Whitespace was ignored on form submission.
+    * Entering a name not in the DB, resulted in editing of current person correctly.
+    * Entering a name in the DB, resulted in calling of the notify duplictaes functionality.
+
+<br>
+
+[Back to Index](#index)
+
+---
+
+## Testing of the Notify Duplicates  Functionality:
+This small function is called to handle the case where editing of a person results in a possible duplicate entry. 
+
+### Initial Testing:
+
+#### After the initial setup of the Notify Duplicates functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * I edited an existing person to be a duplicate of another existing person.
+* :clipboard: RESULT:
+    * I was taken to a page where i was correctly informed about the conflict and given a choice to correctly edit the person, 
+    or go to the person who was found to be a duplicate.
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * Replicated a duplicate entry on multiple browsers and devices
+* :clipboard: RESULT:
+    * Handling Page rendered as expected
+    * I was able to reverse action and correct/adjust my entry.
+    
+
+[Back to Index](#index)
+
+---
+
+## Testing of View Circle functionality:
+
+### Initial Testing:
+
+#### After the initial setup of the **your function here** functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * Visual test.
+* :clipboard: RESULT:
+    * Pages elements rendered as expected
+
+<br>
+
+* :hammer: TEST: 
+    * Checked each circle by clicking on them
+* :clipboard: RESULT:
+    * Each circle redirected me to the correct users circle.
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * Viewed various circles on multiple browsers and devices
+* :clipboard: RESULT:
+    * Page rendered and behaved as expected.
+
+[Back to Index](#index)
+
+---
+
+## Testing for Manage people functionality:
+
+### Initial Testing:
+
+#### After the initial setup of the Manage People functionality, i performed the following tests
+
+* :hammer: TEST: 
+    * Tested searching for a person by first name
+* :clipboard: RESULT:
+    * Got the correct results.
+    * I was able to remove them by clicking on them.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested searching for a person by last name
+* :clipboard: RESULT:
+    * Got the correct results.
+    * I was able to remove them by clicking on them.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested searching for a person by Date of birth
+* :clipboard: RESULT:
+    * Got the correct results.
+    * was able to remove them by clicking on them.
+
+* :hammer: TEST: 
+    * Tested clicking on Delete everyone.
+* :clipboard: RESULT:
+    * Was asked for the password.
+    * When correct password was entered everybody was deleted in the entire DB.
+    * When an incorrect or blank password was entered, no deletion took place and the user was notified about the incorrect password entry.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested Changing the deletion password.
+    * First attempted to change the password by entering an incorrect current password.
+* :clipboard: RESULT:
+    * General incorrect password message was displayed.
+    * Password did not change.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested Changing the deletion password.
+    * Attempted to change the password by entering the correct current password.
+    * Entered a new password that didnt match confirm password
+* :clipboard: RESULT:
+    * General incorrect password message was displayed.
+    * Password did not change.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested Changing the deletion password.
+    * Attempted to change the password by entering the correct current password.
+    * Entered a new password that matched confirm password
+* :clipboard: RESULT:
+    * Password changed message was displayed.
+    * Password changed.
+
+<br>
+
+* :hammer: TEST: 
+    * Checked relationships of people who were related to a person removed
+* :clipboard: RESULT:
+    * No remaining foreign id's existed within any related person.
+
+### Final Testing:
+
+#### After the development stage, i performed the following tests
+
+* :hammer: TEST: 
+    * Performed repeat tests as above on multiple browsers
+* :clipboard: RESULT:
+    * results were as expected and all deletions / removal of relationships were performed cleanly and quickly.
+
+[Back to Index](#index)
+
+---
+
+
+
+
 
 
 ---
