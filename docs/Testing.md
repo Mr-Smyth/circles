@@ -13,7 +13,7 @@
 
 </details>
 
-
+**<details><summary>Individual web page continuous testing</summary>**
 
 * [Testing of Home page](#testing-of-home-page)
 * [Testing of Search Functionality](#testing-of-search-functionality)
@@ -23,7 +23,14 @@
 * [Testing of Manage Relationship Functionality](#testing-of-the-manage-relationship-functionality)
 * [Testing of Assign Sibling Functionality](#testing-of-assign-siblings-functionality)
 * [Testing of Check for Spouse Functionality](#testing-of-check-for-spouse-functionality)
-* [Testing of Assign Children Functionality](#testing-of-add-children-functionality)
+* [Testing of Assign Children Functionality](#testing-of-assign-children-functionality)
+* [Testing of the Manage Child Relationship Functionality](#Testing-of-the-Manage-Child-Relationship-Functionality)
+* [Testing of the Edit Person Relationship Functionality](#Testing-of-the-Edit-Person-Relationship-Functionality)
+* [Testing of the Notify Duplicates Functionality](#Testing-of-the-Notify-Duplicates-Functionality)
+* [Testing of View Circle functionality](#Testing-of-View-Circle-functionality)
+* [Testing for Manage people functionality](#Testing-for-Manage-people-functionality)
+    
+</details>
 
 
 ---
@@ -152,6 +159,7 @@ This did not freeze or break the site, and allowed the user to click on the sear
 ---
 
 ## Testing of Add Person Functionality:
+This page allows user to enter a new person.
 
 ### Initial Testing:
 
@@ -235,7 +243,16 @@ This did not freeze or break the site, and allowed the user to click on the sear
 * :hammer: TEST: 
     * Checked adding new people, while leaving out first all, then certain required elements one by one.
 * :clipboard: RESULT:
-    * The form only submitted when all set requirements were met.
+    * The form only submitted when all set requirements were met.   
+
+<br>
+
+* :hammer: TEST: 
+    * Checked adding a new person who was a duplicate of an existing person.
+* :clipboard: RESULT:
+    * Upon adding the new person, the edit procedure grabbed the existing person, and continued the edit procedure with that existing person.
+    * No duplicate person was created.
+
 [Back to Index](#index)
 
 ---
@@ -245,7 +262,7 @@ Assign Parents, will grab the parents, if they exist, of the person being create
 
 ### Initial Testing:
 
-#### After the initial setup of the Add person functionality, i performed the following tests
+#### After the initial setup of the Assign Parents functionality, i performed the following tests
 
 * :hammer: TEST:  
     * Case where user enters parents name that are new people.
@@ -522,7 +539,7 @@ can effectively add, or remove siblings***
 
 ---
 
-## Testing of check for spouse Functionality:
+## Testing of check for Spouse Functionality:
 This function checks if the current person being edited has anyone linked as a spouse or a partner. 
 If a partner or spouse exists, then the user gets automatically passed on to the assign children page. 
 If there is no spouse or partner the user gets passed to a decision page where they can opt to edit 
@@ -530,7 +547,7 @@ the person, or return home.
 
 ### Initial Testing:
 
-#### After the initial setup of the **your function here** functionality, i performed the following tests
+#### After the initial setup of the Check for Spouse functionality, i performed the following tests
 
 * :hammer: TEST: 
     * Setup a person with no spouse or partner and clicked 'Next' 
@@ -563,7 +580,7 @@ the person, or return home.
 
 ---
 
-## Testing of Add Children Functionality:
+## Testing of Assign Children Functionality:
 The Add children function gets the persons current children and displays them on screen. It also allows the user to 
 enter a child to add to the list of persons children. The childs parent selection, and the smart sibling linking means that adding 
 one child will update that child with parents and siblings (if present) and vice versa. 
@@ -748,7 +765,7 @@ This small function is called to handle the case where editing of a person resul
 
 ### Initial Testing:
 
-#### After the initial setup of the **your function here** functionality, i performed the following tests
+#### After the initial setup of the View Circle functionality, i performed the following tests
 
 * :hammer: TEST: 
     * Visual test.
