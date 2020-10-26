@@ -26,7 +26,7 @@
 * [Testing of Assign Children Functionality](#testing-of-assign-children-functionality)
 * [Testing of the Manage Child Relationship Functionality](#Testing-of-the-Manage-Child-Relationship-Functionality)
 * [Testing of the Edit Person Relationship Functionality](#Testing-of-the-Edit-Person-Relationship-Functionality)
-* [Testing of the Notify Duplicates Functionality](#Testing-of-the-Notify-Duplicates-Functionality)
+* [Testing of the Notify Duplicates Functionality](#Testing-of-notify-duplicates-functionality)
 * [Testing of View Circle functionality](#Testing-of-View-Circle-functionality)
 * [Testing for Manage people functionality](#Testing-for-Manage-people-functionality)
     
@@ -733,7 +733,7 @@ This Function is to handle the editing of any person. It is reachable from a lin
 
 ---
 
-## Testing of the Notify Duplicates  Functionality:
+## Testing of Notify Duplicates Functionality:
 This small function is called to handle the case where editing of a person results in a possible duplicate entry. 
 
 ### Initial Testing:
