@@ -37,6 +37,12 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
     
 </details>
 
+**<details><summary>Testing user stories</summary>**
+
+* [Testing user stories](#Testing-user-stories)
+
+</details>
+
 
 ---
 ## Test connection to Heroku.
@@ -45,15 +51,11 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 **<details><summary>After the initial setup of the flask app, and adding the relevent enviroment variables, and deployment to Heroku i performed the following tests:</summary>**
 
 
-```
-
 * :hammer: TEST:	
     * Setup a base route and function and entered a simple return text "This is Circles".
 * :clipboard: RESULT: 
     * The result displayed as expected on the local development server.
 	* The result displayed as expected on the deployed site via Heroku.
-    
-```
 
 </details>
 
@@ -774,7 +776,7 @@ This Function is to handle the editing of any person. It is reachable from a lin
 
 ### Final Testing:
 
-**<details><summary>#### After the development stage, i performed the following tests:</summary>**
+**<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
     * Performed multiple tests where i checked the 4 buttons available.
@@ -952,6 +954,74 @@ This small function is called to handle the case where editing of a person resul
 
 ---
 
+# Testing user stories
+
+## The following user stories were identified:
+
+**<details><summary>1.  As a user, I want the home screen to be simple with a clear indication of what I can do.</summary>**
+
+* :hammer: TEST: 
+    * Visited the home page.
+* :clipboard: RESULT:
+    * Found the instruction very simple and clear, and any further information was explained by use of clear
+    breadcrumbs, logical button names and flash messages.
+
+</details>
+ 
+
+**<details><summary>2.  As a user, I want to be able to enter my family tree information.</summary>**
+
+* :hammer: TEST: 
+    * Visited the Add person page
+* :clipboard: RESULT:
+    * Was able to enter myself and click add person.
+    * Was then guided through a 5 step process that prompted me for all my family circle information.
+
+</details>
+
+
+**<details><summary>3.  As a user, I want a simple way to enter a new person.</summary>**
+
+* :hammer: TEST: 
+    * Again visited the add person page.
+* :clipboard: RESULT:
+    * Easily entered a new person by filling in the add person form.
+
+</details>
+
+
+**<details><summary>4.  As a user, I don't want to have to think about how to connect people in the family circle.</summary>**
+
+* :hammer: TEST: 
+    * Visited the Add person page and began to add a family member.
+* :clipboard: RESULT:
+    * The 5 step process meant i simply had to fill in the blanks on each form.
+    * At no stage was i asked any question other than, details of family members.
+    * By the end i was able to view my family circle, and browse family connections.
+    * At no stage did i as a user need to provide any input on structure.
+
+</details>
+
+
+**<details><summary>5.  As a user, I want to be able to search my family for a specific person.</summary>**
+
+* :hammer: TEST: 
+    * Visited the home page.
+* :clipboard: RESULT:
+    * After clicking search to reveal the search form, i was able to search for anyone i had entered by any, or all of 
+    either first name, last name or Date of birth
+
+</details>
+
+
+**<details><summary>6.  As a user, I want to be able to see my parental lineage within the database.</summary>**
+
+
+* :clipboard: RESULT:
+    * For this version of Circles it has not been possible to add this functionality due to time constraints. A future version will
+    have this feature.
+
+</details>
 
 
 

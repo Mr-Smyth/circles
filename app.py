@@ -59,7 +59,8 @@ def search():
         #       SEARCH WITHOUT ANY ENTRIES?
         if len(query) > 0:
             people = list(mongo.db.people.find(query))
-            error = "Sorry we have no records matching your query."
+            error = "Sorry Circles has 0 records matching search.\
+                Please use Add person to add this person"
         else:
             return redirect(url_for("home"))
 

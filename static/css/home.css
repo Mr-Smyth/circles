@@ -161,6 +161,11 @@
      -ms-flex-pack: distribute;
      justify-content: space-around;
 }
+#introduction{
+    text-align: center;
+    color: #c0c0c0;
+    font-size: 1.6rem;
+}
 /* MEDIA QUERIES */
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
  @media (min-width:600px){
