@@ -1044,7 +1044,7 @@ This small function is called to handle the case where editing of a person resul
 
 ### app.py:
 
-**<details><summary>app.py Testing:</summary>**
+**<details><summary>app.py Testing</summary>**
 
 * :hammer: TEST: 
     * Checked Gitpods python linter.
@@ -1063,7 +1063,7 @@ This small function is called to handle the case where editing of a person resul
 
 ### utils.py:
 
-**<details><summary>utils Testing:</summary>**
+**<details><summary>utils Testing</summary>**
 
 * :hammer: TEST: 
     * Checked Gitpods python linter.
@@ -1082,7 +1082,7 @@ This small function is called to handle the case where editing of a person resul
 
 ### create_update.py:
 
-**<details><summary>create_update.py Testing:</summary>**
+**<details><summary>create_update.py Testing</summary>**
 
 * :hammer: TEST: 
     * Checked Gitpods python linter.
@@ -1104,9 +1104,9 @@ This small function is called to handle the case where editing of a person resul
 
 ## Testing of Javascript:
 
-### home.js:
+### Manage_People.js:
 
-**<details><summary>manage_people.js Testing:</summary>**
+**<details><summary>manage_people.js Testing</summary>**
 
 * :hammer: TEST: 
     * Used JsHint to validate
@@ -1127,10 +1127,11 @@ This small function is called to handle the case where editing of a person resul
 * :clipboard: RESULT:
     * Manage People form elements opened and closed as expected, and page displayed as expected with no errors in console.
 
-
 </details>
 
-**<details><summary>home.js Testing:</summary>**
+### Home.js:
+
+**<details><summary>home.js Testing</summary>**
 
 * :hammer: TEST: 
     * Used JsHint to validate
@@ -1151,11 +1152,11 @@ This small function is called to handle the case where editing of a person resul
 * :clipboard: RESULT:
     * Home page search form opened as expected, and page displayed as expected with no errors in console.
 
-
 </details>
 
+### Validate.js:
 
-**<details><summary>validate.js Testing:</summary>**
+**<details><summary>validate.js Testing</summary>**
 
 * :hammer: TEST: 
     * Used JsHint to validate
@@ -1194,11 +1195,11 @@ This small function is called to handle the case where editing of a person resul
 * :clipboard: RESULT:
     * Form pages submitted as expected, and page displayed as expected with no errors in console.
 
-
 </details>
 
+### Utility.js:
 
-**<details><summary>utility.js Testing:</summary>**
+**<details><summary>utility.js Testing</summary>**
 
 * :hammer: TEST: 
     * Used JsHint to validate
@@ -1239,6 +1240,10 @@ This small function is called to handle the case where editing of a person resul
 
 
 </details>
+
+[Back to Index](#index)
+
+---
 
 
 
