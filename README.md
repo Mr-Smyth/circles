@@ -64,6 +64,7 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 * [Resources Used](#Resources-used)
 * [Pre Project Logic Walkthrough notes](#Logic-Walkthrough)
 * [Development Walkthrough](#Development-walkthrough)
+* [Problems Encountered during Development](#Problems-Encountered-during-Development)
     
 </details>
 
@@ -591,7 +592,7 @@ clicking on a link in the results will remove that person and any links to that 
 [Back to Index](#index)
 
 ---
-# Problems encountered during development:
+# Problems Encountered during Development:
 
 #### Problem   
 My logic on the assign siblings / Parents and Children all involved trying to cut the work of the user. So what i was doing in these views
@@ -643,7 +644,6 @@ Then i realised that there is room for everyones circle without user logins, and
 interesting overlaps in circles. I already have over 20 family and friends wanting a copy so they can start adding their own families. So i decided
 that instead of user profiles i would setup a deletion password. I currently only have it requested when you try to delete everyone, but 
 will probably restrict further in the future.
-
 
 [Back to Index](#index)
 
