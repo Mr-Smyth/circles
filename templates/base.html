@@ -1,98 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
-      integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
-      crossorigin="anonymous"
-    />
-    <!-- Materialize CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <!-- FAVICONS -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='images/favicons/apple-touch-icon.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/favicons/favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='images/favicons/favicon-16x16.png')}}">
-    <link rel="manifest" href="{{url_for('static', filename='images/favicons/site.webmanifest')}}">
-    <!-- Static CSS -->
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/base.css')}}"
-      type="text/css"
-    />
-    {% block head %}			
-	{% endblock %}
-    <title>Circles</title>
-  </head>
-    <!-- ADD A LOADER -->
-  <div id="overlay">
-    <div class="wait">Please Wait..</div>
-    <div class="loader"></div>
-  </div>
-
-  <body>
-    <header>
-        <nav class="nav-extended text-shadow clear">
-            <div class="nav-wrapper">
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger right clear"><i class="fas fa-bars"></i></a>
-                <ul class="right hide-on-med-and-down">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Font Awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+            integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+            crossorigin="anonymous"
+            />
+        <!-- Materialize CDN -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+            />
+        <!-- FAVICONS -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='images/favicons/apple-touch-icon.png')}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/favicons/favicon-32x32.png')}}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='images/favicons/favicon-16x16.png')}}">
+        <link rel="manifest" href="{{url_for('static', filename='images/favicons/site.webmanifest')}}">
+        <!-- Static CSS -->
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/base.css')}}"
+            type="text/css"
+            />
+        {% block head %}			
+        {% endblock %}
+    </head>
+    <body>
+        <!-- ADD A LOADER -->
+        <div id="overlay">
+            <div class="wait">Please Wait..</div>
+            <div class="loader"></div>
+        </div>
+        <header>
+        <!-- NAV BAR -->
+            <nav class="nav-extended text-shadow clear">
+                <div class="nav-wrapper">
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger right clear"><i class="fas fa-bars"></i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="{{ url_for('home') }}" aria-label="Click for Home screen">Home</a></li>
+                        <li><a href="{{ url_for('add_person') }}" aria-label="Click for Add a new Person">Add Person</a></li>
+                        <li><a href="{{ url_for('manage_people') }}" aria-label="Click to manage people">Manage People</a></li>
+                    </ul>
+                </div>
+                <!-- SIDE NAV BAR -->
+                <ul class="sidenav" id="mobile-demo">
                     <li><a href="{{ url_for('home') }}" aria-label="Click for Home screen">Home</a></li>
                     <li><a href="{{ url_for('add_person') }}" aria-label="Click for Add a new Person">Add Person</a></li>
                     <li><a href="{{ url_for('manage_people') }}" aria-label="Click to manage people">Manage People</a></li>
+                    <li><div id="side-nav-logo-container">
+                        <a  id="side-nav-logo" href="{{ url_for('home') }}"></a>
+                    </div></li>
                 </ul>
+            </nav>
+        </header>
+        {% block content %} {% endblock %}
+        <!-- FOOTER -->
+        <footer id="circles-footer">
+            <div id="social-links">
+                <a class="grey-text text-lighten-4 right" href="https://twitter.com" target="_blank" aria-label="Link to Twitter">
+                <i class="fab fa-twitter"></i>
+                </a>
+                <a class="grey-text text-lighten-4 right" href="https://facebook.com" target="_blank" aria-label="Link to Facebook">
+                <i class="fab fa-facebook"></i>
+                </a>
+                <a class="grey-text text-lighten-4 right" href="https://www.linkedin.com" target="_blank"
+                    aria-label="Link to Linked In">
+                <i class="fab fa-linkedin"></i>
+                </a>
+                <a class="grey-text text-lighten-4 right" href="https://www.youtube.com" target="_blank"
+                    aria-label="Link to You Tube">
+                <i class="fab fa-youtube"></i>
+                </a>
             </div>
-        
-            <!-- SIDE NAV BAR -->
-            <ul class="sidenav" id="mobile-demo">
-                <li><a href="{{ url_for('home') }}" aria-label="Click for Home screen">Home</a></li>
-                <li><a href="{{ url_for('add_person') }}" aria-label="Click for Add a new Person">Add Person</a></li>
-                <li><a href="{{ url_for('manage_people') }}" aria-label="Click to manage people">Manage People</a></li>
-                <div id="side-nav-logo-container">
-                    <a  id="side-nav-logo" href="{{ url_for('home') }}"></a>
-                </div>
-            </ul>
-        </nav>
-	</header>
-
-
-    
-	
-    {% block content %} {% endblock %}
-    <!-- FOOTER -->
-	<footer id="circles-footer">
-		<div id="social-links">
-			<a class="grey-text text-lighten-4 right" href="https://twitter.com" target="_blank" aria-label="Link to Twitter">
-				<i class="fab fa-twitter"></i>
-			</a>
-			<a class="grey-text text-lighten-4 right" href="https://facebook.com" target="_blank" aria-label="Link to Facebook">
-				<i class="fab fa-facebook"></i>
-			</a>
-			<a class="grey-text text-lighten-4 right" href="https://www.linkedin.com" target="_blank"
-				aria-label="Link to Linked In">
-				<i class="fab fa-linkedin"></i>
-			</a>
-			<a class="grey-text text-lighten-4 right" href="https://www.youtube.com" target="_blank"
-				aria-label="Link to You Tube">
-				<i class="fab fa-youtube"></i>
-			</a>
-		</div>
-        <div id="copyright">© 2020 Copyright Mr-Smyth - Circles
-        </div>
-	</footer>
-    <!-- Materialize JS script -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!-- Static JS -->
-    <!-- Add facility for  local in-html scripts -->
-    {% block scripts %} {% endblock %}
-    <script src="{{ url_for('static', filename='js/utility.js') }}"></script>
-
-  </body>
-
+            <div id="copyright">© 2020 Copyright Mr-Smyth - Circles
+            </div>
+        </footer>
+        <!-- Materialize JS script -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <!-- Static JS -->
+        <!-- Add facility for  local in-html scripts -->
+        {% block scripts %} {% endblock %}
+        <script src="{{ url_for('static', filename='js/utility.js') }}"></script>
+    </body>
 </html>

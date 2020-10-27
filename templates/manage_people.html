@@ -1,78 +1,73 @@
 {% extends "base.html" %}
-
-{% block head %}
+    {% block head %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}" type="text/css"/>
-{% endblock %}
-
+    {% endblock %}
 {% block content %}
 
-    <!-- LOGO CONTAINER -->
-    <div id="top-logo-container">
-      <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
-    </div>
+<!-- LOGO CONTAINER -->
+<div id="top-logo-container">
+    <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+</div>
 
-    <!-- FLASH MESSAGES -->
-    <section>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="row">
-                        <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </section>
+<!-- FLASH MESSAGES -->
+<section>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="row">
+                    <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</section>
 
-	<!-- SEARCH BUTTON THAT REVEALS FORM WHEN CLICKED -->
-	<section>
-		<div class="row">
+<!-- SEARCH BUTTON THAT REVEALS FORM WHEN CLICKED -->
+<section>
+    <div class="row center-align">
         <!-- POP VIEW BACK TO TOP WHEN CLICKED -->
-            <a href="#first_name">
-			    <button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
-			        Delete A Person?
-			    </button>
-            </a>
-		</div>
-		<!-- SEARCH FORM  -->
-		<div class="row search-container container">
-			<form id="person-search" action="{{ url_for('manage_people') }}" method="POST" autocomplete="off">
-				<div class="row center-align">
-					<div class="input-field col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-						<input id="first_name" name="first_name" type="text" placeholder="Enter a First Name" class="validate" onfocus="this.select()">
-                        <label for="password">SEARCH FOR SOMEONE</label>
-                    </div>
-				</div>
-				<div class="row">
-					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-						<input id="last_name" name="last_name" type="text" placeholder="Enter a Surname" class="validate">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-						<input id="dob" name="dob" type="text" placeholder="Search by Date of Birth" class="validate datepicker" readonly="readonly">
-				    </div>
-				</div>
-				<div class="row">
-					<button type="submit" class="col s10 m4 offset-s0 offset-m4 search-btn">
-				        <i class="fas fa-search icon-4x"></i>
-				    </button>
-				</div>
-			</form>
-		</div>
-	</section>
+        <a href="#first_name" class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
+        Delete A Person?
+        </a>
+    </div>
+    <!-- SEARCH FORM  -->
+    <div class="row search-container container">
+        <form id="person-search" action="{{ url_for('manage_people') }}" method="POST" autocomplete="off">
+            <div class="row center-align">
+                <div class="input-field col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+                    <input id="first_name" name="first_name" type="text" placeholder="Enter a First Name" class="validate" onfocus="this.select()">
+                    <label for="password">SEARCH FOR SOMEONE</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+                    <input id="last_name" name="last_name" type="text" placeholder="Enter a Surname" class="validate">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+                    <input id="dob" name="dob" type="text" placeholder="Search by Date of Birth" class="validate datepicker" readonly="readonly">
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="col s10 m4 offset-s0 offset-m4 search-btn">
+                <i class="fas fa-search icon-4x"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
 
-    <!-- RESULTS PANEL -->
-	<section>
-		<div class="row">
-			{% if people|length > 0 %}
-            
-            <h1 class="results-heading">Select a Person to Delete</h1>
-				{% for person in people %}
-				<div class="row">
-					<div class="col s10 push-s1 m8 push-m2">
-                    <a href="{{ url_for('delete_person', person_id=person._id) }}">
-						<div class="card-panel search-result">
+<!-- RESULTS PANEL -->
+<section>
+    <div class="row">
+        {% if people|length > 0 %}
+        <h1 class="results-heading">Select a Person to Delete</h1>
+        {% for person in people %}
+        <div class="row">
+            <div class="col s10 push-s1 m8 push-m2">
+                <a href="{{ url_for('delete_person', person_id=person._id) }}">
+                    <div class="card-panel search-result">
                         <i class="fas fa-user-times left"></i>
                         <div class="result-details">
                             <span>{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }} : 
@@ -80,88 +75,84 @@
                             <span>{{ person.dob }}
                             </span>
                         </div>
-						</div>
-                        </a>
-					</div>
-				</div>
-				{% endfor %}
-			{% else %}
-            <div class="row">
-			    <h4 class="center-align red-text text-darken-4">{{ error }}</h4>
+                    </div>
+                </a>
             </div>
-		</div>
-		{% endif %}
-	</section>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="row">
+            <h4 class="center-align red-text text-darken-4">{{ error }}</h4>
+        </div>
+    </div>
+    {% endif %}
+</section>
 
-    <!-- DELETE EVERYONE -->
-    <!-- DELETE BUTTON THAT REVEALS PASSWORD FOR DELETION CLICKED -->
-	<section>
-		<div class="row">
-            <a href="#password">
-			    <button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent delete-button">
-				    Delete Everyone?
-			    </button>
-            </a>
-		</div>
-		<!-- PASSWORD ENTRY FORM  -->
-		<div class="row delete-container container">
-			<form id="password_for_delete" action="{{ url_for('delete_all_documents') }}" method="POST" autocomplete="off">
-				<div class="row center-align">
-					<div class="input-field col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-						<input id="password" name="password" type="password" placeholder="Enter Deletion Password" class="validate" required>
-                        <label for="password">DELETE EVERYONE</label>
-                    </div>
-				</div>
-                <div class="row">
-					<button type="submit" class="col s10 m4 offset-s0 offset-m4 delete-btn">
-				        <i class="fas fa-trash-alt icon-4x"></i>
-				    </button>
-				</div>
-			</form>
-		</div>
-	</section>
-    <!-- PASSWORD RESET FORM -->
-    <section>
-		<div class="row top-space-large">
-            <a href="#existing_password">
-				<button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent change-password-button">
-						Change Password?
-				</button>
-			</a>
-		</div>
-		<!-- PASSWORD CHANGE FORM  -->
-		<div class="row password-container container">
-			<form id="password_reset" action="{{ url_for('change_password') }}" method="POST" autocomplete="off">
+<!-- DELETE EVERYONE -->
+<!-- DELETE BUTTON THAT REVEALS PASSWORD FOR DELETION CLICKED -->
+<section>
+    <div class="row center-align">
+        <a href="#password" class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent delete-button">
+        Delete Everyone?
+        </a>
+    </div>
+    <!-- PASSWORD ENTRY FOR DELETE EVERYONE  -->
+    <div class="row delete-container container">
+        <form id="password_for_delete" action="{{ url_for('delete_all_documents') }}" method="POST" autocomplete="off">
+            <div class="row center-align">
+                <div class="input-field col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+                    <input id="password" name="password" type="password" placeholder="Enter Deletion Password" class="validate" required>
+                    <label for="password">DELETE EVERYONE</label>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="col s10 m4 offset-s0 offset-m4 delete-btn">
+                <i class="fas fa-trash-alt icon-4x"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- PASSWORD RESET FORM -->
+<section>
+    <div class="row top-space-large center-align">
+        <a href="#existing_password" class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent change-password-button">
+        Change Password?
+        </a>
+    </div>
+    <!-- PASSWORD CHANGE FORM  -->
+    <div class="row password-container container">
+        <form id="password_reset" action="{{ url_for('change_password') }}" method="POST" autocomplete="off">
             <!-- EXISTING PASSWORD -->
-				<div class="row center-align">
-					<div class="input-field col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-						<input id="existing_password" name="existing_password" type="password" placeholder="Enter Existing Password" class="validate" autocomplete="off" required>
-                        <label for="existing_password">CHANGE PASSWORD</label>
-                    </div>
-				</div>
-                <!-- NEW PASSWORD -->
-                <div class="row center-align">
-					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-						<input id="new_password" name="new_password" type="password" minlength="5" maxlength="20" pattern="^[a-zA-Z0-9]{5-15}$" placeholder="Enter New Password" class="validate" autocomplete="off" required>
-					</div>
-				</div>
-                <!-- CONFIRM NEW PASSWORD -->
-                <div class="row center-align">
-					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-						<input id="repeat_new_password" name="repeat_new_password" type="password" minlength="5" maxlength="20" pattern="^[a-zA-Z0-9]{5-15}$" placeholder="Confirm New Password" class="validate" autocomplete="off" required>
-					</div>
-				</div>
-                <div class="row">
-					<button type="submit" class="col s10 m4 offset-s0 offset-m4 delete-btn">
-				        <i class="fas fa-recycle icon-4x"></i>
-				    </button>
-				</div>
-			</form>
-		</div>
-	</section>
-
-
+            <div class="row center-align">
+                <div class="input-field col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+                    <input id="existing_password" name="existing_password" type="password" placeholder="Enter Existing Password" class="validate" autocomplete="off" required>
+                    <label for="existing_password">CHANGE PASSWORD</label>
+                </div>
+            </div>
+            <!-- NEW PASSWORD -->
+            <div class="row center-align">
+                <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+                    <input id="new_password" name="new_password" type="password" minlength="5" maxlength="20" pattern="^[a-zA-Z0-9]{5-15}$" placeholder="Enter New Password" class="validate" autocomplete="off" required>
+                </div>
+            </div>
+            <!-- CONFIRM NEW PASSWORD -->
+            <div class="row center-align">
+                <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+                    <input id="repeat_new_password" name="repeat_new_password" type="password" minlength="5" maxlength="20" pattern="^[a-zA-Z0-9]{5-15}$" placeholder="Confirm New Password" class="validate" autocomplete="off" required>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="col s10 m4 offset-s0 offset-m4 delete-btn">
+                <i class="fas fa-recycle icon-4x"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}
+<!-- SCRIPTS -->
 {% block scripts %}
-  <script src="{{ url_for('static', filename='js/manage_people.js') }}"></script>
+<script src="{{ url_for('static', filename='js/manage_people.js') }}"></script>
 {% endblock scripts %}

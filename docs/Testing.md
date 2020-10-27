@@ -47,6 +47,7 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 
 * [Testing of Python Code](#testing-of-python-code)
 * [Testing of Javascript Code](#testing-of-javascript)
+* [Testing of CSS Code](#testing-of-css)
 
 </details>
 
@@ -1360,6 +1361,36 @@ Add on styling for home and manage people pages
     * Pages rendered and behaved as expected.
 
 </details>
+
+[Back to Index](#index)
+
+<br>
+
+# HTML Testing
+
+### All Html files:
+
+**<details><summary>*.html Testing</summary>**
+Add on styling for home and manage people pages
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate add_person.
+* :clipboard: RESULT:
+    * ErrorS because validator did not recognise Jinga or flask Template syntax. I avoided jinja related errors in the validator
+    by pasting in the source code from the page rather than direct copy of the code.
+    * Warning to use <h> elements on sections, but i did not require headings on these sections.
+
+</details>
+
+[Back to Index](#index)
+
+<br>
+
+
+
+
+
+
 
 ---
 ---

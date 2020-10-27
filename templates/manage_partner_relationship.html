@@ -1,42 +1,43 @@
 {% extends "base.html" %}
-
-{% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
-    <title>Circles | Manage Partner Relationship</title>
-{% endblock %}
-
+    {% block head %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
+        <title>Circles | Manage Partner Relationship</title>
+    {% endblock %}
 {% block content %}
 
-	<!-- LOGO CONTAINER -->
-    <div id="top-logo-container">
-      <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+<!-- LOGO CONTAINER -->
+<div id="top-logo-container">
+    <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+</div>
+
+<!-- CHECK IF AN UNLINK IS FALSE - THIS MEANS THEY CANNOT BE 
+SEPERATED BECAUSE THEY HAVE AT LEAST ONE COMMON CHILD -->
+{% if unlink == false %}
+<section>
+    <div class="row center-align flash-messages">
+        <h5 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1">{{ person.first_name.capitalize() }} and {{ person2.first_name.capitalize() }} have shared children
+            as a result we cannot seperate them as relevant partners"
+        </h5>
     </div>
+    <div class="row center-align">
+        <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large indigo darken-4">Return to edit {{ person.first_name }}'s Spouse & Partner</a>
+    </div>
+</section>
 
-    {% if unlink == false %}
-    <section>
-            <div class="row center-align flash-messages">
-                <h5 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1">{{ person.first_name.capitalize() }} and {{ person2.first_name.capitalize() }} have shared children
-                as a result we cannot seperate them as relevant partners"</h5>
-            </div>
-            <div class="row center-align">
-                <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large indigo darken-4">Return to edit {{ person.first_name }}'s Spouse & Partner</a>
-            </div>
-    </section>
-    {% else %}
-    <section>
-            <div class="row center-align flash-messages">
-                <h5 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1"> {{ person.first_name.capitalize() }} and {{ person2.first_name.capitalize() }} have no shared children
-                so we can seperate them as relevant partners</h5>
-            </div>
-            <div class="row top-space-large center-align">
-                <a href="{{ url_for('delete_partner_relationship', person_id=person._id, person2_id=person2._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large red darken-4">Remove {{ person2.first_name }} {{ person2.last_name }} </a>
-            </div>
-            <div class="row top-space-large center-align">
-                <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large green darken-4">Cancel</a>
-            </div>
-    </section>
-
-    {% endif %}
-   
+<!-- ELSE THEY CAN BE SEPERATED -->
+{% else %}
+<section>
+    <div class="row center-align flash-messages">
+        <h5 class="col s12 col m8 offset-m2 text-shadow silver-text text-darken-1"> {{ person.first_name.capitalize() }} and {{ person2.first_name.capitalize() }} have no shared children
+            so we can seperate them as relevant partners
+        </h5>
+    </div>
+    <div class="row top-space-large center-align">
+        <a href="{{ url_for('delete_partner_relationship', person_id=person._id, person2_id=person2._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large red darken-4">Remove {{ person2.first_name }} {{ person2.last_name }} </a>
+    </div>
+    <div class="row top-space-large center-align">
+        <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s8 col m6 offset-s2 offset-m3 btn-large green darken-4">Cancel</a>
+    </div>
+</section>
+{% endif %}
 {% endblock %}
-

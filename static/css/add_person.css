@@ -4,9 +4,13 @@
      padding: 40px 10px 10px 10px;
      border-radius: 10px;
 }
- .page-heading{
+ .page-heading,
+ .page-sub-heading{
      font-size: 2rem;
      text-align: center;
+}
+ .page-sub-heading{
+     font-size: 1.8rem;
 }
  .radioSpacer {
      margin-top: 20px;

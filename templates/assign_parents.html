@@ -1,116 +1,112 @@
 {% extends "base.html" %}
-
-{% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
-    <title>Circles | Assign Parents</title>
-{% endblock %}
-
+    {% block head %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
+        <title>Circles | Assign Parents</title>
+    {% endblock %}
 {% block content %}
 
-	<!-- LOGO CONTAINER -->
-    <div id="top-logo-container">
-      <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
-    </div>
+<!-- LOGO CONTAINER -->
+<div id="top-logo-container">
+   <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+</div>
 
-    <!-- FLASH MESSAGES -->
-    <section>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="row">
-                        <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </section>
-    
-    
-    <h2 class="page-heading text-shadow">Assign {{ person.first_name.capitalize() }}'s Parents
-    <br><strong class="text-shadow"><h4>Step 2 of 5</h4></strong>
-    </h2>
-    
-    <div class="container white box-shade">
-		<div class="row">
-			<form name="form" class="col s12" method="POST" action="{{ url_for('assign_parents', person_id=person._id) }}" autocomplete="off">
-				<!-- ENTER MOTHERS INFORMATION -->
-                <!-- FIRST NAME -->
-				<div class="row"> 
-                    <h5 class="text-shadow">Assign {{ person.first_name.capitalize() }}'s Mother</h5>
-					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="mothers_first_name" name="mothers_first_name" value="{{ existing_mother.first_name.capitalize() }}" type="text" class="validate" required>
-						<label for="mothers_first_name">First Name</label>
-					</div>
-				</div>
-                <!-- LAST NAME -->
-				<div class="row">
-					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="mothers_last_name" name="mothers_last_name" value="{{ existing_mother.last_name.capitalize() }}" type="text" class="validate" required>
-						<label for="mothers_last_name">Last Name</label>
-					</div>
-				</div>
-                <!-- DOB -->
+<!-- FLASH MESSAGES -->
+<section>
+   {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
                 <div class="row">
-                    <div class="input-field col s12 m10 offset-s0 offset-m1">
-                        <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
-                        <input id="mothers_dob" name="mothers_dob" value="{{ existing_mother.dob }}" type="text" class="validate datepicker" readonly="readonly" required>
-                        <label for="mothers_dob">Date of Birth</label>
-                    </div>
+                    <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
                 </div>
-                <!-- ENTER FATHERS INFORMATION -->
-                <!-- FIRST NAME -->
-				<div class="row"> 
-                    <h5 class="text-shadow">Assign {{ person.first_name.capitalize() }}'s Father</h5>               
-					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="fathers_first_name" name="fathers_first_name" value="{{ existing_father.first_name.capitalize() }}" type="text" class="validate" required>
-						<label for="fathers_first_name">First Name</label>
-					</div>
-				</div>
-                <!-- LAST NAME -->
-				<div class="row">
-					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="fathers_last_name" name="fathers_last_name" value="{{ existing_father.last_name.capitalize() }}" type="text" class="validate" required>
-						<label for="fathers_last_name">Last Name</label>
-					</div>
-				</div>
-                <!-- DOB -->
-                <div class="row">
-                    <div class="input-field col s12 m10 offset-s0 offset-m1">
-                        <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
-                        <input id="fathers_dob" name="fathers_dob" type="text" value="{{ existing_father.dob }}" class="validate datepicker" readonly="readonly" required>
-                        <label for="fathers_dob">Date of Birth</label>
-                    </div>
-                </div>
-                <!-- SUBMIT BUTTON -->
-				<div class="row">
-					<div class="col s12 center-align">
-						<button type="submit" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
-				            Add Parents<i class="fas fa-user-plus left"></i>                     
-				        </button>
-                        <a href="{{ url_for('assign_parents', person_id=person._id) }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
-                        Clear<i class="fas fa-times-circle left"></i> </a>
-                    </div>
-                    <div class="col s12 center-align">
-                        {% if both_parents == True %}
-                        <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
-                        Next<i class="fas fa-arrow-alt-circle-right left"></i> </a>
-					    <a href="{{ url_for('view_circle', person_id=person._id) }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
-                        <i class="fas fas fa-street-view left"></i>View {{ person.first_name }}</a>
-                        {% else %}
-                        <a href="{{ url_for('view_circle', person_id=person._id) }}" class="col s10 push-s1 m11 xl4 offset-xl4 btn-large form-button text-shadow">
-                        <i class="fas fas fa-street-view left"></i>View {{ person.first_name }}</a>
-                        {% endif %}
-                    </div>
-				</div>
-			</form>
-		</div>
-    </div>
-       
+            {% endfor %}
+        {% endif %}
+   {% endwith %}
+</section>
+
+<!-- PAGE HEADING -->
+<h4 class="page-sub-heading text-shadow">Step 2 of 5</h4>
+<h2 class="page-heading text-shadow">Assign {{ person.first_name.capitalize() }}'s Parents</h2>
+<div class="container white box-shade">
+   <div class="row">
+      <form name="form" class="col s12" method="POST" action="{{ url_for('assign_parents', person_id=person._id) }}" autocomplete="off">
+         <!-- ENTER MOTHERS INFORMATION -->
+         <!-- FIRST NAME -->
+         <div class="row">
+            <h5 class="text-shadow">Assign {{ person.first_name.capitalize() }}'s Mother</h5>
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+               <input id="mothers_first_name" name="mothers_first_name" value="{{ existing_mother.first_name.capitalize() }}" type="text" class="validate" required>
+               <label for="mothers_first_name">First Name</label>
+            </div>
+         </div>
+         <!-- LAST NAME -->
+         <div class="row">
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+               <input id="mothers_last_name" name="mothers_last_name" value="{{ existing_mother.last_name.capitalize() }}" type="text" class="validate" required>
+               <label for="mothers_last_name">Last Name</label>
+            </div>
+         </div>
+         <!-- DOB -->
+         <div class="row">
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
+               <input id="mothers_dob" name="mothers_dob" value="{{ existing_mother.dob }}" type="text" class="validate datepicker" readonly="readonly" required>
+               <label for="mothers_dob">Date of Birth</label>
+            </div>
+         </div>
+         <!-- ENTER FATHERS INFORMATION -->
+         <!-- FIRST NAME -->
+         <div class="row">
+            <h5 class="text-shadow">Assign {{ person.first_name.capitalize() }}'s Father</h5>
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+               <input id="fathers_first_name" name="fathers_first_name" value="{{ existing_father.first_name.capitalize() }}" type="text" class="validate" required>
+               <label for="fathers_first_name">First Name</label>
+            </div>
+         </div>
+         <!-- LAST NAME -->
+         <div class="row">
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+               <input id="fathers_last_name" name="fathers_last_name" value="{{ existing_father.last_name.capitalize() }}" type="text" class="validate" required>
+               <label for="fathers_last_name">Last Name</label>
+            </div>
+         </div>
+         <!-- DOB -->
+         <div class="row">
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
+               <input id="fathers_dob" name="fathers_dob" type="text" value="{{ existing_father.dob }}" class="validate datepicker" readonly="readonly" required>
+               <label for="fathers_dob">Date of Birth</label>
+            </div>
+         </div>
+         <!-- SUBMIT BUTTON -->
+         <div class="row">
+            <div class="col s12 center-align">
+               <button type="submit" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
+               Add Parents<i class="fas fa-user-plus left"></i>                     
+               </button>
+               <a href="{{ url_for('assign_parents', person_id=person._id) }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
+               Clear<i class="fas fa-times-circle left"></i> </a>
+            </div>
+            <div class="col s12 center-align">
+               {% if both_parents == True %}
+                    <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
+                    Next<i class="fas fa-arrow-alt-circle-right left"></i> </a>
+                    <a href="{{ url_for('view_circle', person_id=person._id) }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
+                    <i class="fas fas fa-street-view left"></i>View {{ person.first_name }}</a>
+                {% else %}
+                    <a href="{{ url_for('view_circle', person_id=person._id) }}" class="col s10 push-s1 m11 xl4 offset-xl4 btn-large form-button text-shadow">
+                    <i class="fas fas fa-street-view left"></i>View {{ person.first_name }}</a>
+               {% endif %}
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
 {% endblock %}
+<!-- SCRIPTS -->
 {% block scripts %}
-  <script src="{{ url_for('static', filename='js/validate.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/validate.js') }}"></script>
 {% endblock scripts %}

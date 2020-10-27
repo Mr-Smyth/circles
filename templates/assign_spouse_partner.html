@@ -1,116 +1,113 @@
 {% extends "base.html" %}
-
-{% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
-    <title>Circles | Assign Spouse / Partner</title>
-{% endblock %}
-
+    {% block head %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
+        <title>Circles | Assign Spouse / Partner</title>
+    {% endblock %}
 {% block content %}
 
-	<!-- LOGO CONTAINER -->
-    <div id="top-logo-container">
-      <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
-    </div>
+<!-- LOGO CONTAINER -->
+<div id="top-logo-container">
+   <a  id="top-logo-image" href="{{ url_for('home') }}"></a>
+</div>
 
-    <!-- FLASH MESSAGES -->
-    <section>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="row">
-                        <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </section>
-  
-    <h2 class="page-heading text-shadow">Enter/Edit {{ person.first_name.capitalize() }}'s Spouse
-    <br><strong class="text-shadow"><h4>Step 3 of 5</h4></strong>
-    </h2>
-    
-	{% if existing_spouse_partners|length > 0 %}
-	<div class="container info-box white box-shade">
-		<h5 class="text-shadow">{{ person.first_name.capitalize() }}'s Spouse / Relevant Partners: </h5>
-        <h5 class="text-shadow space-bottom">Click on any of these links to Remove them:</h5>
-		{% for spouse_partner in existing_spouse_partners %}
-		<a href="{{ url_for('manage_partner_relationship', person_id=person._id, person2_id=spouse_partner._id) }}" class="btn-large indigo darken-4">{{ spouse_partner.first_name }}
-			{{ spouse_partner.last_name }}</a>
-		{% endfor %}
-        
-	</div>
-	{% endif %}
-
-    <div class="container white box-shade">
-		<div class="row">
-			<form name="form" class="col s12" method="POST" action="{{ url_for('assign_spouse_partner', person_id=person._id) }}" autocomplete="off">
-				<!-- ENTER SPOUSE / PARTNER INFORMATION -->
-                <!-- FIRST NAME -->
-				<div class="row"> 
-                    <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s spouse</h5>
-					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="first_name" name="first_name" type="text" class="validate" required>
-						<label for="first_name">First Name</label>
-					</div>
-				</div>
-                <!-- LAST NAME -->
-				<div class="row">
-					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="last_name" name="last_name" type="text" class="validate" required>
-						<label for="last_name">Last Name</label>
-					</div>
-				</div>
-                <!-- BIRTH SURNAME -->
-				<div class="row">
-					<div class="input-field col s12 m10 offset-s0 offset-m1">
-						<i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-						<input id="birth_surname" name="birth_surname" type="text" class="validate">
-						<label for="birth_surname">Maiden (Birth) Surname</label>
-					</div>
-				</div>
-                <!-- SELECT GENDER -->
-				<div class="row">					
-					<div class="input-field col s8 m6 offset-s0 offset-m1">
-                        <i class="fas fa-venus-mars prefix blue-text text-darken-4"></i>
-						<select id="gender" name="gender" class="validate" required>
-				            <option value="" disabled selected>Select Gender</option>
-				            <option value="female" class="validate">Female</option>
-				            <option value="male" class="validate">Male</option>
-				        </select>
-                        <label>Select Gender</label>
-					</div>
-				</div>
-                <!-- DOB -->
+<!-- FLASH MESSAGES -->
+<section>
+   {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
                 <div class="row">
-                    <div class="input-field col s12 m10 offset-s0 offset-m1">
-                        <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
-                        <input id="dob" name="dob" type="text" class="validate datepicker" readonly="readonly" required>
-                        <label for="dob">Date of Birth</label>
-                    </div>
+                    <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
                 </div>
-                <!-- SUBMIT BUTTON -->
-				<div class="row">
-					<div class="col s12 center-align">
-						<button type="submit" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
-				            Add Partner <i class="fas fa-user-plus left"></i>                     
-				        </button>
-                        <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
-                        Clear<i class="fas fa-times-circle left"></i> </a>
-                    </div>
-                    <div class="col s12 center-align">
-                        <a href="{{ url_for('assign_siblings', person_id=person._id) }}" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
-                        Next<i class="fas fa-arrow-alt-circle-right left"></i> </a>
-					    <a href="{{ url_for('view_circle', person_id=person._id) }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
-                        <i class="fas fas fa-street-view left"></i>View {{ person.first_name }}</a>
-                    </div>
-				</div>
-			</form>
-		</div>
-    </div>
-       
+            {% endfor %}
+        {% endif %}
+   {% endwith %}
+</section>
+
+<!-- PAGE HEADING -->
+<h4 class="page-sub-heading text-shadow">Step 3 of 5</h4>
+<h2 class="page-heading text-shadow">Assign {{ person.first_name.capitalize() }}'s Spouse</h2>
+
+<!-- EXISTING SPOUSE PARTNER SECTION AND ASSIGN NEW SPOUSE PARTNER FORM -->
+{% if existing_spouse_partners|length > 0 %}
+<div class="container info-box white box-shade">
+   <h5 class="text-shadow">{{ person.first_name.capitalize() }}'s Spouse / Relevant Partners: </h5>
+   <h5 class="text-shadow space-bottom">Click on any of these links to Remove them:</h5>
+   {% for spouse_partner in existing_spouse_partners %}
+        <a href="{{ url_for('manage_partner_relationship', person_id=person._id, person2_id=spouse_partner._id) }}" class="btn-large indigo darken-4">{{ spouse_partner.first_name }}
+        {{ spouse_partner.last_name }}</a>
+   {% endfor %}
+</div>
+{% endif %}
+<div class="container white box-shade">
+   <div class="row">
+      <form name="form" class="col s12" method="POST" action="{{ url_for('assign_spouse_partner', person_id=person._id) }}" autocomplete="off">
+         <!-- ENTER SPOUSE / PARTNER INFORMATION -->
+         <!-- FIRST NAME -->
+         <div class="row">
+            <h5 class="text-shadow">Add / Edit {{ person.first_name.capitalize() }}'s spouse</h5>
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+               <input id="first_name" name="first_name" type="text" class="validate" required>
+               <label for="first_name">First Name</label>
+            </div>
+         </div>
+         <!-- LAST NAME -->
+         <div class="row">
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+               <input id="last_name" name="last_name" type="text" class="validate" required>
+               <label for="last_name">Last Name</label>
+            </div>
+         </div>
+         <!-- BIRTH SURNAME -->
+         <div class="row">
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+               <input id="birth_surname" name="birth_surname" type="text" class="validate">
+               <label for="birth_surname">Maiden (Birth) Surname</label>
+            </div>
+         </div>
+         <!-- SELECT GENDER -->
+         <div class="row">
+            <div class="input-field col s8 m6 offset-s0 offset-m1">
+               <i class="fas fa-venus-mars prefix blue-text text-darken-4"></i>
+               <select id="gender" name="gender" class="validate" required>
+                  <option value="" disabled selected>Select Gender</option>
+                  <option value="female" class="validate">Female</option>
+                  <option value="male" class="validate">Male</option>
+               </select>
+               <label>Select Gender</label>
+            </div>
+         </div>
+         <!-- DOB -->
+         <div class="row">
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-calendar-alt prefix blue-text text-darken-4"></i>
+               <input id="dob" name="dob" type="text" class="validate datepicker" readonly="readonly" required>
+               <label for="dob">Date of Birth</label>
+            </div>
+         </div>
+         <!-- SUBMIT BUTTON -->
+         <div class="row">
+            <div class="col s12 center-align">
+               <button type="submit" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
+               Add Partner <i class="fas fa-user-plus left"></i>                     
+               </button>
+               <a href="{{ url_for('assign_spouse_partner', person_id=person._id) }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
+               Clear<i class="fas fa-times-circle left"></i> </a>
+            </div>
+            <div class="col s12 center-align">
+               <a href="{{ url_for('assign_siblings', person_id=person._id) }}" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
+               Next<i class="fas fa-arrow-alt-circle-right left"></i> </a>
+               <a href="{{ url_for('view_circle', person_id=person._id) }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
+               <i class="fas fas fa-street-view left"></i>View {{ person.first_name }}</a>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
 {% endblock %}
+<!-- SCRIPTS -->
 {% block scripts %}
-  <script src="{{ url_for('static', filename='js/validate.js') }}"></script>
+<script src="{{ url_for('static', filename='js/validate.js') }}"></script>
 {% endblock scripts %}

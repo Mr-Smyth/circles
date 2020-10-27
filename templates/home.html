@@ -1,112 +1,112 @@
 {% extends "base.html" %}
-
-{% block head %}
+    {% block head %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}" type="text/css"/>
         <title>Circles | Home</title>
-{% endblock %}
-
+    {% endblock %}
 {% block content %}
 
-	<!-- LOGO CONTAINER -->
-    <section>
-        <div id="logo-container">
-        <a  id="logo-image" href="{{ url_for('home') }}"></a>
-        </div>
-    </section>
+<!-- LOGO CONTAINER -->
+<section>
+   <div id="logo-container">
+      <a  id="logo-image" href="{{ url_for('home') }}"></a>
+   </div>
+</section>
 
-    <!-- FLASH MESSAGES -->
-    <section>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="row">
-                        <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </section>
+<!-- FLASH MESSAGES -->
+<section>
+   {% with messages = get_flashed_messages() %}
+   {% if messages %}
+   {% for message in messages %}
+   <div class="row">
+      <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
+   </div>
+   {% endfor %}
+   {% endif %}
+   {% endwith %}
+</section>
 
-	<!-- SEARCH BUTTON THAT REVEALS FORM WHEN CLICKED -->
-	<section>
-		<div class="row">
-            <a href="#first_name">
-			    <button class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
-		            Search Circles
-		        </button>
-            </a>
-		</div>
-		<!-- SEARCH FORM  -->
-		<div class="row search-container container">
-			<form id="person-search" action="{{ url_for('search') }}" method="POST" autocomplete="off">
-				<div class="row center-align">
-					<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-						<input id="first_name" name="first_name" type="text" placeholder="Enter a First Name" class="validate" onfocus="this.select()">
-			    </div>
-					</div>
-					<div class="row">
-						<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-							<input id="last_name" name="last_name" type="text" placeholder="Enter a Surname" class="validate">
-	            </div>
-						</div>
-						<div class="row">
-							<div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-								<input id="dob" name="dob" type="text" placeholder="Search by Date of Birth" class="validate datepicker" readonly="readonly">
-			    </div>
-							</div>
-							<div class="row">
-								<button type="submit" class="col s10 m4 offset-s0 offset-m4 search-btn">
-			        <i class="fas fa-search icon-4x"></i>
-			    </button>
-							</div>
-			</form>
-		</div>
-	</section>
-
-    <!-- RESULTS PANEL -->
-	<section>
-		<div class="row">
-			{% if people|length > 0 %}
-            
-            <h1 class="results-heading">Your Search Results</h1>
-				{% for person in people %}
-				<div class="row">
-					<div class="col s10 push-s1 m8 push-m2">
-                    <a href="{{ url_for('view_circle', person_id=person._id) }}">
-						<div class="card-panel search-result">
-                        <i class="fas fa-user-circle left"></i>
-                        <div class="result-details">
-                            <span>{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }} : 
-                            </span>
-                            <span>{{ person.dob }}
-                            </span>
-                        </div>
-						</div>
-                        </a>
-					</div>
-				</div>
-				{% endfor %}
-                {% else %}
-                <h4 class="col s10 push-s1 m8 push-m2 l6 push-l3 center-align indigo-text text-darken-4">{{ error }}</h4>
+<!-- SEARCH BUTTON THAT REVEALS FORM WHEN CLICKED -->
+<section>
+   <div class="row center-align">
+      <a href="#first_name" class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
+        Search Circles
+      </a>
+   </div>
+   <!-- SEARCH FORM  -->
+   <div class="row search-container container">
+      <form id="person-search" action="{{ url_for('search') }}" method="POST" autocomplete="off">
+         <!-- FIRST NAME -->
+         <div class="row center-align">
+            <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+               <input id="first_name" name="first_name" type="text" placeholder="Enter a First Name" class="validate" onfocus="this.select()">
             </div>
-	
-		{% endif %}
-	</section>
-    <!-- INTRODUCTION -->
-    <section id="introduction" class="container">
-        <p>
-            Welcome to Circles. 
-        </p>
-        <p>
-            Circles is a simple Genealogy builder, where you are able to search, view
-            and add people to your family circle.
-        </p>
-        <p>
-            To begin simply click the above search button, and <strong>Enjoy!</strong>
-        </p>
-    </section>
+         </div>
+         <!-- LAST NAME -->
+         <div class="row">
+            <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+               <input id="last_name" name="last_name" type="text" placeholder="Enter a Surname" class="validate">
+            </div>
+         </div>
+         <!-- DATE OF BIRTH -->
+         <div class="row">
+            <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+               <input id="dob" name="dob" type="text" placeholder="Search by Date of Birth" class="validate datepicker" readonly="readonly">
+            </div>
+         </div>
+         <!-- SEARCH BUTTON -->
+         <div class="row">
+            <button type="submit" class="col s10 m4 offset-s0 offset-m4 search-btn">
+            <i class="fas fa-search icon-4x"></i>
+            </button>
+         </div>
+      </form>
+   </div>
+</section>
+
+<!-- RESULTS PANEL -->
+<section>
+   <div class="row">
+      {% if people|length > 0 %}
+      <h1 class="results-heading">Your Search Results</h1>
+      {% for person in people %}
+      <div class="row">
+         <div class="col s10 push-s1 m8 push-m2">
+            <a href="{{ url_for('view_circle', person_id=person._id) }}">
+               <div class="card-panel search-result">
+                  <i class="fas fa-user-circle left"></i>
+                  <div class="result-details">
+                     <span>{{ person.first_name.capitalize() }} {{ person.last_name.capitalize() }} : 
+                     </span>
+                     <span>{{ person.dob }}
+                     </span>
+                  </div>
+               </div>
+            </a>
+         </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <h4 class="col s10 push-s1 m8 push-m2 l6 push-l3 center-align indigo-text text-darken-4">{{ error }}</h4>
+   </div>
+   {% endif %}
+</section>
+
+<!-- INTRODUCTION -->
+<section id="introduction" class="container">
+   <p>
+      Welcome to Circles. 
+   </p>
+   <p>
+      Circles is a simple Genealogy builder, where you are able to search, view
+      and add people to your family circle.
+   </p>
+   <p>
+      To begin simply click the above search button, and <strong>Enjoy!</strong>
+   </p>
+</section>
 
 {% endblock %}
+<!-- SCRIPTS -->
 {% block scripts %}
-  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
 {% endblock scripts %}
