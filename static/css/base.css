@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700;800&display=swap');
- /* GENERAL & COMMON SITE STYLING */
+
+/* GENERAL & COMMON SITE STYLING */
  * {
      font-family: 'Jost', sans-serif;
      padding: 0;
      margin: 0;
      -webkit-box-sizing: border-box;
-             box-sizing: border-box;
+     box-sizing: border-box;
 }
  html {
      scroll-behavior: smooth;
@@ -29,7 +30,7 @@
      color:rgba(211, 211, 211, 0.060);
      font-size:500px;
      -ms-transform:rotate(10deg);
-         transform:rotate(10deg);
+     transform:rotate(10deg);
      -webkit-transform:rotate(300deg);
 }
  .btn-large {
@@ -42,42 +43,7 @@
      font-size: 1rem;
      border-radius: 30px;
 }
-/* PAGE LOADER */
- #overlay{
-     width: 100%;
-     height: 100vh;
-     background: rgba(0,0,0, 0.8);
-     position: fixed;
-     cursor: wait;
-     z-index: 1000;
-     display: -webkit-box;
-     display: -ms-flexbox;
-     display: flex;
-     -webkit-box-orient: vertical;
-     -webkit-box-direction: normal;
-         -ms-flex-direction: column;
-             flex-direction: column;
-     -webkit-box-pack: center;
-         -ms-flex-pack: center;
-             justify-content: center;
-     -webkit-box-align: center;
-         -ms-flex-align: center;
-             align-items: center;
-}
- .loader{
-     width: 170px;
-     height: 30px;
-     background: url("../images/gifs/loader.gif") no-repeat;
-}
- .wait{
-     color: #eee;
-     font-size: 1.8rem;
-}
-/* END PAGE LOADER*/
-/* OVERRIDE MATERIALISE BUTTON FOCUS */
- .btn:focus, .btn-large:focus, .btn-small:focus, .btn-floating:focus {
-     background-color: #608bcc;
-}
+/** BUTTONS FOR FORM SUBMISSION */
  .form-button{
      font-size: 1.1rem;
      color: #c0c0c0;
@@ -92,8 +58,20 @@
      color: #eeeeee;
      background-color: #0b3574;
 }
+/* OVERRIDE MATERIALISE BUTTON FOCUS */
+ .btn:focus, .btn-large:focus, .btn-small:focus, .btn-floating:focus {
+     background-color: #608bcc;
+}
  .clear {
      background-color: transparent;
+}
+/* ALL ROUND SPACE UTILITY */
+ .space {
+     margin: 40px;
+}
+/* TOP SPACING UTILITY */
+ .space-top {
+     margin-top: 20px;
 }
  .top-space-xlarge {
      margin-top: 150px;
@@ -101,22 +79,19 @@
  .top-space-large {
      margin-top: 50px;
 }
- .space {
-     margin: 40px;
-}
- .space-top {
-     margin-top: 20px;
-}
+/* BOTTOM SPACE UTILITY */
  .space-bottom {
      margin-bottom: 20px;
 }
+/* GENERAL SHADOW UTILITY */
  .text-shadow {
      text-shadow: 2px 1.5px 1.5px rgba(0, 0, 0, 0.5) 
 }
  .box-shade {
      -webkit-box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
-             box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
+     box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
 }
+/* HEADINGS AND MESSAGES */
  .page-heading {
      font-size: 2rem;
      margin-left: 20px;
@@ -134,10 +109,50 @@
      font-size: 2rem;
      margin-top: 60px;
      -webkit-box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
-             box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
+     box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
      padding: 10px;
      color: #9fc5f8;
 }
+/* TOP LOGO RELATED STYLING */
+ #top-logo-container {
+     position: absolute;
+     margin-top: -50px;
+     margin-left: 20px;
+     height: 100px;
+     width: 100px;
+     background-color: transparent;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-pack: left;
+     -ms-flex-pack: left;
+     justify-content: left;
+}
+ #top-logo-image{
+     background-image: url("../images/circles-logo-1024x.png");
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: contain;
+     width: 300px;
+     height: 100%;
+}
+/** USING CSS GLOW ON .CIRCLES CLASS - IM CALLING A SLIGHTLY DIFFERENT IMAGE - TO GIVE A SLOW SUBTLE PULSING EFFECT TO THE LOGO */
+ #side-nav-logo:hover{
+     background-image: url("../images/circles-logo-1024x.png");
+     -webkit-animation: glow 1.5s linear infinite alternate;
+     animation: glow 1.5s linear infinite alternate;
+}
+ @-webkit-keyframes glow{
+     to {
+         background-image: url("../images/circles-logo-1024x-strong.png");
+    }
+}
+ @keyframes glow{
+     to {
+         background-image: url("../images/circles-logo-1024x-strong.png");
+    }
+}
+/* NAV BAR RELATED */
 /* ALTER STYLING OF MATERIALIZE NAV AND SIDE BAR */
  .sidenav {
      background: rgb(60,81,152);
@@ -174,34 +189,11 @@
 /* REMOVE BOX SHADOW FROM MATERIALIZE NAVBAR */
  nav {
      -webkit-box-shadow: none;
-             box-shadow: none;
+     box-shadow: none;
 }
 /* ALTER STYLE OF HAMBURGER */
  .fa-bars:before {
      color: rgb(159, 197, 248);
-}
-/* TOP LOGO RELATED STYLING */
- #top-logo-container {
-     position: absolute;
-     margin-top: -50px;
-     margin-left: 20px;
-     height: 100px;
-     width: 100px;
-     background-color: transparent;
-     display: -webkit-box;
-     display: -ms-flexbox;
-     display: flex;
-     -webkit-box-pack: left;
-         -ms-flex-pack: left;
-             justify-content: left;
-}
- #top-logo-image{
-     background-image: url("../images/circles-logo-1024x.png");
-     background-position: center;
-     background-repeat: no-repeat;
-     background-size: contain;
-     width: 300px;
-     height: 100%;
 }
 /* SIDE-NAV LOGO STYLING */
  #side-nav-logo-container {
@@ -226,78 +218,17 @@
      width: 300px;
      height: 100%;
 }
-/* USING CSS GLOW ON .CIRCLES CLASS - IM CALLING A SLIGHTLY DIFFERENT IMAGE - TO GIVE A SLOW SUBTLE PULSING EFFECT TO THE LOGO */
- #side-nav-logo:hover{
-     background-image: url("../images/circles-logo-1024x.png");
-     -webkit-animation: glow 1.5s linear infinite alternate;
-     animation: glow 1.5s linear infinite alternate;
-}
- @-webkit-keyframes glow{
-     to {
-         background-image: url("../images/circles-logo-1024x-strong.png");
-    }
-}
- @keyframes glow{
-     to {
-         background-image: url("../images/circles-logo-1024x-strong.png");
-    }
-}
-/* END SIDE NAV LOGO */
 /* OVERRIDE MATERIALIZE GREEN ON INPUTS */
  input:focus {
      border-bottom: 1px solid royalblue !important;
      -webkit-box-shadow: 0 1px 0 0 royalblue !important;
-             box-shadow: 0 1px 0 0 royalblue !important;
+     box-shadow: 0 1px 0 0 royalblue !important;
 }
  label.active {
      color: royalblue !important;
 }
  .dropdown-content li>a, .dropdown-content li>span {
      color: royalblue;
-}
-/* FOOTER */
- #circles-footer{
-     min-height: 150px;
-     margin-top: 50px;
-     color: silver;
-     display: -webkit-box;
-     display: -ms-flexbox;
-     display: flex;
-     -webkit-box-orient: vertical;
-     -webkit-box-direction: normal;
-         -ms-flex-direction: column;
-             flex-direction: column;
-     -ms-flex-pack: distribute;
-         justify-content: space-around;
-     -webkit-box-align: center;
-         -ms-flex-align: center;
-             align-items: center;
-     width: 100%;
-}
- #copyright{
-     text-align: center;
-}
- #social-links{
-     width: 80%;
-     display: -webkit-box;
-     display: -ms-flexbox;
-     display: flex;
-     -webkit-box-orient: horizontal;
-     -webkit-box-direction: normal;
-         -ms-flex-direction: row;
-             flex-direction: row;
-     -ms-flex-pack: distribute;
-         justify-content: space-around;
-}
- #social-links i{
-     font-size: 2rem;
-     -webkit-transition: all 0.55s ease-in-out;
-     -o-transition: all 0.55s ease-in-out;
-     transition: all 0.55s ease-in-out;
-}
- #social-links i:hover{
-     color: rgba(87,15,87,1);
-     text-shadow: 0px 0px 10px rgb(240, 239, 175);
 }
 /* MODIFY DATE PICKER DEFAULT STYLE */
  .datepicker-date-display {
@@ -320,6 +251,81 @@
  .datepicker-table td.is-today{
      background-color: rgb(34,65,167);
      color: #fff;
+}
+/* FOOTER STYLING*/
+ #circles-footer{
+     min-height: 150px;
+     margin-top: 50px;
+     color: silver;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-orient: vertical;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: column;
+     flex-direction: column;
+     -ms-flex-pack: distribute;
+     justify-content: space-around;
+     -webkit-box-align: center;
+     -ms-flex-align: center;
+     align-items: center;
+     width: 100%;
+}
+ #copyright{
+     text-align: center;
+}
+ #social-links{
+     width: 80%;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-orient: horizontal;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: row;
+     flex-direction: row;
+     -ms-flex-pack: distribute;
+     justify-content: space-around;
+}
+ #social-links i{
+     font-size: 2rem;
+     -webkit-transition: all 0.55s ease-in-out;
+     -o-transition: all 0.55s ease-in-out;
+     transition: all 0.55s ease-in-out;
+}
+ #social-links i:hover{
+     color: rgba(87,15,87,1);
+     text-shadow: 0px 0px 10px rgb(240, 239, 175);
+}
+/* PAGE LOADER STYLING */
+ #overlay{
+     width: 100%;
+     height: 100vh;
+     background: rgba(0,0,0, 0.8);
+     position: fixed;
+     cursor: wait;
+     z-index: 1000;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-orient: vertical;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: column;
+     flex-direction: column;
+     -webkit-box-pack: center;
+     -ms-flex-pack: center;
+     justify-content: center;
+     -webkit-box-align: center;
+     -ms-flex-align: center;
+     align-items: center;
+}
+ .loader{
+     width: 170px;
+     height: 30px;
+     background: url("../images/gifs/loader.gif") no-repeat;
+}
+ .wait{
+     color: #eee;
+     font-size: 1.8rem;
 }
 /* MEDIA QUERIES */
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */

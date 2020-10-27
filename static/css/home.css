@@ -50,6 +50,7 @@
      -o-transition: 1.2s;
      transition: 1.2s;
 }
+/** STYLING RELATED TO THE SEARCH FORM IN THE HOME PAGE AND ALSO THE FORMS IN THE MANAGE PEOPLE PAGE */
  .search-button:hover, .delete-button:hover, .change-password-button:hover{
      -webkit-box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
      box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
@@ -101,9 +102,7 @@
  button:focus {
      background-color: transparent;
 }
- .col{
-     padding-left: 40px;
-}
+/* RESULTS BANNER */
  .results-heading{
      width: 100%;
      font-size: 2rem;
@@ -161,10 +160,10 @@
      -ms-flex-pack: distribute;
      justify-content: space-around;
 }
-#introduction{
-    text-align: center;
-    color: #c0c0c0;
-    font-size: 1.6rem;
+ #introduction{
+     text-align: center;
+     color: #c0c0c0;
+     font-size: 1.6rem;
 }
 /* MEDIA QUERIES */
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
@@ -178,7 +177,4 @@
      .btn-small {
          font-size: 1.4rem;
     }
-}
-/* big landscape tablets, laptops, and desktops */
- @media (min-width:1025px) {
 }

@@ -1,3 +1,4 @@
+/* * Prefixed by https://autoprefixer.github.io * PostCSS: v7.0.29, * Autoprefixer: v9.7.6 * Browsers: last 4 version */
 /* LOGO RELATED STYLING */
  #logo-container {
      height: 300px;
@@ -188,7 +189,4 @@
          width: 120px;
          font-size: 1.4rem;
     }
-}
-/* big landscape tablets, laptops, and desktops */
- @media (min-width:1025px) {
 }

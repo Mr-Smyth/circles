@@ -1,4 +1,5 @@
 /** Relevant to all pages in the setup and edit person procedure */
+/** GENERAL STYLE FOR COMMON PAGES  */
  .container {
      padding: 40px 10px 10px 10px;
      border-radius: 10px;
@@ -13,14 +14,29 @@
  .info-box {
      margin-bottom: 20px;
 }
-.warning-text::placeholder{
-    color: red;
-}
+/** OVERIDE MATERIALIZE RADIO BUTTONS */
  [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
      border: 2px solid rgba(87,15,87,1);
 }
  [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
      background-color: rgba(87,15,87,1);
+}
+/** WARNING TEXT USED IN TEXT INSERTED BY JS TO VALIDATE DOB
+ - SEE VALIDATE.JS */
+ .warning-text::-webkit-input-placeholder{
+     color: red;
+}
+ .warning-text::-moz-placeholder{
+     color: red;
+}
+ .warning-text:-ms-input-placeholder{
+     color: red;
+}
+ .warning-text::-ms-input-placeholder{
+     color: red;
+}
+ .warning-text::placeholder{
+     color: red;
 }
 /* MEDIA QUERIES */
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
@@ -32,10 +48,4 @@
          padding: 40px 10px 10px 40px;
          border-radius: 10px;
     }
-}
-/* tablet, landscape iPad, lo-res laptops ands desktops */
- @media (min-width:801px) {
-}
-/* big landscape tablets, laptops, and desktops */
- @media (min-width:1025px) {
 }

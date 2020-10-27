@@ -1054,7 +1054,7 @@ This small function is called to handle the case where editing of a person resul
 <br>
 
 * :hammer: TEST: 
-    * Used [pep8online.com](http://pep8online.com/checkresult)
+    * Used [pep8online.com](http://pep8online.com)
 * :clipboard: RESULT:
     * The online PEP8 check returned 0 errors or warnings
 
@@ -1063,7 +1063,7 @@ This small function is called to handle the case where editing of a person resul
 
 ### utils.py:
 
-**<details><summary>utils Testing</summary>**
+**<details><summary>utils.py Testing</summary>**
 
 * :hammer: TEST: 
     * Checked Gitpods python linter.
@@ -1100,7 +1100,7 @@ This small function is called to handle the case where editing of a person resul
 
 [Back to Index](#index)
 
----
+<br>
 
 ## Testing of Javascript:
 
@@ -1243,13 +1243,123 @@ This small function is called to handle the case where editing of a person resul
 
 [Back to Index](#index)
 
----
+<br>
+
+## Testing of CSS:
+
+### base.css:
+
+**<details><summary>base.css Testing</summary>**
+Core styling used accross site.
+
+* :hammer: TEST: 
+    * Used [W3C CSS Validation](https://jigsaw.w3.org/css-validator/#validate_by_input) to validate add_person.
+* :clipboard: RESULT:
+    * No Errors shown
+    * 54 warnings about unknown user prefixes applied using autoprefixer.
+    
+
+<br>
+
+* :hammer: TEST: 
+    * Tested page on Samsung S7 and S10.
+* :clipboard: RESULT:
+    * Pages rendered and behaved as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested page on Multiple browsers including Chrome, Opera, Firefox and Safari via Browserstack.
+* :clipboard: RESULT:
+    * Pages rendered and behaved as expected.
+
+</details>
 
 
 
+### Add_person.css:
+Add on styling to all the form and form related pages
+
+**<details><summary>add_person.css Testing</summary>**
+
+* :hammer: TEST: 
+    * Used [W3C CSS Validation](https://jigsaw.w3.org/css-validator/#validate_by_input) to validate add_person.
+* :clipboard: RESULT:
+    * No Errors shown.
+    * 12 warnings about unknown user prefixes applied using autoprefixer.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested page on Samsung S7 and S10.
+* :clipboard: RESULT:
+    * Pages rendered and behaved as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested page on Multiple browsers including Chrome, Opera, Firefox and Safari via Browserstack.
+* :clipboard: RESULT:
+    * Pages rendered and behaved as expected.
+
+</details>
 
 
+### Home.css:
 
+**<details><summary>home.css Testing</summary>**
+Add on styling for home and manage people pages
+
+* :hammer: TEST: 
+    * Used [W3C CSS Validation](https://jigsaw.w3.org/css-validator/#validate_by_input) to validate add_person.
+* :clipboard: RESULT:
+    * No Errors shown
+    * 31 warnings about unknown user prefixes applied using autoprefixer.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested page on Samsung S7 and S10.
+* :clipboard: RESULT:
+    * Pages rendered and behaved as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested page on Multiple browsers including Chrome, Opera, Firefox and Safari via Browserstack.
+* :clipboard: RESULT:
+    * Pages rendered and behaved as expected.
+
+</details>
+
+
+### View_Circle.css:
+
+**<details><summary>view_circle.css Testing</summary>**
+Add on styling for home and manage people pages
+
+* :hammer: TEST: 
+    * Used [W3C CSS Validation](https://jigsaw.w3.org/css-validator/#validate_by_input) to validate add_person.
+* :clipboard: RESULT:
+    * No Errors shown
+    * 32 warnings about unknown user prefixes applied using autoprefixer.
+    
+
+<br>
+
+* :hammer: TEST: 
+    * Tested page on Samsung S7 and S10.
+* :clipboard: RESULT:
+    * Pages rendered and behaved as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Tested page on Multiple browsers including Chrome, Opera, Firefox and Safari via Browserstack.
+* :clipboard: RESULT:
+    * Pages rendered and behaved as expected.
+
+</details>
 
 ---
 ---
