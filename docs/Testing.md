@@ -48,6 +48,7 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 * [Testing of Python Code](#testing-of-python-code)
 * [Testing of Javascript Code](#testing-of-javascript)
 * [Testing of CSS Code](#testing-of-css)
+* [Testing of HTML Code](#HTML-testing)
 
 </details>
 
@@ -1385,44 +1386,3 @@ Add on styling for home and manage people pages
 [Back to Index](#index)
 
 <br>
-
-
-
-
-
-
-
----
----
----
----
-## Template:
-
-### Initial Testing:
-
-#### After the initial setup of the **your function here** functionality, i performed the following tests
-
-* :hammer: TEST: 
-    * test here..
-* :clipboard: RESULT:
-    * results here..
-
-### Final Testing:
-
-#### After the development stage, i performed the following tests
-
-* :hammer: TEST: 
-    * test here..
-* :clipboard: RESULT:
-    * results here..
-
-[Back to Index](#index)
-
----
-
-**<details><summary> - name here - </summary>**
-
-
------------  tests here
-
-</details>
