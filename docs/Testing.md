@@ -43,6 +43,17 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 
 </details>
 
+**<details><summary>Code Testing</summary>**
+
+* [Testing of Python Code](#testing-of-python-code)
+* [Testing of Javascript Code](#testing-of-javascript)
+
+</details>
+
+
+
+
+
 
 ---
 ## Test connection to Heroku.
@@ -1022,6 +1033,214 @@ This small function is called to handle the case where editing of a person resul
     have this feature.
 
 </details>
+
+[Back to Index](#index)
+
+---
+
+# Code Testing
+
+## Testing of Python code:
+
+### app.py:
+
+**<details><summary>app.py Testing:</summary>**
+
+* :hammer: TEST: 
+    * Checked Gitpods python linter.
+* :clipboard: RESULT:
+    * The Gitpod editor is clear of all PEP8 errors, except for the env which is not applicable.
+
+<br>
+
+* :hammer: TEST: 
+    * Used [pep8online.com](http://pep8online.com/checkresult)
+* :clipboard: RESULT:
+    * The online PEP8 check returned 0 errors or warnings
+
+</details>
+
+
+### utils.py:
+
+**<details><summary>utils Testing:</summary>**
+
+* :hammer: TEST: 
+    * Checked Gitpods python linter.
+* :clipboard: RESULT:
+    * The Gitpod editor is clear of all PEP8 errors, except for the env which is not applicable.
+
+<br>
+
+* :hammer: TEST: 
+    * Used [pep8online.com](http://pep8online.com/checkresult)
+* :clipboard: RESULT:
+    * The online PEP8 check returned 0 errors or warnings
+
+</details>
+
+
+### create_update.py:
+
+**<details><summary>create_update.py Testing:</summary>**
+
+* :hammer: TEST: 
+    * Checked Gitpods python linter.
+* :clipboard: RESULT:
+    * The Gitpod editor is clear of all PEP8 errors.
+
+<br>
+
+* :hammer: TEST: 
+    * Used [pep8online.com](http://pep8online.com/checkresult)
+* :clipboard: RESULT:
+    * The online PEP8 check returned 0 errors or warnings
+
+</details>
+
+[Back to Index](#index)
+
+---
+
+## Testing of Javascript:
+
+### home.js:
+
+**<details><summary>manage_people.js Testing:</summary>**
+
+* :hammer: TEST: 
+    * Used JsHint to validate
+* :clipboard: RESULT:
+    * Js Hint showed no errors.
+
+<br>
+
+* :hammer: TEST: 
+    * Checked that the forms in manage people were all opening and closing correctly.
+* :clipboard: RESULT:
+    * Manage People form elements opened and closed as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Repeated these tests on multiple browsers, and refreshed and hard reset pages multiple times
+* :clipboard: RESULT:
+    * Manage People form elements opened and closed as expected, and page displayed as expected with no errors in console.
+
+
+</details>
+
+**<details><summary>home.js Testing:</summary>**
+
+* :hammer: TEST: 
+    * Used JsHint to validate
+* :clipboard: RESULT:
+    * Js Hint showed no errors.
+
+<br>
+
+* :hammer: TEST: 
+    * Checked that the search form in home page was opening correctly on clicking search button.
+* :clipboard: RESULT:
+    * Search form opened as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Repeated this test on multiple browsers, and refreshed and hard reset pages multiple times
+* :clipboard: RESULT:
+    * Home page search form opened as expected, and page displayed as expected with no errors in console.
+
+
+</details>
+
+
+**<details><summary>validate.js Testing:</summary>**
+
+* :hammer: TEST: 
+    * Used JsHint to validate
+* :clipboard: RESULT:
+    * Js Hint showed no errors.
+
+<br>
+
+* :hammer: TEST: 
+    * Checked that i could not submit any form without having entered a Date of Birth.
+* :clipboard: RESULT:
+    * No form anywhere in Circles would allow form submission with a blank Date of Birth.
+    * After attempting submission user would be directed to the date of birth input, and in redirected
+     clear text asked to please enter date of birth.
+
+<br>
+
+* :hammer: TEST: 
+    * Checked that i could not submit On Parents page as this is different to a normal single form page.
+* :clipboard: RESULT:
+    * I could not submit the parents with a blank Date of Birth.
+    * After attempting submission user would be directed to the date of birth input, and in redirected
+     clear text asked to please enter date of birth.
+
+<br>
+
+* :hammer: TEST: 
+    * Checked that page loader activated upon submission.
+* :clipboard: RESULT:
+    * Page loader loaded after submission.
+
+<br>
+
+* :hammer: TEST: 
+    * Repeated these tests on multiple browsers, and refreshed and hard reset pages multiple times
+* :clipboard: RESULT:
+    * Form pages submitted as expected, and page displayed as expected with no errors in console.
+
+
+</details>
+
+
+**<details><summary>utility.js Testing:</summary>**
+
+* :hammer: TEST: 
+    * Used JsHint to validate
+* :clipboard: RESULT:
+    * Js Hint showed no errors.
+    * Js Hint showed one warning:
+        * 	Functions declared within loops referencing an outer scoped variable may lead to confusing semantics. (e, classInvalid)
+        * I was unable to achieve a fix on this, the code was taken and credited to Tim in Code Institute.
+    * There was 1 undeclared variable.
+        * M - this is used for materialize date format.
+    * 4 unused variables.
+        * These were all materialize related again. Removing them broke my style. So Materialize is 
+        dependant on them.
+<br>
+
+* :hammer: TEST: 
+    * Checked that the materializ dropdown element was showing same validation as the other elements
+* :clipboard: RESULT:
+    * Form validation displayed as expected.
+
+<br>
+
+* :hammer: TEST: 
+    * Checked that all Materialize components behaved as expected.
+* :clipboard: RESULT:
+    * Yes except for the date picker. If you scroll down the screen to almost half way mark, before opening the date picker. And
+    You then select the year picker, then the top setting for the drop down seems to be relevant to the page instead of the date picker.
+    Checked online and asked on slack channel. found that it is an issue with materialize, which i will try to fix in Js at a later date, but was not able to 
+    fix for this project submission.
+
+<br>
+
+
+* :hammer: TEST: 
+    * Repeated these tests on multiple browsers, and refreshed and hard reset pages multiple times
+* :clipboard: RESULT:
+    * Form pages behaved as expected, and page displayed as expected with no errors in console.
+
+
+</details>
+
+
 
 
 

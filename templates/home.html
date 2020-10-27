@@ -2,6 +2,7 @@
 
 {% block head %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}" type="text/css"/>
+        <title>Circles | Home</title>
 {% endblock %}
 
 {% block content %}
@@ -91,6 +92,19 @@
 	
 		{% endif %}
 	</section>
+    <!-- INTRODUCTION -->
+    <section id="introduction" class="container">
+        <p>
+            Welcome to Circles. 
+        </p>
+        <p>
+            Circles is a simple Genealogy builder, where you are able to search, view
+            and add people to your family circle.
+        </p>
+        <p>
+            To begin simply click the above search button, and <strong>Enjoy!</strong>
+        </p>
+    </section>
 
 {% endblock %}
 {% block scripts %}

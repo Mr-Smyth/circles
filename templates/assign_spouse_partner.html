@@ -2,6 +2,7 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
+    <title>Circles | Assign Spouse / Partner</title>
 {% endblock %}
 
 {% block content %}
@@ -109,7 +110,7 @@
 		</div>
     </div>
        
-
-    
-    
 {% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/validate.js') }}"></script>
+{% endblock scripts %}

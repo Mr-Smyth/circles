@@ -2,6 +2,7 @@
 
 {% block head %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/view_circle.css')}}" type="text/css"/>
+        <title>Circles | View Circle</title>
 {% endblock %}
 
 {% block content %}
@@ -133,7 +134,7 @@
             {% endfor %}
 		</div>
         <!-- IF NO SIBLING, THEN SHOW ALT CIRCLE -->
-        {% elif mother|length > 0 and father|length > 0 %} %}
+        {% elif mother|length > 0 and father|length > 0 %}
         <h2 class="circles-subheading">{{ person.first_name.capitalize() }}'s Siblings</h2>
         <div class="my-circles-container">
 			<div class="circles-item">
