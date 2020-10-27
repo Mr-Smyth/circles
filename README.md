@@ -591,6 +591,63 @@ clicking on a link in the results will remove that person and any links to that 
 [Back to Index](#index)
 
 ---
+# Problems encountered during development:
+
+#### Problem   
+My logic on the assign siblings / Parents and Children all involved trying to cut the work of the user. So what i was doing in these views
+was at every submit, i was getting every person involved, mostly siblings, checking who each siblings parents were and comparing them to find
+out who is a full of half sibling. Then assign them to each sibling / child. It worked great until i quickly realised that the workload went up
+exponentially with each new sibling, and after a quick stress test, found that Heroku timed out at around 10 siblings. 
+
+#### Solution   
+I knew i still wanted this functionality, so i spread the workload. Any existing siblings were collected with their parents into a nested array
+in a fixed format [[child, mother, father],[child, mother, father]] and so on...   
+This was all done in the Get portion or the view. The new sibling/child would be then added to this list, and within the POST section
+i could easily compare these nested arrays to find out who was who's sibling without multiple database calls pulling the application down as 
+the siblings grew. This worked very well and i added up to 30 siblings without more than a 10 second delay.
+
+#### Problem
+A problem relating to above situation about adding siblings. I needed to let the user know that something was happening when submit
+was clicked. On mobile devices especially where hover effects dont add to visual feed back i felt myself that i was not sure if i had 
+clicked submit or not.
+
+#### Solution
+I added a *"Working ... Please wait"* message and gif. I used Js and Css to call the loader gif on form submission, 
+then cancel it on page load.
+
+#### Problem
+I wanted the Date Picker to be Iron clad, in that i did not want any typed in dates, which was possible if you Tab onto the date picker.
+I found that making the date picker readonly only allowed click and select date entery which is exactly what i wanted. However this led to a bigger
+problem, because if you set the date picker input to readonly in HTML, form validation **required** no longer works. So it left the situation
+where i could click submit without entering a date of birth. The date of birth is one of the key values i am using to identify people in 
+The database and so i had to get a solution.
+
+#### Solution
+So I used a JS function to manually check if each date field was not blank, if it was i had to also indicate this to the user with an 
+inserted red placeholder text, and scroll to the problem input.
+
+#### Problem
+The dropdown for the year in the date picker seems to have a top relative to the page, after you go down the page so far.
+Obviously some js is acting on it because when you get to a certain point, the element style stops applying a top margin.
+
+#### Solution
+I was not able to find a solution yet to this problem. It is a problem with materialize, and i have read some attempted botched solutions for it
+which i do not like: [Source](https://github.com/Dogfalo/materialize/issues/6388).    
+I am considering removing Materialize in a future release, as i have had a poor experience with materialize, and much prefer to either build from
+scratch or i may look at another solution such as Materialize Bootstrap, or just Bootstrap.
+
+#### Footnote
+RE: Deletions:   
+I was concerned about allowing everyone access and did intend to set up user profiles allowing each profile to setup their own circle. But 
+Then i realised that there is room for everyones circle without user logins, and that actually everyone working in the same space could lead to 
+interesting overlaps in circles. I already have over 20 family and friends wanting a copy so they can start adding their own families. So i decided
+that instead of user profiles i would setup a deletion password. I currently only have it requested when you try to delete everyone, but 
+will probably restrict further in the future.
+
+
+[Back to Index](#index)
+
+---
 
 # Deployment
 
