@@ -637,6 +637,19 @@ which i do not like: [Source](https://github.com/Dogfalo/materialize/issues/6388
 I am considering removing Materialize in a future release, as i have had a poor experience with materialize, and much prefer to either build from
 scratch or i may look at another solution such as Materialize Bootstrap, or just Bootstrap.
 
+#### Problem 
+Date Pickers for date of birth. Setting them to read only had also caused the materialize coloured validation to no longer work.
+
+#### Solution
+Some rather unstylish, but effective JS code in validate.js. I had a slight problem where on the parent page i was not simply targeting 1 date input, but 2 in the same form.
+One for Mother and One for Father. So i started with a check to see what id elemnts were available. and then got which one was clicked.
+I passed the element of the clicked id through and checked if there was an existing date, if so, then give correct colour.   
+Then i passed the element through to a function to handle the datepicker Modal. As there were 2 DOB's in the parents form, so there was 2 
+Datepickers. I wanted to return to checkColour to set the correct colour, once a selection or clear or cancel was done by the user.
+But i need to point at the correct modal, not just the first one in the dom. So i got the parent node of the clicked element, and performed
+a query on it to find a modal, this gave me the correct modal, and i listened to it for the user click.
+Once passed back into checkColour, the correct colour was applied to the datepicker, in all circumstances.
+
 #### Footnote
 RE: Deletions:   
 I was concerned about allowing everyone access and did intend to set up user profiles allowing each profile to setup their own circle. But 
