@@ -62,19 +62,22 @@ document.addEventListener('DOMContentLoaded', function () {
      * GREEN OR RED LINES GET DOB INPUT - AS THE PARENTS PAGE
      * HAS 2 DOB DATEPICKERS IN ONE FORM, I NEED TO CHECK FOR THIS */
     if (document.getElementById("fathers_dob")){
-        document.getElementById("fathers_dob").addEventListener("click", function(){
+        const dob = document.getElementById("fathers_dob")
+        dob.addEventListener("click", function(){
             checkColour(dob)
-        }, false);
+        });
     }
     if (document.getElementById("mothers_dob")){
-        document.getElementById("mothers_dob").addEventListener("click", function(){
+        const dob = document.getElementById("mothers_dob")
+        dob.addEventListener("click", function(){
             checkColour(dob)
-        }, false);
+        });
     }
     if (document.getElementById("dob")){
-        document.getElementById("dob").addEventListener("click", function(){
+        const dob = document.getElementById("dob")
+        dob.addEventListener("click", function(){
            checkColour(dob) 
-        }, false);
+        });
     }
 
     /* CHECKS WHAT COLOR TO APPLY TO THE DOB INPUT ELEMENT */
@@ -93,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
             handleModal(dob);
         }
         else{
-            break;
+            return;
         }
     }
     /** ACT UPON WHAT USER DOES IN THE DATEPICKER MODAL */
