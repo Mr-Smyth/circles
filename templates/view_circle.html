@@ -25,7 +25,7 @@
     </div>
     <div id="person-details">
         {% if (person.family_name != "") %}
-            <p>Circle Name : <strong> {{ person.family_name.capitalize() }}</strong></p>
+            <p>Circle Name : <strong> {{ person.last_name.capitalize() }}</strong></p>
         {% endif %}
         {% if (person.birth_surname != "") %}
             <p>Maiden Name: <strong> {{ person.birth_surname.capitalize() }}</strong></p>
@@ -38,6 +38,12 @@
         {% endif %}
         {% if (person.dod != "") %}
             <p>Date of Death: <strong> {{ person.dod }}</strong></p>
+        {% endif %}
+        {% if (person.birth_address != "") %}
+            <p>Birth Addr: <strong> {{ person.birth_address.capitalize() }}</strong></p>
+        {% endif %}
+        {% if (person.rel_address != "") %}
+            <p>Relevant Addr: <strong> {{ person.rel_address.capitalize() }}</strong></p>
         {% endif %}
     </div>
 </div>

@@ -2,7 +2,7 @@
 <div align="center">
 
 # Manual ContinuousTesting
-All Initial/continuous testing performed between Google Chrome and a Samsung Galaxy S7. Individual browser tests will be performed after main development stage.
+All Initial/continuous testing performed between Google Chrome and a Samsung Galaxy S7. Individual browser tests will be performed after the main development stage.
 
 [Back to Readme](https://github.com/Mr-Smyth/circles/blob/master/README.md)
 
@@ -61,14 +61,14 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 ## Test connection to Heroku.
 
 ### Initial Testing:
-**<details><summary>After the initial setup of the flask app, and adding the relevent enviroment variables, and deployment to Heroku i performed the following tests:</summary>**
+**<details><summary>After the initial setup of the flask app, and adding the relevant environment variables, and deployment to Heroku I performed the following tests:</summary>**
 
 
-* :hammer: TEST:	
+* :hammer: TEST:    
     * Setup a base route and function and entered a simple return text "This is Circles".
 * :clipboard: RESULT: 
     * The result displayed as expected on the local development server.
-	* The result displayed as expected on the deployed site via Heroku.
+    * The result displayed as expected on the deployed site via Heroku.
 
 </details>
 
@@ -77,8 +77,8 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 **<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
-    * After Development stage, checked deployed link on multiple browsers and continued to use the deployed heroku link
-    throughout post development testing
+    * After Development stage, checked deployed link on multiple browsers and continued to use the deployed Heroku link
+    throughout post-development testing
 * :clipboard: RESULT:
     * Website always displayed as expected.
     * No errors in Heroku logs.
@@ -96,19 +96,19 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 **<details><summary>After initial layout and setup of basic navbar and logo, i performed the following tests</summary>**
 
 * :hammer: TEST: 
-    * Viewed Page on various screen sizes to check for overflow and undesired behavior
+    * Viewed Page on various screen sizes to check for overflow and undesired behaviour
 * :clipboard: RESULT: 
     * The home page rendered as expected.
-	* The resposiveness was good for initial testing.
+    * The responsiveness was good for initial testing.
 
 <br>
 
 * :hammer: TEST: 
     * Clicked the search input
 * :clipboard: RESULT:
-    * The search input dissappeared and the search form appeared. All displayed as expected.
+    * The search input disappeared and the search form appeared. All displayed as expected.
 
-*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
+*In all cases the styling of the page rendered as expected on both mobile, tablet and desktop.*
 
 </details>
 
@@ -120,7 +120,7 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
     * Checked the home page on multiple browsers and devices
 * :clipboard: RESULT:
     * Page rendered as expected.
-    * Firefox 79.0 did however show some jerky-ness in the glow animation of my logo, and also in the view circles. I have tried 
+    * Firefox 79.0 did, however, show some jerky-ness in the glow animation of my logo, and also in the view circles. I have tried 
     Stack overflow and other online resources but as yet have not found a solution for this.
 
 </details>
@@ -130,14 +130,14 @@ All Initial/continuous testing performed between Google Chrome and a Samsung Gal
 ---
 
 ## Testing of Search Functionality:
-After the initial setup of the search functionality, i decided to move from a single full name search box to a more flexible Mini Form.
-I believe provided an experience that was more flexible and desirable, in that i could search by any of First name, last name or DOB, or all together.
+After the initial setup of the search functionality, I decided to move from a single full name search box to a more flexible Mini Form.
+I believe provided an experience that was more flexible and desirable, in that I could search by any of First name, last name or DOB, or all together.
 
 ### Initial Testing:
 
 **<details><summary>After initial setup - i performed the following tests on the Search functionality</summary>**
 
-I believe provided an experience that was more flexible and desirable, in that i could search by any of First name, last name or DOB, or all together.
+I believe provided an experience that was more flexible and desirable, in that I could search by any of First name, last name or DOB, or all together.
 
 * :hammer: TEST: 
     * Provided a name in mixed case to the first name only.
@@ -163,21 +163,21 @@ I believe provided an experience that was more flexible and desirable, in that i
 * :hammer: TEST:
     * Provided a name in mixed case to the first name, last name and selected a DOB.
 * :clipboard: RESULT: 
-    * Results for that name, and DOB returned from MongoDB as expected.
-	* Results were filtered down to reflect the more detailed search.
+    * Results for that name and DOB returned from MongoDB as expected.
+    * Results were filtered down to reflect the more detailed search.
 
 All results were displayed in a column of clickable results.
 
 ### In the case of Errors:
 
 * :hammer: TEST: 
-    * Provided a name to the name fields that was not in the Mongo collection.
+    * Provided a name to the name fields that were not in the Mongo collection.
 * :clipboard: RESULT:   
-    * The error message passed into the home template from the search function, was succesfully displayed in bold.
+    * The error message passed into the home template from the search function, was successfully displayed in bold.
 
-This did not freeze or break the site, and allowed the user to click on the search button, and attempt another search. The message reflected the error.
+This did not freeze or break the site and allowed the user to click on the search button, and attempt another search. The message reflected the error.
 
-*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
+*In all cases the styling of the page rendered as expected on both mobile, tablet and desktop.*
 
 </details>
 
@@ -200,45 +200,45 @@ This did not freeze or break the site, and allowed the user to click on the sear
 ---
 
 ## Testing of Add Person Functionality:
-This page allows user to enter a new person.
+This page allows the user to enter a new person.
 
 ### Initial Testing:
 
 **<details><summary>After the initial setup of the Add person functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
-    * Entered information into all fields in search form, and submitted
+    * Entered information into all fields in the search form, and submitted
 * :clipboard: RESULT:
     * A Flash message to inform the user that the person was inserted successfully was displayed.
     * The Mongo collection contained 2 problems:
     * ERRORS: 
-	* Where i had not matched the import dictionary with the correct HTML input ID, the type of the document was set to null.
+    * Where I had not matched the import dictionary with the correct HTML input ID, the type of the document was set to null.
     * FIX: 
-	* I matched the import field in the dictionary being imported, to the correct Id in the form.
+    * I matched the import field in the dictionary being imported, to the correct id in the form.
 
     * RE-TESTED RESULT: 
-	* All fields within each document in MongoDB were inserted correctly.
+    * All fields within each document in MongoDB were inserted correctly.
 
 <br>
 
 * :hammer: TEST:
-    * Make sure i could not enter dates manually
+    * Make sure I could not enter dates manually
 * :clipboard: RESULT:
     * No dates can be entered manually.
 
 <br>
 
 * :hammer: TEST:
-    * What happens when i try to submit an empty form
+    * What happens when I try to submit an empty form
 * :clipboard: RESULT:   
-    * In form validation, using required, ensures that a minimum of, First name, Last name and Date of birth is required.
+    * In-form validation, using required, ensures that a minimum of, First name, Last name and Date of birth is required.
 
 <br>
 
 * :hammer: TEST:
-    * Could i recall all the information from a document
+    * Could I recall all the information from a document
 * :clipboard: RESULT: 
-    * Using the search feature on the home page, i was able to recall and view any document i entered.
+    * Using the search feature on the home page, I was able to recall and view any document I entered.
 
 <br>
 
@@ -257,18 +257,18 @@ This page allows user to enter a new person.
 <br>
 
 * :hammer: TEST: 
-    * After changing date pickers for Date of Birth to readonly to avoid user input error, tested that form validation still worked
+    * After changing date pickers for Date of Birth to read-only to avoid user input error, tested that form validation still worked
 * :clipboard: RESULT:
-    * The form submitted without required date of birth, this is not allowed and a script must be added to change this behavior.
+    * The form submitted without required date of birth, this is not allowed and a script must be added to change this behaviour.
 
 <br>
 
 * :hammer: TEST: 
-    * After adding additional form validation to force users to enter date of birth, into the readonly date of birth input.
+    * After adding additional form validation to force users to enter the date of birth, into the read-only date of birth input.
 * :clipboard: RESULT:
     * The form behaved as expected and required. The form did not submit until the user entered a Date of Birth. The user is guided to do this.
 
-*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
+*In all cases the styling of the page rendered as expected on both mobile, tablet and desktop.*
 
 </details>
 
@@ -293,7 +293,7 @@ This page allows user to enter a new person.
 * :hammer: TEST: 
     * Checked adding a new person who was a duplicate of an existing person.
 * :clipboard: RESULT:
-    * Upon adding the new person, the edit procedure grabbed the existing person, and continued the edit procedure with that existing person.
+    * Upon adding the new person, the editing procedure grabbed the existing person and continued the editing procedure with that existing person.
     * No duplicate person was created.
 
 </details>
@@ -310,7 +310,7 @@ Assign Parents, will grab the parents, if they exist, of the person being create
 **<details><summary>After the initial setup of the Assign Parents functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST:  
-    * Case where user enters parents name that are new people.
+    * Case where the user enters parents name that are new people.
 * :clipboard: RESULT:
     * User was able to enter parents details into the blank input form and then click
     **Add Parents** which then took the user to the next stage.  
@@ -320,17 +320,16 @@ Assign Parents, will grab the parents, if they exist, of the person being create
 <br>
 
 * :hammer: TEST: 
-    * Case where user enters parents name that would match an existing person.
+    * Case where the user enters parents name that would match an existing person.
 * :clipboard: RESULT:
-    * The function successfully detected any existing documents within MongoDb that matched the user entry into 
-    the form, and so eliminates duplication. The existing documents as well as the person were updated accordingly
+    * The function successfully detected any existing documents within MongoDB that matched the user entry into the form, and so eliminates duplication. The existing documents, as well as the person, were updated accordingly
 
 <br>
 
 * :hammer: TEST: 
-    * Case where user is editing a person that has existing parents.
+    * Case where the user is editing a person that has existing parents.
 * :clipboard: RESULT:
-    * The function will currently get the existing parents names, and display their details.  
+    * The function will currently get the existing parents names and display their details.  
     In the case where they are edited in any way the function will take the data from the form 
     and use them to select the correct parents from the DB, or create new ones.  
     
@@ -341,7 +340,7 @@ Assign Parents, will grab the parents, if they exist, of the person being create
 * :clipboard: RESULT:
     * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
 
-*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
+*In all cases the styling of the page rendered as expected on both mobile, tablet and desktop.*
 
 </details>
 
@@ -357,21 +356,21 @@ Assign Parents, will grab the parents, if they exist, of the person being create
 <br>
 
 * :hammer: TEST: 
-    * Performed multiple tests which tested form submission. I left out names and dates in various combinations, and attempted to submit.
+    * Performed multiple tests which tested form submission. I left out names and dates in various combinations and attempted to submit.
 * :clipboard: RESULT:
     * Form would not submit unless form validation was satisfied.
 
 * :hammer: TEST: 
-    * Performed multiple tests where i changed parents to new and/or existing people.
+    * Performed multiple tests where I changed parents to new and/or existing people.
 * :clipboard: RESULT:
-    * The parent child relationship was always correct after submission.
+    * The parent-child relationship was always correct after submission.
 
 <br>
 
 * :hammer: TEST: 
-    * Performed multiple tests where i checked the 4 buttons available.
+    * Performed multiple tests where I checked the 4 buttons available.
 * :clipboard: RESULT:
-    * The next button only displayed when parents were already selected, the update, clear and view person buttons as well as the next button, when visable, all
+    * The next button only displayed when parents were already selected, the update, clear and view person buttons as well as the next button, when visible, all
     behaved and worked as expected.
 
 </details>
@@ -381,7 +380,7 @@ Assign Parents, will grab the parents, if they exist, of the person being create
 ---
 
 ## Testing for Assign Spouse or Partner Functionality:
-Assign spouse / partner will grab the persons spouse / partners and display them on screen. These partners name are clickable, which leads to a page where they can possibly be removed
+Assign spouse/partner will grab the persons spouse/partners and display them on screen. These partners name are clickable, which leads to a page where they can be removed
 so long as they have no shared children. The included form will allow for adding of more partners.
 
 ### Initial Testing:
@@ -407,20 +406,19 @@ so long as they have no shared children. The included form will allow for adding
 **<details><summary>After refactor to change spouse / partner to an array, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
-    * After refactoring the code to convert the spouse link, to an Array, i performed multiple tests where i created a new person and added a spouse/Partner.
+    * After refactoring the code to convert the spouse link, to an Array, I performed multiple tests where I created a new person and added a spouse/Partner.
 * :clipboard: RESULT:
-    * Results in Database were correct and as expected. The results on screen showed the persons spouse / partner list. This list is clickable and clicking on a name, changes the person being edited to the person clicked.
+    * Results in Database were correct and as expected. The results on the screen showed the persons spouse/partner list. This list is clickable and clicking on a name, changes the person being edited to the person clicked.
 
 <br>
 
 * :hammer: TEST: 
     * Clicked on existing spouse/partner
 * :clipboard: RESULT:
-    * Result as expected. was taken to a manage spouse/partner page where, in the case of having no common children, was given the choice to remove
-    the person as a partner, or return back to the spouse/partner page.
-    * In the case where there were common children a message explained why i could not remove the partner, and gave me an option to return.
+    * Result as expected. was taken to a manage spouse/partner page where, in the case of having no common children, was given the choice to remove the person as a partner, or return to the spouse/partner page.
+    * In the case where there were common children, a message explained why I could not remove the partner, and gave me an option to return.
 
-*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
+*In all cases the styling of the page rendered as expected on both mobile, tablet and desktop.*
 
 </details>
 
@@ -436,21 +434,21 @@ so long as they have no shared children. The included form will allow for adding
 <br>
 
 * :hammer: TEST: 
-    * Performed multiple tests where i removed spouse/partners.
+    * Performed multiple tests where I removed spouse/partners.
 * :clipboard: RESULT:
     * Circles removed the person and the relationship, where there were no children involved.
 
 <br>
 
 * :hammer: TEST: 
-    * Performed multiple tests where i partially completed the forms, leaving out required information.
+    * Performed multiple tests where I partially completed the forms, leaving out the required information.
 * :clipboard: RESULT:
     * The form would not submit unless all required information had been entered.
 
 <br>
 
 * :hammer: TEST: 
-    * Performed multiple tests where i checked the 4 buttons available.
+    * Performed multiple tests where I checked the 4 buttons available.
 * :clipboard: RESULT:
     * All buttons behaved and worked as expected.
 
@@ -462,8 +460,8 @@ so long as they have no shared children. The included form will allow for adding
 
 ## Testing of the Manage Relationship Functionality:
 This small function is called if an existing spouse/partner is clicked on to remove it. The function checks to see
-if the 2 people have any common children, if they do, then Circles will not allow them to be 'Un-Tied' from eachother. The reason
-is that if they have a shared child then they are relevant partners within the structure of someones family Circle
+if the 2 people have any common children, if they do, then Circles will not allow them to be 'Un-Tied' from each other. The reason
+is that if they have a shared child then they are relevant partners within the structure of someone's family Circle
 and must remain as partners. The user is taken to a page where they are either allowed to undo the relationship, or informed that they
 cannot do that.
 
@@ -475,7 +473,7 @@ cannot do that.
     * click on a spouse/partner to remove, from within in the assign spouse/ partner page, where the person clicked
     has a common child with the person being edited.
 * :clipboard: RESULT:
-    * The user is informed that they cannot do this and given the option to return back to the spouse page.   
+    * The user is informed that they cannot do this and given the option to return to the spouse page.   
 
 <br>
 
@@ -484,9 +482,9 @@ cannot do that.
     has no common child with the person being assigned.
 * :clipboard: RESULT:
     * The user is informed that they can do this and given the option to remove the person as a spouse/partner and also 
-    the option to return back to the spouse page.
+    the option to return to the spouse page.
 
-*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
+*In all cases the styling of the page rendered as expected on both mobile, tablet and desktop.*
 
 </details>
 
@@ -509,8 +507,8 @@ cannot do that.
 ---
 
 ## Testing of Assign Siblings Functionality:
-The Assign siblings page adds someone as the persons sibling, and vice versa.
-Also siblings of siblings also become siblings of eachother. As a result, of all this 'heavy lifting', a small delay on form submit is noticable with larger sibling groups.
+The Assign siblings page adds someone as the person's sibling, and vice versa.
+Siblings of siblings also become siblings of each other. As a result, of all this 'heavy lifting', a small delay on form submit is noticeable with larger sibling groups.
 I am implementing a 'working'/'Please Wait' indicator for these situations.
 
 ### Initial Testing:
@@ -518,7 +516,7 @@ I am implementing a 'working'/'Please Wait' indicator for these situations.
 **<details><summary>After the initial setup of the Assign_siblings functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
-    * Enter a new sibling - (person did not pre-exist in DB) into the form and click Add Sibling.
+    * Enter a new sibling - (the person did not pre-exist in DB) into the form and click Add Sibling.
 * :clipboard: RESULT:
     * MongoDB showed sibling correctly added to person array, and the person was added to the sibling within the sibling array.
     Any existing siblings of the person being edited were added to the new sibling as siblings.
@@ -526,33 +524,28 @@ I am implementing a 'working'/'Please Wait' indicator for these situations.
 <br>
 
 * :hammer: TEST: 
-    * Created 2 seperate 2 child families - (Family A and Family B). I then added a new person (Steve) and
-    made Steves mother the family A mother, and Steves father the family B father.   
-    In the assign siblings page i added a child from family A as a sibling of Steve. And also added one child from family B as
-    a sibling of Steve. 
+    * Created 2 separate 2 child families - (Family A and Family B). I then added a new person (Steve) and made Steves mother the family A mother, and Steves father the family B father.   
+    In the assign siblings page, I added a child from family A as a sibling of Steve. And also added one child from family B as a sibling of Steve. 
 * :clipboard: RESULT:
-    * The result was Steve had 4 new siblings, 2 from each family. By adding the one sibling, Circles checked and added the sibling of the sibling
-    But due to the parent check within the function the Children in family A did not gain the children of family B as Siblings, 
+    * The result has Steve had 4 new siblings, 2 from each family. By adding the one sibling, Circles checked and added the sibling of the sibling
+    But due to the parent check within the function, the Children in family A did not gain the children of family B as Siblings, 
     and vice versa, Instead they just gained Steve, because Steve had one common parent.
 
-** ***Update : The above test will mostly be redundant as some adding siblings functionality now exists in the 
-assign parents function. This was to make the whole building process faster. ie: if i add my father, and he has children, 
+** ***Update: The above test will mostly be redundant as some adding siblings functionality now exists in the assign parents function. This was to make the whole building process faster. ie: if I add my father, and he has children, 
 then those children can become my siblings.  
-However the functionality will remain in place to protect against incorrect siblings of siblings being added***
+However, the functionality will remain in place to protect against incorrect siblings of siblings being added***
 
-*** ***Update II: Removed the siblings being added at the assign parents stage, as it slowed the assign parents stage noticably.  my attempts to
+*** ***Update II: Removed the siblings being added at the assign parents stage, as it slowed the assign parents stage noticeably.  my attempts to
 reduce the workload, and increase the automated process of adding to a family circle seemed to be skewing the logical flow of the site.
-It was slowing the Assign parents functionality just to add all the siblings and as a result rendered the siblings functionality largely
+It was slowing the Assign parents functionality just to add all the siblings and as a result, rendered the siblings functionality largely
 redundant. 
 Sibling functionality should be kept in the Siblings page, so therefore apart from the children section, Assign Siblings is now the only page where you 
 can effectively add, or remove siblings***
 
 * :hammer: TEST: 
-    * I linked person(A) to 2 siblings. Then linked another person(B) to 2 siblings. I then 
-    linked person(A) to person(B) as a sibling.
+    * I linked person(A) to 2 siblings. Then linked another person(B) to 2 siblings. I then linked person(A) to person(B) as a sibling.
 * :clipboard: RESULT:
-    * All person(A)'s siblings became siblings of person(B) and vice versa. also all of their siblings became 
-    siblings of eachother, if they had at least one matching parent.
+    * All person(A)'s siblings became siblings of person(B) and vice versa. also, all of their siblings became siblings of each other, if they had at least one matching parent.
 
 <br>
 
@@ -561,7 +554,7 @@ can effectively add, or remove siblings***
 * :clipboard: RESULT:
     * The form did not submit, and an indicator from the HTML Validation displayed to indicate the issue.
 
-*In all cases the pages styling rendered as expected on both mobile, tablet and desktop.*
+*In all cases the styling of the page rendered as expected on both mobile, tablet and desktop.*
 
 </details>
 
@@ -570,14 +563,14 @@ can effectively add, or remove siblings***
 **<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
-    * Performed multiple tests where i partially completed the forms, leaving out required information.
+    * Performed multiple tests where I partially completed the forms, leaving out the required information.
 * :clipboard: RESULT:
     * The form would not submit unless all required information had been entered.
 
 <br>
 
 * :hammer: TEST: 
-    * Performed multiple tests where i checked the 4 buttons available.
+    * Performed multiple tests where I checked the 4 buttons available.
 * :clipboard: RESULT:
     * All buttons behaved and worked as expected.
 
@@ -589,16 +582,16 @@ can effectively add, or remove siblings***
     * Page rendered as expected
     * I was forced to enter the required information.
     * Trailing Whitespace was ignored on form submission.
-    * Entering a name not in the DB, resulted in a creation of new sibling.
-    * Entering a name in the DB, resulted in correct linking of that person, as child to parents and sibling to other siblings.
+    * Entering a name not in the DB, resulted in the creation of new sibling.
+    * Entering a name in the DB, resulted in the correct linking of that person, as a child to parents and sibling to other siblings.
 <br>
 
 * :hammer: TEST: 
     * Checked the remove Sibling feature in assign children
 * :clipboard: RESULT:
-    * I was able to remove any child i clicked on.
+    * I was able to remove any child I clicked on.
     * I was returned to assign siblings page correctly.
-    * all pages rendered as expected, with desired amount of information.
+    * all pages rendered as expected, with the desired amount of information.
 
 </details>
 
@@ -606,7 +599,7 @@ can effectively add, or remove siblings***
 
 ---
 
-## Testing of check for Spouse Functionality:
+## Testing of the check for Spouse Functionality:
 This function checks if the current person being edited has anyone linked as a spouse or a partner. 
 If a partner or spouse exists, then the user gets automatically passed on to the assign children page. 
 If there is no spouse or partner the user gets passed to a decision page where they can opt to edit 
@@ -617,11 +610,11 @@ the person, or return home.
 **<details><summary>After the initial setup of the Check for Spouse functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
-    * Setup a person with no spouse or partner and clicked 'Next' 
+    * Setup a person with no spouse or partner and click 'Next' 
     from within the assign siblings page. 
 * :clipboard: RESULT:
-    * I was taken to a decision page where i clicked edit 'persons name' 
-    and i was taken back to the persons assign spouse page, where i could add a spouse/partner. 
+    * I was taken to a decision page where I clicked edit ' person's name' 
+    and I was taken back to the persons assign spouse page, where I could add a spouse/partner. 
     I also repeated this test and clicked on the home link and was taken back to the home screen.
     These results were as expected and correct.  
 
@@ -631,7 +624,7 @@ the person, or return home.
     * Setup a person with a spouse or partner and clicked 'Next' 
     from within the assign siblings page. 
 * :clipboard: RESULT:
-    * I was taken to the assign childrens page which is correct.
+    * I was taken to the assign children's page which is correct.
 
 </details>
 
@@ -640,10 +633,10 @@ the person, or return home.
 **<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
-    * Restested with and without spouse/partners setup.
+    * Retested with and without spouse/partners setup.
 * :clipboard: RESULT:
     * Results as expected.
-    * No spouse or partner led the user to a page informing them that they cannot add children unless a partner is set.
+    * No spouse or partner, led the user to a page informing them that they cannot add children unless a partner is set.
 
 </details>
 
@@ -652,9 +645,7 @@ the person, or return home.
 ---
 
 ## Testing of Assign Children Functionality:
-The Add children function gets the persons current children and displays them on screen. It also allows the user to 
-enter a child to add to the list of persons children. The childs parent selection, and the smart sibling linking means that adding 
-one child will update that child with parents and siblings (if present) and vice versa. 
+The Add children function gets the persons current children and displays them on screen. It also allows the user to enter a child to add to the list of the person's children. The child's parent selection, and the smart sibling linking means that adding one child will update that child with parents and siblings (if present) and vice versa. 
 I have made a change that restricts the user from getting to this page unless the person being edited has a spouse or a partner setup.
 
 ### Initial Testing:
@@ -664,7 +655,7 @@ I have made a change that restricts the user from getting to this page unless th
 * :hammer: TEST: 
     * Add a new child, not in MongoDB as a child of a new person.
 * :clipboard: RESULT:
-    * Child was updated in both parents documents, in the children array. Also the childs parents field was updated.   
+    * Child was updated in both parents documents, in the children array. Also, the child's parents field was updated.   
 
 <br>
 
@@ -672,16 +663,15 @@ I have made a change that restricts the user from getting to this page unless th
 * :hammer: TEST: 
     * Add a new child, not in MongoDB as a child of a person with 1 existing child. 
 * :clipboard: RESULT:
-    * Child was updated in both parents documents, in the children array. Also the childs parents field was updated. The siblings field
-    of bothe children were updated.
+    * Child was updated in both parents documents, in the children array. Also, the child's parents field was updated. The sibling's field of both children was updated.
 
 <br>
 
 * :hammer: TEST: 
-    * Add a child, that already existed in Mongo DB, that had existing half siblings from another set of parents,
+    * Add a child, that already existed in Mongo DB, that had existing half-siblings from another set of parents,
      as a child of a person with 1 existing child. 
 * :clipboard: RESULT:
-    * Child was updated in both parents documents, in the children array. Also the childs parents field was updated. 
+    * Child was updated in both parents documents, in the children array. Also, the child's parents field was updated. 
     The sibling fields of any children with a common parent were updated.
 
 </details>
@@ -691,14 +681,14 @@ I have made a change that restricts the user from getting to this page unless th
 **<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
-    * Performed multiple tests where i partially completed the forms, leaving out required information.
+    * Performed multiple tests where I partially completed the forms, leaving out the required information.
 * :clipboard: RESULT:
     * The form would not submit unless all required information had been entered.
 
 <br>
 
 * :hammer: TEST: 
-    * Performed multiple tests where i checked the 4 buttons available.
+    * Performed multiple tests where I checked the 4 buttons available.
 * :clipboard: RESULT:
     * All buttons behaved and worked as expected.
 
@@ -710,16 +700,16 @@ I have made a change that restricts the user from getting to this page unless th
     *  Page rendered as expected
     * I was forced to enter the required information.
     * Trailing Whitespace was ignored on form submission.
-    * Entering a name not in the DB, resulted in a creation of new child.
-    * Entering a name in the DB, resulted in correct linking of that person, as child to parents and sibling to other children.
+    * Entering a name not in the DB, resulted in the creation of a new child.
+    * Entering a name in the DB, resulted in incorrect linking of that person, as a child to parents and sibling to other children.
 <br>
 
 * :hammer: TEST: 
     * Checked the remove children feature in assign children
 * :clipboard: RESULT:
-    *  I was able to remove any child i clicked on.
+    *  I was able to remove any child I clicked on.
     * I was returned to assign children page correctly.
-    * all pages rendered as expected, with desired amount of information.
+    * all pages rendered as expected, with the desired amount of information.
 
 </details>
 
@@ -728,7 +718,7 @@ I have made a change that restricts the user from getting to this page unless th
 ---
 
 ## Testing of the Manage Child Relationship Functionality:
-This small function is called to handle removal of children. It consists of a landing page for info and calls delete_child to handle the removal. 
+This small function is called to handle the removal of children. It consists of a landing page for info and calls delete_child to handle the removal. 
 
 ### Initial Testing:
 
@@ -750,8 +740,8 @@ This small function is called to handle removal of children. It consists of a la
     * Checked the Remove Children feature on multiple browsers and devices
 * :clipboard: RESULT:
     * Page rendered as expected
-    * I was given clear information about what i was doing and given correct options.
-    * After checking Mongo DB, i found that, the removal was handled correctly.
+    * I was given clear information about what I was doing and given correct options.
+    * After checking Mongo DB, I found that the removal was handled correctly.
 
 </details>
 
@@ -781,7 +771,7 @@ This Function is to handle the editing of any person. It is reachable from a lin
 <br>
 
 * :hammer: TEST: 
-    * Check that any changes that conflicted with another person were handled..
+    * Check that any changes that conflicted with another person were handled.
 * :clipboard: RESULT:
     * If a person was changed in such a way as to be a duplicate of an existing person, Then the user is notified via the notify duplicate functionality.
 
@@ -792,7 +782,7 @@ This Function is to handle the editing of any person. It is reachable from a lin
 **<details><summary>After the development stage, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
-    * Performed multiple tests where i checked the 4 buttons available.
+    * Performed multiple tests where I checked the 4 buttons available.
 * :clipboard: RESULT:
     * All buttons behaved and worked as expected.
 
@@ -804,8 +794,8 @@ This Function is to handle the editing of any person. It is reachable from a lin
     *  Page rendered as expected
     * I was able to skip page if no editing was needed.
     * Trailing Whitespace was ignored on form submission.
-    * Entering a name not in the DB, resulted in editing of current person correctly.
-    * Entering a name in the DB, resulted in calling of the notify duplictaes functionality.
+    * Entering a name not in the DB, resulted in the editing of a current person correctly.
+    * Entering a name in the DB, resulted in calling the notify duplicates functionality.
 
 </details>
 
@@ -823,7 +813,7 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * I edited an existing person to be a duplicate of another existing person.
 * :clipboard: RESULT:
-    * I was taken to a page where i was correctly informed about the conflict and given a choice to correctly edit the person, 
+    * I was taken to a page where I was correctly informed about the conflict and given a choice to correctly edit the person, 
     or go to the person who was found to be a duplicate.
 
 </details>
@@ -886,7 +876,7 @@ This small function is called to handle the case where editing of a person resul
 **<details><summary>After the initial setup of the Manage People functionality, i performed the following tests:</summary>**
 
 * :hammer: TEST: 
-    * Tested searching for a person by first name
+    * Tested searching for a person by the first name
 * :clipboard: RESULT:
     * Got the correct results.
     * I was able to remove them by clicking on them.
@@ -928,7 +918,7 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * Tested Changing the deletion password.
     * Attempted to change the password by entering the correct current password.
-    * Entered a new password that didnt match confirm password
+    * Entered a new password that didn't match confirm password
 * :clipboard: RESULT:
     * General incorrect password message was displayed.
     * Password did not change.
@@ -959,7 +949,7 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * Performed repeat tests as above on multiple browsers
 * :clipboard: RESULT:
-    * results were as expected and all deletions / removal of relationships were performed cleanly and quickly.
+    * results were as expected and all deletions/removal of relationships were performed cleanly and quickly.
 
 </details>
 
@@ -976,7 +966,7 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * Visited the home page.
 * :clipboard: RESULT:
-    * Found the instruction very simple and clear, and any further information was explained by use of clear
+    * Found the instruction very simple and clear, and any further information was explained by the use of clear
     breadcrumbs, logical button names and flash messages.
 
 </details>
@@ -1008,10 +998,10 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * Visited the Add person page and began to add a family member.
 * :clipboard: RESULT:
-    * The 5 step process meant i simply had to fill in the blanks on each form.
-    * At no stage was i asked any question other than, details of family members.
-    * By the end i was able to view my family circle, and browse family connections.
-    * At no stage did i as a user need to provide any input on structure.
+    * The 5 step process meant I simply had to fill in the blanks on each form.
+    * At no stage was I asked any question other than, details of family members.
+    * By the end I was able to view my family circle and browse family connections.
+    * At no stage did I as a user need to provide any input on the structure.
 
 </details>
 
@@ -1021,7 +1011,7 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * Visited the home page.
 * :clipboard: RESULT:
-    * After clicking search to reveal the search form, i was able to search for anyone i had entered by any, or all of 
+    * After clicking search to reveal the search form, I was able to search for anyone I had entered by any or all of 
     either first name, last name or Date of birth
 
 </details>
@@ -1031,8 +1021,7 @@ This small function is called to handle the case where editing of a person resul
 
 
 * :clipboard: RESULT:
-    * For this version of Circles it has not been possible to add this functionality due to time constraints. A future version will
-    have this feature.
+    * For this version of Circles, it has not been possible to add this functionality due to time constraints. A future version will have this feature.
 
 </details>
 
@@ -1127,7 +1116,7 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * Repeated these tests on multiple browsers, and refreshed and hard reset pages multiple times
 * :clipboard: RESULT:
-    * Manage People form elements opened and closed as expected, and page displayed as expected with no errors in console.
+    * Manage People form elements opened and closed as expected, and the page displayed as expected with no errors in the console.
 
 </details>
 
@@ -1143,7 +1132,7 @@ This small function is called to handle the case where editing of a person resul
 <br>
 
 * :hammer: TEST: 
-    * Checked that the search form in home page was opening correctly on clicking search button.
+    * Checked that the search form in home page was opening correctly on clicking the search button.
 * :clipboard: RESULT:
     * Search form opened as expected.
 
@@ -1152,7 +1141,7 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * Repeated this test on multiple browsers, and refreshed and hard reset pages multiple times
 * :clipboard: RESULT:
-    * Home page search form opened as expected, and page displayed as expected with no errors in console.
+    * Home page search form opened as expected, and the page displayed as expected with no errors in the console.
 
 </details>
 
@@ -1168,20 +1157,18 @@ This small function is called to handle the case where editing of a person resul
 <br>
 
 * :hammer: TEST: 
-    * Checked that i could not submit any form without having entered a Date of Birth.
+    * Checked that I could not submit any form without having entered a Date of Birth.
 * :clipboard: RESULT:
     * No form anywhere in Circles would allow form submission with a blank Date of Birth.
-    * After attempting submission user would be directed to the date of birth input, and in redirected
-     clear text asked to please enter date of birth.
+    * After attempting submission user would be directed to the date of birth input, and in redirected clear text asked to please enter the date of birth.
 
 <br>
 
 * :hammer: TEST: 
-    * Checked that i could not submit On Parents page as this is different to a normal single form page.
+    * Checked that I could not submit On Parents page as this is different to a normal single form page.
 * :clipboard: RESULT:
     * I could not submit the parents with a blank Date of Birth.
-    * After attempting submission user would be directed to the date of birth input, and in redirected
-     clear text asked to please enter date of birth.
+    * After attempting submission user would be directed to the date of birth input, and in placeholder clear text asked to please enter the date of birth.
 
 <br>
 
@@ -1195,7 +1182,7 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * Repeated these tests on multiple browsers, and refreshed and hard reset pages multiple times
 * :clipboard: RESULT:
-    * Form pages submitted as expected, and page displayed as expected with no errors in console.
+    * Form pages submitted as expected, and the page displayed as expected with no errors in the console.
 
 </details>
 
@@ -1208,13 +1195,12 @@ This small function is called to handle the case where editing of a person resul
 * :clipboard: RESULT:
     * Js Hint showed no errors.
     * Js Hint showed one warning:
-        * 	Functions declared within loops referencing an outer scoped variable may lead to confusing semantics. (e, classInvalid)
+        *   Functions declared within loops referencing an outer scoped variable may lead to confusing semantics. (e, classInvalid)
         * I was unable to achieve a fix on this, the code was taken and credited to Tim in Code Institute.
     * There was 1 undeclared variable.
         * M - this is used for materialize date format.
     * 4 unused variables.
-        * These were all materialize related again. Removing them broke my style. So Materialize is 
-        dependant on them.
+        * These were all materialize related again. Removing them broke my style. So Materialize is dependant on them.
 <br>
 
 * :hammer: TEST: 
@@ -1227,9 +1213,9 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * Checked that all Materialize components behaved as expected.
 * :clipboard: RESULT:
-    * Yes except for the date picker. If you scroll down the screen to almost half way mark, before opening the date picker. And
-    You then select the year picker, then the top setting for the drop down seems to be relevant to the page instead of the date picker.
-    Checked online and asked on slack channel. found that it is an issue with materialize, which i will try to fix in Js at a later date, but was not able to 
+    * Yes except for the date picker. If you scroll down the screen to almost halfway mark, before opening the date picker. And
+    You then select the year picker, then the top setting for the drop-down seems to be relevant to the page instead of the date picker.
+    Checked online and asked on the slack channel. found that it is an issue with materialize, which I will try to fix in Js at a later date, but was not able to 
     fix for this project submission.
 
 <br>
@@ -1238,7 +1224,7 @@ This small function is called to handle the case where editing of a person resul
 * :hammer: TEST: 
     * Repeated these tests on multiple browsers, and refreshed and hard reset pages multiple times
 * :clipboard: RESULT:
-    * Form pages behaved as expected, and page displayed as expected with no errors in console.
+    * Form pages behaved as expected, and the page displayed as expected with no errors in the console.
 
 
 </details>
@@ -1377,9 +1363,8 @@ Add on styling for home and manage people pages
 * :hammer: TEST: 
     * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate add_person.
 * :clipboard: RESULT:
-    * ErrorS because validator did not recognise Jinga or flask Template syntax. I avoided jinja related errors in the validator
-    by pasting in the source code from the page rather than direct copy of the code.
-    * Warning to use <h> elements on sections, but i did not require headings on these sections.
+    * ErrorS because validator did not recognise Jinga or flask Template syntax. I avoided jinja related errors in the validator by pasting in the source code from the page rather than a direct copy of the code.
+    * Warning to use <h> elements on sections, but I did not require headings on these sections.
 
 </details>
 

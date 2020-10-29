@@ -455,7 +455,7 @@ Clicking **View** (Person Name) will take the user to the **view Circle page**.
 ## Assign Children
 ### Step 5 of 5
 This page is reachable from completing or skipping the Assign Sibling page, and only when the person being edited has an existing spouse or partner. 
-This page is also reachable, from the view circle page, if the person being viewed has a partner already set-up, and also has no existing children.
+This page is also reachable, from the view circle page, if the person being viewed, has an existing partner already set-up, and also has no existing children.
 The page includes common site navigation and a reduced logo pushed to the top left.
 The page will display the existing Children of the person being edited, in a row of links, within
 a top separated window. These links are clickable and when clicked, allow the user to remove the clicked child if you choose to, this will also remove the link between the child and the parent being edited. All other links will remain in place
@@ -595,68 +595,63 @@ clicking on a link in the results will remove that person and any links to that 
 # Problems Encountered during Development:
 
 #### Problem   
-My logic on the assign siblings / Parents and Children all involved trying to cut the work of the user. So what i was doing in these views
-was at every submit, i was getting every person involved, mostly siblings, checking who each siblings parents were and comparing them to find
-out who is a full of half sibling. Then assign them to each sibling / child. It worked great until i quickly realised that the workload went up
+My logic on the assign siblings / Parents and Children all involved trying to cut the work of the user. So what I was doing in these views
+was at every submit, I was getting every person involved, mostly siblings, checking who each sibling's parents were and comparing them to find
+out who is either a full or half-sibling. Then assign them to each sibling/child. It worked great until I quickly realised that the workload went up
 exponentially with each new sibling, and after a quick stress test, found that Heroku timed out at around 10 siblings. 
 
 #### Solution   
-I knew i still wanted this functionality, so i spread the workload. Any existing siblings were collected with their parents into a nested array
+I knew I still wanted this functionality, so I spread the workload. Any existing siblings were collected with their parents into a nested array
 in a fixed format [[child, mother, father],[child, mother, father]] and so on...   
-This was all done in the Get portion or the view. The new sibling/child would be then added to this list, and within the POST section
-i could easily compare these nested arrays to find out who was who's sibling without multiple database calls pulling the application down as 
-the siblings grew. This worked very well and i added up to 30 siblings without more than a 10 second delay.
+This was all done in the Get portion of the view. The new sibling/child would be then added to this list and within the POST section,
+I could easily compare these nested arrays to find out who was who's sibling without multiple database calls pulling the application down as the siblings grew. This worked very well and I added up to 30 siblings without more than a 10-second delay.
 
 #### Problem
-A problem relating to above situation about adding siblings. I needed to let the user know that something was happening when submit
-was clicked. On mobile devices especially where hover effects dont add to visual feed back i felt myself that i was not sure if i had 
-clicked submit or not.
+A problem relating to the above situation about adding siblings. I needed to let the user know that something was happening when the submit button is clicked. On mobile devices especially where hover effects don't add to visual feedback I felt that I was not sure if I had clicked submit or not.
 
 #### Solution
-I added a *"Working ... Please wait"* message and gif. I used Js and Css to call the loader gif on form submission, 
+I added a *"Working ... Please wait"* message and gif. I used Js and CSS to call the loader gif on form submission, 
 then cancel it on page load.
 
 #### Problem
-I wanted the Date Picker to be Iron clad, in that i did not want any typed in dates, which was possible if you Tab onto the date picker.
-I found that making the date picker readonly only allowed click and select date entery which is exactly what i wanted. However this led to a bigger
-problem, because if you set the date picker input to readonly in HTML, form validation **required** no longer works. So it left the situation
-where i could click submit without entering a date of birth. The date of birth is one of the key values i am using to identify people in 
-The database and so i had to get a solution.
+I wanted the Date Picker to be Ironclad, in that, I did not want any typed in dates, which was possible if you Tab onto the date picker.
+I found that making the date picker read-only only allowed click and select date entry which is exactly what I wanted. However, this led to a bigger
+problem, because if you set the date picker input to read-only in HTML, form validation **required** no longer works. So it left the situation
+where I could click submit without entering a date of birth. The date of birth is one of the key values I am using to identify people in 
+The database and so I had to get a solution.
 
 #### Solution
-So I used a JS function to manually check if each date field was not blank, if it was i had to also indicate this to the user with an 
+So I used a JS function to manually check if each date field was not blank if it was I had to also indicate this to the user with an 
 inserted red placeholder text, and scroll to the problem input.
 
 #### Problem
-The dropdown for the year in the date picker seems to have a top relative to the page, after you go down the page so far.
-Obviously some js is acting on it because when you get to a certain point, the element style stops applying a top margin.
+The dropdown for the year in the date picker seems to have a top relative to the page after you go down the page so far.
+Some js is acting on it because when you get to a certain point, the element style stops applying a top margin.
 
 #### Solution
-I was not able to find a solution yet to this problem. It is a problem with materialize, and i have read some attempted botched solutions for it
-which i do not like: [Source](https://github.com/Dogfalo/materialize/issues/6388).    
-I am considering removing Materialize in a future release, as i have had a poor experience with materialize, and much prefer to either build from
-scratch or i may look at another solution such as Materialize Bootstrap, or just Bootstrap.
+I was not able to find a solution yet to this problem. It is a problem with materialize, and I have read some attempted botched solutions for it
+which I do not like: [Source](https://github.com/Dogfalo/materialize/issues/6388).    
+I am considering removing Materialize in a future release, as I have had a poor experience with materialize, and much prefer to either build from
+scratch or I may look at another solution such as Materialize Bootstrap, or just Bootstrap.
 
 #### Problem 
-Date Pickers for date of birth. Setting them to read only had also caused the materialize coloured validation to no longer work.
+Date Pickers for date of birth. Setting them to read-only had also caused the materialize coloured validation to no longer work.
 
 #### Solution
-Some rather unstylish, but effective JS code in validate.js. I had a slight problem where on the parent page i was not simply targeting 1 date input, but 2 in the same form.
-One for Mother and One for Father. So i started with a check to see what id elemnts were available. and then got which one was clicked.
+Some rather unstylish, but effective JS code in validate.js. I had a slight problem where on the parent page I was not simply targeting 1 date input, but 2 in the same form.
+One for Mother and One for Father. So I started with a check to see what id elements were available. and then got which one was clicked.
 I passed the element of the clicked id through and checked if there was an existing date, if so, then give correct colour.   
-Then i passed the element through to a function to handle the datepicker Modal. As there were 2 DOB's in the parents form, so there was 2 
+Then I passed the element through to a function to handle the date picker Modal. As there were 2 DOB's in the parent's form, so there was 2 
 Datepickers. I wanted to return to checkColour to set the correct colour, once a selection or clear or cancel was done by the user.
-But i need to point at the correct modal, not just the first one in the dom. So i got the parent node of the clicked element, and performed
-a query on it to find a modal, this gave me the correct modal, and i listened to it for the user click.
-Once passed back into checkColour, the correct colour was applied to the datepicker, in all circumstances.
+But I need to point at the correct modal, not just the first one in the dom. So I got the parent node of the clicked element and performed
+a query on it to find a modal, this gave me the correct modal, and I listened to it for the user click.
+Once passed back into checkColour, the correct colour was applied to the date picker, in all circumstances.
 
 #### Footnote
 RE: Deletions:   
-I was concerned about allowing everyone access and did intend to set up user profiles allowing each profile to setup their own circle. But 
-Then i realised that there is room for everyones circle without user logins, and that actually everyone working in the same space could lead to 
-interesting overlaps in circles. I already have over 20 family and friends wanting a copy so they can start adding their own families. So i decided
-that instead of user profiles i would setup a deletion password. I currently only have it requested when you try to delete everyone, but 
-will probably restrict further in the future.
+I was concerned about allowing everyone access and did intend to set up user profiles allowing each profile to setup their circle. But 
+Then I realised that there is room for everyone's circle without user logins and that everyone working in the same space could lead to interesting overlaps in circles. I already have over 20 family and friends wanting a copy so they can start adding their own families. So I decided
+that instead of user-profiles I would set up a deletion password. I currently only have it requested when you try to delete everyone, but will probably restrict further in the future.
 
 [Back to Index](#index)
 
@@ -688,7 +683,7 @@ Heroku looks for this Procfile to find out which file runs the app and how to ru
 
 1.  Goto the Heroku Dashboard.
 2.  Click New.
-3.  Select create a new app.
+3.  Select to create a new app.
 4.  The Heroku app name must be unique, use "–" instead of spaces, and use lower case letters.
 5.  Mr-smyth-circles is the name I picked for this application.
 6.  Select the region closest – Europe
