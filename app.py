@@ -18,23 +18,18 @@ from create_update import (
     blank_template, call_person_update, call_create_person,
     create_parent)
 
-# Import env.py if it exists
 if os.path.exists("env.py"):
     import env
 
 app = Flask(__name__)
 
-#   SETUP OUR env VARIABLES
-#   MONGO DBNAME
+#   SETUP env VARIABLES
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
-#   GET THE MONGO URI OR CONNECTION STRING
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
-#    GET THE SECRET KEY WHICH IS REQUIRED FOR PARTS OF FLASK, LIKE FLASH
-app.secret_key = os.environ.get("MONGO_DBNAME")
+app.secret_key = os.environ.get("SECRET_KEY")
 
-#   SETUP INSTANCE OF PyMongo AND ADD IN app.py
+#   SETUP INSTANCE OF PyMongo
 mongo = PyMongo(app)
-
 
 #   BASE ROUTE
 @app.route("/")
@@ -43,57 +38,45 @@ def home():
     return render_template("home.html")
 
 
-#   SEARCH VIEW
+# Search view
 @app.route("/search", methods=["GET", "POST"])
 def search():
+    """ Search view
 
-    #   FUNCTION PURPOSE -
-    #   TO BUILD A SEARCH QUERY FROM WHATEVER THE USER CHOOSES TO
-    #       ENTER AND RUN THE SEARCH AND RETURN RESULTS
-
+    Build and perform a search for whatever info user enters
+    """
+    # get search data and check for empty search
     if request.method == "POST":
-
         query = call_search()
-
-        #   CHECK IF THE QUERY IS NOT BLANK - SOMEONE JUST CLICKED
-        #       SEARCH WITHOUT ANY ENTRIES?
         if len(query) > 0:
             people = list(mongo.db.people.find(query))
             error = "Sorry Circles has 0 records matching search.\
                 Please use Add person to add this person"
         else:
             return redirect(url_for("home"))
-
-        # RETURN TO HOME, THE RESULTS CURSOR
+    # return list of results and the error for no results.
     return render_template("home.html", people=people, error=error)
 
 
-#   ADD PERSON VIEW
+# Add person view
 @app.route("/add_person/", methods=["GET", "POST"])
 def add_person():
+    """Add person view
 
-    #   FUNCTION PURPOSE -
-    # 1.    GETS INFORMATION FROM THE FORM AND CREATES A NEW
-    #       PERSON IN CIRCLES
-    # 2.    IF PERSON ENTERED EXISTS - THEN PERSON WILL NOT BE DUPLICATED
-    #       AND ANY EXTRA INFORMATION WILL BE UPDATED TO THE EXISTING PERSON
-
+    Creates a new person or updates in the case
+    where user entered details match an existing person
+    """
     if request.method == "POST":
-        #   GET CALL_SEARCH RESULT QUERY
+        # Setup a person search to see if this person exists already
         person_search = call_search()
-
-        #   CHECK TO SEE IF PERSON ALREADY EXISTS
         if mongo.db.people.count_documents(person_search, limit=1) == 0:
 
-            #   GET A TEMPLATE FOR IMPORTING NEW PERSON
+            # person doesnt exist lets create them and insert
             person = call_create_person()
-            #   ADD THE PERSON DICTIONARY TO MONGO AND GET THE ID BACK
             person_inserted = mongo.db.people.insert_one(person)
             person_id = person_inserted.inserted_id
         else:
-
-            #   THEN PERSON ALREADY EXISTS, WE CAN UPDATE THEM
-            #   GET TEMPLATE FOR UPDATING EXISTING PERSON
+            # Person already exists - get and update them
             person_update = call_person_update()
             person_id = mongo.db.people.find_one(
                 person_search)["_id"]
@@ -105,29 +88,29 @@ def add_person():
         return redirect(url_for(
             "assign_parents", person_id=person_id))
 
-    # GET THE FAMILY COLLECTION NAMES, FOR THE FAMILY
-    # SELECTION DROP DOWN
     families = mongo.db.family.find().sort("family_name", 1)
-    # RETURN THE FAMILIES TO THE ADD_PERSON PAGE FOR JINGA
     return render_template(
         "add_person.html", families=families)
 
 
-#   ASSIGN PARENTS VIEW
 @app.route("/assign_parents/<person_id>", methods=["GET", "POST"])
 def assign_parents(person_id):
+    """ Assign parents view
 
-    # FUNCTION PURPOSE -
-    # 1.    GET AND DISPLAY EXISTING PARENTS IN FORM.
-    # 2.    ANY NEW NAME ENTERED IN FORM WILL BECOME THE NEW PARENT - IT
-    #       DOES NOT EDIT EXISTING PARENT, IT SEARCHES TO SEE IF THE PARENT
-    #       EXISTS, IF YES, THEN THEY ARE UPDATED AS A PARENT OF THE PERSON
-    #       BEING EDITED, OTHERWISE THEY ARE CREATED.
-    # 3.    IT ALSO MAKES SURE THAT THE 2 PARENTS ARE CONNECTED AS
-    #       SPOUSE_PARTNER AS THEY HAVE A RELEVANT RELATIONSHIP DUE TO HAVING
-    #       A CHILD.
+    Display existing parents in the form inputs.
+    Any name entered into the form will become the parent.
+    In the case that name entered matches existing person, then existing
+    person becomes the parent.
+    In the case where there is an existing parent and the user changes the
+    details a check is done to see if that matches an existing person, if
+    so then that person becomes the new parent. Otherwise the existing
+    parent is edited.
+    Also make sure parents are connected as spouse/partners.
 
-    #   SETUP REQUIRED VARIABLES
+    Args:
+        person_id (str): The id of the person being edited.
+    """
+    # Required variables
     person = mongo.db.people.find_one({"_id": ObjectId(person_id)})
     persons_id = person["_id"]
     mother_id = person["parents"]["mother"]
@@ -136,56 +119,40 @@ def assign_parents(person_id):
     father_entered = False
     both_parents = False
 
-    #   PREP FOR RENDER TEMPLATE -
-    #   PERSONS MOTHER - CHECK IF MOTHER ALREADY LINKED
+    # Check if parents exist to decide if to allow skipping of this stage
+    # Also to provide parent info to the rendered template
     if mother_id != "":
-        #   THEN IT HAS EXISTING MOTHER - SO ASSIGN THE ID
         existing_mother = mongo.db.people.find_one({
             "_id": ObjectId(mother_id)
             })
         mother_entered = True
     else:
-        #   ITS A NEW MOTHER - NO TEMPLATE YET
-        #   SO WE GIVE IT ONE
         existing_mother = blank_template()
-
-    #   PERSONS FATHER - CHECK IF FATHER ALREADY LINKED
     if father_id != "":
-        #   THEN IT HAS EXISTING FATHER - SO ASSIGN THE ID
         existing_father = mongo.db.people.find_one({
             "_id": ObjectId(father_id)
             })
         father_entered = True
     else:
-        #   ITS A NEW FATHER - NO TEMPLATE YET
-        #   SO WE GIVE IT ONE
         existing_father = blank_template()
-
-    # IM USING THIS VARIABLE TO EITHER ALLOW OR
-    # NOT ALLOW THE NEXT BUTTON
     if mother_entered and father_entered:
         both_parents = True
     else:
         both_parents = False
 
-    #   WHEN FORM IS SUBMITTED / UPDATED
     if request.method == "POST":
-
-        #   IMPORTANT - WE REMOVE THE PERSONS ID FROM ANY CHILDREN
-        #   ARRAY - THIS IS BECAUSE WE ARE POSTING NEW PARENTS.
-        #   WE DONT WANT PERSON HAVING 2 BIRTH MOTHERS.
+        # Remove person from any child array. dont want person being
+        # a child of 2 mothers - parents are reassigned later
         mongo.db.people.update({}, {"$pull": {
              "children": {"$in": [persons_id]}}}, multi=True)
 
-        #   GET THE TEMPLTE FROM THE FORM
-        #   FOR MOTHER
+        # Get mother and father from form
         mother = {
             "first_name": request.form.get(
                 "mothers_first_name").lower().strip(),
             "last_name": request.form.get("mothers_last_name").lower().strip(),
             "dob": request.form.get("mothers_dob")
         }
-        #   FOR FATHER
         father = {
             "first_name": request.form.get(
                 "fathers_first_name").lower().strip(),
@@ -193,28 +160,18 @@ def assign_parents(person_id):
             "dob": request.form.get("fathers_dob")
         }
 
-        #   FIRST WE CHECK IF MOTHER EXISTS ANYWHERE IN THE DB
+        # Check for mother
         if mongo.db.people.count_documents(mother, limit=1) == 0:
-            #   SO THIS PERSON ENTERED DOES NOT EXIST - BUT WE HAVE TO CHECK
-            #   IS THERE ALREADY A mother - IF SO, WE MAY JUST BE EDITING.
-
-            #   CHECK IS MOTHER HAS BEEN ALREADY ENTERED
+            # No match in db - so we will edit current mother
             if mother_entered:
-                #   THEN WE ARE EDITING EXISTING MOTHER
-                #   UPDATE EXISTING MOTHER
                 mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(mother_id)},
                     {"$set": mother})
             else:
-                # NO EXISTING MOTHER, SO WE MAKE A NEW ONE
-                # BUILD A NEW MOTHER OBJECT
+                # No found or existing mother - create one and add child
                 mother = create_parent(person, 'mother')
-
-                #   INSERT THE NEW MOTHER, THEN GET BACK THE ID
                 mongo.db.people.insert_one(mother)
                 mother_id = mongo.db.people.find_one(mother)["_id"]
-
-                # ADD THE PERSON TO THEIR NEW MOTHER AS A CHILD
                 mongo.db.people.find_one_and_update(
                     {"_id": ObjectId(mother_id)},
                     {"$addToSet": {"children": persons_id}})
