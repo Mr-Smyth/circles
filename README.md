@@ -77,7 +77,7 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 **<details><summary>Deployment</summary>**
 
 * [Deploy to Heroku](#deploy-to-heroku)
-* [Local Deployment](#local-deployment)
+* [Local Development](#local-development)
     
 </details>
 
@@ -730,7 +730,7 @@ Once the Config Vars has been entered you are ready for Automatic Deployment.
 [Back to Index](#index)
 
 
-## Local Deployment
+## Local Development
 To run this project locally on your system - you will need the following components installed on your system:
 
 * Python 3.8 including PIP.
@@ -739,18 +739,17 @@ To run this project locally on your system - you will need the following compone
 * MongoDB to manage the database either locally or remotely on MongoDB Atlas.
 
 #### Then:
-
-1.  Clone the Circles GitHub repository by clicking the Code, button in GitHub and copying the HTTPS Link.   
-2.  Open a Git Bash Command line, in your preferred destination.
-3.  Enter git clone and paste in the link you copied.
-4.  CD into the circle's folder and create a .env file with the credentials, example:
-5.  Create a .flaskenv file and add the following entries:
+   
+1.  Open a Git Bash Command line, in your preferred destination.
+2.  Enter git clone and paste in this link `https://github.com/Mr-Smyth/circles.git`
+3.  CD into the circle's folder and create a .env file with the correct credentials.
+4.  Create a .flaskenv file and add the following entries:
     *   FLASK_APP=run.py
     *   FLASK_ENV=development
-6.  Install all requirements from the requirements.txt file. To do this enter:
+5.  Install all requirements from the requirements.txt file. To do this enter:
     *   sudo -H pip3 -r requirements.txt
-7.  You should now be able to launch your app locally.
-8.  The app should now be running on localhost on an address similar to http://127.0.0.1:5000. Copy/paste this address into your browser.
+6.  You should now be able to launch your app locally.
+7.  The app should now be running on localhost on an address similar to http://127.0.0.1:5000. Copy/paste this address into your browser.
 
 
 [Back to Index](#index)
