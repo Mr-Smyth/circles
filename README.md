@@ -54,6 +54,7 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 * [Manage Partner Relationship](#Manage-partner-relationship)
 * [Manage Sibling Relationship](#Manage-sibling-relationship)
 * [Manage People](#Manage-people)
+* [Features considering implementing in future releases](#Features-considering-implementing-in-future-releases)
 
 </details>
 
@@ -202,28 +203,28 @@ The viewing of a persons circle will be interactive and each member of the circl
 
 ## Wireframes
 
-  * [Home Page](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/home-page-wireframe.pdf)
+  * [Home Page](https://github.com/Mr-Smyth/circles/blob/master/docs/Wireframes/home-page-wireframe.pdf)
 
 
-  * [Search Results Page](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/search-results-page-wireframe.pdf)   
+  * [Search Results Page](https://github.com/Mr-Smyth/circles/blob/master/docs/Wireframes/search-results-page-wireframe.pdf)   
 
 
-  * [New Person Page](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/enter-new-person-page-wireframe.pdf)   
+  * [New Person Page](https://github.com/Mr-Smyth/circles/blob/master/docs/Wireframes/enter-new-person-page-wireframe.pdf)   
 
 
-  * [Edit/Add Parents Page](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/edit-parents-page-wireframe.pdf)   
+  * [Edit/Add Parents Page](https://github.com/Mr-Smyth/circles/blob/master/docs/Wireframes/edit-parents-page-wireframe.pdf)   
 
 
-  * [Edit/Add Siblings Page](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/edit-siblings-page-wireframe.pdf)   
+  * [Edit/Add Siblings Page](https://github.com/Mr-Smyth/circles/blob/master/docs/Wireframes/edit-siblings-page-wireframe.pdf)   
 
 
-  * [Edit/Add Spouse/Partner Page](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/edit-spouse-page-wireframe.pdf)   
+  * [Edit/Add Spouse/Partner Page](https://github.com/Mr-Smyth/circles/blob/master/docs/Wireframes/edit-spouse-page-wireframe.pdf)   
 
 
-  * [Edit/Add Children Page](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/edit-children-page-wireframe.pdf)  
+  * [Edit/Add Children Page](https://github.com/Mr-Smyth/circles/blob/master/docs/Wireframes/edit-children-page-wireframe.pdf)  
 
 
-  * [Family Circle Page](https://github.com/Mr-Smyth/circles/blob/master/Wireframes/family-circle-page-wireframe.pdf)   
+  * [Family Circle Page](https://github.com/Mr-Smyth/circles/blob/master/docs/Wireframes/family-circle-page-wireframe.pdf)   
 
 
   [Back to Index](#index)
@@ -508,6 +509,15 @@ clicking on a link in the results will remove that person and any links to that 
 
 *   **Change Password** allows the user to change the delete password, by entering their existing password and entering a new one, then confirm the new password. The user will be notified if the change was successful.
 
+
+[Back to Index](#index)
+
+
+## Features considering implementing in future releases:
+
+* Login System and an isolated area for people to build their own circles.
+* More ways to view aspects of family, paternal timelines for example.
+* A way to print out the family circle page.
 
 [Back to Index](#index)
 
