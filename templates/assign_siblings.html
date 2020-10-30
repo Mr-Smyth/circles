@@ -48,7 +48,7 @@
             <h6 class="col s12 m10 offset-s0 offset-m1"><strong>Firstly, lets select this Siblings parents:</strong></h6>
             <p class="col s12 m10 offset-s0 offset-m1">
                <label>
-                  <!-- SEND BACK THE PARENTS - MOTHER FIRST  -->
+                  <!-- MOTHER FIRST - Display Persons Parents  -->
                   <input class="with-gap" id="child_parents" name="sibling_parents" type="radio" value="{{ persons_parents[1]._id, persons_parents[0]._id }}" required/>
                   <span class="blue-text text-darken-4"><strong>{{ persons_parents[1].first_name.capitalize() }} and {{ persons_parents[0].first_name.capitalize() }}</strong></span>
                </label>
@@ -57,7 +57,7 @@
                 {% for partner in fathers_partners_list %}
                     <p class="col s12 m10 offset-s0 offset-m1">
                         <label>
-                            <!-- SEND BACK THE PARENTS - MOTHER FIRST  -->
+                            <!--  MOTHER FIRST - Display father with all possible partners -->
                             <input class="with-gap" id="fathers_partners" name="sibling_parents" type="radio" value="{{ partner._id, persons_parents[0]._id }}"/>
                             <span class="blue-text text-darken-4"><strong>{{ partner.first_name.capitalize() }} and {{ persons_parents[0].first_name.capitalize() }}</strong></span>
                         </label>
@@ -68,7 +68,7 @@
                 {% for partner in mothers_partners_list %}
                     <p class="col s12 m10 offset-s0 offset-m1">
                         <label>
-                            <!-- SEND BACK THE PARENTS - MOTHER FIRST  -->
+                            <!--  MOTHER FIRST - Display mother with all possible partners -->
                             <input class="with-gap" id="mothers_partners" name="sibling_parents" type="radio" value="{{ persons_parents[1]._id, partner._id }}"/>
                             <span class="blue-text text-darken-4"><strong>{{ persons_parents[1].first_name.capitalize() }} and {{ partner.first_name.capitalize() }}</strong></span>
                         </label>
