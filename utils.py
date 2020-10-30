@@ -21,7 +21,10 @@ mongo = PyMongo(app)
 def call_search():
     """ call_search Function:
 
-    Build a query from user input on form.
+    * Build a query from user input on form.
+
+    \n Args:
+        \n None
 
     """
     # Get the form data

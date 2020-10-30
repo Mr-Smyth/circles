@@ -2,12 +2,13 @@ from flask import (request)
 
 
 def blank_template():
+    """ blank_template Function:
 
-    # FUNCTION PURPOSE -
-    # 1.    TO PROVIDE A BLANK OBJECT WHEN CALLED
-    #       (USUALLY REQUIRED FOR RENDERING TEMPLATES WHEN
-    #       NO DATA PRESENT)
+    * Returns a blank template for a person.
 
+    \n Args:
+        \n None.
+    """
     template = {
                 "first_name": "",
                 "last_name": "",
@@ -27,10 +28,13 @@ def blank_template():
 
 
 def call_person_update():
+    """ call_person_update Function:
 
-    # FUNCTION PURPOSE -
-    # 1.    TO PROVIDE AN UPDATE TEMPLATE FOR UPDATING A PERSON
+    * Returns an update template for updating a person.
 
+    \n Args:
+        \n None.
+    """
     person_update = {
             "family_name": 'My Circle',
             "first_name": request.form.get("first_name").lower().strip(),
@@ -49,10 +53,15 @@ def call_person_update():
 def call_create_person(
     person={"family_name": "My Circle"}, parents={
         "mother": "", "father": ""}):
+    """ call_create_person Function:
 
-    # FUNCTION PURPOSE -
-    # 1.    TO PROVIDE A TEMPLATE OBJECT FOR INSERTING A NEW PERSON.
+    * Provides a template for inserting a new person.
+    * Various information will be taken from person obj.
 
+    \n Args:
+        \n 1. person (Dict): The person object.
+        \n 2. parents (Dict): A Dict of the siblings chosen parents
+    """
     # setup some variable for forms that do not contain all required fields
     if person['family_name']:
         family_name = person['family_name']
@@ -105,10 +114,17 @@ def call_create_person(
 
 
 def create_parent(person, parent):
+    """ create_parent Function:
 
-    # FUNCTION PURPOSE -
-    # 1.    RETURN A PARENT TEMPLATE TO CREATE A NEW PARENT
+    * Returns a dict to create parent.
+    * As parents form is different to normal person we
+      need to create them in a seperate function.
+      Pass in the parent you are creating as a string.
 
+    \n Args:
+        \n 1. person (Dict): The person object.
+        \n 2. parent (str): A string indicating either 'mother' or 'father'.
+    """
     if parent == 'mother':
         mother = {
                     "family_name": 'My Circle',
