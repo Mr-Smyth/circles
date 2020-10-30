@@ -41,14 +41,20 @@
  .search-button, .delete-button, .change-password-button {
      margin-top: 50px;
      height: 50px;
-     padding-top: 20px;
      border: 0.5px solid rgb(159, 197, 248);
      border-radius: 20px;
-     font-size: 2rem;
+     font-size: 1.5rem;
      color: rgb(159, 197, 248);
      -webkit-transition: 1.2s;
      -o-transition: 1.2s;
      transition: 1.2s;
+     display: flex;
+     -webkit-box-pack: center;
+     -ms-flex-pack: center;
+     justify-content: center;
+     -webkit-box-align: center;
+     -ms-flex-align: center;
+     align-items: center;
 }
 /** STYLING RELATED TO THE SEARCH FORM IN THE HOME PAGE AND ALSO THE FORMS IN THE MANAGE PEOPLE PAGE */
  .search-button:hover, .delete-button:hover, .change-password-button:hover{
@@ -168,6 +174,9 @@
 /* MEDIA QUERIES */
 /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
  @media (min-width:600px){
+    .search-button, .delete-button, .change-password-button {
+        font-size: 2rem;
+    }
 }
 /* tablet, landscape iPad, lo-res laptops ands desktops */
  @media (min-width:801px) {
