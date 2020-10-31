@@ -11,17 +11,15 @@
 </div>
 
 <!-- FLASH MESSAGES -->
-<section>
-   {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="row">
-                    <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
-                </div>
-            {% endfor %}
-        {% endif %}
-   {% endwith %}
-</section>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="row">
+                <h4 class="center-align text-shadow flash-messages">{{ message }}</h4>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
 <!-- PAGE HEADING -->
 <h4 class="page-sub-heading text-shadow">Step 2 of 5</h4>
