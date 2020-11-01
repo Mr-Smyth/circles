@@ -1355,18 +1355,167 @@ Add on styling for home and manage people pages
 
 # HTML Testing
 
-### All Html files:
+## All Html files:
+All Html files were tested visually and also using a validator. Due to the validator being unable to examine Jinga2 code
+I took the code from source. The results are shown here:
 
-**<details><summary>*.html Testing</summary>**
-Add on styling for home and manage people pages
+**<details><summary>home.html Testing</summary>**
+Html Validation
 
 * :hammer: TEST: 
-    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate add_person.
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
 * :clipboard: RESULT:
-    * ErrorS because validator did not recognise Jinga or flask Template syntax. I avoided jinja related errors in the validator by pasting in the source code from the page rather than a direct copy of the code.
-    * Warning to use <h> elements on sections, but I did not require headings on these sections.
+    * No Warnings or errors.
+![Home page Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/home-html-validation.png "HTML Validation")
 
 </details>
+
+**<details><summary>Assign Children.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![Assign Children page Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/assign-children-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>Add Person.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![Add Person page Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/add-person-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>Assign Parents.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![Assign parents Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/assign-parents-html-validation.png "HTML Validation")
+
+</details>
+
+
+**<details><summary>Assign Siblings.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![Assign Siblings Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/assign-siblings-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>Assign Spouse / Partner.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![Assign Spouse / Partner Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/assign-spouse-partner-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>Check if Partner exists.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![Check if Partner exists Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/check-if-partner-exists-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>Duplicate Person.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![Duplicate Person.Html Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/duplicate-person-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>Edit Person.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * Showed 1 Error - this was where i am using Jinga if statement to reconstruct the gender dropdown. The multiple
+    instance of 'selected' is deliberate and required.
+![Edit Person.html Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/edit-person-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>Manage Child Relationship.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![Manage Child Relationship.html Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/manage-child-relationship-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>Manage Partner Relationship.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![Manage Partner Relationship.html Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/manage-partner-relationship-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>Manage People Relationship.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * 2 Errors due to the validator not being able to read the Jinga if statement in the results block.
+      The validator thinks there is no closing div, but it is there after the if block.
+![Manage People Relationship.html Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/manage-people-relationship-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>Manage Sibling Relationship.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![Manage Sibling Relationship.html Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/manage-sibling-relationship-html-validation.png "HTML Validation")
+
+</details>
+
+**<details><summary>View Circle.html Testing</summary>**
+Html Validation
+
+* :hammer: TEST: 
+    * Used [W3C HTML Validation](https://validator.w3.org/#validate_by_input) to validate.
+* :clipboard: RESULT:
+    * No Warnings or errors.
+![View Circle.html Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/view-circle-html-validation.png "HTML Validation")
+
+</details>
+
 
 [Back to Index](#index)
 
