@@ -25,25 +25,25 @@
     </div>
     <div id="person-details">
         {% if (person.family_name != "") %}
-            <p>Circle Name : <strong> {{ person.last_name.capitalize() }}</strong></p>
+            <p>Circle Name : {{ person.last_name.capitalize() }}</p>
         {% endif %}
         {% if (person.birth_surname != "") %}
-            <p>Maiden Name: <strong> {{ person.birth_surname.capitalize() }}</strong></p>
+            <p>Maiden Name: {{ person.birth_surname.capitalize() }}</p>
         {% endif %}
         {% if (person.gender != "") %}
-            <p>Gender: <strong> {{ person.gender.capitalize() }}</strong></p>
+            <p>Gender: {{ person.gender.capitalize() }}</p>
         {% endif %}
         {% if (person.dob != "") %}
-            <p>Date of Birth: <strong> {{ person.dob }}</strong></p>
+            <p>Date of Birth: {{ person.dob }}</p>
         {% endif %}
         {% if (person.dod != "") %}
-            <p>Date of Death: <strong> {{ person.dod }}</strong></p>
+            <p>Date of Death: {{ person.dod }}</p>
         {% endif %}
         {% if (person.birth_address != "") %}
-            <p>Birth Addr: <strong> {{ person.birth_address.capitalize() }}</strong></p>
+            <p>Birth Addr: {{ person.birth_address.capitalize() }}</p>
         {% endif %}
         {% if (person.rel_address != "") %}
-            <p>Relevant Addr: <strong> {{ person.rel_address.capitalize() }}</strong></p>
+            <p>Relevant Addr: {{ person.rel_address.capitalize() }}</p>
         {% endif %}
     </div>
 </div>

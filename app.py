@@ -8,23 +8,13 @@ from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
 
-###################################################################
-
-                ## remove debug
-            ## remove coment out on delete all circles
-
-
-###################################################################
-###################################################################
-###################################################################
-
-from utils import (
+from helpers.utils import (
     call_search, get_parents, get_mothers_partners, get_fathers_partners,
     get_persons_data, build_target_list, merge_target_parent_list,
     link_real_siblings, get_selected_parents, get_chosen_parent,
     remove_all_links, remove_parent_link, choose_sibling_parents)
 
-from create_update import (
+from helpers.create_update import (
     blank_template, call_person_update, call_create_person,
     create_parent)
 
@@ -944,17 +934,5 @@ def server_error(e):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True)
-
-###################################################################
-
-                ## remove debug
-            ## remove coment out on delete all circles
-
-
-###################################################################
-###################################################################
-###################################################################
-
-
-
+            debug=False)
+            

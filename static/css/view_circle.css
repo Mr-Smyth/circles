@@ -42,6 +42,7 @@
      width: 90%;
      margin: auto;
      border-bottom: 0.5px solid #c0c0c0;
+     font-variant: small-caps;
 }
  .person-details-container{
      margin: 0 auto;
@@ -92,12 +93,14 @@
      font-size: 2.2rem;
      text-align: center;
      text-shadow: 1px 1px 1.5px rgba(87,15,87,1);
+     font-variant: small-caps;
 }
  .circles-subheading{
      color: rgb(59, 9, 59);
      font-size: 1.8rem;
      text-align: center;
      text-shadow: 1px 1px 1.5px rgba(87,15,87,1);
+     font-variant: small-caps;
 }
  .my-circles-row{
      width: 100%;
