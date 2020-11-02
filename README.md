@@ -275,7 +275,9 @@ Circles will then remove all links, linking the Child to previous parents and si
 hers own 'Propper' Siblings.   
 
 
-It is then possible to view this person circle and any other circle within.
+It is then possible to view this person circle and any other circle within.   
+
+***For the sake of demonstration, some sample people have been entered: John Lennon, Sean Connery and Eamonn Smyth - All famous people of course!***
 
 [Back to Index](#index)
 
@@ -499,13 +501,16 @@ Could be added again automatically, and suggests using Manage People as an alter
 
 This page is reachable from any page by the Manage People link in the Navigation Menu.
 The page opens, with a similar style to the home page, except the logo is pushed to the top left corner. 3 buttons are the main 
-the focus of the page **Delete a Person**, **Delete Everyone** and change Password.
+the focus of the page **Delete a Person**, **Delete Everyone** and **Change Password**.
 
 
 *   **Delete a Person** allows you to search for a person by first, last or Date of birth. The user will get a list of results, 
 clicking on a link in the results will remove that person and any links to that person in every documents array, object or otherwise in the DB.   
 
-*   **Delete Everyone** gives you the ability to clear everything from the Circles DB. It is password-protected for safety, contact the designer for a password.
+*   **Delete Everyone** gives you the ability to clear everything from the Circles DB. It requests a password which is set at this development stage 
+as : flatcircle.   
+I am planning to have this feature hidden within admin user authentication, but for the sake of demonstartion in this MS3 project, 
+i have made it simply another option on the manage people page.
 
 *   **Change Password** allows the user to change the delete password, by entering their existing password and entering a new one, then confirm the new password. The user will be notified if the change was successful.
 
