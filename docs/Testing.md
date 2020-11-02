@@ -969,6 +969,11 @@ This small function is called to handle the case where editing of a person resul
     * Found the instruction very simple and clear, and any further information was explained by the use of clear
     breadcrumbs, logical button names and flash messages.
 
+![User story 1 - image 1](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-1-1.png "User Story 1 - image 1")
+![User story 1 - image 2](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-1-2.png "User Story 1 - image 2")
+![User story 1 - image 3](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-1-3.png "User Story 1 - image 3")
+![User story 1 - image 4](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-1-4.png "User Story 1 - image 4")
+
 </details>
  
 
@@ -980,6 +985,13 @@ This small function is called to handle the case where editing of a person resul
     * Was able to enter myself and click add person.
     * Was then guided through a 5 step process that prompted me for all my family circle information.
 
+![User story 2 - image 1](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-2-1.png "User Story 2 - image 1")
+![User story 2 - image 2](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-2-2.png "User Story 2 - image 2")
+![User story 2 - image 3](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-2-3.png "User Story 2 - image 3")
+![User story 2 - image 4](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-2-4.png "User Story 2 - image 4")
+![User story 2 - image 5](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-2-5.png "User Story 2 - image 5")
+
+
 </details>
 
 
@@ -989,6 +1001,11 @@ This small function is called to handle the case where editing of a person resul
     * Again visited the add person page.
 * :clipboard: RESULT:
     * Easily entered a new person by filling in the add person form.
+
+
+![User story 3 - image 1](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-3-1.png "User Story 3 - image 1")
+![User story 3 - image 2](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-3-2.png "User Story 3 - image 2")
+
 
 </details>
 
@@ -1014,6 +1031,9 @@ This small function is called to handle the case where editing of a person resul
     * After clicking search to reveal the search form, I was able to search for anyone I had entered by any or all of 
     either first name, last name or Date of birth
 
+![User story 5 - image 1](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-5-1.png "User Story 5 - image 1")
+
+
 </details>
 
 
@@ -1022,6 +1042,11 @@ This small function is called to handle the case where editing of a person resul
 
 * :clipboard: RESULT:
     * For this version of Circles, it has not been possible to add this functionality due to time constraints. A future version will have this feature.
+    * However a functional view circle page is available by clicking on any search result, and this in turn can be used to trace back through the
+    users history.   
+
+![User story 6 - image 1](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-6-1.png "User Story 6 - image 1")
+
 
 </details>
 
@@ -1235,7 +1260,9 @@ This small function is called to handle the case where editing of a person resul
 
 ## Testing of CSS:
 
-### base.css:
+## All CSS Files:
+All Css files were tested visually on multiple browsers and devices.
+Used [W3C CSS Validation](https://jigsaw.w3.org/css-validator/#validate_by_input) to validate.
 
 **<details><summary>base.css Testing</summary>**
 Core styling used accross site.
@@ -1266,10 +1293,6 @@ Core styling used accross site.
 </details>
 
 
-
-### Add_person.css:
-Add on styling to all the form and form related pages
-
 **<details><summary>add_person.css Testing</summary>**
 
 * :hammer: TEST: 
@@ -1296,8 +1319,6 @@ Add on styling to all the form and form related pages
 
 </details>
 
-
-### Home.css:
 
 **<details><summary>home.css Testing</summary>**
 Add on styling for home and manage people pages
@@ -1326,8 +1347,6 @@ Add on styling for home and manage people pages
 
 </details>
 
-
-### View_Circle.css:
 
 **<details><summary>view_circle.css Testing</summary>**
 Add on styling for home and manage people pages
