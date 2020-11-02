@@ -62,21 +62,21 @@ document.addEventListener('DOMContentLoaded', function () {
      * GREEN OR RED LINES GET DOB INPUT - AS THE PARENTS PAGE
      * HAS 2 DOB DATEPICKERS IN ONE FORM, I NEED TO CHECK FOR THIS */
     if (document.getElementById("fathers_dob")){
-        const dob = document.getElementById("fathers_dob")
+        const dob = document.getElementById("fathers_dob");
         dob.addEventListener("click", function(){
-            checkColour(dob)
+            checkColour(dob);
         });
     }
     if (document.getElementById("mothers_dob")){
-        const dob = document.getElementById("mothers_dob")
+        const dob = document.getElementById("mothers_dob");
         dob.addEventListener("click", function(){
-            checkColour(dob)
+            checkColour(dob);
         });
     }
     if (document.getElementById("dob")){
-        const dob = document.getElementById("dob")
+        const dob = document.getElementById("dob");
         dob.addEventListener("click", function(){
-           checkColour(dob) 
+           checkColour(dob);
         });
     }
 
