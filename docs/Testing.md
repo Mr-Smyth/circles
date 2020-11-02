@@ -1031,7 +1031,7 @@ This small function is called to handle the case where editing of a person resul
     * After clicking search to reveal the search form, I was able to search for anyone I had entered by any or all of 
     either first name, last name or Date of birth
 
-![User story 5 - image 1](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-5-1.png "User Story 5 - image 1")
+![User story 5 - image 1](https://github.com/Mr-Smyth/circles/blob/master/docs/user-story-5-1.png "User-Story-5-image-1")
 
 
 </details>
