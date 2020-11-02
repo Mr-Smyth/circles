@@ -32,7 +32,6 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
-#   BASE ROUTE
 @app.route("/")
 @app.route("/home")
 def home():
@@ -40,7 +39,6 @@ def home():
     return render_template("home.html")
 
 
-# Search view
 @app.route("/search", methods=["GET", "POST"])
 def search():
     """ Search view
@@ -60,7 +58,7 @@ def search():
     return render_template("home.html", people=people, error=error)
 
 
-# Add person view
+
 @app.route("/add_person/", methods=["GET", "POST"])
 def add_person():
     """Add person view
@@ -762,7 +760,6 @@ def notify_duplicate(person_id, duplicate_id):
         "notify_duplicate.html", person=person, duplicate=duplicate)
 
 
-# VIEW CIRCLE VIEW
 @app.route("/view_circle/<person_id>")
 def view_circle(person_id):
     """ View Circle view
@@ -816,7 +813,6 @@ def view_circle(person_id):
         children_list=children_list)
 
 
-# MANAGE PEOPLE ROUTE
 @app.route("/manage_people", methods=["GET", "POST"])
 def manage_people():
     """ Manage people view
@@ -923,7 +919,6 @@ def page_not_found(e):
     return render_template("404.html")
 
 
-# ROUTE TO HANDLE E500
 @app.errorhandler(500)
 def server_error(e):
     """ Handle 500 error """
@@ -935,4 +930,3 @@ if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
             debug=False)
-            
