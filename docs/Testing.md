@@ -1244,7 +1244,9 @@ Core styling used accross site.
     * Used [W3C CSS Validation](https://jigsaw.w3.org/css-validator/#validate_by_input) to validate add_person.
 * :clipboard: RESULT:
     * No Errors shown
-    * 54 warnings about unknown user prefixes applied using autoprefixer.
+    * 54 warnings about unknown user prefixes applied using autoprefixer.   
+
+![Bace.css Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/css-validation/base-css-validation.png "CSS Validation")
     
 
 <br>
@@ -1274,7 +1276,9 @@ Add on styling to all the form and form related pages
     * Used [W3C CSS Validation](https://jigsaw.w3.org/css-validator/#validate_by_input) to validate add_person.
 * :clipboard: RESULT:
     * No Errors shown.
-    * 12 warnings about unknown user prefixes applied using autoprefixer.
+    * 12 warnings about unknown user prefixes applied using autoprefixer.   
+
+![Add Person.css Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/css-validation/add-person-css-validation.png "CSS Validation")
 
 <br>
 
@@ -1302,7 +1306,9 @@ Add on styling for home and manage people pages
     * Used [W3C CSS Validation](https://jigsaw.w3.org/css-validator/#validate_by_input) to validate add_person.
 * :clipboard: RESULT:
     * No Errors shown
-    * 31 warnings about unknown user prefixes applied using autoprefixer.
+    * 37 warnings about unknown user prefixes applied using autoprefixer.   
+
+![home.css Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/css-validation/home-css-validation.png "CSS Validation")
 
 <br>
 
@@ -1330,7 +1336,9 @@ Add on styling for home and manage people pages
     * Used [W3C CSS Validation](https://jigsaw.w3.org/css-validator/#validate_by_input) to validate add_person.
 * :clipboard: RESULT:
     * No Errors shown
-    * 32 warnings about unknown user prefixes applied using autoprefixer.
+    * 32 warnings about unknown user prefixes applied using autoprefixer.    
+
+![View Circle.css Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/css-validation/view-circle-css-validation.png "CSS Validation")
     
 
 <br>
@@ -1482,7 +1490,7 @@ Html Validation
 
 </details>
 
-**<details><summary>Manage People Relationship.html Testing</summary>**
+**<details><summary>Manage People.html Testing</summary>**
 Html Validation
 
 * :hammer: TEST: 
@@ -1490,7 +1498,7 @@ Html Validation
 * :clipboard: RESULT:
     * 2 Errors due to the validator not being able to read the Jinga if statement in the results block.
       The validator thinks there is no closing div, but it is there after the if block.
-![Manage People Relationship.html Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/manage-people-relationship-html-validation.png "HTML Validation")
+![Manage People.html Validation](https://github.com/Mr-Smyth/circles/blob/master/docs/html-validation/manage-people-html-validation.png "HTML Validation")
 
 </details>
 
