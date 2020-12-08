@@ -138,7 +138,7 @@ I have chosen this design, as I feel that this is what common people like me wan
 [Back to Index](#index)
 
 ## User Stories
-The Application is intended for users of any age who are deciding on a location for their mini-break, or even just a day out.
+The Application is intended for users of any age who are interested in detailing and tracking family data
 
 
 The following user stories have been identified:
