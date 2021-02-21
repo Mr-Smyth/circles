@@ -912,6 +912,47 @@ def change_password():
     return render_template("manage_people.html")
 
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """ Handles registering for a user account
+
+    """
+
+    if request.method == "POST":
+        # CHECK TO SEE IF USER ALREADY EXISTS IN MONGO DB
+        existing_user = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()})
+
+        if existing_user:
+            # IF USER ALREADY EXISTS IN DB
+            # REDIRECT BACK TO REGISTER PAGE
+            flash("Username already exists")
+            return redirect(url_for("register"))
+
+        password = request.form.get("password")
+        check = request.form.get("password-check")
+
+        if password != check:
+            flash("Passwords do not match!")
+            return redirect(url_for("register"))
+
+        # GATHER THE DATA FROM THE FORM
+        # ACTS AS AN IF STATEMENT
+        register = {
+            "username": request.form.get("username").lower(),
+            "password": generate_password_hash(request.form.get("password"))
+        }
+        # INSERT THE ABOVE DICTIONARY
+        mongo.db.users.insert_one(register)
+
+        # PUT THE NEW USER INTO 'SESSION' COOKIE
+        session["user"] = request.form.get("username").lower()
+        flash("Registration Successful!")
+        return redirect(url_for("profile", username=session["user"]))
+
+    return render_template("register.html")
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     """ Handle 404 error """
