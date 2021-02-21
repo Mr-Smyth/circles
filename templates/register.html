@@ -21,40 +21,66 @@
     {% endif %}
 {% endwith %}
 
-<!-- SEARCH BUTTON THAT REVEALS FORM WHEN CLICKED -->
-<div class="row center-align">
-    <!-- POP VIEW BACK TO TOP WHEN CLICKED -->
-    <a href="#first_name" class="col s8 m6 l4 offset-s2 offset-m3 offset-l4 transparent search-button">
-    Delete A Person?
-    </a>
-</div>
-<!-- SEARCH FORM  -->
-<div class="row search-container container">
-    <form id="person-search" action="{{ url_for('manage_people') }}" method="POST" autocomplete="off">
-        <div class="row center-align">
-            <div class="input-field col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-                <input id="first_name" name="first_name" type="text" placeholder="Enter a First Name" class="validate" onfocus="this.select()">
-                <label for="password">SEARCH FOR SOMEONE</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-                <input id="last_name" name="last_name" type="text" placeholder="Enter a Surname" class="validate">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
-                <input id="dob" name="dob" type="text" placeholder="Search by Date of Birth" class="validate datepicker" readonly="readonly">
-            </div>
-        </div>
-        <div class="row">
-            <button type="submit" class="col s10 m4 offset-s0 offset-m4 search-btn">
-            <i class="fas fa-search icon-4x"></i>
-            </button>
-        </div>
-    </form>
-</div>
+<!-- PAGE HEADING -->
+<h2 class="page-heading text-shadow">Register for an Circles Account</h2>
+<h4 class="page-sub-heading text-shadow">Please enter your details below..</h4>
 
+<!-- MATERIALIZE CONTAINER WITH FORM TEXT INPUT -->
+<div class="container white box-shade">
+   <div class="row">
+      <form name="form" class="col s12" method="POST" action="{{ url_for('register') }}" autocomplete="off">
+         <!-- Username -->
+         <div class="row">
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+               <input id="username" name="username" type="text" class="validate" required>
+               <label for="username">Username (*Req)</label>
+            </div>
+         </div>
+
+         <!-- NEW PASSWORD -->
+        <div class="row center-align">
+            <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+                <input id="new_password" name="new_password" type="password" minlength="5" maxlength="20" pattern="^[a-zA-Z0-9]{5-15}$" placeholder="Enter New Password" class="validate" autocomplete="off" required>
+            </div>
+        </div>
+        <!-- CONFIRM NEW PASSWORD -->
+        <div class="row center-align">
+            <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+                <input id="repeat_new_password" name="repeat_new_password" type="password" minlength="5" maxlength="20" pattern="^[a-zA-Z0-9]{5-15}$" placeholder="Confirm New Password" class="validate" autocomplete="off" required>
+                <i class="fas fa-user-lock icon-4x"></i>
+            </div>
+        </div>
+        <!-- SUBMIT BUTTON -->
+        <div class="row">
+            <div class="col s12 center-align">
+                <button type="submit" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
+                    <i class="fas fa-user-plus left"></i>Submit
+                </button>
+                <a href="{{ url_for('home') }}"
+                    class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
+                    Cancel<i class="fas fa-times-circle left"></i> </a>
+            </div>
+        </div>
+
+
+
+
+
+
+         <!-- SUBMIT BUTTON -->
+         <div class="row">
+            <div class="col s12 center-align">
+               <button type="submit" class="col s10 m5 push-s1 xl4 push-xl1 btn-large form-button text-shadow">
+               <i class="fas fa-user-plus left"></i>Add Person
+               </button>
+               <a href="{{ url_for('add_person') }}" class="col s10 m5 push-s1 push-m1 xl4 push-xl3 btn-large form-button text-shadow">
+               Clear<i class="fas fa-times-circle left"></i> </a>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
 {% endblock %}
 <!-- SCRIPTS -->
 {% block scripts %}
