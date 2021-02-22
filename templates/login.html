@@ -1,7 +1,7 @@
 {% extends "base.html" %}
     {% block head %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/add_person.css')}}" type="text/css"/>
-        <title>Circles | Register</title>
+        <title>Circles | Login</title>
     {% endblock %}
 {% block content %}
 
@@ -36,8 +36,8 @@
          <div class="row">
             <div class="input-field col s12 m10 offset-s0 offset-m1">
                <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
-               {{ form.username.label }}
-               {{ form.username }}
+               {{ form.email.label }}
+               {{ form.email }}
             </div>
          </div>
 

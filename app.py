@@ -4,6 +4,8 @@ from flask import (
     redirect, request, url_for)
 from flask_pymongo import PyMongo
 
+from forms import RegistrationForm, LoginForm
+
 from bson.objectid import ObjectId
 from werkzeug.security import (
     generate_password_hash, check_password_hash)
@@ -26,6 +28,7 @@ app = Flask(__name__)
 # Setup env variables
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 # Setup instance of PyMongo
@@ -916,41 +919,28 @@ def change_password():
 def register():
     """ Handles registering for a user account
 
+    \n * Uses our custom registration form.
+
     """
+    # Create a new instance of our Register form
+    form = RegistrationForm()
 
-    if request.method == "POST":
-        # CHECK TO SEE IF USER ALREADY EXISTS IN MONGO DB
-        existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
+    return render_template("register.html",
+                           title='Register for a new Account', form=form)
 
-        if existing_user:
-            # IF USER ALREADY EXISTS IN DB
-            # REDIRECT BACK TO REGISTER PAGE
-            flash("Username already exists")
-            return redirect(url_for("register"))
 
-        password = request.form.get("password")
-        check = request.form.get("password-check")
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """ Handles User Login
 
-        if password != check:
-            flash("Passwords do not match!")
-            return redirect(url_for("register"))
+    \n * Uses our custom Login form.
 
-        # GATHER THE DATA FROM THE FORM
-        # ACTS AS AN IF STATEMENT
-        register = {
-            "username": request.form.get("username").lower(),
-            "password": generate_password_hash(request.form.get("password"))
-        }
-        # INSERT THE ABOVE DICTIONARY
-        mongo.db.users.insert_one(register)
+    """
+    # Create a new instance of our Login form
+    form = LoginForm()
 
-        # PUT THE NEW USER INTO 'SESSION' COOKIE
-        session["user"] = request.form.get("username").lower()
-        flash("Registration Successful!")
-        return redirect(url_for("profile", username=session["user"]))
-
-    return render_template("register.html")
+    return render_template("login.html",
+                           title='Login to your Account', form=form)
 
 
 @app.errorhandler(404)
