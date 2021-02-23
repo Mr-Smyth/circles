@@ -27,17 +27,37 @@
 <h4 class="page-sub-heading text-shadow">Under Construction - Please be patient</h4>
 
 <div class="container white box-shade">
+    <!-- Existing acc check -->
+    <div class="row">
+        <div class="input-field col s12 m10 offset-s0 offset-m1">
+            <h6>Dont have an existing account? Then you can <a href="{{ url_for('register') }}" aria-label="Click to Login">Register</a> </h6>
+        </div>
+    </div>
    <div class="row">
       <form method="POST" action="" class="col s12">
           <!-- Add the csrf token using hidden_tag() -->
         {{ form.hidden_tag() }}
 
-        <!-- Username -->
+         <!-- email address -->
          <div class="row">
             <div class="input-field col s12 m10 offset-s0 offset-m1">
                <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
                {{ form.email.label }}
                {{ form.email }}
+            </div>
+         </div>
+         <!-- Password -->
+         <div class="row">
+            <div class="input-field col s12 m10 offset-s0 offset-m1">
+               <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
+               {{ form.password.label }}
+               {{ form.password }}
+            </div>
+         </div>
+         <!-- Login Button -->
+         <div class="row">
+            <div class="col s12 center-align">
+               {{ form.login(class="col s6 push-s3 btn-large form-button text-shadow") }}
             </div>
          </div>
 
