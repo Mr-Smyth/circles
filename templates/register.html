@@ -43,7 +43,18 @@
             <div class="input-field col s12 m10 offset-s0 offset-m1">
                <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
                {{ form.username.label }}
-               {{ form.username }}
+                <!-- Check for validation errors -->
+                {% if form.username.errors %}
+                    {{ form.username(class="red-text text-darken-2") }}
+                    <div class="red-text text-darken-2">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                <!-- else just display the content -->
+                {% else %}
+                    {{ form.username }}
+                {% endif %}
             </div>
          </div>
          <!-- email address -->
@@ -51,7 +62,18 @@
             <div class="input-field col s12 m10 offset-s0 offset-m1">
                <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
                {{ form.email.label }}
-               {{ form.email }}
+               <!-- Check for validation errors -->
+                {% if form.email.errors %}
+                    {{ form.email(class="red-text text-darken-2") }}
+                    <div class="red-text text-darken-2">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                <!-- else just display the content -->
+                {% else %}
+                    {{ form.email }}
+                {% endif %}
             </div>
          </div>
          <!-- Password -->
@@ -59,7 +81,18 @@
             <div class="input-field col s12 m10 offset-s0 offset-m1">
                <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
                {{ form.password.label }}
-               {{ form.password }}
+               {<!-- Check for validation errors -->
+                {% if form.password.errors %}
+                    {{ form.password(class="red-text text-darken-2") }}
+                    <div class="red-text text-darken-2">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                <!-- else just display the content -->
+                {% else %}
+                    {{ form.password }}
+                {% endif %}
             </div>
          </div>
 
@@ -68,7 +101,18 @@
             <div class="input-field col s12 m10 offset-s0 offset-m1">
                <i class="fas fa-user-circle prefix blue-text text-darken-4"></i>
                {{ form.confirm_password.label }}
-               {{ form.confirm_password }}
+               <!-- Check for validation errors -->
+                {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="red-text text-darken-2") }}
+                    <div class="red-text text-darken-2">
+                        {% for error in form.confirm_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                <!-- else just display the content -->
+                {% else %}
+                    {{ form.confirm_password }}
+                {% endif %}
             </div>
          </div>
 

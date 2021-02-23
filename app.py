@@ -919,10 +919,15 @@ def register():
     """ Handles registering for a user account
 
     \n * Uses our custom registration form.
+    \n * Checks validation
 
     """
-    # Create a new instance of our Register form
+    # Create a new instance of our Register form and check validation
     form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f"Account for {form.username.data.capitalize()} \
+            created successfully!")
+        return redirect(url_for("home"))
 
     return render_template("register.html",
                            title='Register for a new Account', form=form)
@@ -933,10 +938,14 @@ def login():
     """ Handles User Login
 
     \n * Uses our custom Login form.
+    \n * Checks validation.
 
     """
     # Create a new instance of our Login form
     form = LoginForm()
+    if form.validate_on_submit():
+        # --------------------------
+        # Handle  successful login here
 
     return render_template("login.html",
                            title='Login to your Account', form=form)
