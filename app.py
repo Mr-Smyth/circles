@@ -1,7 +1,7 @@
 import os
 from flask import (
     Flask, flash, render_template,
-    redirect, request, url_for)
+    redirect, request, url_for, session)
 from flask_pymongo import PyMongo
 
 from forms import RegistrationForm, LoginForm
@@ -925,6 +925,19 @@ def register():
     # Create a new instance of our Register form and check validation
     form = RegistrationForm()
     if form.validate_on_submit():
+        # Gather the info
+        register = {
+            "username": form.username.data.lower(),
+            "email": form.email.data.lower(),
+            "password": generate_password_hash(form.password.data)
+        }
+        # INSERT THE ABOVE DICTIONARY
+        mongo.db.users.insert_one(register)
+
+        # PUT THE NEW USER INTO 'SESSION' COOKIE
+        session["user"] = form.username.data.lower()
+
+        # Send user home with a Successful message
         flash(f"Account for {form.username.data.capitalize()} \
             created successfully!", 'success')
         return redirect(url_for("home"))
