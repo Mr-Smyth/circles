@@ -926,7 +926,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         flash(f"Account for {form.username.data.capitalize()} \
-            created successfully!")
+            created successfully!", 'success')
         return redirect(url_for("home"))
 
     return render_template("register.html",
@@ -944,8 +944,12 @@ def login():
     # Create a new instance of our Login form
     form = LoginForm()
     if form.validate_on_submit():
-        # --------------------------
-        # Handle  successful login here
+        flash(f"{form.username.data.capitalize()}, you have been logged in",
+              'success')
+        return redirect(url_for("home"))
+    else:
+        flash("Login unsuccessful. Please check the required details and try \
+            again.", 'error')
 
     return render_template("login.html",
                            title='Login to your Account', form=form)

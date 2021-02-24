@@ -108,10 +108,22 @@
  .flash-messages {
      font-size: 2rem;
      margin-top: 60px;
-     -webkit-box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
-     box-shadow: 0px 0px 10px 1px rgba(87,15,87,1);
+     -webkit-box-shadow: 0px 0px 10px 1px white;
+     box-shadow: 0px 0px 10px 1px white;
      padding: 10px;
      color: #9fc5f8;
+}
+.alert-success{
+    color: greenyellow;
+}
+.alert-warning{
+    color: orangered;
+}
+.alert-error{
+    color: red;
+}
+.alert-info{
+    color: silver;
 }
 /* TOP LOGO RELATED STYLING */
  #top-logo-container {
