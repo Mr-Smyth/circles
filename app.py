@@ -922,6 +922,11 @@ def register():
     \n * Checks validation
 
     """
+    # Handle existing user
+    if session['user']:
+        flash("You are already logged in", 'error')
+        return redirect(url_for("home"))
+
     # Create a new instance of our Register form and check validation
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -954,15 +959,40 @@ def login():
     \n * Checks validation.
 
     """
+    # Handle existing user
+    if session['user']:
+        flash("You are already logged in", 'error')
+        return redirect(url_for("home"))
+
     # Create a new instance of our Login form
     form = LoginForm()
-    if form.validate_on_submit():
-        flash(f"{form.username.data.capitalize()}, you have been logged in",
-              'success')
-        return redirect(url_for("home"))
-    else:
-        flash("Login unsuccessful. Please check the required details and try \
-            again.", 'error')
+
+    if request.method == "POST":
+        # Check form validation
+        if form.validate_on_submit():
+            existing_user = mongo.db.users.find_one(
+                {"email": form.email.data.lower()})
+            if existing_user:
+                # Check Password
+                if check_password_hash(
+                        existing_user["password"], form.password.data):
+                    username = existing_user['username']
+                    session["user"] = username
+                    # Success
+                    flash(f"{username.capitalize()},\
+                        you have been logged in", 'success')
+                    return redirect(url_for("home"))
+                else:
+                    # Else the password is wrong
+                    flash("Incorrect Email and/or Password", 'error')
+                    return redirect(url_for("login"))
+            else:
+                # Else the username is incorrect
+                flash("Incorrect Email and/or Password", 'error')
+                return redirect(url_for("login"))
+        else:
+            flash("Login unsuccessful. Please check the required details and try \
+                again.", 'error')
 
     return render_template("login.html",
                            title='Login to your Account', form=form)
