@@ -32,6 +32,7 @@ common dataset. It will also demonstrate the technologies I have learned so far.
 * [Purpose and Goals](#purpose-and-goals)
 * [User Stories](#user-stories)
 * [Opportunities arising from user stories](#opportunities-arising-from-user-stories)
+* [Updates](#updates)
 </details>
 
 **<details><summary>UI</summary>**
@@ -149,6 +150,7 @@ The following user stories have been identified:
 4.  As a user, I don't want to have to think about how to connect people in the family circle.
 5.  As a user, I want to be able to search my family for a specific person.
 6.  As a user, I want to be able to see my parental lineage within the database.
+6.  As a user, I want to be able to create a user account and login.
 
 [Back to Index](#index)
 
@@ -166,6 +168,7 @@ The following user stories have been identified:
 |**Remove need for user planning of structure**| 5 | 5 |
 |**Search Feature** | 5 | 5 |
 |**See Parental/Maternal Lineage** | 2 | 3 |
+|**Create user account** | 4 | 4 |
 
 
 </div>
@@ -236,6 +239,7 @@ The viewing of a persons circle will be interactive and each member of the circl
 Circles will Intelligently guide the user through the Family Circle building process. From a blank Database, the user can click **Add Person** from
 the navbar menu. This will take the user to step 1 of 5 optional steps, in building a family circle.
 Add Person will provide a form for the user to fill in the details of a new person.   
+
 
 
 Clicking Add Person at the foot of the form will add the person to the database and move the user to Step 2, where they can fill in the persons parents details.
@@ -525,6 +529,14 @@ i have made it simply another option on the manage people page.
 * A way to print out the family circle page.
 
 [Back to Index](#index)
+
+---
+
+# Updates
+
+[Back to Index](#index)
+
+**Feb 2021**: Added User Registration and user login capability.
 
 ---
 
