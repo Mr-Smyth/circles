@@ -42,18 +42,36 @@
                     <a href="#" data-target="mobile-demo" class="sidenav-trigger right clear"><i class="fas fa-bars"></i></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="{{ url_for('home') }}" aria-label="Click for Home screen">Home</a></li>
+                        {% if session.user %}
                         <li><a href="{{ url_for('add_person') }}" aria-label="Click for Add a new Person">Add Person</a></li>
-                        <li><a href="{{ url_for('manage_people') }}" aria-label="Click to manage people">Manage </a></li>
-                        <li><a href="{{ url_for('register') }}" aria-label="Click to register">Register</a></li>
-                        <li><a href="{{ url_for('login') }}" aria-label="Click to Login">Login</a></li>
+                            <li><a href="{{ url_for('logout') }}" aria-label="Click to Login">Logout</a></li>
+                            <li><a href="#">Hi {{ session.user.capitalize() }} </a></li>
+                            {% if session.user|lower == "admin"|lower %}
+                                <li><a href="{{ url_for('manage_people') }}" aria-label="Click to manage people">Manage </a></li>
+                            {% endif %}
+                        {% else %}
+                            <li><a href="{{ url_for('register') }}" aria-label="Click to register">Register</a></li>
+                            <li><a href="{{ url_for('login') }}" aria-label="Click to Login">Login</a></li>
+                        {% endif %}
+                        
                     </ul>
                 </div>
                 <!-- SIDE NAV BAR -->
                 <ul class="sidenav" id="mobile-demo">
+                    {% if session.user %}
+                        <li><a href="#">Hi {{ session.user.capitalize() }} </a></li>
+                    {% endif %}
                     <li><a href="{{ url_for('home') }}" aria-label="Click for Home screen">Home</a></li>
-                    <li><a href="{{ url_for('add_person') }}" aria-label="Click for Add a new Person">Add Person</a></li>
-                    <li><a href="{{ url_for('manage_people') }}" aria-label="Click to manage people">Manage People</a></li>
-                    <li><a href="#" aria-label="Click to manage people">Register</a></li>
+                        {% if session.user %}
+                        <li><a href="{{ url_for('add_person') }}" aria-label="Click for Add a new Person">Add Person</a></li>
+                            <li><a href="{{ url_for('logout') }}" aria-label="Click to Login">Logout</a></li>
+                            {% if session.user|lower == "admin"|lower %}
+                                <li><a href="{{ url_for('manage_people') }}" aria-label="Click to manage people">Manage </a></li>
+                            {% endif %}
+                        {% else %}
+                            <li><a href="{{ url_for('register') }}" aria-label="Click to register">Register</a></li>
+                            <li><a href="{{ url_for('login') }}" aria-label="Click to Login">Login</a></li>
+                        {% endif %}
                     <li><div id="side-nav-logo-container">
                         <a  id="side-nav-logo" href="{{ url_for('home') }}"></a>
                     </div></li>

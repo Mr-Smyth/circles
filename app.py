@@ -922,10 +922,6 @@ def register():
     \n * Checks validation
 
     """
-    # Handle existing user
-    if session['user']:
-        flash("You are already logged in", 'error')
-        return redirect(url_for("home"))
 
     # Create a new instance of our Register form and check validation
     form = RegistrationForm()
@@ -936,16 +932,27 @@ def register():
             "email": form.email.data.lower(),
             "password": generate_password_hash(form.password.data)
         }
-        # INSERT THE ABOVE DICTIONARY
-        mongo.db.users.insert_one(register)
+        # check for existing credentials - dont want duplicates
+        existing_user = mongo.db.users.find_one(
+                {"username": form.username.data.lower()})
+        existing_email = mongo.db.users.find_one(
+                {"email": form.email.data.lower()})
+        if existing_user or existing_email:
+            # Else the password is wrong
+            flash("Username / email already in use, do you \
+                need to login?", 'error')
+            return redirect(url_for("login"))
+        else:
+            # INSERT THE ABOVE DICTIONARY
+            mongo.db.users.insert_one(register)
 
-        # PUT THE NEW USER INTO 'SESSION' COOKIE
-        session["user"] = form.username.data.lower()
+            # PUT THE NEW USER INTO 'SESSION' COOKIE
+            session["user"] = form.username.data.lower()
 
-        # Send user home with a Successful message
-        flash(f"Account for {form.username.data.capitalize()} \
-            created successfully!", 'success')
-        return redirect(url_for("home"))
+            # Send user home with a Successful message
+            flash(f"Account for {form.username.data.capitalize()} \
+                created successfully!", 'success')
+            return redirect(url_for("home"))
 
     return render_template("register.html",
                            title='Register for a new Account', form=form)
@@ -959,10 +966,6 @@ def login():
     \n * Checks validation.
 
     """
-    # Handle existing user
-    if session['user']:
-        flash("You are already logged in", 'error')
-        return redirect(url_for("home"))
 
     # Create a new instance of our Login form
     form = LoginForm()
@@ -996,6 +999,14 @@ def login():
 
     return render_template("login.html",
                            title='Login to your Account', form=form)
+
+
+@app.route("/logout")
+def logout():
+    # REMOVE USER FROM SESSION COOKIES
+    flash("You have been logged out", 'success')
+    session.pop("user")
+    return redirect(url_for('home'))
 
 
 @app.errorhandler(404)
