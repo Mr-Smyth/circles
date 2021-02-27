@@ -3,6 +3,7 @@ from flask import (
     Flask, flash, render_template,
     redirect, request, url_for, session)
 from flask_pymongo import PyMongo
+from functools import wraps
 
 from forms import RegistrationForm, LoginForm
 
@@ -34,6 +35,21 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
+def login_required(view):
+    """
+    Login check decorator
+    """
+    @wraps(view)
+    def wrap(*args, **kwargs):
+        if 'user' in session:
+            return view(*args, **kwargs)
+        else:
+            flash("You must be logged in to view this\
+                 page. Please login first..", 'warning')
+            return redirect(url_for("login"))
+    return wrap
+
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -61,6 +77,7 @@ def search():
 
 
 @app.route("/add_person/", methods=["GET", "POST"])
+@login_required
 def add_person():
     """Add person view
 
@@ -95,6 +112,7 @@ def add_person():
 
 
 @app.route("/assign_parents/<person_id>", methods=["GET", "POST"])
+@login_required
 def assign_parents(person_id):
     """ Assign parents view
 
@@ -231,6 +249,7 @@ def assign_parents(person_id):
 
 
 @app.route("/assign_spouse_partner/<person_id>", methods=["GET", "POST"])
+@login_required
 def assign_spouse_partner(person_id):
     """ Spouse / Partner View
 
@@ -289,6 +308,7 @@ def assign_spouse_partner(person_id):
 
 
 @app.route("/assign_siblings/<person_id>", methods=["GET", "POST"])
+@login_required
 def assign_siblings(person_id):
     """ Assign Siblings View
 
@@ -392,6 +412,7 @@ def assign_siblings(person_id):
 
 
 @app.route("/check_if_partner_exists/<person_id>")
+@login_required
 def check_if_partner_exists(person_id):
     """ Check if there is any partners linked to person view
 
@@ -415,6 +436,7 @@ def check_if_partner_exists(person_id):
 
 
 @app.route("/assign_children/<person_id>", methods=["GET", "POST"])
+@login_required
 def assign_children(person_id):
     """ Assign children view
 
@@ -520,6 +542,7 @@ def assign_children(person_id):
 
 @app.route(
     "/manage_partner_relationship/<person_id>/<person2_id>")
+@login_required
 def manage_partner_relationship(person_id, person2_id):
     """ Manage Spouse/Partner relationship
 
@@ -558,6 +581,7 @@ def manage_partner_relationship(person_id, person2_id):
 
 @app.route(
     "/delete_partner_relationship/<person_id>/<person2_id>")
+@login_required
 def delete_partner_relationship(person_id, person2_id):
     """ Remove a spouse / partner
 
@@ -585,6 +609,7 @@ def delete_partner_relationship(person_id, person2_id):
 
 @app.route(
     "/manage_sibling_relationship/<person_id>/<person2_id>")
+@login_required
 def manage_sibling_relationship(person_id, person2_id):
     """ Manage Sibling relationship view
 
@@ -607,6 +632,7 @@ def manage_sibling_relationship(person_id, person2_id):
 @app.route(
     "/delete_sibling_relationship/<person_id>/<person2_id>",
     methods=["GET", "POST"])
+@login_required
 def delete_sibling_relationship(person_id, person2_id):
     """ Remove Sibling relationship view
 
@@ -631,6 +657,7 @@ def delete_sibling_relationship(person_id, person2_id):
 
 
 @app.route("/manage_child_relationship/<person_id>/<person2_id>")
+@login_required
 def manage_child_relationship(person_id, person2_id):
     """ Manage Child relationship view
 
@@ -653,6 +680,7 @@ def manage_child_relationship(person_id, person2_id):
 @app.route(
     "/delete_child_relationship/<person_id>/<person2_id>",
     methods=["GET", "POST"])
+@login_required
 def delete_child_relationship(person_id, person2_id):
     """ Remove Child relationship view
 
@@ -690,6 +718,7 @@ def delete_child_relationship(person_id, person2_id):
 
 
 @app.route("/edit_person/<person_id>", methods=["GET", "POST"])
+@login_required
 def edit_person(person_id):
     """ Edit person view
 
@@ -744,6 +773,7 @@ def edit_person(person_id):
 
 
 @app.route("/notify_duplicate/<person_id>/<duplicate_id>")
+@login_required
 def notify_duplicate(person_id, duplicate_id):
     """ Notify Duplicates view
 
@@ -762,6 +792,7 @@ def notify_duplicate(person_id, duplicate_id):
 
 
 @app.route("/view_circle/<person_id>")
+@login_required
 def view_circle(person_id):
     """ View Circle view
 
@@ -815,6 +846,7 @@ def view_circle(person_id):
 
 
 @app.route("/manage_people", methods=["GET", "POST"])
+@login_required
 def manage_people():
     """ Manage people view
 
@@ -837,6 +869,7 @@ def manage_people():
 
 
 @app.route("/delete_person/<person_id>", methods=["GET", "POST"])
+@login_required
 def delete_person(person_id):
     """ Delete a person function
 
@@ -859,6 +892,7 @@ def delete_person(person_id):
 
 
 @app.route("/delete_all_documents", methods=["GET", "POST"])
+@login_required
 def delete_all_documents():
     """ Delete all documents:
 
@@ -881,6 +915,7 @@ def delete_all_documents():
 
 
 @app.route("/change_password", methods=["GET", "POST"])
+@login_required
 def change_password():
     """ Remove Password:
 
@@ -1025,4 +1060,4 @@ def server_error(e):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=False)
+            debug=True)
