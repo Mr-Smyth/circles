@@ -1,3 +1,5 @@
 env.py
 __pycache__
 mongo.py
+.vscode
+circles_venv
