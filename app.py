@@ -981,13 +981,10 @@ def register():
             # INSERT THE ABOVE DICTIONARY
             mongo.db.users.insert_one(register)
 
-            # PUT THE NEW USER INTO 'SESSION' COOKIE
-            session["user"] = form.username.data.lower()
-
-            # Send user home with a Successful message
+            # Send user to login page with a Successful message
             flash(f"Account for {form.username.data.capitalize()} \
-                created successfully!", 'success')
-            return redirect(url_for("home"))
+                created successfully! You can now login.", 'success')
+            return redirect(url_for("login"))
 
     return render_template("register.html",
                            title='Register for a new Account', form=form)
@@ -1010,15 +1007,27 @@ def login():
         if form.validate_on_submit():
             existing_user = mongo.db.users.find_one(
                 {"email": form.email.data.lower()})
+
+            # if there is a member who matches this email
             if existing_user:
                 # Check Password
                 if check_password_hash(
                         existing_user["password"], form.password.data):
+                    # Then Success
                     username = existing_user['username']
                     session["user"] = username
-                    # Success
                     flash(f"{username.capitalize()},\
                         you have been logged in", 'success')
+
+                    # I want to put a ref user in that holds current user details
+                    current_user = {
+                        "description": "current-user",
+                        "current_username": username,
+                        "current_email": existing_user['email'],
+                        "current_user_id": existing_user['_id']
+                    }
+                    mongo.db.users.insert_one(current_user)
+
                     return redirect(url_for("home"))
                 else:
                     # Else the password is wrong
@@ -1038,8 +1047,15 @@ def login():
 
 @app.route("/logout")
 def logout():
-    # REMOVE USER FROM SESSION COOKIES
+    """ Remove user as current-user
+    
+    \n * Also remove user from session cookies
+    """
+
     flash("You have been logged out", 'success')
+    current_id = mongo.db.users.find_one(
+                {"description": 'current-user'})['_id']
+    mongo.db.users.remove({"_id": ObjectId(current_id)})
     session.pop("user")
     return redirect(url_for('home'))
 
@@ -1060,4 +1076,4 @@ def server_error(e):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=False)
+            debug=True)
