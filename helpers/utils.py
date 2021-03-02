@@ -18,6 +18,16 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
+def get_current_user():
+    """Get the current logged in user
+    
+    \n * returns the current user object if exists
+    """
+    current_user = mongo.db.users.find_one(
+                {"description": 'current-user'})
+    return current_user
+
+
 def call_search():
     """ call_search Function:
 

@@ -43,6 +43,8 @@
                     <ul class="right hide-on-med-and-down">
                         <li><a href="{{ url_for('home') }}" aria-label="Click for Home screen">Home</a></li>
                         {% if session.user %}
+                        <li><a href="{{ url_for('register') }}" aria-label="Click to register">Register</a></li>
+                            <li><a href="{{ url_for('login') }}" aria-label="Click to Login">Login</a></li>
                         <li><a href="{{ url_for('add_person') }}" aria-label="Click for Add a new Person">Add Person</a></li>
                             <li><a href="{{ url_for('logout') }}" aria-label="Click to Login">Logout</a></li>
                             <li><a href="#">Hi {{ session.user.capitalize() }} </a></li>

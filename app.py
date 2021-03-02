@@ -15,7 +15,8 @@ from helpers.utils import (
     call_search, get_parents, get_mothers_partners, get_fathers_partners,
     get_persons_data, build_target_list, merge_target_parent_list,
     link_real_siblings, get_selected_parents, get_chosen_parent,
-    remove_all_links, remove_parent_link, choose_sibling_parents)
+    remove_all_links, remove_parent_link, choose_sibling_parents,
+    get_current_user)
 
 from helpers.create_update import (
     blank_template, call_person_update, call_create_person,
@@ -41,7 +42,7 @@ def login_required(view):
     """
     @wraps(view)
     def wrap(*args, **kwargs):
-        if 'user' in session:
+        if get_current_user() and 'user' in session:
             return view(*args, **kwargs)
         else:
             flash("You must be logged in to view this\
@@ -957,6 +958,11 @@ def register():
     \n * Checks validation
 
     """
+    # check for already logged in user
+    if get_current_user():
+        flash("You are already logged in. Please logout first\
+                  if you wish to change user accounts..", 'warning')
+    return redirect(url_for("home"))
 
     # Create a new instance of our Register form and check validation
     form = RegistrationForm()
@@ -998,6 +1004,11 @@ def login():
     \n * Checks validation.
 
     """
+    # check for already logged in user
+    if get_current_user():
+        flash("You are already logged in. Please logout first\
+                  if you wish to change user accounts..", 'warning')
+        return redirect(url_for("home"))
 
     # Create a new instance of our Login form
     form = LoginForm()
