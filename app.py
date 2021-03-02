@@ -46,8 +46,8 @@ def login_required(view):
             return view(*args, **kwargs)
         else:
             flash("You must be logged in to view this\
-                 page. Please login first..", 'warning')
-            return redirect(url_for("login"))
+                 page. Please login first..", 'info')
+            return redirect(url_for("login", next=request.url))
     return wrap
 
 
@@ -1039,7 +1039,15 @@ def login():
                     }
                     mongo.db.users.insert_one(current_user)
 
-                    return redirect(url_for("home"))
+                    # Get the page that user was trying to access,
+                    # by trying to get the next parameter - Use the get method, 
+                    # so it wont return an error if next does not exist.
+
+                    # This is made possible by adding the request.next to the login decorator
+                    # at top of this file.
+                    next_page = request.args.get('next')
+                    # ternary conditional to return correct template
+                    return redirect(next_page) if next_page else redirect(url_for("home"))
                 else:
                     # Else the password is wrong
                     flash("Incorrect Email and/or Password", 'error')
