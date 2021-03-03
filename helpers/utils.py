@@ -20,18 +20,38 @@ mongo = PyMongo(app)
 
 def get_reset_token(expires_sec=1800):
     """ Creates a password reset token
-    
+
     \n * Step 1 of password reset
     """
     current_user_id = mongo.db.users.find_one(
         {"description": 'current-user'})['current_user_id']
-    
+
     # create a serializer object
     s = Serializer(app.secret_key, expires_sec)
     # return token created with this serializer
     # decode to utf-8
     return s.dumps({'user_id': current_user_id }).decode('utf-8')
 
+
+def verify_reset_token(token):
+    """ verify the password reset token
+
+    \n Args:
+    \n * token : token for password reset from get_reset_token
+
+    \n Returns:
+    \n * The user id object from user in token
+    """
+    
+    s = Serializer(app.secret_key)
+    # in case token is invalid or has expired use try block
+    try:
+        # try to get the user id out of the token
+        user_id = s.loads(token)['user_id']
+    except:
+        return None
+    # if successful
+    return mongo.db.people.find_one({"_id": ObjectId(user_id)})
 
 
 def get_current_user():
