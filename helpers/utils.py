@@ -1,5 +1,6 @@
 import os
 from flask import (Flask, request)
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_pymongo import PyMongo
 
 from bson.objectid import ObjectId
@@ -16,6 +17,21 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 # Setup instance OF PyMongo
 mongo = PyMongo(app)
+
+def get_reset_token(expires_sec=1800):
+    """ Creates a password reset token
+    
+    \n * Step 1 of password reset
+    """
+    current_user_id = mongo.db.users.find_one(
+        {"description": 'current-user'})['current_user_id']
+    
+    # create a serializer object
+    s = Serializer(app.secret_key, expires_sec)
+    # return token created with this serializer
+    # decode to utf-8
+    return s.dumps({'user_id': current_user_id }).decode('utf-8')
+
 
 
 def get_current_user():
