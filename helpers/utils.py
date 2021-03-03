@@ -42,7 +42,7 @@ def verify_reset_token(token):
     \n Returns:
     \n * The user id object from user in token
     """
-    
+
     s = Serializer(app.secret_key)
     # in case token is invalid or has expired use try block
     try:
@@ -55,9 +55,15 @@ def verify_reset_token(token):
 
 
 def get_current_user():
-    """Get the current logged in user
+    """Get the current logged in user, which is always
+    stored within the record - current_user. 
+    \n * The current user record contains all the information relating to the current user, 
+    but is not the actual current users record. The current_user['current_user_id'] 
+    contains the actual current users id.
     
-    \n * returns the current user object if exists
+
+    \n Returns:
+    \n * returns the current_user object if exists
     """
     current_user = mongo.db.users.find_one(
                 {"description": 'current-user'})
