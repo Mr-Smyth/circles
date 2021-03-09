@@ -42,7 +42,7 @@ def login_required(view):
     """
     @wraps(view)
     def wrap(*args, **kwargs):
-        if get_current_user() and 'user' in session:
+        if get_current_user():
             return view(*args, **kwargs)
         else:
             flash("You must be logged in to view this\
@@ -962,7 +962,7 @@ def register():
     if get_current_user():
         flash("You are already logged in. Please logout first\
                   if you wish to change user accounts..", 'warning')
-    return redirect(url_for("home"))
+        return redirect(url_for("home"))
 
     # Create a new instance of our Register form and check validation
     form = RegistrationForm()
@@ -1030,14 +1030,14 @@ def login():
                     flash(f"{username.capitalize()},\
                         you have been logged in", 'success')
 
-                    # I want to put a ref user in that holds current user details
-                    current_user = {
-                        "description": "current-user",
-                        "current_username": username,
-                        "current_email": existing_user['email'],
-                        "current_user_id": existing_user['_id']
-                    }
-                    mongo.db.users.insert_one(current_user)
+                    # # I want to put a ref user in that holds current user details
+                    # current_user = {
+                    #     "description": "current-user",
+                    #     "current_username": username,
+                    #     "current_email": existing_user['email'],
+                    #     "current_user_id": existing_user['_id']
+                    # }
+                    # mongo.db.users.insert_one(current_user)
 
                     # Get the page that user was trying to access,
                     # by trying to get the next parameter - Use the get method, 
@@ -1072,9 +1072,6 @@ def logout():
     """
 
     flash("You have been logged out", 'success')
-    current_id = mongo.db.users.find_one(
-                {"description": 'current-user'})['_id']
-    mongo.db.users.remove({"_id": ObjectId(current_id)})
     session.pop("user")
     return redirect(url_for('home'))
 
