@@ -1,5 +1,5 @@
 import os
-from flask import (Flask, request)
+from flask import (Flask, request, session)
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_pymongo import PyMongo
 
@@ -65,9 +65,16 @@ def get_current_user():
     \n Returns:
     \n * returns the current_user object if exists
     """
-    current_user = mongo.db.users.find_one(
-                {"description": 'current-user'})
-    return current_user
+    username = session.get("user")
+
+    if username:
+        session_user = session['user']
+        current_user = mongo.db.users.find_one(
+                    {"username": session_user})
+        
+        return current_user
+    else:
+        return None
 
 
 def call_search():
