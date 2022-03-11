@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector(".change-password-button").style.display = "block";
         document.querySelector(".password-container").style.display = "none";
     };
+    
+    
     /** FUNCTION TO HANDLE OPENING OF THE DELETE EVERYONE FORM
      *  AND CLOSING OF ALL OTHER FORMS*/
     const deleteForm = document.querySelector(".delete-button");
@@ -23,6 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector(".change-password-button").style.display = "block";
         document.querySelector(".password-container").style.display = "none";
     };
+    
+    
     /** FUNCTION TO HANDLE OPENING OF CHANGE DELETE PASSWORD CONTAINER FORM
      *  AND CLOSING OF ALL OTHERS */
     const passForm = document.querySelector(".change-password-button");
@@ -34,6 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector(".delete-button").style.display = "block";
         document.querySelector(".delete-container").style.display = "none";
     };
+    
+    
     /** FUNCTION TO HANDLE CHECKING OF NEW PASSWORDS TO SEE IF THEY MATCH
      * IF THEY DO SET FORM VALIDITY TO TRUE */
     const repeat_pass = document.getElementById("repeat_new_password");
