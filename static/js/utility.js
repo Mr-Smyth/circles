@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             selectValidate.style.cssText = "display: block; height: 0; padding: 0; width: 0; position: absolute;";
         }
 
+        
         /** ONCE THE USER IS FOCUSED ON THE INPUT SECTION OF THE SCREEN 
          * WE TRAVERSE THE DOM UP AND DOWN USING PARENT AND CHILD EVENT LISTENERS
          * IF ONE OF THE LIST ITEMS IS SELECTED, BUT DOESNT HAVE THE DISABLED 
